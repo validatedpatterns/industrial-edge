@@ -16,7 +16,7 @@ spec:
     namespace: argocd
   syncPolicy:
     automated: {}
-ignoreDifferences:
+  ignoreDifferences:
   - group: apps
     kind: Deployment
     jsonPointers:
