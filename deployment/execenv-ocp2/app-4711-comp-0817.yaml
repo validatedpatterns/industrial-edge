@@ -13,7 +13,7 @@ spec:
     path: config/instances/app-4711/comp-0817
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: app-4711-comp-0817
   syncPolicy:
     automated: {}
   ignoreDifferences:
