@@ -1,0 +1,20 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: comp-0817
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: comp-0817
+  template:
+    metadata:
+      labels:
+        app: comp-0817
+    spec:
+      containers:
+      - image: openshiftkatacoda/blog-django-py
+        name: blog-from-image-pod-container
+        ports:
+        - containerPort: 8080

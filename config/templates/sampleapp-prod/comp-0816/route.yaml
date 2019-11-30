@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: comp-0816
+spec:
+  host: $COMP_0816_ROUTE_HOST
+  port:
+    targetPort: 8080-tcp
+  subdomain: ""
+  to:
+    kind: Service
+    name: comp-0816
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []

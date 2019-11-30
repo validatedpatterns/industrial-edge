@@ -1,0 +1,7 @@
+resources:
+- namespace.yaml
+patchesStrategicMerge:
+- route.yaml
+bases:
+#- github.com/sa-mw-dach/manuela-gitops/config/templates/sampleapp-prod/comp-0815
+- ../../../templates/sampleapp-prod/comp-0815
