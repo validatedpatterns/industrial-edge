@@ -1,5 +1,4 @@
 resources:
-- namespace.yaml
 patchesStrategicMerge:
 - route.yaml
 bases:
