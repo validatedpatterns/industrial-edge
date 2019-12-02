@@ -4,4 +4,4 @@ metadata:
   name: service-client-comp-0816
 data:
   hostname: comp-0816-comp-0816.apps-crc.testing
-  port: 80 
+  port: '80' 
