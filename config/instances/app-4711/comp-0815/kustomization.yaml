@@ -1,6 +1,7 @@
 resources:
 patchesStrategicMerge:
 - route.yaml
+- service-client-comp-0816-configmap.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/sampleapp-prod/comp-0815
 - ../../../templates/sampleapp-prod/comp-0815

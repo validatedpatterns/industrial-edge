@@ -18,3 +18,17 @@ spec:
         name: blog-from-image-pod-container
         ports:
         - containerPort: 8080
+      volumeMounts:
+      - name: service-client-comp-0816
+        mountPath: /etc/components/comp-0816
+  volumes:
+    - name: service-client-comp-0816
+      configMap:
+        name: service-client-comp-0816
+        items:
+        - key: hostname
+          path: hostname
+        - key: port
+          path: port
+        - key: tlssni
+          path: tlssni
