@@ -3,6 +3,6 @@ kind: ConfigMap
 metadata:
   name: service-client-comp-0816
 data:
-  hostname: comp-0816
-  port: 8080 
-  tlssni: false
+  host: comp-0816
+  port: "8080"
+  tlssni: "false"
