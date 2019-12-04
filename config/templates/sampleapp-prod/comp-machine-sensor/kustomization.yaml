@@ -1,0 +1,6 @@
+resources:
+- route.yaml
+bases:
+- ../../sampleapp/comp-machine-sensor
+patchesStrategicMerge:
+- deployment.yaml

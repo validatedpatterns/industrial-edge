@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: machine-sensor
+spec:
+  host: machine-sensor-machine-sensor.apps-crc.testing

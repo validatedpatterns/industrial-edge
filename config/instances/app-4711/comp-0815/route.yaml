@@ -1,6 +1,0 @@
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: comp-0815
-spec:
-  host: comp-0815-comp-0815.apps-crc.testing

@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: line-dashboard
+spec:
+  host: line-dashboard-line-dashboard.apps-crc.testing

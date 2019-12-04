@@ -1,6 +1,0 @@
-resources:
-patchesStrategicMerge:
-- route.yaml
-bases:
-#- github.com/sa-mw-dach/manuela-gitops/config/templates/sampleapp-prod/comp-0816
-- ../../../templates/sampleapp-prod/comp-0816

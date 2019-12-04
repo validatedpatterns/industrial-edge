@@ -1,0 +1,6 @@
+resources:
+- route.yaml
+bases:
+- ../../sampleapp/comp-mqtt-messaging
+patchesStrategicMerge:
+- deployment.yaml

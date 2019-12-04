@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-client-comp-0816
-data:
-  host: comp-0816
-  port: "8080"
-  tlssni: "false"

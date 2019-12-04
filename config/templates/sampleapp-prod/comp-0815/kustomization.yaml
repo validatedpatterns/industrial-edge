@@ -1,6 +1,0 @@
-resources:
-- route.yaml
-bases:
-- ../../sampleapp/comp-0815
-patchesStrategicMerge:
-- deployment.yaml

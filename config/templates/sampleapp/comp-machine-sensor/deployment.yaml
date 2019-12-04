@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: machine-sensor
+spec:
+  replicas: 1
+  revisionHistoryLimit: 3
+  selector:
+    matchLabels:
+      app: machine-sensor
+  template:
+    metadata:
+      labels:
+        app: machine-sensor
+    spec:
+      containers:
+      - image: openshiftkatacoda/blog-django-py
+        name: blog-from-image-pod-container
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: service-client-mqtt-messaging
+          mountPath: /etc/components/comp-mqtt-messaging
+      volumes:
+        - name: service-client-mqtt-messaging
+          configMap:
+            name: service-client-mqtt-messaging
+            items:
+            - key: hostname
+              path: hostname
+            - key: port
+              path: port
+            - key: tlssni
+              path: tlssni

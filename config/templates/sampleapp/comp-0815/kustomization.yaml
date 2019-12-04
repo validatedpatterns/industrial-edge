@@ -1,4 +1,0 @@
-resources:
-- deployment.yaml
-- service.yaml
-- service-client-comp-0816-configmap.yaml

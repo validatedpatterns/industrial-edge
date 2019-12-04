@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: mqtt-messaging
+spec:
+  host: mqtt-messaging-mqtt-messaging.apps-crc.testing
