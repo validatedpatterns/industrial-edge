@@ -1,0 +1,16 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: line-dashboard
+  name: line-dashboard
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: line-dashboard
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []

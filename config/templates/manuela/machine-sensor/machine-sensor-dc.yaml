@@ -1,0 +1,74 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    application: machine-sensor
+    template: openjdk18-web-basic-s2i
+  name: machine-sensor
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentConfig: machine-sensor
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        application: machine-sensor
+        deploymentConfig: machine-sensor
+      name: machine-sensor
+    spec:
+      containers:
+        - env:
+            - name: COMPONENT_MQTT_HOSTNAME
+              valueFrom:
+                configMapKeyRef:
+                  name: service-client-messaging
+                  key: host
+            - name: COMPONENT_MQTT_PORT
+              valueFrom:
+                configMapKeyRef:
+                  name: service-client-messaging
+                  key: port
+            - name: mqtt.username
+              value: iotuser
+            - name: mqtt.password
+              value: iotuser
+          image: machine-sensor:latest
+          imagePullPolicy: Always
+          name: machine-sensor
+          ports:
+            - containerPort: 8778
+              name: jolokia
+              protocol: TCP
+            - containerPort: 8080
+              name: http
+              protocol: TCP
+            - containerPort: 8443
+              name: https
+              protocol: TCP
+          resources: {}
+          terminationMessagePath: /dev/termination-log
+          terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 75
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - machine-sensor
+        from:
+          kind: ImageStreamTag
+          name: 'machine-sensor:latest'
+      type: ImageChange
+    - type: ConfigChange

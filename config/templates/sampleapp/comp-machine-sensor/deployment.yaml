@@ -21,6 +21,22 @@ spec:
         volumeMounts:
         - name: service-client-mqtt-messaging
           mountPath: /etc/components/comp-mqtt-messaging
+        env:
+        - name: COMPONENT_COMP_MQTT_MESSAGING_HOSTNAME
+          valueFrom:
+            configMapKeyRef:
+              name: service-client-mqtt-messaging
+              key: hostname
+        - name: COMPONENT_COMP_MQTT_MESSAGING_PORT
+          valueFrom:
+            configMapKeyRef:
+              name: service-client-mqtt-messaging
+              key: port
+        - name: COMPONENT_COMP_MQTT_MESSAGING_TLSSNI
+          valueFrom:
+            configMapKeyRef:
+              name: service-client-mqtt-messaging
+              key: tlssni
       volumes:
         - name: service-client-mqtt-messaging
           configMap:
