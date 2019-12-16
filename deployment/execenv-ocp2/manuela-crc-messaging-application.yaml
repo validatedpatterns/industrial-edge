@@ -25,3 +25,11 @@ spec:
     kind: Route
     jsonPointers:
     - /status
+  - group: image.openshift.io
+    kind: ImageStream
+    jsonPointers:
+    - /spec/tags/0/generation
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/template/spec/containers/0/image
