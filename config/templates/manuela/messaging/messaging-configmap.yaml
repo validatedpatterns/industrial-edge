@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: iot-consumer-cfg
+  name: messaging-configmap
 data:
   MQTT_BROKER: 'ws://broker-amq-mqtt-all-0-svc:61616'
   MQTT_PASSWORD: iotuser

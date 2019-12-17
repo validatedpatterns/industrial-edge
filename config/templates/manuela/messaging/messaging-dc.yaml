@@ -33,9 +33,9 @@ spec:
         ports:
         - containerPort: 3000
           protocol: TCP
-        env:
-        - name: PORT
-          value: '3000'
+        envFrom:
+        - configMapRef:
+            name: messaging-configmap
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
