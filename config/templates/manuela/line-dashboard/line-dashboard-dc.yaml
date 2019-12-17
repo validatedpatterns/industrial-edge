@@ -37,7 +37,7 @@ spec:
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
         volumeMounts:
-            - mountPath: /var/www/html/conf/config.json
+            - mountPath: /opt/app-root/output/conf/config.json
               name: line-dashboard-configmap-vol
               subPath: config.json
       dnsPolicy: ClusterFirst
