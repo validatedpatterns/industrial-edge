@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: iot-consumer-cfg
+data:
+  MQTT_BROKER: 'ws://broker-amq-mqtt-all-0-svc:61616'
+  MQTT_PASSWORD: iotuser
+  MQTT_USER: iotuser
+  PORT: '3000'
+  SOCKET_PATH: /api/service-web/socket
+  TEMPERATURE_THRESHOLD: '70.0'
+  TOPIC_GPS: iot-ocp/sw/iottest/gps
+  TOPIC_TEMPERATURE: iot-ocp/sw/iottest/temperature
+  TOPIC_VIBRATION: iot-ocp/sw/iottest/vibration
+
