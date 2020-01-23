@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: service-client-messaging
 data:
-  host: broker-amq-mqtt-all-0-svc-rte-manuela-crc-messaging.apps-crc.testing
+  host: broker-amq-mqtt-all-0-svc-rte-manuela-stormshift-messaging.apps.ocp3.stormshift.coe.muc.redhat.com
   port: '80' 
