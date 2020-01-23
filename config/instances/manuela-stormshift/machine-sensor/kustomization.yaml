@@ -1,0 +1,6 @@
+resources:
+patchesStrategicMerge:
+- service-client-messaging-configmap.yaml
+bases:
+#- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
+- ../../../templates/manuela/machine-sensor

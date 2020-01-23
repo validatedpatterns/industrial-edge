@@ -1,0 +1,6 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: execenv-ocp4-placeholder-configmap
+data:
+  info: don't delete me - I'm here so there is always some content for ArgoCD that can be synced even though nothing is deployed.
