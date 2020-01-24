@@ -9,7 +9,8 @@ data:
   PORT: '3000'
   SOCKET_PATH: /api/service-web/socket
   TEMPERATURE_THRESHOLD: '70.0'
-  TOPIC_GPS: iot-ocp/sw/iottest/gps
-  TOPIC_TEMPERATURE: iot-ocp/sw/iottest/temperature
-  TOPIC_VIBRATION: iot-ocp/sw/iottest/vibration
+  TOPIC_GPS: iot-sensor/sw/gps
+  TOPIC_TEMPERATURE: iot-sensor/sw/temperature
+  TOPIC_VIBRATION: iot-sensor/sw/vibration
+  TOPIC_LIGHT: iot-sensor/sw/light
 
