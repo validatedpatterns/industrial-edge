@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: service-client-messaging
 data:
-  host: broker-amq-mqtt-all-0-svc-rte-manuela-crc-messaging.apps-crc.testing
-  port: '80' 
+  MQTT_HOSTNAME: broker-amq-mqtt-all-0-svc-rte-manuela-crc-messaging.apps-crc.testing
+  MQTT_PORT: '80' 
