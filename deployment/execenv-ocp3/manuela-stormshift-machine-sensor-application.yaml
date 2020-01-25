@@ -15,7 +15,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-machine-sensor
   syncPolicy:
-    automated: {}
+    automated: 
+      prune: true
+      selfHeal: true
   ignoreDifferences:
   - group: apps
     kind: Deployment
