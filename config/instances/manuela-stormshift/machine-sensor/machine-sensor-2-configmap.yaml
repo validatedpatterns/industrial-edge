@@ -4,5 +4,5 @@ metadata:
   name: machine-sensor-2
 data:
   MQTT_HOSTNAME: broker-amq-mqtt-all-0-svc-rte-manuela-stormshift-messaging.apps.ocp3.stormshift.coe.muc.redhat.com
-  MQTT_PORT: '80'  SENSOR_TEMPERATURE_ENABLED: 'true'
+  MQTT_PORT: '80'
   SENSOR_TEMPERATURE_ENABLED: 'true'
