@@ -1,0 +1,12 @@
+kind: Group
+apiVersion: user.openshift.io/v1
+metadata:
+  name: manuela-team
+users:
+  - dfroehli@redhat.com
+  - oschneid@redhat.com
+  - sbergste@redhat.com
+  - wrichter@redhat.com
+  - mpfuetzn@redhat.com
+  - mreinke@redhat.com
+  - jlopezyg@redhat.com
