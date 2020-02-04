@@ -14,6 +14,20 @@ items:
     - mreinke@redhat.com
     - jlopezyg@redhat.com
 
+- kind: Group
+  apiVersion: user.openshift.io/v1
+  metadata:
+    name: manuela-dev
+  users:
+    - manuela-dev
+
+- kind: Group
+  apiVersion: user.openshift.io/v1
+  metadata:
+    name: manuela-ops
+  users:
+    - manuela-ops
+
 - kind: RoleBinding
   apiVersion: rbac.authorization.k8s.io/v1
   metadata:
@@ -30,3 +44,34 @@ items:
   - apiGroup: rbac.authorization.k8s.io
     kind: Group
     name: manuela-dev
+
+- kind: RoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    namespace: manuela-stormshift-line-dashboard
+    name: admin
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: admin
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: manuela-team
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: manuela-dev
+
+- kind: RoleBinding
+  apiVersion: rbac.authorization.k8s.io/v1
+  metadata:
+    namespace: manuela-stormshift-line-dashboard
+    name: view
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: view
+  subjects:
+  - apiGroup: rbac.authorization.k8s.io
+    kind: Group
+    name: manuela-ops
