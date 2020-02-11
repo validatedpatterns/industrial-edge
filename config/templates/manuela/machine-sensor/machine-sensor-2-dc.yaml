@@ -1,0 +1,68 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  labels:
+    application: machine-sensor-2
+    template: openjdk18-web-basic-s2i
+    app.kubernetes.io/part-of: ManuELA
+  name: machine-sensor-2
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    deploymentConfig: machine-sensor-2
+  strategy:
+    activeDeadlineSeconds: 21600
+    recreateParams:
+      timeoutSeconds: 600
+    resources: {}
+    type: Recreate
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        application: machine-sensor-2
+        deploymentConfig: machine-sensor-2
+      name: machine-sensor-2
+    spec:
+      containers:
+      - name: machine-sensor
+        image: machine-sensor:latest
+        imagePullPolicy: Always
+        ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+        envFrom:
+          - configMapRef: 
+              name: machine-sensor-2
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 75
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 75
+  test: false
+  triggers:
+    - imageChangeParams:
+        automatic: true
+        containerNames:
+          - machine-sensor
+        from:
+          kind: ImageStreamTag
+          name: 'machine-sensor:latest'
+      type: ImageChange
+    - type: ConfigChange

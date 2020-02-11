@@ -15,7 +15,9 @@ spec:
     server: https://kubernetes.default.svc
     namespace: manuela-crc-line-dashboard
   syncPolicy:
-    automated: {}
+    automated: 
+      prune: true
+      selfHeal: true
   ignoreDifferences:
   - group: apps
     kind: Deployment

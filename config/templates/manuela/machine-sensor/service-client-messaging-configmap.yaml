@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-client-messaging
-data:
-  host: broker-amq-mqtt-all-0-svc
-  port: "61616"
-  tlssni: "false"

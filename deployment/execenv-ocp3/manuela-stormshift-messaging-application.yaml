@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: ocp3
+  name: manuela-stormshift-messaging
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
     targetRevision: HEAD
-    path: deployment/execenv-ocp3
+    path: config/instances/manuela-stormshift/messaging
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: manuela-stormshift-messaging
   syncPolicy:
     automated: 
       prune: true
@@ -27,3 +27,11 @@ spec:
     kind: Route
     jsonPointers:
     - /status
+  - group: image.openshift.io
+    kind: ImageStream
+    jsonPointers:
+    - /spec/tags/0/generation
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/template/spec/containers/0/image

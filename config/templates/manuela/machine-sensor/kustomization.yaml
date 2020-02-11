@@ -1,4 +1,6 @@
 resources:
-- machine-sensor-dc.yaml
 - machine-sensor-is.yaml
-- service-client-messaging-configmap.yaml
+- machine-sensor-1-configmap.yaml
+- machine-sensor-2-configmap.yaml
+- machine-sensor-1-dc.yaml
+- machine-sensor-2-dc.yaml

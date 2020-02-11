@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: machine-sensor-2
+data:
+  MQTT_HOSTNAME: broker-amq-mqtt-all-0-svc-rte-manuela-crc-messaging.apps-crc.testing
+  MQTT_PORT: '80' 
