@@ -1,0 +1,13 @@
+resources:
+#- quay-ops-secret.yaml
+- manuela-admin-rolebinding.yaml
+- manuela-view-rolebinding.yaml
+
+secretGenerator:
+- name: quay-ops-secret
+  literals:
+  - .dockerconfigjson=ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJiV0Z1ZFdWc1lTdHZjSE02U0UweU16aFdUMDlRTlZGU1VUbE9XVVkzUjFoUFNGTTRWRGRXUTBWT1drcEpWRGxTTjFkRFVGRTBXazlhT0ZoYVMxRllPRFV3V0RnNU5rOHpSRFV4VlE9PSIsCiAgICAgICJlbWFpbCI6ICIiCiAgICB9CiAgfQp9
+  type: kubernetes.io/dockerconfigjson
+
+generatorOptions:
+  disableNameSuffixHash: true

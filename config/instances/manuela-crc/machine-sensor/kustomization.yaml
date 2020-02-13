@@ -5,3 +5,5 @@ patchesStrategicMerge:
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela/machine-sensor
+- ../../../common/manuela
+
