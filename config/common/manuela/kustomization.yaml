@@ -6,7 +6,7 @@ resources:
 secretGenerator:
 - name: quay-ops-secret
   literals:
-  - .dockerconfigjson=ewogICJhdXRocyI6IHsKICAgICJxdWF5LmlvIjogewogICAgICAiYXV0aCI6ICJiV0Z1ZFdWc1lTdHZjSE02U0UweU16aFdUMDlRTlZGU1VUbE9XVVkzUjFoUFNGTTRWRGRXUTBWT1drcEpWRGxTTjFkRFVGRTBXazlhT0ZoYVMxRllPRFV3V0RnNU5rOHpSRFV4VlE9PSIsCiAgICAgICJlbWFpbCI6ICIiCiAgICB9CiAgfQp9
+  - .dockerconfigjson={"auths":{"quay.io":{"auth":"bWFudWVsYStvcHM6SE0yMzhWT09QNVFSUTlOWUY3R1hPSFM4VDdWQ0VOWkpJVDlSN1dDUFE0Wk9aOFhaS1FYODUwWDg5Nk8zRDUxVQ==","email":""}}}
   type: kubernetes.io/dockerconfigjson
 
 generatorOptions:
