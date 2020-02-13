@@ -1,7 +1,12 @@
-resources:
-patchesStrategicMerge:
-- machine-sensor-1-configmap.yaml
-- machine-sensor-2-configmap.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela/machine-sensor
+configMapGenerator:
+- name: machine-sensor-1
+  behavior: merge
+  envs:
+   - machine-sensor-1-configmap.properties
+- name: machine-sensor-2
+  behavior: merge
+  envs:
+   - machine-sensor-2-configmap.properties
