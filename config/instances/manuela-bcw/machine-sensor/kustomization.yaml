@@ -1,0 +1,13 @@
+bases:
+#- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
+- ../../../templates/manuela/machine-sensor
+- ../../../common/manuela
+configMapGenerator:
+- name: machine-sensor-1
+  behavior: merge
+  envs:
+   - machine-sensor-1-configmap.properties
+- name: machine-sensor-2
+  behavior: merge
+  envs:
+   - machine-sensor-2-configmap.properties
