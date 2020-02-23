@@ -4,5 +4,9 @@ kind: Kustomization
 bases:
 - ../../manuela/machine-sensor
 
+patchesStrategicMerge:
+- machine-sensor-1-dc.yaml
+- machine-sensor-2-dc.yaml
+
 resources:
 - machine-sensor-is.yaml
