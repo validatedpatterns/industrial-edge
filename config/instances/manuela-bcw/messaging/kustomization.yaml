@@ -10,5 +10,5 @@ patchesStrategicMerge:
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
 - ../../../templates/manuela-dev/messaging
-- ../../../common/manuela
+- ../../../templates/manuela-team-rolebindings
 

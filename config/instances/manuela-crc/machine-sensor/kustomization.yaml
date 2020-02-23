@@ -1,12 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-resources:
 patchesStrategicMerge:
 - machine-sensor-1-configmap.yaml
 - machine-sensor-2-configmap.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela-dev/machine-sensor
-- ../../../common/manuela
+- ../../../templates/manuela-team-rolebindings
 

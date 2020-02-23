@@ -4,7 +4,7 @@ kind: Kustomization
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela-prod/machine-sensor
-- ../../../common/manuela
+- ../../../templates/manuela-team-rolebindings
 configMapGenerator:
 - name: machine-sensor-1
   behavior: merge
