@@ -7,5 +7,5 @@ patchesStrategicMerge:
 - line-dashboard-configmap.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/line-dashboard
-- ../../../templates/manuela/line-dashboard
+- ../../../templates/manuela-prod/line-dashboard
 - ../../../common/manuela

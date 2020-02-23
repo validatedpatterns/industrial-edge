@@ -1,0 +1,10 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../manuela/machine-sensor
+
+images:
+- name: machine-sensor
+  newName: quay.io/manuela/iot-software-sensor
+  digest: sha256:b3302dfb20654649c2935890b2b713bc8a141957199dd4c2afd54ca1fdf2f213

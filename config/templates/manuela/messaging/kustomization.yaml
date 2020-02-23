@@ -6,6 +6,5 @@ resources:
 - amq-broker.yaml
 - messaging-configmap.yaml
 - messaging-dc.yaml
-- messaging-is.yaml
 - messaging-route.yaml
 - messaging-svc.yaml

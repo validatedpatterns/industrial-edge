@@ -5,7 +5,6 @@ configurations:
 - kustomizeconfig-deploymentconfig.yaml
 
 resources:
-- machine-sensor-is.yaml
 - machine-sensor-1-dc.yaml
 - machine-sensor-2-dc.yaml
 

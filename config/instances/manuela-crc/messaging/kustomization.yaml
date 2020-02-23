@@ -6,5 +6,5 @@ patchesStrategicMerge:
 - route.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
-- ../../../templates/manuela/messaging
+- ../../../templates/manuela-dev/messaging
 - ../../../common/manuela
