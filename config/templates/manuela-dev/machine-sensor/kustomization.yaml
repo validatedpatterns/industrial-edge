@@ -6,3 +6,8 @@ bases:
 
 resources:
 - machine-sensor-is.yaml
+
+images:
+- name: machine-sensor
+  newName: iotdemo/iot-software-sensor
+  newTag: latest
