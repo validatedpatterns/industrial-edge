@@ -57,12 +57,4 @@ spec:
       terminationGracePeriodSeconds: 75
   test: false
   triggers:
-    - imageChangeParams:
-        automatic: true
-        containerNames:
-          - machine-sensor
-        from:
-          kind: ImageStreamTag
-          name: 'machine-sensor:latest'
-      type: ImageChange
     - type: ConfigChange

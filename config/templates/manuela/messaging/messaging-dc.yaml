@@ -47,11 +47,3 @@ spec:
   test: false
   triggers:
   - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - messaging
-      from:
-        kind: ImageStreamTag
-        name: messaging:latest
-    type: ImageChange

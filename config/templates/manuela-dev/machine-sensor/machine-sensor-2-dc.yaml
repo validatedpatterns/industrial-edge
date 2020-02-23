@@ -1,0 +1,14 @@
+apiVersion: apps.openshift.io/v1
+kind: DeploymentConfig
+metadata:
+  name: machine-sensor-2
+spec:
+  triggers:
+  - type: ConfigChange
+  - imageChangeParams:
+      automatic: true
+      containerNames:
+      - machine-sensor
+      from:
+        kind: ImageStreamTag
+        name: machine-sensor:latest
