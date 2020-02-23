@@ -10,4 +10,4 @@ patchesStrategicMerge:
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/line-dashboard
 - ../../../templates/manuela-prod/line-dashboard
-#- ../../../common/manuela
+- ../../../common/manuela
