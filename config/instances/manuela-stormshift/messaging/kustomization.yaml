@@ -1,7 +1,7 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: manuela-stormshift-line-dashboard
+namespace: manuela-stormshift-messaging
 resources:
 - messaging-namespace.yaml
 - messaging-operatorgroup.yaml
