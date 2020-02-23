@@ -5,7 +5,8 @@ metadata:
 spec:
   triggers:
   - type: ConfigChange
-  - imageChangeParams:
+  - type: ImageChange
+    imageChangeParams:
       automatic: true
       containerNames:
       - line-dashboard
