@@ -4,5 +4,8 @@ kind: Kustomization
 bases:
 - ../../manuela/line-dashboard
 
+patchesStrategicMerge:
+- line-dashboard-dc.yaml
+
 resources:
 - line-dashboard-is.yaml

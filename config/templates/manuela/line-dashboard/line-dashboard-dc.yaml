@@ -53,11 +53,3 @@ spec:
   test: false
   triggers:
   - type: ConfigChange
-  - imageChangeParams:
-      automatic: true
-      containerNames:
-      - line-dashboard
-      from:
-        kind: ImageStreamTag
-        name: line-dashboard:latest
-    type: ImageChange
