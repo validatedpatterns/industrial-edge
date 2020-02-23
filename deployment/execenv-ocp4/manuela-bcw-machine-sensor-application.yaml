@@ -13,6 +13,7 @@ spec:
     path: config/instances/manuela-bcw/machine-sensor
   destination:
     server: https://kubernetes.default.svc
+    namespace: manuela-bcw-machine-sensor
   syncPolicy:
     automated: 
       prune: true
