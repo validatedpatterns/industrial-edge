@@ -9,5 +9,5 @@ resources:
 
 images:
 - name: machine-sensor
-  newName: iotdemo/iot-software-sensor
+  newName: image-registry.openshift-image-registry.svc:5000/iotdemo/iot-software-sensor
   newTag: latest
