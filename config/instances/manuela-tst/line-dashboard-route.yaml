@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: line-dashboard
+spec:
+  host: line-dashboard-manuela-tst-all.apps.ocp3.stormshift.coe.muc.redhat.com

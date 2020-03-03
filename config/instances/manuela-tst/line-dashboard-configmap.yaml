@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: line-dashboard-configmap
+data:
+  config.json: |-
+    {
+        "websocketHost": "http://messaging-manuela-tst-all.apps.ocp3.stormshift.coe.muc.redhat.com",
+        "websocketPath": "/api/service-web/socket",
+        "SERVER_TIMEOUT": 20000
+    }
