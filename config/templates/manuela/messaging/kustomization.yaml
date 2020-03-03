@@ -5,6 +5,6 @@ resources:
 - amq-operator-subscription.yaml
 - amq-broker.yaml
 - messaging-configmap.yaml
-- messaging-dc.yaml
+- messaging-deployment.yaml
 - messaging-route.yaml
 - messaging-svc.yaml

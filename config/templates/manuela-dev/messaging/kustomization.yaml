@@ -4,8 +4,6 @@ kind: Kustomization
 bases:
 - ../../manuela/messaging
 
-patchesStrategicMerge:
-- messaging-dc.yaml
 
 resources:
 - messaging-is.yaml

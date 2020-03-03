@@ -1,25 +1,17 @@
-apiVersion: apps.openshift.io/v1
-kind: DeploymentConfig
+apiVersion: apps/v1
+kind: Deployment
 metadata:
   labels:
-    app: messaging
+    application: messaging
   name: messaging
 spec:
   replicas: 1
   revisionHistoryLimit: 10
   selector:
-    app: messaging
-    deploymentconfig: messaging
+    matchLabels:
+      app: messaging
   strategy:
-    activeDeadlineSeconds: 21600
-    resources: {}
-    rollingParams:
-      intervalSeconds: 1
-      maxSurge: 25%
-      maxUnavailable: 25%
-      timeoutSeconds: 600
-      updatePeriodSeconds: 1
-    type: Rolling
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -27,7 +19,7 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: messaging:latest
+      - image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging:latest
         imagePullPolicy: Always
         name: messaging
         ports:
@@ -44,6 +36,4 @@ spec:
       schedulerName: default-scheduler
       securityContext: {}
       terminationGracePeriodSeconds: 30
-  test: false
-  triggers:
-  - type: ConfigChange
+
