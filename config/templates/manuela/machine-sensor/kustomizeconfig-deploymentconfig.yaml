@@ -4,5 +4,5 @@ nameReference:
   fieldSpecs:
   - path: spec/template/spec/containers/envFrom/configMapRef
     version: v1
-    kind: DeploymentConfig
+    kind: DeploymentConfig1
     

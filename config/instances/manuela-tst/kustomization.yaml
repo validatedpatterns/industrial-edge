@@ -5,6 +5,7 @@ namespace: manuela-tst-all
 resources:
 - manuela-tst-all-namespace.yaml
 - messaging-operatorgroup.yaml
+
 patchesStrategicMerge:
 - line-dashboard-route.yaml
 - line-dashboard-configmap.yaml
