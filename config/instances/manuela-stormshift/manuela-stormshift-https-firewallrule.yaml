@@ -1,7 +1,7 @@
 apiVersion: manuela.redhat.com/v1alpha1
 kind: FirewallRule
 metadata:
-  name: manuela-stormshift-http-firewallrule
+  name: manuela-stormshift-https-firewallrule
 spec:
   # Add fields here
   action: pass
