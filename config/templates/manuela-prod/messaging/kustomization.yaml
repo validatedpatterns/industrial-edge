@@ -7,4 +7,4 @@ bases:
 images:
 - name: messaging
   newName: quay.io/manuela/iot-consumer
-  digest: sha256:2baee417906f998947820f51aeff0c2a522b52fe7ae621c3480e4a81e4b6bad5
+  digest: sha256:114ecb4acfd8ea5231914c8aeb7b565a6d6ad76379b66a737e2adcfc0334ed47

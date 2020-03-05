@@ -7,4 +7,4 @@ bases:
 images:
 - name: machine-sensor
   newName: quay.io/manuela/iot-software-sensor
-  digest: sha256:b3302dfb20654649c2935890b2b713bc8a141957199dd4c2afd54ca1fdf2f213
+  digest: sha256:8f275e70295429ecdfe222ad9daa2fd478f62d33201bf7852fb332e97b4aabee
