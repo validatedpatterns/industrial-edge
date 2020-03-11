@@ -11,7 +11,7 @@ spec:
   - annotations: null
     from:
       kind: ImageStreamTag
-      name: iot-consumer:latest
+      name: iot-consumer:latest2
       namespace: iotdemo
     generation: 2
     importPolicy: {}
