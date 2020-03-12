@@ -36,6 +36,5 @@ configMapGenerator:
 
 
 images:
-- name: image-registry.openshift-image-registry.svc:5000/iotdemo/iot-software-sensor
-  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/iot-software-sensor
-  newTag: 0.13.3-22
+- name: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  newTag: 0.3.2-10
