@@ -33,3 +33,9 @@ configMapGenerator:
   behavior: merge
   envs: 
     - machine-sensor-2-configmap.properties
+
+
+images:
+- name: image-registry.openshift-image-registry.svc:5000/iotdemo/iot-software-sensor
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/iot-software-sensor
+  newTag: 0.13.3-22
