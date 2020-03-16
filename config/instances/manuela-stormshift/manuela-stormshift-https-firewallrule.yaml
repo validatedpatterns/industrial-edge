@@ -10,6 +10,6 @@ spec:
   protocol: tcp
   source: any
   destination: any
-  destination_port: 443
+  destination_port: '443'
   after: top
   

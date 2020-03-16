@@ -10,6 +10,6 @@ spec:
   protocol: tcp
   source: any
   destination: any
-  destination_port: 80
+  destination_port: '80'
   after: top
   
