@@ -15,7 +15,7 @@ configMapGenerator:
   name: machine-sensor-2
 images:
 - name: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  newTag: 0.3.2-19
+  newTag: 0.3.2-20
 kind: Kustomization
 namespace: manuela-tst-all
 patchesStrategicMerge:
