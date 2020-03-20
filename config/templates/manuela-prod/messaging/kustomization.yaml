@@ -5,6 +5,6 @@ bases:
 - ../../manuela/messaging
 
 images:
-- name: messaging
+- name: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging:latest
   newName: quay.io/manuela/iot-consumer
   newTag: 0.3.2-19
