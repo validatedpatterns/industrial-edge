@@ -6,7 +6,7 @@ resources:
 - machine-sensor-namespace.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
-- ../../../templates/manuela-prod/machine-sensor
+- ../../../templates/manuela-openshift-prod/machine-sensor
 - ../../../templates/manuela-team-rolebindings
 configMapGenerator:
 - name: machine-sensor-1
@@ -17,3 +17,7 @@ configMapGenerator:
   behavior: merge
   envs:
    - machine-sensor-2-configmap.properties
+
+images:
+- name: machine-sensor
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor

@@ -1,6 +1,0 @@
-apiVersion: route.openshift.io/v1
-kind: Route
-metadata:
-  name: messaging
-spec:
-  host: messaging-manuela-bcw-messaging.apps.ocp3.stormshift.coe.muc.redhat.com

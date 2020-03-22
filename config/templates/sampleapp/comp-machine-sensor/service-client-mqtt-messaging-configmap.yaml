@@ -1,8 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: service-client-mqtt-messaging
-data:
-  host: mqtt-messaging
-  port: "8080"
-  tlssni: "false"
