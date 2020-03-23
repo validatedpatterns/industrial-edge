@@ -30,7 +30,10 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  newTag: latest
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+  newTag: latest
 - name: line-dashboard
-  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-al/line-dashboard
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+  newTag: latest
