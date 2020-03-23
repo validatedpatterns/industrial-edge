@@ -3,9 +3,9 @@ kind: Kustomization
 
 bases:
 - ../../templates/manuela-team-rolebindings
-- ../../templates/manuela-openshift-test/line-dashboard
-- ../../templates/manuela-openshift-test/messaging
-- ../../templates/manuela-openshift-test/machine-sensor
+- ../../templates/manuela-openshift/line-dashboard
+- ../../templates/manuela-openshift/messaging
+- ../../templates/manuela-openshift/machine-sensor
 
 namespace: manuela-tst-all
 
