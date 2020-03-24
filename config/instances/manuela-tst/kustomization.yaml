@@ -32,4 +32,4 @@ images:
   newTag: latest
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: 0.3.2-27
+  newTag: latest
