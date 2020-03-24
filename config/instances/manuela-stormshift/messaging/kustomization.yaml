@@ -9,6 +9,9 @@ patchesStrategicMerge:
 - route.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
-- ../../../templates/manuela-prod/messaging
+- ../../../templates/manuela-openshift-prod/messaging
 - ../../../templates/manuela-team-rolebindings
 
+images:
+- name: messaging
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging

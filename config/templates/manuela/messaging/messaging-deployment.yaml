@@ -19,7 +19,7 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging:latest
+      - image: messaging
         imagePullPolicy: Always
         name: messaging
         ports:
