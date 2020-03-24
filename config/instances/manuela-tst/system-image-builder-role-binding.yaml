@@ -6,12 +6,6 @@ subjects:
   - kind: ServiceAccount
     name: pipeline
     namespace: manuela-ci
-  - kind: ServiceAccount
-    name: pipeline
-    namespace: oschneid-ci
-  - kind: ServiceAccount
-    name: pipeline
-    namespace: wrichter-ci
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
