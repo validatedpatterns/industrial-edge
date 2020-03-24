@@ -18,7 +18,6 @@ configMapGenerator:
   envs:
   - machine-sensor-2-configmap.properties
   name: machine-sensor-2
-
 patchesStrategicMerge:
 - line-dashboard-route.yaml
 - line-dashboard-configmap.yaml
@@ -26,6 +25,7 @@ patchesStrategicMerge:
 resources:
 - manuela-tst-all-namespace.yaml
 - manuela-tst-all-operatorgroup.yaml
+- system-image-builder-role-binding.yaml
 
 images:
 - name: messaging
