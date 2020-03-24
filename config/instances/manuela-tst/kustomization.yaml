@@ -1,14 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 bases:
 - ../../templates/manuela-team-rolebindings
 - ../../templates/manuela-openshift/line-dashboard
 - ../../templates/manuela-openshift/messaging
 - ../../templates/manuela-openshift/machine-sensor
-
 namespace: manuela-tst-all
-
 configMapGenerator:
 - behavior: merge
   envs:
@@ -26,7 +23,6 @@ resources:
 - manuela-tst-all-namespace.yaml
 - manuela-tst-all-operatorgroup.yaml
 - system-image-builder-role-binding.yaml
-
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
@@ -36,4 +32,4 @@ images:
   newTag: latest
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: latest
+  newTag: 0.3.2-27
