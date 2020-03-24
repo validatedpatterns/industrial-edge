@@ -25,3 +25,4 @@ patchesStrategicMerge:
 resources:
 - manuela-tst-all-namespace.yaml
 - messaging-operatorgroup.yaml
+- system-image-builder-role-binding.yaml
