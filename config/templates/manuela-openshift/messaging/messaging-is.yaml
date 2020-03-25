@@ -1,0 +1,10 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: messaging
+  name: messaging
+spec:
+  lookupPolicy:
+    local: false
+  tags: []

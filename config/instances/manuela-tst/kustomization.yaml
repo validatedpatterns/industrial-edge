@@ -1,9 +1,11 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
 bases:
 - ../../templates/manuela-team-rolebindings
-- ../../templates/manuela-dev/line-dashboard
-- ../../templates/manuela-dev/messaging
-- ../../templates/manuela-dev/machine-sensor
+- ../../templates/manuela-openshift/line-dashboard
+- ../../templates/manuela-openshift/messaging
+- ../../templates/manuela-openshift/machine-sensor
+namespace: manuela-tst-all
 configMapGenerator:
 - behavior: merge
   envs:
@@ -13,15 +15,21 @@ configMapGenerator:
   envs:
   - machine-sensor-2-configmap.properties
   name: machine-sensor-2
-images:
-- name: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  newTag: 0.3.2-21
-kind: Kustomization
-namespace: manuela-tst-all
 patchesStrategicMerge:
 - line-dashboard-route.yaml
 - line-dashboard-configmap.yaml
 - route.yaml
 resources:
 - manuela-tst-all-namespace.yaml
-- messaging-operatorgroup.yaml
+- manuela-tst-all-operatorgroup.yaml
+- system-image-builder-role-binding.yaml
+images:
+- name: messaging
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  newTag: 0.3.2-28
+- name: machine-sensor
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+  newTag: latest
+- name: line-dashboard
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+  newTag: latest

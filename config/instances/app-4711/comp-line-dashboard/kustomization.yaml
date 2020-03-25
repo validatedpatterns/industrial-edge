@@ -1,9 +1,0 @@
-apiVersion: kustomize.config.k8s.io/v1beta1
-kind: Kustomization
-
-resources:
-patchesStrategicMerge:
-- route.yaml
-bases:
-#- github.com/sa-mw-dach/manuela-gitops/config/templates/sampleapp-prod/comp-line-dashboard
-- ../../../templates/sampleapp-prod/comp-line-dashboard
