@@ -6,4 +6,4 @@ bases:
 
 images:
 - name: line-dashboard
-  newTag: prod
+  newTag: prod123
