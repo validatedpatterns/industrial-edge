@@ -4,7 +4,7 @@ kind: Kustomization
 bases:
 - ../../manuela-openshift/messaging
 
-resources: 
+patchesStrategicMerge: 
 - line-dashboard-is.yaml
 
 images:
