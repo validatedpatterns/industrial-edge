@@ -6,4 +6,7 @@ bases:
 
 images:
 - name: messaging
-  newTag: prod
+  newTag: 0.3.2-42 
+
+resources: 
+- imagestreamtag.yaml

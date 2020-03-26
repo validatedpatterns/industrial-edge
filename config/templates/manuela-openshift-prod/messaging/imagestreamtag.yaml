@@ -1,0 +1,22 @@
+kind: ImageStreamTag
+apiVersion: image.openshift.io/v1
+metadata:
+  name: line-dashboard:0.3.2-42
+tag:
+  name: ""
+  annotations: null
+  from:
+    kind: DockerImage
+    name: quay.io/manuela/iot-consumer:0.3.2-42
+  generation: 0
+  importPolicy: {}
+  referencePolicy:
+    type: Local
+generation: 0
+lookupPolicy:
+  local: false
+image:
+  metadata:
+    creationTimestamp: null
+  dockerImageMetadata: null
+  dockerImageLayers: null
