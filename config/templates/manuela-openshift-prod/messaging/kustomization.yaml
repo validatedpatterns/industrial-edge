@@ -4,9 +4,9 @@ kind: Kustomization
 bases:
 - ../../manuela-openshift/messaging
 
+resources: 
+- line-dashboard-is.yaml
+
 images:
 - name: messaging
   newTag: 0.3.2-42 
-
-resources: 
-- imagestreamtag.yaml

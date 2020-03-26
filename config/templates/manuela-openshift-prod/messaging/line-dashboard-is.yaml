@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: line-dashboard
+spec:
+  tags:
+  - name: 0.3.2-42
+    annotations: null
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-consumer:0.3.2-42
+    importPolicy: {}
+    referencePolicy:
+      type: Local
