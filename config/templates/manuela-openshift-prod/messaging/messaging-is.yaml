@@ -1,7 +1,7 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: line-dashboard
+  name: messaging
 spec:
   tags:
   - name: 0.3.2-42

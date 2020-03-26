@@ -5,7 +5,7 @@ bases:
 - ../../manuela-openshift/messaging
 
 patchesStrategicMerge: 
-- line-dashboard-is.yaml
+- messaging-is.yaml
 
 images:
 - name: messaging
