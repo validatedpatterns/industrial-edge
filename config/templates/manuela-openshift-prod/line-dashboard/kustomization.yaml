@@ -4,6 +4,9 @@ kind: Kustomization
 bases:
 - ../../manuela-openshift/line-dashboard
 
+patchesStrategicMerge: 
+- line-dashboard-is.yaml
+
 images:
 - name: line-dashboard
   newTag: prod

@@ -4,6 +4,9 @@ kind: Kustomization
 bases:
 - ../../manuela-openshift/machine-sensor
 
+patchesStrategicMerge: 
+- machine-sensor-is.yaml
+
 images:
 - name: machine-sensor
   newTag: prod

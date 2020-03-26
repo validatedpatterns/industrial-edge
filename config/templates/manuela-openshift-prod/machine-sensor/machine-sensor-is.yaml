@@ -1,0 +1,14 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: machine-sensor
+spec:
+  tags:
+  - name: prod
+    annotations: null
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-software-sensor:prod
+    importPolicy: {}
+    referencePolicy:
+      type: Local

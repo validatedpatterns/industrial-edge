@@ -31,10 +31,6 @@ spec:
     kind: ImageStream
     jsonPointers:
     - /spec/tags/0/generation
-  - group: image.openshift.io
-    kind: ImageStreamTag
-    jsonPointers:
-    - /image
   - group: apps.openshift.io
     kind: DeploymentConfig
     jsonPointers:
