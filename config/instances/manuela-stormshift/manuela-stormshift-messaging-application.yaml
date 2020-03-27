@@ -30,7 +30,7 @@ spec:
   - group: image.openshift.io
     kind: ImageStream
     jsonPointers:
-    - /spec/tags/0/generation
+    - /spec/tags
   - group: apps.openshift.io
     kind: DeploymentConfig
     jsonPointers:
