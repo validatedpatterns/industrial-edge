@@ -1,12 +1,9 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
-
 bases:
 - ../../manuela-openshift/messaging
-
-patchesStrategicMerge: 
+patchesStrategicMerge:
 - messaging-is.yaml
-
 images:
 - name: messaging
-  newTag: 0.3.2-42 
+  newTag: 0.3.2-51
