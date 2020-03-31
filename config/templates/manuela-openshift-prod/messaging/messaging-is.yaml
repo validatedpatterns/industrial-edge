@@ -33,3 +33,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.2-53
+    from:
+      kind: DockerImage
+      name: :0.3.2-53
+    importPolicy: {}
+    referencePolicy:
+      type: Local
