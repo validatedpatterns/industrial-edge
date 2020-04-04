@@ -4,12 +4,3 @@ kind: Kustomization
 resources:
 - manuela-admin-rolebinding.yaml
 - manuela-view-rolebinding.yaml
-
-# secretGenerator:
-# - name: quay-ops-secret
-#   literals:
-#   - .dockerconfigjson={"auths":{"quay.io":{"auth":"bWFudWVsYStvcHM6SE0yMzhWT09QNVFSUTlOWUY3R1hPSFM4VDdWQ0VOWkpJVDlSN1dDUFE0Wk9aOFhaS1FYODUwWDg5Nk8zRDUxVQ==","email":""}}}
-#   type: kubernetes.io/dockerconfigjson
-
-# generatorOptions:
-#   disableNameSuffixHash: true
