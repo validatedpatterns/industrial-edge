@@ -47,3 +47,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.1-19
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-software-sensor:0.3.1-19
+    importPolicy: {}
+    referencePolicy:
+      type: Local
