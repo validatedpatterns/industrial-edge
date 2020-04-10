@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
     targetRevision: HEAD
-    path: deployment/execenv-crc
+    path: deployment/execenv-quickstart
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
