@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
-    targetRevision: HEAD
+    targetRevision: 257_first_steps
     path: config/instances/manuela-quickstart/messaging
   destination:
     server: https://kubernetes.default.svc
