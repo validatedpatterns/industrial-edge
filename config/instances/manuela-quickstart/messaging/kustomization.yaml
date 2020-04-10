@@ -13,5 +13,5 @@ bases:
 
 images:
 - name: messaging
-  newName: image-registry.openshift-image-registry.svc:5000/iotdemo/iot-consumer
-  newTag: latest
+  newName: quay.io/manuela/iot-consumer
+  newTag: quickstart
