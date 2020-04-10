@@ -1,4 +1,4 @@
 apiVersion: v1
 kind: Namespace
 metadata:
-  name: manuela-crc-messaging
+  name: manuela-quickstart-machine-sensor

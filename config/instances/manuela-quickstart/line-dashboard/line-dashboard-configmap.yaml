@@ -5,7 +5,7 @@ metadata:
 data:
   config.json: |-
     {
-        "websocketHost": "http://messaging-manuela-crc-messaging.apps-crc.testing",
+        "websocketHost": "http://messaging-manuela-quickstart-messaging.apps-crc.testing",
         "websocketPath": "/api/service-web/socket",
         "SERVER_TIMEOUT": 20000
     }

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-crc-messaging
+  name: manuela-quickstart-messaging
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-crc/messaging
+    path: config/instances/manuela-quickstart/messaging
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-crc-messaging
+    namespace: manuela-quickstart-messaging
   syncPolicy:
     automated: 
       prune: true

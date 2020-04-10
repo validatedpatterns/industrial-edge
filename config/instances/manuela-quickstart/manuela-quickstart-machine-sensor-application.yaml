@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-crc-line-dashboard
+  name: manuela-quickstart-machine-sensor
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-crc/line-dashboard
+    path: config/instances/manuela-quickstart/machine-sensor
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-crc-line-dashboard
+    namespace: manuela-quickstart-machine-sensor
   syncPolicy:
     automated: 
       prune: true
