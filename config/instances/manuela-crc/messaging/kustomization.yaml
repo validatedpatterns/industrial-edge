@@ -9,7 +9,7 @@ patchesStrategicMerge:
 - route.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
-- ../../../templates/manuela-openshift-test/messaging
+- ../../../templates/manuela-openshift/messaging
 - ../../../templates/manuela-team-rolebindings
 
 images:

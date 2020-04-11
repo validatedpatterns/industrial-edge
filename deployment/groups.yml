@@ -16,6 +16,8 @@ items:
     - bschmeli@redhat.com
     - bcygan@redhat.com
     - iboernig@redhat.com
+    - llasmith@redhat.com
+
 
 - kind: Group
   apiVersion: user.openshift.io/v1

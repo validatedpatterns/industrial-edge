@@ -6,7 +6,7 @@ resources:
 - machine-sensor-namespace.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
-- ../../../templates/manuela-openshift-test/machine-sensor
+- ../../../templates/manuela-openshift/machine-sensor
 - ../../../templates/manuela-team-rolebindings
 configMapGenerator:
 - name: machine-sensor-1

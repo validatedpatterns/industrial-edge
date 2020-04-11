@@ -9,7 +9,7 @@ patchesStrategicMerge:
 - line-dashboard-configmap.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/line-dashboard
-- ../../../templates/manuela-openshift-test/line-dashboard
+- ../../../templates/manuela-openshift/line-dashboard
 - ../../../templates/manuela-team-rolebindings
 
 images:
