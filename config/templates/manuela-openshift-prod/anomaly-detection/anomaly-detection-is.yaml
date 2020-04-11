@@ -1,0 +1,21 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: anomaly-detection
+spec:
+  tags:
+  - name: prod
+    annotations: null
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/anomaly-detection:prod
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.0.1-4
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/anomaly-detection:0.0.1-4
+    importPolicy: {}
+    referencePolicy:
+      type: Local
