@@ -3,6 +3,7 @@ kind: CustomResourceDefinition
 metadata:
   annotations:
     cert-manager.io/inject-ca-from: 'kubeflow/seldon-serving-cert'
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
   creationTimestamp: null
   labels:
     app: seldon
