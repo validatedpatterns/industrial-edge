@@ -1,0 +1,35 @@
+apiVersion: machinelearning.seldon.io/v1alpha2
+kind: SeldonDeployment
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: "*"
+spec:
+  annotations:
+    deployment_version: "1"
+  name: anomaly-detection
+  predictors:
+  - annotations:
+        predictor_version: "0.1"
+    componentSpecs:
+    - spec:
+        containers:
+          - name: anomaly-detection
+            image: anomaly-detection:latest
+            env:
+            - name: MODEL_VERSION
+              value: "1"
+            - name: MODEL_STDDEV_MULTIPLIER
+              value: "3"
+            - name: MODEL_WINDOW_SIZE
+              value: "5"
+    graph:
+      children: []
+      endpoint:
+        type: REST
+      name: anomaly-detection
+      type: MODEL
+    name: predictor
+    replicas: 1

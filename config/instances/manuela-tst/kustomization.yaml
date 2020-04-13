@@ -6,6 +6,7 @@ bases:
 - ../../templates/manuela-openshift/line-dashboard
 - ../../templates/manuela-openshift/messaging
 - ../../templates/manuela-openshift/machine-sensor
+- ../../templates/manuela-openshift/anomaly-detection
 configMapGenerator:
 - behavior: merge
   envs:
