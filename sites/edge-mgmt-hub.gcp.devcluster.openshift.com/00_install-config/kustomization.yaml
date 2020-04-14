@@ -1,5 +1,5 @@
 bases:
-- git::https://github.com/redhat-edge-computing/basic-industrial-blueprint.git//profiles/production.gcp/00_install-config 
+- git::https://github.com/redhat-edge-computing/blueprint-management-hub.git//profiles/production.gcp/00_install-config 
 
 patches:
 - install-config.patch.yaml
