@@ -1,0 +1,4 @@
+bases:
+- ../00_cluster
+
+resources:

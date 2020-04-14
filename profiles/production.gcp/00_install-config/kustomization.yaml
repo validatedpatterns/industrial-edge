@@ -1,0 +1,6 @@
+bases:
+- ../../../base/00_install-config
+
+patches:
+- install-config.patch.yaml
+

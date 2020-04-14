@@ -1,0 +1,4 @@
+kubectl: https://dl.k8s.io/v1.16.0/kubernetes-client-linux-amd64.tar.gz
+kustomize: https://github.com/kubernetes-sigs/kustomize/releases/download/v3.2.0/kustomize_3.2.0_linux_amd64
+oc: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-client-linux-4.3.0.tar.gz
+openshift-install: https://mirror.openshift.com/pub/openshift-v4/clients/ocp/4.3.0/openshift-install-linux-4.3.0.tar.gz

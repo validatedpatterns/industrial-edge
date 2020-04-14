@@ -1,0 +1,15 @@
+bases:
+- git::https://github.com/redhat-edge-computing/basic-industrial-blueprint.git//profiles/production.gcp/00_install-config 
+
+patches:
+- install-config.patch.yaml
+
+patchesJson6902:
+- target:
+    version: v1
+    kind: InstallConfig
+    name: cluster
+  path: install-config.name.patch.yaml
+
+transformers:
+- site-config.yaml

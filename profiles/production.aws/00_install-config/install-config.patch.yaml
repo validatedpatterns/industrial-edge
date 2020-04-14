@@ -1,0 +1,7 @@
+apiVersion: v1
+kind: InstallConfig
+metadata:
+  name: cluster
+platform:
+  aws:
+    region: us-east-2

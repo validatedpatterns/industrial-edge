@@ -1,0 +1,17 @@
+apiVersion: machineconfiguration.openshift.io/v1
+kind: MachineConfig
+metadata:
+  labels:
+    machineconfiguration.openshift.io/role: master
+  name: 10-master-nm-disable-auto-config
+spec:
+  config:
+    ignition:
+      version: 2.2.0
+    storage: 
+      files:
+      - contents:
+          source: data:text/plain;charset=utf-8;base64,W21haW5dCnBsdWdpbnM9aWZjZmctcmgKIyBEbyBub3QgZG8gYXV0b21hdGljIChESENQL1NMQUFDKSBjb25maWd1cmF0aW9uIG9uIGV0aGVybmV0IGRldmljZXMKIyB3aXRoIG5vIG90aGVyIG1hdGNoaW5nIGNvbm5lY3Rpb25zLgpuby1hdXRvLWRlZmF1bHQ9KgojIElnbm9yZSB0aGUgY2FycmllciAoY2FibGUgcGx1Z2dlZCBpbikgc3RhdGUgd2hlbiBhdHRlbXB0aW5nIHRvCiMgYWN0aXZhdGUgc3RhdGljLUlQIGNvbm5lY3Rpb25zLgppZ25vcmUtY2Fycmllcj0qCgo=
+        filesystem: root
+        mode: 0644
+        path: /etc/NetworkManager/conf.d/10-master-nm-disable-auto-config.conf

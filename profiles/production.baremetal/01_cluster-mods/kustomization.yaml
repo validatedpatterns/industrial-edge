@@ -1,0 +1,6 @@
+bases:
+- ../../../base/01_cluster-mods
+
+resources:
+- openshift/99_metal3-config.yaml
+- openshift/10-master-nm-disable-auto-config.yaml

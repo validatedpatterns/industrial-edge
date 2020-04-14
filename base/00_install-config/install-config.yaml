@@ -1,0 +1,19 @@
+apiVersion: v1
+baseDomain: edge.industrial
+compute:
+- hyperthreading: Enabled
+  name: worker
+  replicas: 3
+controlPlane:
+  hyperthreading: Enabled
+  name: master
+  replicas: 3
+kind: InstallConfig
+metadata:
+  name: cluster
+networking:
+  machineCIDR: 10.1.1.0/24
+  networkType: OpenShiftSDN
+pullSecret: PULL_SECRET
+sshKey: |
+  SSH_PUB_KEY
