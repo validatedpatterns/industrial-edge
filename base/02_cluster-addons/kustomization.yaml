@@ -1,1 +1,4 @@
-resources:
+bases:
+- 00_advance-cluster-manager/00_prereqs
+- 00_advance-cluster-manager/01_multiclusterhub-operator
+- 00_advance-cluster-manager/02_multiclusterhub
