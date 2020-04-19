@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-crc-machine-sensor
+  name: manuela-quickstart-line-dashboard
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
-    targetRevision: HEAD
-    path: config/instances/manuela-crc/machine-sensor
+    targetRevision: 257_first_steps
+    path: config/instances/manuela-quickstart/line-dashboard
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-crc-machine-sensor
+    namespace: manuela-quickstart-line-dashboard
   syncPolicy:
     automated: 
       prune: true
@@ -30,7 +30,7 @@ spec:
   - group: image.openshift.io
     kind: ImageStream
     jsonPointers:
-    - /spec/tags/0/generation
+    - /spec/tags
   - group: apps.openshift.io
     kind: DeploymentConfig
     jsonPointers:

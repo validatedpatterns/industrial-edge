@@ -1,13 +1,13 @@
 apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
-namespace: manuela-crc-machine-sensor
+namespace: manuela-quickstart-machine-sensor
 resources:
 - machine-sensor-namespace.yaml
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela-openshift/machine-sensor
-- ../../../templates/manuela-team-rolebindings
+
 configMapGenerator:
 - name: machine-sensor-1
   behavior: merge
@@ -21,4 +21,5 @@ configMapGenerator:
 
 images:
 - name: machine-sensor
-  newName: image-registry.openshift-image-registry.svc:5000/manuela-crc-machine-sensor/machine-sensor
+  newName: quay.io/manuela/iot-software-sensor
+  newTag: quickstart

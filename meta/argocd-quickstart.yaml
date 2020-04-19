@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-crc-messaging
+  name: crc
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-crc/messaging
+    path: deployment/execenv-quickstart
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-crc-messaging
+    namespace: argocd
   syncPolicy:
     automated: 
       prune: true
@@ -27,11 +27,3 @@ spec:
     kind: Route
     jsonPointers:
     - /status
-  - group: image.openshift.io
-    kind: ImageStream
-    jsonPointers:
-    - /spec/tags/0/generation
-  - group: apps.openshift.io
-    kind: DeploymentConfig
-    jsonPointers:
-    - /spec/template/spec/containers/0/image
