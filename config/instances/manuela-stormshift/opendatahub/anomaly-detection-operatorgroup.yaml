@@ -1,0 +1,10 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: manuela-stormshift-odh-
+  generation: 1
+  name: manuela-stormshift-odh
+  namespace: manuela-stormshift-odh
+spec:
+  targetNamespaces:
+  - manuela-stormshift-odh
