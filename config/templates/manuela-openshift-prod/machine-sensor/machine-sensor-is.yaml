@@ -4,14 +4,6 @@ metadata:
   name: machine-sensor
 spec:
   tags:
-  - name: prod
-    annotations: null
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-software-sensor:prod
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-13
     from:
       kind: DockerImage
@@ -51,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-software-sensor:0.3.1-19
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-20
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-software-sensor:0.3.1-20
     importPolicy: {}
     referencePolicy:
       type: Local
