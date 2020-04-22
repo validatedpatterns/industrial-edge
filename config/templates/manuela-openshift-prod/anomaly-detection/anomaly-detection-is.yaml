@@ -40,3 +40,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.0.1-14
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-anomaly-detection:0.0.1-14
+    importPolicy: {}
+    referencePolicy:
+      type: Local

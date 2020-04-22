@@ -25,3 +25,17 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.2-71
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-consumer:0.3.2-71
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-72
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-consumer:0.3.2-72
+    importPolicy: {}
+    referencePolicy:
+      type: Local
