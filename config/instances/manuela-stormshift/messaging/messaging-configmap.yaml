@@ -6,6 +6,6 @@ data:
 
   ANOMALY_DETECTION_URL: 'https://anomaly-detection-manuela-stormshift-odh.apps.ocp3.stormshift.coe.muc.redhat.com'
   VIBRATION_ALERT_ENABLED: 'true'
-  VIBRATION_ANOMALY_ENABLED: 'false'
+  VIBRATION_ANOMALY_ENABLED: 'true'
   VIBRATION_ANOMALY_PUMP: 'floor-1-line-1-extruder-1pump-2'
   NODE_TLS_REJECT_UNAUTHORIZED: '0'
