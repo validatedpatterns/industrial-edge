@@ -20,7 +20,7 @@ spec:
     spec:
       containers:
       - image: messaging
-        imagePullPolicy: Always
+        #imagePullPolicy: Always
         name: messaging
         ports:
         - containerPort: 3000
