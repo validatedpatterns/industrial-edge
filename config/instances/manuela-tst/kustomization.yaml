@@ -34,7 +34,7 @@ images:
   newTag: build-iot-swsensor-0.3.3-1
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: build-iot-frontend-0.3.3-1
+  newTag: build-iot-frontend-0.3.3-4
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
   newTag: build-iot-anomaly-0.3.3-3
