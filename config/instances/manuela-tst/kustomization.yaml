@@ -31,7 +31,7 @@ images:
   newTag: build-iot-consumer-0.3.3-27
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  newTag: 0.3.1-21
+  newTag: build-iot-swsensor-0.3.3-1
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
   newTag: build-iot-frontend-0.3.3-1
