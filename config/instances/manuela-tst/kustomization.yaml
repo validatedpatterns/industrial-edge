@@ -37,4 +37,4 @@ images:
   newTag: build-iot-frontend-0.3.3-1
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: 0.0.1-17
+  newTag: build-iot-anomaly-0.3.3-1
