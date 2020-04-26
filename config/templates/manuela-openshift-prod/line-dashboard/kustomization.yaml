@@ -6,4 +6,4 @@ patchesStrategicMerge:
 - line-dashboard-is.yaml
 images:
 - name: line-dashboard
-  newTag: build-iot-frontend-0.3.3-1
+  newTag: build-iot-frontend-0.3.3-4
