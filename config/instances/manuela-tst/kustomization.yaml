@@ -28,13 +28,13 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  newTag: 0.3.3-28
+  newTag: 0.3.3-29
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  newTag: build-iot-swsensor-0.3.3-1
+  newTag: 0.3.3-2
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: build-iot-frontend-0.3.3-4
+  newTag: 0.3.3-5
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: build-iot-anomaly-0.3.3-3
+  newTag: 0.3.3-4
