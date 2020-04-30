@@ -21,6 +21,7 @@ patchesStrategicMerge:
 - line-dashboard-route.yaml
 - line-dashboard-configmap.yaml
 - messaging-route.yaml
+- messaging-configmap.yaml
 resources:
 - manuela-tst-all-namespace.yaml
 - manuela-tst-all-operatorgroup.yaml
