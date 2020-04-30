@@ -6,4 +6,5 @@ patchesStrategicMerge:
 - machine-sensor-is.yaml
 images:
 - name: machine-sensor
-  newTag: 0.3.3-4
+  newTag: 0.3.3-7
+
