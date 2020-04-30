@@ -39,3 +39,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.3-31
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-consumer:0.3.3-31
+    importPolicy: {}
+    referencePolicy:
+      type: Local

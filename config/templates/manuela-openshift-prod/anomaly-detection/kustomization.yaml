@@ -7,3 +7,4 @@ patchesStrategicMerge:
 images:
 - name: anomaly-detection
   newTag: 0.0.1-23
+

@@ -16,7 +16,6 @@ data:
   TOPIC_VIBRATION: iot-sensor/sw/vibration
   TOPIC_LIGHT: iot-sensor/sw/light
   VIBRATION_ANOMALY_ENABLED: 'false'
-  VIBRATION_ANOMALY_PUMP: 'floor-1-line-1-extruder-1pump-2'
   ANOMALY_DETECTION_URL: 'http://anomaly-detection-anomaly-detection:8000'
 
 

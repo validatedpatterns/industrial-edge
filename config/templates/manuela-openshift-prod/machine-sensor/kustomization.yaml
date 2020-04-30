@@ -7,3 +7,4 @@ patchesStrategicMerge:
 images:
 - name: machine-sensor
   newTag: 0.3.3-7
+
