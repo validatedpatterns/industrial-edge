@@ -29,7 +29,7 @@ spec:
           name: http
           protocol: TCP
         volumeMounts:
-        - mountPath: /opt/app-root/output/conf/config.json
+        - mountPath: /var/www/html/conf/config.json
           name: line-dashboard-configmap-vol
           subPath: config.json
         resources: {}
