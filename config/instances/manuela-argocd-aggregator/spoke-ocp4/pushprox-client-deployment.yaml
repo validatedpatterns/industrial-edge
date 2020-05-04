@@ -7,4 +7,4 @@ spec:
     spec:
       containers:
       - name: pushprox-client
-        args: ["--metrics-addr", ":8080", "--proxy-url", "http://pushprox-proxy-manuela-argocd-aggregator.apps.ocp3.stormshift.coe.muc.redhat.com", "--fqdn=argocd-prometheus-spoke-ocp4"]
+        args: ["--metrics-addr", ":8080", "--proxy-url", "http://pushprox-proxy-manuela-argocd-aggregator.apps.ocp3.stormshift.coe.muc.redhat.com", "--fqdn=prometheus-operated.argocd.svc"]
