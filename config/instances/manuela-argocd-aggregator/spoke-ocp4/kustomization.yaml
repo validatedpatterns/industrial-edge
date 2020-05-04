@@ -5,6 +5,7 @@ namespace: manuela-argocd-aggregator-client-ocp4
 
 bases:
 - ../../../templates/pushprox-client
+- ../../../templates/manuela-team-rolebindings
 
 patchesStrategicMerge:
 - pushprox-client-deployment.yaml

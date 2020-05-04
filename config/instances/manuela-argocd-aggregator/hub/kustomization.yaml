@@ -3,12 +3,15 @@ kind: Kustomization
 
 bases:
 - ../../../templates/pushprox-proxy
+- ../../../templates/prometheus
+- ../../../templates/manuela-team-rolebindings
+
 
 patchesStrategicMerge:
 - pushprox-proxy-route.yaml
+- prometheus.yaml
 
 resources:
 - prometheus-additional-scrape-configs-secret.yaml
-- prometheus.yaml
-- prometheus-subscription.yaml
+
 
