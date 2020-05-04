@@ -7,3 +7,4 @@ metadata:
 spec:
   type: ExternalName
   externalName: prometheus-operated.argocd.svc
+selector: {}
