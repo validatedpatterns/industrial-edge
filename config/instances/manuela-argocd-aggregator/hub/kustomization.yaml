@@ -12,6 +12,7 @@ patchesStrategicMerge:
 
 resources:
 - prometheus-additional-scrape-configs-secret.yaml
+- prometheus-route.yaml
 - manuela-argocd-aggregator-namespace.yaml
 - manuela-argocd-aggregator-operatorgroup.yaml
 
