@@ -13,3 +13,4 @@ patchesStrategicMerge:
 resources:
 - manuela-argocd-aggregator-namespace.yaml
 - manuela-argocd-aggregator-operatorgroup.yaml
+- argocd-prometheus-spoke-ocp4-service.yaml
