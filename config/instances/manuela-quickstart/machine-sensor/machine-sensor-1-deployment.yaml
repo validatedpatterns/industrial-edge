@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: machine-sensor-1
+spec:
+  template:
+    spec:
+      containers:
+      - name: machine-sensor
+        imagePullPolicy: Always

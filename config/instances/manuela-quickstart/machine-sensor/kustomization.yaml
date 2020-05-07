@@ -8,6 +8,10 @@ bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
 - ../../../templates/manuela-openshift/machine-sensor
 
+patchesStrategicMerge:
+- machine-sensor-1-deployment.yaml
+- machine-sensor-2-deployment.yaml
+
 configMapGenerator:
 - name: machine-sensor-1
   behavior: merge
