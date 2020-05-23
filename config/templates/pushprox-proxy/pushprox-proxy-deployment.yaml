@@ -1,0 +1,54 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: pushprox-proxy
+  name: pushprox-proxy
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deployment: pushprox-proxy
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: pushprox-proxy
+        deployment: pushprox-proxy
+      name: pushprox-proxy
+    spec:
+      containers:
+      - name: pushprox-proxy
+        image: quay.io/manuela/pushprox:latest
+        #imagePullPolicy: Always
+        command: ["./pushprox-proxy"]
+        args: []
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        # livenessProbe: 
+        #   httpGet:   
+        #     path: /home
+        #     port: 8080
+        #     scheme: HTTP
+        #   initialDelaySeconds: 15  
+        #   timeoutSeconds: 1
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 3
+        # readinessProbe:
+        #   httpGet:
+        #     path: /home
+        #     port: 8080
+        #     scheme: HTTP
+        #   initialDelaySeconds: 15
+        #   timeoutSeconds: 1
+        #   periodSeconds: 10
+        #   successThreshold: 1
+        #   failureThreshold: 3
+        

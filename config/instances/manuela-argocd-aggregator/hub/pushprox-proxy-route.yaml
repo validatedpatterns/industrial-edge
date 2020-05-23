@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: pushprox-proxy
+spec:
+  host: pushprox-proxy-manuela-argocd-aggregator.apps.ocp3.stormshift.coe.muc.redhat.com
