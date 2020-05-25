@@ -1,4 +1,9 @@
-bases:
-- 00_advance-cluster-manager/00_prereqs
-- 00_advance-cluster-manager/01_multiclusterhub-operator
-- 00_advance-cluster-manager/02_multiclusterhub
+resources:
+  - 00_advance-cluster-manager/00_namespace.yaml
+  - 00_advance-cluster-manager/01_operator-group.yaml
+  - 00_advance-cluster-manager/02_subscription.yaml
+  - 00_advance-cluster-manager/03_acm-pull-secret.yaml
+  - 00_advance-cluster-manager/04_multiclusterhub.yaml
+
+transformers:
+  - site-config.yaml

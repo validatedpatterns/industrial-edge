@@ -1,7 +1,8 @@
 apiVersion: operators.coreos.com/v1
 kind: OperatorGroup
 metadata:
-  name: default
+  name: acm-operator-group
+  namespace: open-cluster-management
 spec:
   targetNamespaces:
   - open-cluster-management
