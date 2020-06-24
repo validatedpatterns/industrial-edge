@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-broker
+  namespace: manuela-lineapp-mcs
+spec:
+  channel: current-76
+  installPlanApproval: Automatic
+  name: amq-broker
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  startingCSV: amq-broker-operator.v0.13.0

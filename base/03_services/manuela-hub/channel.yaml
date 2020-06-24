@@ -1,0 +1,11 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Channel
+metadata:
+  name: manuela-mcs-gitops-channel
+  namespace: manuela-lineapp-mcs
+spec:
+  type: GitHub
+  pathname: https://github.com/redhat-edge-computing/manuela-gitops.git
+
+
+
