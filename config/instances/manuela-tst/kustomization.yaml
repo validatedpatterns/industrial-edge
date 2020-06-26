@@ -36,6 +36,6 @@ images:
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
   newTag: 0.3.2-1
-- name: anomaly-detection
-  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: 0.3.2-1
+#- name: anomaly-detection
+#  newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+#  newTag: 0.3.2-1
