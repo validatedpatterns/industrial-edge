@@ -7,7 +7,7 @@ bases:
 - ../../templates/manuela-openshift/messaging
 - ../../templates/manuela-openshift/machine-sensor
 # Comment out the following line if you don't want to run anomaly-detection (ODH)
-- ../../templates/manuela-openshift/anomaly-detection
+# - ../../templates/manuela-openshift/anomaly-detection
 configMapGenerator:
 - behavior: merge
   envs:
