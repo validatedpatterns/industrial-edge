@@ -8,20 +8,28 @@ bases:
 - ../../templates/manuela-openshift/machine-sensor
 # Comment out the following line if you don't want to run anomaly-detection (ODH)
 - ../../templates/manuela-openshift/anomaly-detection
+# - ../../templates/manuela-openshift/anomaly-detection
+
 configMapGenerator:
-- behavior: merge
+- name: machine-sensor-1
+  behavior: merge
   envs:
   - machine-sensor-1-configmap.properties
-  name: machine-sensor-1
-- behavior: merge
+- name: machine-sensor-2
+  behavior: merge
   envs:
   - machine-sensor-2-configmap.properties
-  name: machine-sensor-2
+- name: line-dashboard-configmap
+  behavior: replace
+  files:
+  - config.json=line-dashboard-configmap-config.json
+- name: messaging-configmap
+  behavior: merge
+  envs:
+  - messaging-configmap.properties
 patchesStrategicMerge:
 - line-dashboard-route.yaml
-- line-dashboard-configmap.yaml
 - messaging-route.yaml
-- messaging-configmap.yaml
 resources:
 - manuela-tst-all-namespace.yaml
 - manuela-tst-all-operatorgroup.yaml
