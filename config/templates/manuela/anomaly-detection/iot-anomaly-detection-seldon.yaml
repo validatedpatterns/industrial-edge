@@ -22,7 +22,6 @@ spec:
             - name: MODEL_FIILE
               value: "model.joblib"
     graph:
-      children: []
       endpoint:
         type: REST
       name: anomaly-detection
