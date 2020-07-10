@@ -1,4 +1,4 @@
-apiVersion: machinelearning.seldon.io/v1alpha2
+apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
   name: anomaly-detection
@@ -17,14 +17,10 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:latest
+            image: iot-anomaly-detection:latest
             env:
-            - name: MODEL_VERSION
-              value: "1"
-            - name: MODEL_STDDEV_MULTIPLIER
-              value: "3"
-            - name: MODEL_WINDOW_SIZE
-              value: "5"
+            - name: MODEL_FIILE
+              value: "model.joblib"
     graph:
       children: []
       endpoint:

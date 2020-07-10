@@ -2,8 +2,5 @@ apiVersion: kustomize.config.k8s.io/v1beta1
 kind: Kustomization
 
 resources:
-- odh-operator-subscription.yaml
-- odh-instance.yaml
-# - seldon-deployment-crd.yaml
 - iot-anomaly-detection-route.yaml    
 - iot-anomaly-detection-seldon.yaml
