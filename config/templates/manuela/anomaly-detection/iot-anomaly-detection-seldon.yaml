@@ -17,7 +17,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: iot-anomaly-detection:latest
+            image: anomaly-detection:latest
             env:
             - name: MODEL_FIILE
               value: "model.joblib"
