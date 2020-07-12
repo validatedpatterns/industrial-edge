@@ -8,7 +8,6 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-anomaly-detection:0.3.2-3
-<<<<<<< HEAD
     importPolicy: {}
     referencePolicy:
       type: Local
@@ -23,8 +22,6 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-anomaly-detection:0.3.2-1
-=======
->>>>>>> ef2ea50ff3f71c1add82fc5e7df6a4a42c5d5472
     importPolicy: {}
     referencePolicy:
       type: Local
