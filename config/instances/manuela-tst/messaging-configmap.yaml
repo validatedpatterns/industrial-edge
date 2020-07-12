@@ -1,9 +1,0 @@
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: messaging-configmap
-data:
-
-  VIBRATION_ALERT_ENABLED: 'true'
-  VIBRATION_ANOMALY_ENABLED: 'true'
-  NODE_TLS_REJECT_UNAUTHORIZED: '0'

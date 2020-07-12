@@ -25,3 +25,4 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+      

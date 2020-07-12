@@ -9,7 +9,7 @@ spec:
     targetPort: http
   to:
     kind: Service
-    name: anomaly-detection-anomaly-detection
+    name: anomaly-detection-predictor-anomaly-detection
   tls:
     insecureEdgeTerminationPolicy: Allow
     termination: edge
