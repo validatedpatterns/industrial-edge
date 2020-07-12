@@ -19,8 +19,11 @@ configMapGenerator:
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
 - ../../../templates/manuela-openshift-prod/messaging
+- ../../../templates/manuela-openshift-prod/anomaly-detection
 - ../../../templates/manuela-team-rolebindings
 
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
+- name: anomaly-detection
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-odh/anomaly-detection
