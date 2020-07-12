@@ -1,0 +1,10 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: messaging
+spec:
+  template:
+    spec:
+      containers:
+      - name: messaging
+        imagePullPolicy: Always

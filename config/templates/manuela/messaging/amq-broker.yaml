@@ -5,7 +5,7 @@ metadata:
 spec:
   deploymentPlan:
     size: 1
-    image: registry.redhat.io/amq7/amq-broker:7.5
+    image: registry.redhat.io/amq7/amq-broker:7.6
     requireLogin: false
     persistenceEnabled: false
     journalType: nio

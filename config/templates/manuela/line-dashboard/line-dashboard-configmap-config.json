@@ -1,0 +1,5 @@
+{
+    "websocketHost": "http://iot-consumer-iotdemo.apps-crc.testing",
+    "websocketPath": "/api/service-web/socket",
+    "SERVER_TIMEOUT": 20000
+}

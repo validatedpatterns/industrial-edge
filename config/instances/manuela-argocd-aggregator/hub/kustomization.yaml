@@ -1,0 +1,19 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+bases:
+- ../../../templates/pushprox-proxy
+- ../../../templates/prometheus
+- ../../../templates/manuela-team-rolebindings
+
+patchesStrategicMerge:
+- pushprox-proxy-route.yaml
+- prometheus.yaml
+
+resources:
+- prometheus-additional-scrape-configs-secret.yaml
+- prometheus-route.yaml
+- manuela-argocd-aggregator-namespace.yaml
+- manuela-argocd-aggregator-operatorgroup.yaml
+
+

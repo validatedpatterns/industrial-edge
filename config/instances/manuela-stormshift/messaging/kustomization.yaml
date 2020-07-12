@@ -5,17 +5,27 @@ namespace: manuela-stormshift-messaging
 resources:
 - messaging-namespace.yaml
 - messaging-operatorgroup.yaml
+
 patchesStrategicMerge:
 - route.yaml
-- messaging-configmap.yaml
 
+configMapGenerator:
+- name: messaging-configmap
+  behavior: merge
+  envs:
+  - messaging-configmap.properties
 
 
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
 - ../../../templates/manuela-openshift-prod/messaging
+
+# Comment/uncomment following line to disable/enable anomaly-detection deployment
+- ../../../templates/manuela-openshift-prod/anomaly-detection
 - ../../../templates/manuela-team-rolebindings
 
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
+- name: anomaly-detection
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection

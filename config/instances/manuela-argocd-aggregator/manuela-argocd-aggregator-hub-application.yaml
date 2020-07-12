@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: quickstart
+  name: manuela-argocd-aggregator-hub
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/sa-mw-dach/manuela-gitops.git
-    targetRevision: HEAD
-    path: deployment/execenv-quickstart
+    targetRevision: master
+    path: config/instances/manuela-argocd-aggregator/hub
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: manuela-argocd-aggregator
   syncPolicy:
     automated: 
       prune: true

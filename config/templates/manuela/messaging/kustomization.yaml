@@ -4,6 +4,10 @@ kind: Kustomization
 resources:
 - amq-operator-subscription.yaml
 - amq-broker.yaml
-- messaging-configmap.yaml
 - messaging-deployment.yaml
 - messaging-svc.yaml
+
+configMapGenerator:
+- name: messaging-configmap
+  envs:
+  - messaging-configmap.properties
