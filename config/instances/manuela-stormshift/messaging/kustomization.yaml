@@ -26,4 +26,4 @@ images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
 - name: anomaly-detection
-  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-odh/anomaly-detection
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection
