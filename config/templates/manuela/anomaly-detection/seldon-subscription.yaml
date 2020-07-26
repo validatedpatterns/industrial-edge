@@ -5,8 +5,8 @@ metadata:
   name: seldon-operator
 spec:
   channel: alpha
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   name: seldon-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.v1.2.0
+  startingCSV: seldon-operator.v1.2.1

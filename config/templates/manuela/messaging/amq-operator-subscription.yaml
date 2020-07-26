@@ -4,7 +4,7 @@ metadata:
   name: amq-broker
 spec:
   channel: current
-  installPlanApproval: Automatic
+  installPlanApproval: Manual
   name: amq-broker
   source: redhat-operators
   sourceNamespace: openshift-marketplace

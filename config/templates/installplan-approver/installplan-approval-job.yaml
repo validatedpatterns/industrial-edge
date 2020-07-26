@@ -1,0 +1,45 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  annotations:
+    argocd.argoproj.io/hook: Sync
+    argocd.argoproj.io/sync-wave: "1"
+    argocd.argoproj.io/hook-delete-policy: BeforeHookCreation
+  name: startingcsv-installplan-approver
+spec:
+  template:
+    spec:
+      containers:
+        - image: registry.redhat.io/openshift4/ose-cli:v4.4
+          command:
+            - /bin/bash
+            - -c
+            - |
+              set -x
+              for SUBSCRIPTION_DESIREDCSV in $(oc get subscription.operators.coreos.com -o jsonpath="{range .items[?(@.spec.installPlanApproval==\"Manual\")]}{@.metadata.name}{'|'}{@.spec.startingCSV}{'\n'}{end}")
+              do 
+                SUBSCRIPTION=$(echo $SUBSCRIPTION_DESIREDCSV|cut -f1 -d"|")
+                DESIRED_CSV=$(echo $SUBSCRIPTION_DESIREDCSV|cut -f2 -d"|")
+
+                GET_INSTALLPLAN_CMD="oc get installplan.operators.coreos.com -o jsonpath=\"{range .items[*]}{@.metadata.name}{'|'}{@.spec.approved}{'|'}{@.spec.clusterServiceVersionNames}{'\n'}{end}\" | grep \"$DESIRED_CSV\" | cut -f1,2 -d\"|\""
+                ALL_INSTALL_PLANS_FOR_CSV=$(eval $GET_INSTALLPLAN_CMD)
+                while [ "$ALL_INSTALL_PLANS_FOR_CSV" == "" ]; do sleep 2; ALL_INSTALL_PLANS_FOR_CSV=$(eval $GET_INSTALLPLAN_CMD); done
+
+                for INSTALL_PLAN_SUMMARY in $ALL_INSTALL_PLANS_FOR_CSV
+                do
+                  INSTALL_PLAN="$(echo $INSTALL_PLAN_SUMMARY|cut -f1 -d'|')"
+                  if [ "$INSTALL_PLAN_SUMMARY" == "$INSTALL_PLAN|false" ]; then
+                    echo "Approving install plan $INSTALL_PLAN for subscription $SUBSCRIPTION"
+                    oc patch installplan.operators.coreos.com $INSTALL_PLAN --type=json -p='[{"op":"replace","path": "/spec/approved", "value": true}]'
+                  else
+                    echo "Install plan '$INSTALL_PLAN' for subscription $SUBSCRIPTION already approved"
+                  fi
+                done
+              done
+          imagePullPolicy: IfNotPresent
+          name: installplan-approver
+      dnsPolicy: ClusterFirst
+      restartPolicy: OnFailure
+      serviceAccount: installplan-approver
+      serviceAccountName: installplan-approver
+      terminationGracePeriodSeconds: 30
