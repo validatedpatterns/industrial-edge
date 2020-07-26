@@ -9,6 +9,7 @@ bases:
 # Comment out the following line if you don't want to run anomaly-detection (ODH)
 - ../../templates/manuela-openshift/anomaly-detection
 # - ../../templates/manuela-openshift/anomaly-detection
+- ../../../templates/installplan-approver
 
 configMapGenerator:
 - name: machine-sensor-1

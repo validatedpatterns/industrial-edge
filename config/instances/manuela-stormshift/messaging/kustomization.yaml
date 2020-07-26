@@ -19,6 +19,7 @@ configMapGenerator:
 bases:
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
 - ../../../templates/manuela-openshift-prod/messaging
+- ../../../templates/installplan-approver
 
 # Comment/uncomment following line to disable/enable anomaly-detection deployment
 - ../../../templates/manuela-openshift-prod/anomaly-detection
