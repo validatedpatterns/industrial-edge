@@ -5,6 +5,8 @@ metadata:
   generation: 1
   name: manuela-tst-all
   namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   targetNamespaces:
   - manuela-tst-all

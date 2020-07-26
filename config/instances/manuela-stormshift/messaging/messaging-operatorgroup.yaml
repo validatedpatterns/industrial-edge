@@ -5,6 +5,8 @@ metadata:
   generation: 1
   name: manuela-stormshift-messaging
   namespace: manuela-stormshift-messaging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   targetNamespaces:
   - manuela-stormshift-messaging

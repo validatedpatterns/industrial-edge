@@ -5,6 +5,8 @@ metadata:
   generation: 1
   name: manuela-argocd-aggregator
   namespace: manuela-argocd-aggregator
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   targetNamespaces:
   - manuela-argocd-aggregator
