@@ -6,6 +6,7 @@ metadata:
     component: serving
   annotations:
     alpha.image.policy.openshift.io/resolve-names: "*"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   annotations:
     deployment_version: "1"
