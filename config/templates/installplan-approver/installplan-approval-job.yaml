@@ -21,6 +21,7 @@ spec:
             - -c
             - |
               set -x
+              # work around unwriteable HOME dir for unprivileged pods causing OC commands to be slow in pods
               export HOME=$(mktemp -d)
               cd $HOME
 
