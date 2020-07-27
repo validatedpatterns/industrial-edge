@@ -32,9 +32,15 @@ spec:
                 INSTALLED_CSV=$(echo $SUBSCRIPTION_DESIREDCSV_INSTALLEDCSV|cut -f3 -d"|")
 
                 if [ "$DESIRED_CSV" != "$INSTALLED_CSV" ]; then
+                  
+                  # get InstallPlan for desired CSV, or fail if it can't be determined (this sometimes happens with OLM)
                   GET_INSTALLPLAN_CMD="oc get installplan.operators.coreos.com -o jsonpath=\"{range .items[*]}{@.metadata.name}{'|'}{@.spec.approved}{'|'}{@.spec.clusterServiceVersionNames}{'\n'}{end}\" | grep \"$DESIRED_CSV\" | cut -f1,2 -d\"|\""
                   ALL_INSTALL_PLANS_FOR_CSV=$(eval $GET_INSTALLPLAN_CMD)
-                  while [ "$ALL_INSTALL_PLANS_FOR_CSV" == "" ]; do sleep 2; ALL_INSTALL_PLANS_FOR_CSV=$(eval $GET_INSTALLPLAN_CMD); done
+                  RETRIES=10
+                  while [ "$ALL_INSTALL_PLANS_FOR_CSV" == "" && $RETRIES -gt 0]; do sleep 5; ALL_INSTALL_PLANS_FOR_CSV=$(eval $GET_INSTALLPLAN_CMD); RETRIES=$(($RETRIES - 1)); done
+                  if [ "ALL_INSTALL_PLANS_FOR_CSV" == "" ]; then
+                    exit 1
+                  fi
 
                   for INSTALL_PLAN_SUMMARY in $ALL_INSTALL_PLANS_FOR_CSV
                   do
