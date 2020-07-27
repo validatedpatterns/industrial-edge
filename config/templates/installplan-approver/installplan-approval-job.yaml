@@ -11,11 +11,19 @@ spec:
     spec:
       containers:
         - image: registry.redhat.io/openshift4/ose-cli:v4.4
+          # env:
+          # - name: NAMESPACE
+          #   valueFrom:
+          #     fieldRef:
+          #       fieldPath: metadata.namespace
           command:
             - /bin/bash
             - -c
             - |
               set -x
+              export HOME=$(mktemp -d)
+              cd $HOME
+
               for SUBSCRIPTION_DESIREDCSV_INSTALLEDCSV in $(oc get subscription.operators.coreos.com -o jsonpath="{range .items[?(@.spec.installPlanApproval==\"Manual\")]}{@.metadata.name}{'|'}{@.spec.startingCSV}{'|'}{@.status.installedCSV}{'\n'}{end}")
               do 
                 SUBSCRIPTION=$(echo $SUBSCRIPTION_DESIREDCSV_INSTALLEDCSV|cut -f1 -d"|")
