@@ -17,13 +17,14 @@ configMapGenerator:
 
 
 bases:
+- ../../../templates/manuela-team-rolebindings
 #- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
 - ../../../templates/manuela-openshift-prod/messaging
+- ../../../templates/manuela-openshift-prod/messaging-kafka
 - ../../../templates/installplan-approver
 
 # Comment/uncomment following line to disable/enable anomaly-detection deployment
 - ../../../templates/manuela-openshift-prod/anomaly-detection
-- ../../../templates/manuela-team-rolebindings
 
 images:
 - name: messaging

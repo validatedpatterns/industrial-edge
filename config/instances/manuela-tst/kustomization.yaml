@@ -5,6 +5,7 @@ bases:
 - ../../templates/manuela-team-rolebindings
 - ../../templates/manuela-openshift/line-dashboard
 - ../../templates/manuela-openshift/messaging
+- ../../templates/manuela-openshift/messaging-kafka
 - ../../templates/manuela-openshift/machine-sensor
 # Comment out the following line if you don't want to run anomaly-detection (ODH)
 - ../../templates/manuela-openshift/anomaly-detection
