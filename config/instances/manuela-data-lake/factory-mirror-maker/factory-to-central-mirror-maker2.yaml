@@ -8,7 +8,7 @@ spec:
   connectCluster: manuela-central
   clusters:
     - alias: manuela-central
-      bootstrapServers: 'kafka-cluster-kafka-bootstrap-manuela-central-kafka-cluster.apps.ocp3.stormshift.coe.muc.redhat.com:443'
+      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.apps.ocp3.stormshift.coe.muc.redhat.com:443'
       tls:
         trustedCertificates:
         - certificate: tls.crt

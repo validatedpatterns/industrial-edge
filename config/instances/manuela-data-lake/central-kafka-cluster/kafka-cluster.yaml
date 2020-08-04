@@ -13,6 +13,9 @@ spec:
       tls: {}
       external:
         type: route
+        overrides:
+          bootstrap:
+            host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.ocp3.stormshift.coe.muc.redhat.com
         configuration:
           brokerCertChainAndKey:
             certificate: tls.crt
