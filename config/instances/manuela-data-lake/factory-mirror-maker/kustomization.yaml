@@ -1,0 +1,16 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: manuela-factory-mirror-maker
+
+resources:
+- manuela-data-lake-factory-mirror-maker-namespace.yaml
+- manuela-data-lake-factory-mirror-maker-operatorgroup.yaml
+- amq-streams-operator-subscription.yaml
+- factory-to-central-mirror-maker2.yaml
+- kafka-tls-certificate.yaml
+
+
+bases:
+- ../../../templates/manuela-team-rolebindings
+- ../../../templates/installplan-approver
