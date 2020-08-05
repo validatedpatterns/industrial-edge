@@ -20,7 +20,7 @@ spec:
           brokerCertChainAndKey:
             certificate: tls.crt
             key: tls.key
-            secretName: kafka-certificate-and-key
+            secretName: kafka-tls-certificate-and-key
     config:
       log.message.format.version: '2.4'
       offsets.topic.replication.factor: 3
