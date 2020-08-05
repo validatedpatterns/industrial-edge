@@ -35,7 +35,7 @@ spec:
                     .log("Reading message form MQTT: ${body}")
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{kafka.broker.topic.temperature}}?brokers={{kafka.broker.uri}}")
-                    .log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void storeVibrationInKafka() {
@@ -43,7 +43,7 @@ spec:
                     .log("Reading message form MQTT: ${body}")
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{kafka.broker.topic.vibration}}?brokers={{kafka.broker.uri}}")
-                    .log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void readTemperatureFromKafka() {
