@@ -6,13 +6,11 @@ data:
   application.properties: |
     
     kafka.broker.uri=manuela-kafka-cluster-kafka-bootstrap:9092
-    kafka.broker.topic.temperature=iot-sensor-sw-temperature
-    kafka.broker.topic.vibration=iot-sensor-sw-vibration
+    kafka.broker.topic.temperature=manuela-factory.iot-sensor-sw-temperature
+    kafka.broker.topic.vibration=manuela-factory.iot-sensor-sw-vibration
 
-    s3.accessKey=replacme
-    s3.secretKey=replaceme
     s3.region=eu-central-1
-    s3.bucket.name=manuela
+    s3.bucket.name=manuela-data-lake
     s3.message.aggregation.count=10
     s3.custom.endpoint.enabled=true
     s3.custom.endpoint.url=s3-openshift-storage.apps.ocp4.stormshift.coe.muc.redhat.com
