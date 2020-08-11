@@ -2,6 +2,8 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: red-hat-camel-k
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
 spec:
   channel: techpreview
   installPlanApproval: Manual

@@ -4,6 +4,8 @@ metadata:
   name: iot-sensor-sw-vibration
   labels:
     strimzi.io/cluster: manuela-kafka-cluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
   partitions: 1
   replicas: 1
