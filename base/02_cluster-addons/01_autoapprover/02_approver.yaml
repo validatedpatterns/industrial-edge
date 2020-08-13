@@ -1,0 +1,62 @@
+kind: StatefulSet
+apiVersion: apps/v1beta1
+metadata:
+  name: autoapprover
+  namespace: openshift-infra
+spec:
+  updateStrategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: autoapprover
+    spec:
+      nodeSelector:
+        node-role.kubernetes.io/master: ''
+      tolerations:
+      - key: "node-role.kubernetes.io/master"
+        operator: "Equal"
+        value: ""
+        effect: "NoSchedule"
+      serviceAccountName: autoapprover
+      terminationGracePeriodSeconds: 1
+      containers:
+      - name: signer
+        image: quay.io/openshift/origin-cli:latest
+        command:
+        - /bin/bash
+        - -c
+        args:
+        - |
+          #!/bin/bash
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          unset KUBECONFIG
+          cat <<SCRIPT > /tmp/signer
+          #!/bin/bash
+          #
+          # It will approve any CSR that is not approved yet, and delete any CSR that expired more than 60 seconds
+          # ago.
+          #
+
+          set -o errexit
+          set -o nounset
+          set -o pipefail
+
+          name=\${1}
+          condition=\${2}
+          certificate=\${3}
+          username=\${4}
+
+          # auto approve
+          if [[ -z "\${condition}" && ("\${username}" == "system:admin" ) ]]; then
+            oc adm certificate approve "\${name}"
+            exit 0
+          fi
+
+          SCRIPT
+          chmod u+x /tmp/signer
+
+          exec oc observe csr --maximum-errors=1 --resync-period=10m -a '{.status.conditions[*].type}' -a '{.status.certificate}' -a '{.spec.username}' -- /tmp/signer

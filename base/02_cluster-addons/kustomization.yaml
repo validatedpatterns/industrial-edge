@@ -3,6 +3,9 @@ resources:
   - 00_advance-cluster-manager/01_operator-group.yaml
   - 00_advance-cluster-manager/02_subscription.yaml
   - 00_advance-cluster-manager/04_multiclusterhub.yaml
+  - 01_autoapprover/00_sa.yaml
+  - 01_autoapprover/01_crb.yaml
+  - 01_autoapprover/02_approver.yaml
 
 transformers:
   - site-config.yaml
