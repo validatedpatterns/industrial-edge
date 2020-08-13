@@ -6,6 +6,9 @@ resources:
   - 01_autoapprover/00_sa.yaml
   - 01_autoapprover/01_crb.yaml
   - 01_autoapprover/02_approver.yaml
+  - 02_managed-clusters/baremetal-edge.yaml
+  - 02_managed-clusters/staging-aws.yaml
+  - 02_managed-clusters/staging-gcp.yaml
 
 transformers:
   - site-config.yaml
