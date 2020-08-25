@@ -4,13 +4,6 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2-11
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-consumer:0.3.2-11
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-12
     from:
       kind: DockerImage
@@ -43,6 +36,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-consumer:0.3.2-16
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-20
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-consumer:0.3.2-20
     importPolicy: {}
     referencePolicy:
       type: Local
