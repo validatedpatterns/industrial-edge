@@ -16,6 +16,6 @@ data:
 # acceptable.
 
 # This secret was created by running
-# export MYDOMAIN=apps.ocp3.stormshift.coe.muc.redhat.com
+# export MYDOMAIN=apps.edge-mgmt-hub.gcp.devcluster.openshift.com
 # openssl req -newkey rsa:2048 -nodes -keyout key.pem -x509 -days 365 -out certificate.pem -subj "/C=DE/OU=Manuela/CN=*.${MYDOMAIN}"
 # oc create secret tls kafka-tls-certificate-and-key --key key.pem --cert certificate.pem

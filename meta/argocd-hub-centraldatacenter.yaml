@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-stormshift-machine-sensor
+  name: centraldatacenter
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-stormshift/machine-sensor
+    path: deployment/hub-centraldatacenter
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-stormshift-machine-sensor
+    namespace: argocd
   syncPolicy:
     automated: 
       prune: true
@@ -27,11 +27,3 @@ spec:
     kind: Route
     jsonPointers:
     - /status
-  - group: image.openshift.io
-    kind: ImageStream
-    jsonPointers:
-    - /spec/tags
-  - group: apps.openshift.io
-    kind: DeploymentConfig
-    jsonPointers:
-    - /spec/template/spec/containers/0/image
