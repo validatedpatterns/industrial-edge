@@ -12,7 +12,7 @@ spec:
   template:
     metadata:
       labels:
-        app: autoapprover
+        node-role.kubernetes.io/master: ''
     spec:
       tolerations:
       - key: "node-role.kubernetes.io/master"
