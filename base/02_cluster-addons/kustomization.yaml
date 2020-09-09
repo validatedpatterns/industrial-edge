@@ -12,6 +12,8 @@ resources:
 
 bases:
   - 03_argocd/
+  - 04_openshift-pipelines/
+  - 05_manuela-ci/
 
 transformers:
   - site-config.yaml
