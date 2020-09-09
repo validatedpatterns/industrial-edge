@@ -1,18 +1,19 @@
 kind: StatefulSet
-apiVersion: apps/v1beta1
+apiVersion: apps/v1
 metadata:
   name: autoapprover
   namespace: openshift-infra
 spec:
   updateStrategy:
     type: RollingUpdate
+  selector:
+    matchLabels:
+        node-role.kubernetes.io/master: ''
   template:
     metadata:
       labels:
-        app: autoapprover
-    spec:
-      nodeSelector:
         node-role.kubernetes.io/master: ''
+    spec:
       tolerations:
       - key: "node-role.kubernetes.io/master"
         operator: "Equal"
