@@ -10,5 +10,8 @@ resources:
   - 02_managed-clusters/staging-aws.yaml
   - 02_managed-clusters/staging-gcp.yaml
 
+bases:
+  - 03_argocd/
+
 transformers:
   - site-config.yaml
