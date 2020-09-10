@@ -1,0 +1,20 @@
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: argocd
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: argocd-sub
+  namespace: argocd
+  annotations:
+    apps.open-cluster-management.io/github-path: base/02_cluster-addons/03_argocd
+spec:
+  channel: argocd-operator-gitops/argocd-operator-channel
+  name: argocd-sub
+  placement:
+    placementRef:
+      kind: PlacementRule
+      name: apply-argocd-to-ready-clusters
+      apiGroup: apps.open-cluster-management.io

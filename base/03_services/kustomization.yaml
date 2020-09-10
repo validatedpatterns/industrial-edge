@@ -4,4 +4,8 @@ resources:
   #- manuela-hub/amq-subscription.yaml
   #- manuela-hub/channel.yaml
   #- manuela-hub/subscription-lineapp.yaml
+  - argocd-operator-subs/namespace.yaml
+  - argocd-operator-subs/channel.yaml
+  - argocd-operator-subs/placementrule.yaml
+  - argocd-operator-subs/subscription.yaml
 
