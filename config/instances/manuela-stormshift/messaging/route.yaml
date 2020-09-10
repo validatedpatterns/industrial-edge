@@ -3,4 +3,4 @@ kind: Route
 metadata:
   name: messaging
 spec:
-  host: messaging-manuela-stormshift-messaging.apps.edge-mgmt-hub.gcp.devcluster.openshift.com
+  host: messaging-manuela-stormshift-messaging.apps.staging-edge.gcp.devcluster.openshift.com

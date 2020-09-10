@@ -3,4 +3,4 @@ kind: Route
 metadata:
   name: line-dashboard
 spec:
-  host: line-dashboard-manuela-stormshift-line-dashboard.apps.edge-mgmt-hub.gcp.devcluster.openshift.com
+  host: line-dashboard-manuela-stormshift-line-dashboard.apps.staging-edge.gcp.devcluster.openshift.com
