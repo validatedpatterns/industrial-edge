@@ -1,5 +1,5 @@
 {
-    "websocketHost": "http://messaging-manuela-stormshift-messaging.apps.ocp3.stormshift.coe.muc.redhat.com",
+    "websocketHost": "http://messaging-manuela-stormshift-messaging.apps.staging-edge.gcp.devcluster.openshift.com",
     "websocketPath": "/api/service-web/socket",
     "SERVER_TIMEOUT": 20000
 }

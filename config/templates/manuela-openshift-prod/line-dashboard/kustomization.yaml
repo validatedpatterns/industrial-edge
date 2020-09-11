@@ -6,4 +6,5 @@ patchesStrategicMerge:
 - line-dashboard-is.yaml
 images:
 - name: line-dashboard
-  newTag: 0.3.1-26
+  newTag: 0.3.1-31
+
