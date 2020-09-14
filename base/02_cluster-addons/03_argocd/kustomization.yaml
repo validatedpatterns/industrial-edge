@@ -9,6 +9,7 @@ bases:
 
 resources:
 - argocd-namespace.yaml
+- argocd-cluster-secret.yaml
 - argocd-operatorgroup.yaml
 - argocd-subscription.yaml
 - argocd-application-controller-cluster-admin-role-binding.yaml
