@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-images
+spec:
+  workspaces:
+  - name: gitrepos 
+  - name: config
+  - name: github-secret
+  - name: quay-secret
+  params:
+  - name: PATH_CONTEXT
+    type: string
+    default: tekton/images/httpd-ionic
+  - name: OUTPUT_IMAGE_CONFIGMAPKEY
+    type: string
+    default: HTTPD_IONIC_REMOTE_IMAGE
+  - name: DEV_REVISION 
+    type: string 
+    default: master
+  tasks:
+  - name: git-clone-dev
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_DEV_REPO_URL
+    - name: revision
+      value: $(params.DEV_REVISION)
+    - name: subdirectory
+      value: dev
+    - name: deleteExisting
+      value: "true"
+
+  - name: buildah-build
+    taskRef:
+      name: buildah
+    runAfter:
+    - git-clone-dev
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: pushsecret
+      workspace: quay-secret
+    - name: config
+      workspace: config
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: PATH_CONTEXT
+      value: $(params.PATH_CONTEXT)
+    - name: TAG
+      value: latest
+    - name: OUTPUT_IMAGE_CONFIGMAPKEY
+      value: $(params.OUTPUT_IMAGE_CONFIGMAPKEY)

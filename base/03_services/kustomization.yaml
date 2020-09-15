@@ -5,3 +5,5 @@ resources:
   - argocd-operator-subs/subscription.yaml
   - manuela-central/argocd-hub-centraldatacenter.yaml
 
+bases:
+  - tekton/

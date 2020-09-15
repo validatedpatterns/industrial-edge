@@ -1,0 +1,38 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: seed
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: seed-
+  spec:
+    pipelineRef:
+      name: seed
+    workspaces:
+    - name: config
+      configMap:
+        name: environment
+    - name: github-secret
+      secret:
+        secretName: github
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret
+    - name: build-artifacts
+      persistentVolumeClaim:
+        claimName: build-artifacts
+    - name: gitrepos
+      # volumeClaimTemplate:
+      #   spec:
+      #     accessModes: 
+      #     - ReadWriteMany
+      #     resources:
+      #       requests:
+      #         storage: 1Gi
+      persistentVolumeClaim:
+        claimName: iot-consumer

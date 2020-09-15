@@ -1,0 +1,276 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-test
+spec:
+  workspaces:
+  - name: gitrepos 
+  - name: config
+  - name: github-secret
+  - name: argocd-env-secret
+  - name: build-artifacts
+  params:
+  - name: S2I_BUILDER_IMAGE
+    type: string
+    default: registry.access.redhat.com/rhscl/nodejs-10-rhel7
+  - name: LOCAL_IMAGE
+    type: string
+    default: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  - name: PATH_CONTEXT
+    type: string
+    default: components/iot-consumer
+  - name: COMPONENT_NAME
+    type: string
+    default: iot-consumer
+  - name: CONFIGMAP_PREFIX
+    type: string
+    default: IOT_CONSUMER
+  - name: CHAINED_BUILD_DOCKERFILE 
+    type: string 
+    default: ""
+  - name: DEV_REVISION 
+    type: string 
+    default: master
+  tasks:
+  - name: git-clone-dev
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_DEV_REPO_URL
+    - name: revision
+      value: $(params.DEV_REVISION)
+    - name: subdirectory
+      value: dev
+    - name: deleteExisting
+      value: "true"
+
+  - name: bump-build-version
+    taskRef:
+      name: bumpversion
+    runAfter:
+    - git-clone-dev
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: component_name
+      value: $(params.COMPONENT_NAME)
+    - name: version_file_path
+      value: $(params.PATH_CONTEXT)/VERSION
+
+  - name: s2i-build
+    taskRef:
+      name: s2i
+    runAfter:
+    - bump-build-version
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: build-artifacts
+      workspace: build-artifacts
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: PATH_CONTEXT
+      value: $(params.PATH_CONTEXT)
+    - name: BUILDER_IMAGE
+      value: $(params.S2I_BUILDER_IMAGE)
+    - name: TAG
+      value: $(tasks.bump-build-version.results.image-tag)
+    - name: OUTPUT_IMAGE
+      value: $(params.LOCAL_IMAGE)
+    - name: CHAINED_BUILD_DOCKERFILE
+      value: $(params.CHAINED_BUILD_DOCKERFILE)
+
+  - name: push-dev-tag
+    taskRef:
+      name: github-push
+    runAfter:
+    - s2i-build
+#    - bump-build-version
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: github-secret
+      workspace: github-secret
+    params:
+    - name: PUSH_FLAGS
+      value: origin $(tasks.bump-build-version.results.git-tag)
+
+  - name: git-clone-gitops
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_OPS_REPO_TEST_URL
+    - name: revision
+      value: master
+    - name: subdirectory
+      value: ops
+    - name: deleteExisting
+      value: "true"
+
+  - name: modify-ops-test
+    taskRef:
+      name: gitops-imagetag
+    runAfter:
+    - bump-build-version
+    - git-clone-gitops
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: CONFIGMAP_PREFIX
+      value: $(params.CONFIGMAP_PREFIX)
+    - name: ENVIRONMENT
+      value: TEST
+    - name: TAG
+      value: $(tasks.bump-build-version.results.image-tag)
+    - name: subdirectory
+      value: ops
+
+  - name: commit-ops-test
+    taskRef:
+      name: git-commit
+    runAfter:
+    - modify-ops-test
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config 
+      workspace: config
+    params:
+    - name: subdirectory
+      value: ops
+
+  - name: push-ops-test
+    taskRef:
+      name: github-push
+    runAfter:
+    - push-dev-tag
+    - commit-ops-test
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: github-secret
+      workspace: github-secret
+    params:
+    - name: subdirectory
+      value: ops
+    - name: PUSH_FLAGS
+      value: --set-upstream origin master
+
+  - name: argocd-sync-application
+    taskRef:
+      name: argocd-sync-and-wait
+    runAfter:
+    - push-ops-test
+    workspaces:
+    - name: argocd-env-secret
+      workspace: argocd-env-secret
+    params:
+    - name: application-name
+      value: manuela-tst-all
+    - name: flags
+      value: --insecure
+    - name: argocd-version
+      value: "v1.5.2"
+
+  # - name: sensor-broker-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully sent messages to broker..."
+  # - name: consumer-broker-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully processed messages from broker..."
+  # - name: consumer-frontend-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully executed Websocket APIs..."
+  # - name: e2e-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - sensor-broker-test
+  #     - consumer-broker-test
+  #     - consumer-frontend-test
+  #   params:
+  #     - name: MESSAGE
+  #       value: "e2e testsuite succesfully executed"
+  - name: test-all
+    taskRef: 
+      name: tkn
+    runAfter:
+    - argocd-sync-application
+    params:
+    - name: ARGS
+      value: 
+      - pipeline
+      - start 
+      - test-all 
+      - --showlog 
+      - --nocolour
+
+  - name: cleanup
+    taskRef:
+      name: cleanup
+    runAfter:
+    - test-all
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config 
+      workspace: config
+    - name: github-secret
+      workspace: github-secret
+    params:
+    - name: subdirectory
+      value: dev
+    - name: COMPONENT_NAME
+      value: $(params.COMPONENT_NAME)
+    # - name: OPENSHIFT_NAMESPACE
+    #   value: manuela-tst-all
+    # - name: OPENSHIFT_IMAGESTREAM
+    #   value: messaging
+
+  - name: trigger-staging
+    taskRef: 
+      name: openshift-instantiate-template
+    runAfter:
+    - test-all
+    params:
+    - name: TEMPLATE
+      value: stage-production-pipelinerun
+    - name: PARAMS
+      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=$(params.CONFIGMAP_PREFIX) -p SOURCE_IMAGE=$(params.LOCAL_IMAGE) -p COMPONENT_NAME=$(params.COMPONENT_NAME)
+  

@@ -1,0 +1,33 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment
+data:
+  GIT_EMAIL: "rnoriega@redhat.com"
+  GIT_USERNAME: "oglok"
+  GIT_DEV_REPO_URL: https://github.com/redhat-edge-computing/manuela-dev.git
+  GIT_OPS_REPO_TEST_URL: https://github.com/redhat-edge-computing/manuela-gitops.git
+  GIT_OPS_REPO_PROD_URL: https://github.com/redhat-edge-computing/manuela-gitops.git
+  IOT_CONSUMER_REMOTE_IMAGE: quay.io/manuela/iot-consumer
+  IOT_CONSUMER_YAML_PATH: images.(name==messaging).newTag
+  IOT_CONSUMER_TEST_KUSTOMIZATION_PATH: config/instances/manuela-tst/kustomization.yaml
+  IOT_CONSUMER_PROD_KUSTOMIZATION_PATH: config/templates/manuela-openshift-prod/messaging/kustomization.yaml
+  IOT_CONSUMER_PROD_IMAGESTREAM_PATH: config/templates/manuela-openshift-prod/messaging/messaging-is.yaml
+  IOT_FRONTEND_REMOTE_IMAGE: quay.io/manuela/iot-frontend
+  IOT_FRONTEND_YAML_PATH: images.(name==line-dashboard).newTag
+  IOT_FRONTEND_TEST_KUSTOMIZATION_PATH: config/instances/manuela-tst/kustomization.yaml
+  IOT_FRONTEND_PROD_KUSTOMIZATION_PATH: config/templates/manuela-openshift-prod/line-dashboard/kustomization.yaml
+  IOT_FRONTEND_PROD_IMAGESTREAM_PATH: config/templates/manuela-openshift-prod/line-dashboard/line-dashboard-is.yaml
+  IOT_SWSENSOR_REMOTE_IMAGE: quay.io/manuela/iot-software-sensor
+  IOT_SWSENSOR_YAML_PATH: images.(name==machine-sensor).newTag
+  IOT_SWSENSOR_TEST_KUSTOMIZATION_PATH: config/instances/manuela-tst/kustomization.yaml
+  IOT_SWSENSOR_PROD_KUSTOMIZATION_PATH: config/templates/manuela-openshift-prod/machine-sensor/kustomization.yaml
+  IOT_SWSENSOR_PROD_IMAGESTREAM_PATH: config/templates/manuela-openshift-prod/machine-sensor/machine-sensor-is.yaml
+  IOT_ANOMALY_REMOTE_IMAGE: quay.io/manuela/iot-anomaly-detection
+  IOT_ANOMALY_YAML_PATH: images.(name==anomaly-detection).newTag
+  IOT_ANOMALY_TEST_KUSTOMIZATION_PATH: config/instances/manuela-tst/kustomization.yaml
+  IOT_ANOMALY_PROD_KUSTOMIZATION_PATH: config/templates/manuela-openshift-prod/anomaly-detection/kustomization.yaml
+  IOT_ANOMALY_PROD_IMAGESTREAM_PATH: config/templates/manuela-openshift-prod/anomaly-detection/anomaly-detection-is.yaml
+  BUMPVERSION_REMOTE_IMAGE: quay.io/manuela/bumpversion
+  HTTPD_IONIC_REMOTE_IMAGE: quay.io/manuela/httpd-ionic
+  PUSHPROX_REMOTE_IMAGE: quay.io/manuela/pushprox

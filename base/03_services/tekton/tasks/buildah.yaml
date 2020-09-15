@@ -1,0 +1,60 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: buildah
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: config
+  - name: pushsecret
+  results:
+  - name: image
+    description: The image+tag that was created
+  params:
+  - name: PATH_CONTEXT
+    default: .
+    description: The location of the path to run s2i from.
+    type: string
+  - name: TLSVERIFY
+    default: "true"
+    description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+    type: string
+  - name: subdirectory
+    default: "dev"
+    description: subdirectory in the gitrepos workspace where the dev repo has been cloned to
+    type: string
+  - name: OUTPUT_IMAGE_CONFIGMAPKEY
+    type: string
+  - name: TAG
+    default: latest 
+    type: string
+  - name: DOCKERFILE
+    default: Dockerfile
+    type: string
+  steps:
+  - name: build
+    image: quay.io/buildah/stable:v1.11.0
+    script: |
+      buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f $(params.DOCKERFILE) -t $(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_CONFIGMAPKEY)) .
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)/$(params.PATH_CONTEXT)
+  - name: push
+    image: quay.io/buildah/stable:v1.11.0
+    script: |
+      buildah push --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_CONFIGMAPKEY)) docker://$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_CONFIGMAPKEY)):$(params.TAG)
+      echo -n "$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_CONFIGMAPKEY)):$(params.TAG)" >$(results.image.path)
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+  volumes:
+  - emptyDir: {}
+    name: varlibcontainers

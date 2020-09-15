@@ -1,0 +1,47 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: git-commit
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: config
+    description: configmap contents
+  params:
+  - name: GIT_EMAIL_CONFIGMAPKEY
+    default: GIT_EMAIL
+    type: string
+  - name: GIT_USERNAME_CONFIGMAPKEY
+    default: GIT_USERNAME
+    type: string
+  - name: MESSAGE
+    description: commit message
+    type: string
+    default: "change made by Tekton task"
+  - name: subdirectory
+    description: subdirectory inside the "gitrepos" workspace to clone the git repo into
+    type: string
+  steps:
+  - name: commit
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    script: |
+      git diff
+      git config --global user.email "$(cat $(workspaces.config.path)/$(params.GIT_EMAIL_CONFIGMAPKEY))"
+      git config --global user.name "$(cat $(workspaces.config.path)/$(params.GIT_USERNAME_CONFIGMAPKEY))"
+      git add .
+      EXIT_CODE="$?"
+      if [ "$EXIT_CODE" != 0 ]
+      then
+        exit $EXIT_CODE
+      fi
+
+      #only commit if there is something which has changed
+      git diff --staged --quiet || git commit -m "$(params.MESSAGE)"
+
+      EXIT_CODE="$?"
+      if [ "$EXIT_CODE" != 0 ]
+      then
+        exit $EXIT_CODE
+      fi
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

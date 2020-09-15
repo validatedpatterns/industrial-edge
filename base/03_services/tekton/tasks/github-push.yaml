@@ -1,0 +1,33 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: github-push
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: github-secret
+  params:
+  - name: GITHUB_USERNAME_CONFIGMAPKEY
+    default: user
+    type: string
+  - name: GITHUB_TOKEN_CONFIGMAPKEY
+    default: token
+    type: string
+  - name: subdirectory
+    description: subdirectory inside the "gitrepos" workspace to clone the git repo into
+    type: string
+    default: "dev"
+  - name: PUSH_FLAGS
+    description: additional flags for git push 
+    type: string
+    default: ""
+  steps:
+  - name: push
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    script: |
+      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
+      git config --global credential.helper store 'store --file ~/.git-credentials'
+      git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git pull --ff-only --no-edit
+      git push $(params.PUSH_FLAGS)
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

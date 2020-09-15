@@ -1,0 +1,88 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: cleanup
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: config
+    description: configmap contents
+  - name: github-secret
+  params:
+  - name: subdirectory
+    description: subdirectory inside the "gitrepos" workspace to clone the git repo into
+    type: string
+    default: dev
+  - name: COMPONENT_NAME
+    description: component name
+    type: string
+  - name: NUMBER_OF_TAGS_TO_KEEP
+    type: string
+    default: "5"
+  - name: GITHUB_USERNAME_CONFIGMAPKEY
+    default: user
+    type: string
+  - name: GITHUB_TOKEN_CONFIGMAPKEY
+    default: token
+    type: string
+  # - name: OPENSHIFT_NAMESPACE
+  #   default: manuela-tst-all
+  #   type: string
+  # - name: OPENSHIFT_IMAGESTREAM
+  #   default: messaging
+  #   type: string
+  steps:
+  - name: cleanup-git-tags
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    script: |
+      #list build tags for component in repo
+      BUILD_TAG_GLOB="build-$(params.COMPONENT_NAME)-*"
+      git tag --sort "version:refname" -l $BUILD_TAG_GLOB >/scratch/tags
+     
+      #identify build tags to keep
+      tail -n $(params.NUMBER_OF_TAGS_TO_KEEP) /scratch/tags >/scratch/keep
+
+      #identify build tags to be deleted
+      diff /scratch/tags /scratch/keep | grep \^-build | cut -c2- > /scratch/delete
+
+      #delete build tags
+      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
+      git config --global credential.helper store 'store --file ~/.git-credentials'
+
+      for TAG in $(cat /scratch/delete); do 
+        git push origin :$TAG
+        EXIT_CODE="$?"
+        if [ "$EXIT_CODE" != 0 ]
+        then
+          exit $EXIT_CODE
+        fi
+      done
+    volumeMounts:
+    - mountPath: /scratch
+      name: scratch  
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  # - name: cleanup-test-images
+  #   image: quay.io/openshift/origin-cli:latest
+  #   script: |
+  #     oc get is -n $(params.OPENSHIFT_NAMESPACE) $(params.OPENSHIFT_IMAGESTREAM) -o jsonpath='{.status.tags..tag}' | tr " " "\n" | grep build- | comm -23 - /scratch/keep >/scratch/delete_istags
+  #     EXIT_CODE="$?"
+  #     if [ "$EXIT_CODE" != 0 ]
+  #     then
+  #       exit $EXIT_CODE
+  #     fi
+  #     for TAG in $(cat /scratch/delete_istags); do 
+  #       oc tag -n $(params.OPENSHIFT_NAMESPACE) -d $(params.OPENSHIFT_IMAGESTREAM):$TAG
+  #       EXIT_CODE="$?"
+  #       if [ "$EXIT_CODE" != 0 ]
+  #       then
+  #         exit $EXIT_CODE
+  #       fi
+  #     done
+  #   volumeMounts:
+  #   - mountPath: /scratch
+  #     name: scratch  
+  #   workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  volumes:
+  - emptyDir: {}
+    name: scratch

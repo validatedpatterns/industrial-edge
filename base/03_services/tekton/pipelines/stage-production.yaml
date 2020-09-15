@@ -1,0 +1,137 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: stage-production
+spec:
+  workspaces:
+  - name: gitrepos 
+  - name: config
+  - name: github-secret
+  - name: quay-secret
+  params:
+  - name: TAG
+    type: string
+  - name: SOURCE_IMAGE
+    type: string
+  - name: CONFIGMAP_PREFIX
+    type: string
+
+  tasks:
+  - name: git-clone-ops
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_OPS_REPO_PROD_URL
+    - name: revision
+      value: master
+    - name: subdirectory
+      value: ops
+    - name: deleteExisting
+      value: "true"
+
+  - name: checkout-staging-branch
+    taskRef:
+      name: git-checkout
+    runAfter:
+    - git-clone-ops
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: subdirectory
+      value: ops
+    - name: BRANCH
+      value: staging-approval
+
+  - name: copy-image-to-remote-registry
+    taskRef:
+      name: skopeo-copy
+    runAfter: 
+    - git-clone-ops
+    workspaces:
+    - name: config
+      workspace: config
+    - name: pushsecret
+      workspace: quay-secret
+    params:
+    - name: TAG
+      value: $(params.TAG)
+    - name: SOURCE_IMAGE
+      value: $(params.SOURCE_IMAGE)
+    - name: TARGET_IMAGE_CONFIGMAPKEY
+      value: $(params.CONFIGMAP_PREFIX)_REMOTE_IMAGE
+
+  - name: modify-ops-prod
+    taskRef:
+      name: gitops-imagetag
+    runAfter:
+    - checkout-staging-branch
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: CONFIGMAP_PREFIX
+      value: $(params.CONFIGMAP_PREFIX)
+    - name: ENVIRONMENT
+      value: PROD
+    - name: TAG
+      value: $(params.TAG)
+    - name: subdirectory
+      value: ops
+      
+  - name: commit-ops-prod
+    taskRef:
+      name: git-commit
+    runAfter:
+    - modify-ops-prod
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config 
+      workspace: config
+    params:
+    - name: subdirectory
+      value: ops
+
+  - name: push-ops-prod
+    taskRef:
+      name: github-push
+    runAfter:
+    - commit-ops-prod
+    - copy-image-to-remote-registry
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: github-secret
+      workspace: github-secret
+    params:
+    - name: subdirectory
+      value: ops
+    - name: PUSH_FLAGS
+      value: --set-upstream origin staging-approval
+
+  - name: github-pull-request
+    taskRef: 
+      name: github-add-pull-request
+    runAfter:
+    - push-ops-prod
+    workspaces:
+    - name: github-secret
+      workspace: github-secret
+    - name: config 
+      workspace: config
+    params:
+    - name: GITHUB_REPO_CONFIGMAPKEY
+      value: GIT_OPS_REPO_PROD_URL
+    - name: GIT_BRANCH_HEAD
+      value: staging-approval
+    - name: GIT_BRANCH_BASE
+      value: master

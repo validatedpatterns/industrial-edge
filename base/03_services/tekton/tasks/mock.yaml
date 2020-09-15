@@ -1,0 +1,16 @@
+kind: Task
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: mock
+spec:
+  params:
+  - name: MESSAGE
+    type: string
+    description: |
+      The message to echo.
+    default: "Hello from mock-task"
+  steps:
+  - image: node  # contains node
+    script: |
+      #!/usr/bin/env node
+      console.log("$(params.MESSAGE)")

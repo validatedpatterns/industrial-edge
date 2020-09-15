@@ -1,0 +1,42 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: argocd-sync-and-wait
+spec:
+  workspaces:
+  - name: argocd-env-secret
+  params:
+  - name: application-name
+    type: string
+    description: name of the application to sync
+  - name: revision
+    type: string
+    description: the revision to sync to
+    default: HEAD
+  - name: flags
+    type: string
+    default: --
+  - name: argocd-version
+    type: string
+    default: v1.5.2
+  - name: argocd-server
+    type: string
+    default: argocd-server.argocd.svc
+  steps:
+    - name: login
+      image: argoproj/argocd:$(params.argocd-version)
+      command: ["/bin/bash", "-c"]
+      args:
+        - if [ -z $ARGOCD_AUTH_TOKEN ]; then
+            yes | argocd login $(params.argocd-server) --grpc-web $(params.flags) --username=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_USERNAME) --password=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_PASSWORD);
+          fi
+    - name: sync
+      image: argoproj/argocd:$(params.argocd-version)
+      command: ["/bin/bash", "-c"]
+      args:
+        - argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags)
+    - name: wait
+      image: argoproj/argocd:$(params.argocd-version)
+      command: ["/bin/bash", "-c"]
+      args:
+        - argocd app wait $(params.application-name) --health $(params.flags)

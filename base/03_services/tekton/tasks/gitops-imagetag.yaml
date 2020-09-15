@@ -1,0 +1,50 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: gitops-imagetag
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: config
+  params:
+  - name: CONFIGMAP_PREFIX
+    type: string
+  - name: ENVIRONMENT
+    type: string
+    default: TEST
+    description: TEST or PROD
+  - name: TAG
+    description: the VERSION tag
+    type: string
+  - name: TRUNCATE_IMAGESTREAM_TAGS_AFTER
+    type: string
+    description: Number of image stream tags to keep
+    default: "5"
+  - name: subdirectory
+    description: subdirectory inside the "gitrepos" workspace to clone the git repo into
+    type: string
+    default: "ops"
+  steps:
+  - name: patch-kustomization
+    image: mikefarah/yq:3.2.1
+    script: |
+      KUSTOMIZATION_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_KUSTOMIZATION_PATH)"
+      YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
+      yq w -i $KUSTOMIZATION_PATH "$YAML_PATH" $(params.TAG)
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: patch-imagestream
+    image: mikefarah/yq:3.2.1
+    script: |
+      IMAGESTREAM_CONFIG_PATH=$(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_IMAGESTREAM_PATH
+      if [ -f "$IMAGESTREAM_CONFIG_PATH" ]; then
+        IMAGESTREAM_PATH=$(cat $IMAGESTREAM_CONFIG_PATH)
+        REMOTE_IMAGE=$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_REMOTE_IMAGE)
+
+        echo "Adding $(params.TAG) to image stream $IMAGESTREAM_PATH"
+        echo "{\"spec\":{\"tags\":[{\"name\":\"$(params.TAG)\",\"from\":{\"kind\":\"DockerImage\",\"name\":\"$REMOTE_IMAGE:$(params.TAG)\"},\"importPolicy\":{},\"referencePolicy\":{\"type\":\"Local\"}}]}}" | yq -P m -i -a $IMAGESTREAM_PATH -
+        if [ $(yq r $IMAGESTREAM_PATH --length spec.tags) -gt $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER) ]; then
+          yq -P d -i $IMAGESTREAM_PATH 'spec.tags[0]'
+        fi
+      fi
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

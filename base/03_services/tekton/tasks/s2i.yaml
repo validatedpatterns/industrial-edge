@@ -1,0 +1,150 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: s2i
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  - name: build-artifacts
+    description: The maven repo for java builds
+  results:
+  - name: image
+    description: The image+tag that was created
+  params:
+  - name: BUILDER_IMAGE
+    description: The location of the s2i builder image.
+    type: string
+  - name: PATH_CONTEXT
+    default: .
+    description: The location of the path to run s2i from.
+    type: string
+  - name: TLSVERIFY
+    default: "true"
+    description: Verify the TLS on the registry endpoint (for push/pull to a non-TLS registry)
+    type: string
+  - name: LOGLEVEL
+    default: "0"
+    description: Log level when running the S2I binary
+    type: string
+  - name: subdirectory
+    default: "dev"
+    description: subdirectory in the gitrepos workspace where the dev repo has been cloned to
+    type: string
+  - name: OUTPUT_IMAGE
+    type: string
+  - name: TAG
+    default: latest 
+    type: string
+# only for java builds
+  - name: MAVEN_ARGS_APPEND
+    default: ""
+    description: Additional Maven arguments
+    type: string
+  - name: MAVEN_CLEAR_REPO
+    default: "false"
+    description: Remove the Maven repository after the artifact is built
+    type: string
+  - name: MAVEN_MIRROR_URL
+    default: ""
+    description: The base URL of a mirror used for retrieving artifacts
+    type: string
+  - name: CHAINED_BUILD_DOCKERFILE
+    default: "" 
+    description: If a chained build is to be executed, the second part of the DOCKERFILE
+    type: string
+  steps:
+  - name: prepare-env
+    image: quay.io/openshift-pipeline/s2i
+    script: |
+      if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then 
+        echo "MAVEN_CLEAR_REPO=$(params.MAVEN_CLEAR_REPO)" > env-file
+
+        [[ '$(params.MAVEN_ARGS_APPEND)' != "" ]] &&
+          echo "MAVEN_ARGS_APPEND=$(params.MAVEN_ARGS_APPEND)" >> env-file
+
+        [[ '$(params.MAVEN_MIRROR_URL)' != "" ]] &&
+          echo "MAVEN_MIRROR_URL=$(params.MAVEN_MIRROR_URL)" >> env-file
+
+        #create build artifacts cache directory
+        if [[ ! -d $(workspaces.build-artifacts.path)/m2 ]]; then 
+           mkdir $(workspaces.build-artifacts.path)/m2
+           chmod a+rwx $(workspaces.build-artifacts.path)/m2
+        fi
+        echo "MAVEN_LOCAL_REPO=/ba/m2" >> env-file
+
+        echo "Generated Env file"
+        echo "------------------------------"
+        cat env-file
+        echo "------------------------------"
+
+        echo "s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --image-scripts-url image:///usr/local/s2i --as-dockerfile /gen-source/Dockerfile.gen --environment-file /env-params/env-file" >s2icommand
+        echo "buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f /gen-source/Dockerfile.gen -t $(params.OUTPUT_IMAGE) -v $(workspaces.build-artifacts.path)/m2:/ba/m2 ." >buildahcommand
+      fi
+    volumeMounts:
+    - mountPath: /env-params
+      name: envparams
+    workingDir: /env-params
+  - name: generate
+    image: quay.io/openshift-pipeline/s2i
+    # command:
+    # - s2i
+    # - build
+    # - --loglevel=$(params.LOGLEVEL)
+    # - $(params.PATH_CONTEXT)
+    # - $(params.BUILDER_IMAGE)
+    # - --as-dockerfile
+    # - /gen-source/Dockerfile.gen
+    script: |
+      if [ -f /env-params/s2icommand ]; then
+        source /env-params/s2icommand
+      else
+        s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --as-dockerfile /gen-source/Dockerfile.gen
+      fi 
+      if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
+        echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
+      fi
+    resources: {}
+    volumeMounts:
+    - mountPath: /gen-source
+      name: gen-source
+    - mountPath: /env-params
+      name: envparams
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: build
+    image: quay.io/buildah/stable:v1.11.0
+    script: |
+      if [ -f /env-params/buildahcommand ]; then
+        source /env-params/buildahcommand
+      else 
+        buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f /gen-source/Dockerfile.gen -t $(params.OUTPUT_IMAGE) .
+      fi
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+    - mountPath: /gen-source
+      name: gen-source    
+    - mountPath: /env-params
+      name: envparams
+    workingDir: /gen-source
+  - name: push
+    image: quay.io/buildah/stable:v1.11.0
+    script: |
+      buildah push --tls-verify=$(params.TLSVERIFY) $(params.OUTPUT_IMAGE) docker://$(params.OUTPUT_IMAGE):$(params.TAG)
+      echo -n "$(params.OUTPUT_IMAGE):$(params.TAG)" >$(results.image.path)
+    resources: {}
+    securityContext:
+      privileged: true
+    volumeMounts:
+    - mountPath: /var/lib/containers
+      name: varlibcontainers
+  volumes:
+  - emptyDir: {}
+    name: varlibcontainers
+  - emptyDir: {}
+    name: gen-source
+  - emptyDir: {}
+    name: envparams

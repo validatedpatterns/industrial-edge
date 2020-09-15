@@ -1,0 +1,41 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: git-checkout
+spec:
+  workspaces:
+  - name: gitrepos
+    description: The git repo will be cloned onto the volume backing this workspace
+  params:
+  - name: BRANCH
+    description: branch to check out or to create
+    type: string
+    default: master
+  - name: subdirectory
+    description: subdirectory inside the "gitrepos" workspace to clone the git repo into
+    type: string
+  results:
+  - name: commit
+    description: The precise commit SHA that is HEAD of the checked out branch
+  steps:
+  - name: checkout
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    script: |
+      BRANCH=$(params.BRANCH)
+      git checkout -q --track -b $BRANCH origin/$BRANCH 2>&1 || git checkout -q -b $BRANCH 2>&1
+
+      EXIT_CODE="$?"
+      if [ "$EXIT_CODE" != 0 ]
+      then
+        exit $EXIT_CODE
+      fi
+
+      RESULT_SHA="$(git rev-parse HEAD | tr -d '\n')"
+      EXIT_CODE="$?"
+      if [ "$EXIT_CODE" != 0 ]
+      then
+        exit $EXIT_CODE
+      fi
+      # Make sure we don't add a trailing newline to the result!
+      echo -n "$RESULT_SHA" > $(results.commit.path)
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

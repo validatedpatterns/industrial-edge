@@ -1,0 +1,22 @@
+kind: Task
+apiVersion: tekton.dev/v1beta1
+metadata:
+  name: skopeo-copy
+spec:
+  workspaces:
+  - name: config
+    description: configmap contents
+  - name: pushsecret
+    description: push secret for quay
+  params:
+  - name: TAG
+    type: string
+  - name: SOURCE_IMAGE
+    type: string
+  - name: TARGET_IMAGE_CONFIGMAPKEY
+    type: string
+  steps:
+  - name: skopeo-copy
+    image: quay.io/redhat-emea-ssa-team/skopeo-ubi:latest
+    script: |
+      skopeo copy --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)

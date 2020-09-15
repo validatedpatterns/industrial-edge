@@ -1,0 +1,35 @@
+apiVersion: tekton.dev/v1beta1
+kind: Task
+metadata:
+  name: github-add-pull-request
+spec:
+  workspaces:
+  - name: github-secret
+  - name: config
+  params:
+  - name: PULL_REQUEST_BODY
+    description: The body to be used for the pull request
+    type: string
+    default: ""
+  - name: PULL_REQUEST_TITLE
+    description: Title of the pull request
+    type: string
+    default: "Pull request created by Tekton task github-add-pull-request"
+  - name: GITHUB_REPO_CONFIGMAPKEY
+    description: The github owner/repo to use
+    type: string
+  - name: GIT_BRANCH_HEAD
+    description: The branch to pull from
+    type: string
+    default: approve
+  - name: GIT_BRANCH_BASE
+    description: The branch to pull into
+    type: string
+    default: master
+  steps:
+  - name: create-pull-request
+    image: curlimages/curl
+    script: |
+      GITREPO=$(cat $(workspaces.config.path)/$(params.GITHUB_REPO_CONFIGMAPKEY))
+      PULLREQUEST_API_ENDPOINT=$(echo -n "$GITREPO" | sed "s|github.com|api.github.com/repos|" | sed "s/\.git$//g")/pulls
+      curl -v -u :$(cat $(workspaces.github-secret.path)/token) $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'

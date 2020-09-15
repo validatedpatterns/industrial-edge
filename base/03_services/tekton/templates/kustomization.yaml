@@ -1,0 +1,14 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- build-iot-consumer.yaml
+- build-iot-frontend.yaml
+- build-iot-software-sensor.yaml
+- build-iot-software-sensor-quarkus.yaml
+- build-iot-anomaly-detection.yaml
+- stage-production-pipelinerun.yaml
+- seed.yaml
+- build-image-httpd-ionic.yaml
+- build-image-bumpversion.yaml
+- build-image-pushprox.yaml

@@ -1,0 +1,49 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: build-iot-frontend
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: build-and-test-iot-frontend-
+  spec:
+    pipelineRef:
+      name: build-and-test
+    workspaces:
+    - name: config
+      configMap:
+        name: environment
+    - name: github-secret
+      secret:
+        secretName: github
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
+    - name: build-artifacts
+      persistentVolumeClaim:
+        claimName: build-artifacts
+    - name: gitrepos
+      # volumeClaimTemplate:
+      #   spec:
+      #     accessModes: 
+      #     - ReadWriteMany
+      #     resources:
+      #       requests:
+      #         storage: 1Gi
+      persistentVolumeClaim:
+        claimName: iot-frontend
+    params:
+    - name: S2I_BUILDER_IMAGE
+      value: nodeshift/ubi8-s2i-web-app
+    - name: LOCAL_IMAGE
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+    - name: PATH_CONTEXT
+      value: components/iot-frontend
+    - name: COMPONENT_NAME
+      value: iot-frontend
+    - name: CONFIGMAP_PREFIX
+      value: IOT_FRONTEND
+    - name: CHAINED_BUILD_DOCKERFILE
+      #value: "FROM centos/httpd-24-centos7\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"

@@ -1,0 +1,47 @@
+apiVersion: v1
+kind: Template
+metadata:
+  name: stage-production-pipelinerun
+objects:
+- apiVersion: tekton.dev/v1beta1
+  kind: PipelineRun
+  metadata:
+    generateName: stage-production-${COMPONENT_NAME}-
+  spec:
+    pipelineRef:
+      name: stage-production
+    params:
+    - name: TAG
+      value: ${TAG}
+    - name: SOURCE_IMAGE
+      value: ${SOURCE_IMAGE}
+    - name: CONFIGMAP_PREFIX
+      value: ${CONFIGMAP_PREFIX}
+    workspaces:
+    - name: config
+      configMap:
+        name: environment
+    - name: github-secret
+      secret:
+        secretName: github
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret
+    - name: gitrepos
+      # volumeClaimTemplate:
+      #   spec:
+      #     accessModes: 
+      #     - ReadWriteMany
+      #     resources:
+      #       requests:
+      #         storage: 1Gi
+      persistentVolumeClaim:
+        claimName: stage-production
+parameters:
+- name: TAG
+- name: SOURCE_IMAGE
+- name: CONFIGMAP_PREFIX
+- name: COMPONENT_NAME
