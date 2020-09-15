@@ -7,3 +7,8 @@ resources:
 
 bases:
   - tekton/
+
+
+transformers:
+  - site-config.yaml
+
