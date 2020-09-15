@@ -1,11 +1,7 @@
 resources:
-  #- manuela-hub/namespaces.yaml
-  #- manuela-hub/amq-broker.yaml
-  #- manuela-hub/amq-subscription.yaml
-  #- manuela-hub/channel.yaml
-  #- manuela-hub/subscription-lineapp.yaml
   - argocd-operator-subs/namespace.yaml
   - argocd-operator-subs/channel.yaml
   - argocd-operator-subs/placementrule.yaml
   - argocd-operator-subs/subscription.yaml
+  - manuela-central/argocd-hub-centraldatacenter.yaml
 
