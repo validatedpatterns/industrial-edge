@@ -10,3 +10,6 @@ bases:
 - tasks
 - pipelines
 - templates
+
+resources:
+- seed-run.yaml
