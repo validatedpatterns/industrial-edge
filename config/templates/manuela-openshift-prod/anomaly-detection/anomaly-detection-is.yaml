@@ -4,27 +4,6 @@ metadata:
   name: anomaly-detection
 spec:
   tags:
-  - name: 0.3.2-7
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-anomaly-detection:0.3.2-7
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-8
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-anomaly-detection:0.3.2-8
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-9
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-anomaly-detection:0.3.2-9
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-10
     from:
       kind: DockerImage
@@ -36,6 +15,27 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-anomaly-detection:0.3.2-11
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-12
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-anomaly-detection:0.3.2-12
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-13
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-anomaly-detection:0.3.2-13
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-14
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-anomaly-detection:0.3.2-14
     importPolicy: {}
     referencePolicy:
       type: Local
