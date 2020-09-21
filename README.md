@@ -17,7 +17,7 @@ This folder will contain the basic settings for the site, including the base blu
 
 ```yaml
 bases:
-- git::https://github.com/redhat-edge-computing/blueprint-industrial-edge.git//profiles/production.baremetal/00_install-config
+- git::https://github.com/redhat-edge-computing/blueprint-management-hub.git//profiles/production.gcp/00_install-config
 
 patches:
 - install-config.patch.yaml
@@ -33,7 +33,7 @@ transformers:
 - site-config.yaml
 ```
 
-The entry in bases needs to reference the blueprint being used (in this case blueprint-pae), and the profile install-config file (in this case `profiles/production.aws/00_install-config`). The other entries need to be just written literally.
+The entry in bases needs to reference the blueprint being used, and the profile install-config file (in this case `profiles/production.gcp/00_install-config`). The other entries need to be just written literally.
 
 + **install-config.patch.yaml**: is a patch to modify the domain from the base blueprint. You need to customize with the domain you want to give to your site.
 + **install-config.name.patch.yaml**: is a patch to modify the site name from the base blueprint. You need to customize with the name you want to give to your site.
@@ -89,7 +89,7 @@ Create a `$HOME/.kni` folder and copy the following files:
 To build the container image, execute the following command inside this repo.
 
 ```bash
-cd blueprint-industrial-edge/
+cd blueprint-management-hub/
 podman build -t localhost/knictl:latest -f Containerfile.knictl
 ```
 
