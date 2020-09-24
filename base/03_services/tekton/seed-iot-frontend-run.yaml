@@ -1,0 +1,29 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: seed-iot-frontend-run
+  namespace: manuela-ci
+spec:
+  pipelineRef:
+    name: seed-iot-frontend
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+  - configMap:
+      name: environment
+    name: config
+  - name: github-secret
+    secret:
+      secretName: github
+  - name: argocd-env-secret
+    secret:
+      secretName: argocd-env
+  - name: quay-secret
+    secret:
+      secretName: quay-build-secret
+  - name: build-artifacts
+    persistentVolumeClaim:
+      claimName: build-artifacts-rwo
+  - name: gitrepos
+    persistentVolumeClaim:
+      claimName: iot-frontend-rwo

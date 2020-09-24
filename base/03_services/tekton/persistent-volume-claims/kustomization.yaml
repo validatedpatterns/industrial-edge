@@ -9,3 +9,11 @@ resources:
 - stage-production.yaml
 - build-artifacts.yaml
 - build-images.yaml
+# These are ReadWriteOnce PVCs that will be used for the individual component seed pipelines
+- iot-consumer.rwo.yaml
+- iot-frontend.rwo.yaml
+- iot-software-sensor.rwo.yaml
+- iot-anomaly-detection.rwo.yaml
+- stage-production.rwo.yaml
+- build-artifacts.rwo.yaml
+- build-images.rwo.yaml
