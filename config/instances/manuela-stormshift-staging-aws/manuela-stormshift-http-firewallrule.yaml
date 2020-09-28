@@ -1,0 +1,15 @@
+apiVersion: manuela.redhat.com/v1alpha1
+kind: FirewallRule
+metadata:
+  name: manuela-stormshift-http-firewallrule
+spec:
+  # Add fields here
+  action: pass
+  interface: lan
+  ipprotocol: inet
+  protocol: tcp
+  source: any
+  destination: any
+  destination_port: '80'
+  after: top
+  

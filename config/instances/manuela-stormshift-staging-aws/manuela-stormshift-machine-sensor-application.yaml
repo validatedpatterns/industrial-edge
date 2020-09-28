@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-stormshift-staging-gcp/machine-sensor
+    path: config/instances/manuela-stormshift/machine-sensor
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-machine-sensor

@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
     targetRevision: HEAD
-    path: config/instances/manuela-stormshift/messaging
+    path: config/instances/manuela-stormshift-staging-gcp/messaging
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-messaging
