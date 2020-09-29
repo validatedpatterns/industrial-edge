@@ -7,3 +7,8 @@ resources:
 - stage-production.yaml
 - seed.yaml
 - build-images.yaml
+# Seed Pipelines to build individual component images using RWO PVCs
+- seed-iot-anomaly-detection.yaml
+- seed-iot-consumer.yaml
+- seed-iot-frontend.yaml
+- seed-iot-software-sensor.yaml

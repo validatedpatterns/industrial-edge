@@ -1,0 +1,11 @@
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: iot-consumer-rwo
+spec:
+  resources:
+    requests:
+      storage: 128Mi
+  volumeMode: Filesystem
+  accessModes:
+    - ReadWriteOnce
