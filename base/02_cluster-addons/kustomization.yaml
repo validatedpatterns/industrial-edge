@@ -9,6 +9,7 @@ resources:
   - 02_managed-clusters/baremetal-edge.yaml
   - 02_managed-clusters/staging-aws.yaml
   - 02_managed-clusters/staging-gcp.yaml
+  - 06_opendatahub/subscription.yaml
 
 bases:
   - 03_argocd/
