@@ -31,15 +31,15 @@ objects:
       secret:
         secretName: quay-build-secret
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: stage-production
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
+      # persistentVolumeClaim:
+      #   claimName: stage-production
 parameters:
 - name: TAG
 - name: SOURCE_IMAGE

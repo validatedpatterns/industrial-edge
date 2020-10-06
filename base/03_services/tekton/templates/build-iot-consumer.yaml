@@ -21,18 +21,25 @@ objects:
       secret:
         secretName: argocd-env
     - name: build-artifacts
-      persistentVolumeClaim:
-        claimName: build-artifacts
+      # persistentVolumeClaim:
+      #   claimName: build-artifacts
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: iot-consumer
+      # persistentVolumeClaim:
+      #   claimName: iot-consumer
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 128Mi
     params:
     - name: S2I_BUILDER_IMAGE
       value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
