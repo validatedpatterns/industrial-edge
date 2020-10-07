@@ -1,0 +1,15 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: manuela-ml-workspace
+
+bases:
+- ../../02_cluster-addons/manuela-team-rolebindings/
+- ../../02_cluster-addons/jobs/installplan-approver/
+- github.com/redhat-edge-computing/manuela-dev//operator_subscriptions/seldon?ref=manuela-1.3
+# if included here, the install will fail because kustomize will change the namespace from openshift-operators to manuela-ml-workspace
+#- github.com/sa-mw-dach/manuela-dev//operator_subscriptions/opendatahub?ref=manuela-1.3
+
+resources:
+- manuela-ml-workspace-namespace.yaml
+- manuela-ml-workspace-operatorgroup.yaml
