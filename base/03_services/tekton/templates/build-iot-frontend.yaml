@@ -21,18 +21,25 @@ objects:
       secret:
         secretName: argocd-env
     - name: build-artifacts
-      persistentVolumeClaim:
-        claimName: build-artifacts
+      # persistentVolumeClaim:
+      #   claimName: build-artifacts
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: iot-frontend
+      # persistentVolumeClaim:
+      #   claimName: iot-frontend
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 128Mi
     params:
     - name: S2I_BUILDER_IMAGE
       value: nodeshift/ubi8-s2i-web-app

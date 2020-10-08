@@ -21,18 +21,25 @@ objects:
       secret:
         secretName: argocd-env
     - name: build-artifacts
-      persistentVolumeClaim:
-        claimName: build-artifacts
+      # persistentVolumeClaim:
+      #   claimName: build-artifacts
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: iot-software-sensor
+      # persistentVolumeClaim:
+      #   claimName: iot-software-sensor
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 128Mi
     params:
     - name: S2I_BUILDER_IMAGE
       value: quay.io/quarkus/ubi-quarkus-native-s2i:19.3.1-java11

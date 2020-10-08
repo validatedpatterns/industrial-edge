@@ -21,15 +21,15 @@ objects:
       secret:
         secretName: quay-build-secret
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: build-images
+      volumeClaimTemplate:
+        spec:
+          accessModes:
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 128Mi
+      # persistentVolumeClaim:
+      #   claimName: build-images
     params:
     - name: PATH_CONTEXT
       value: tekton/images/bumpversiontask

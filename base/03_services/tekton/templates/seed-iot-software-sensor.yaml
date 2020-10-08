@@ -24,15 +24,22 @@ objects:
       secret:
         secretName: quay-build-secret
     - name: build-artifacts
-      persistentVolumeClaim:
-        claimName: build-artifacts
+      # persistentVolumeClaim:
+      #   claimName: build-artifacts
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
     - name: gitrepos
-      # volumeClaimTemplate:
-      #   spec:
-      #     accessModes: 
-      #     - ReadWriteMany
-      #     resources:
-      #       requests:
-      #         storage: 1Gi
-      persistentVolumeClaim:
-        claimName: iot-consumer
+      # persistentVolumeClaim:
+      #   claimName: iot-consumer
+      volumeClaimTemplate:
+        spec:
+          accessModes: 
+          - ReadWriteMany
+          resources:
+            requests:
+              storage: 1Gi
