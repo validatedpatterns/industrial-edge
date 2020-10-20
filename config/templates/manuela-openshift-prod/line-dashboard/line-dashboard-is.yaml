@@ -4,13 +4,6 @@ metadata:
   name: line-dashboard
 spec:
   tags:
-  - name: 0.3.1-41
-    from:
-      kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-41
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-43
     from:
       kind: DockerImage
@@ -50,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/manuela/iot-frontend:0.3.1-54
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-55
+    from:
+      kind: DockerImage
+      name: quay.io/manuela/iot-frontend:0.3.1-55
     importPolicy: {}
     referencePolicy:
       type: Local
