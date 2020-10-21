@@ -4,7 +4,7 @@ metadata:
   name: build-and-test
 spec:
   workspaces:
-  - name: gitrepos 
+  - name: gitrepos
   - name: config
   - name: github-secret
   - name: argocd-env-secret
@@ -25,11 +25,11 @@ spec:
   - name: CONFIGMAP_PREFIX
     type: string
     default: IOT_CONSUMER
-  - name: CHAINED_BUILD_DOCKERFILE 
-    type: string 
+  - name: CHAINED_BUILD_DOCKERFILE
+    type: string
     default: ""
-  - name: DEV_REVISION 
-    type: string 
+  - name: DEV_REVISION
+    type: string
     default: master
   tasks:
   - name: git-clone-dev
@@ -50,11 +50,31 @@ spec:
     - name: deleteExisting
       value: "true"
 
+  - name: git-clone-gitops
+    taskRef:
+      name: git-clone-with-tags
+    runAfter:
+    - git-clone-dev
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_OPS_REPO_TEST_URL
+    - name: revision
+      value: master
+    - name: subdirectory
+      value: ops
+    - name: deleteExisting
+      value: "true"
+
   - name: bump-build-version
     taskRef:
       name: bumpversion
     runAfter:
-    - git-clone-dev
+    - git-clone-gitops
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -103,30 +123,11 @@ spec:
     - name: PUSH_FLAGS
       value: origin $(tasks.bump-build-version.results.git-tag)
 
-  - name: git-clone-gitops
-    taskRef:
-      name: git-clone-with-tags
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    params:
-    - name: url_configmapkey
-      value: GIT_OPS_REPO_TEST_URL
-    - name: revision
-      value: master
-    - name: subdirectory
-      value: ops
-    - name: deleteExisting
-      value: "true"
-
   - name: modify-ops-test
     taskRef:
       name: gitops-imagetag
     runAfter:
-    - bump-build-version
-    - git-clone-gitops
+    - push-dev-tag
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -150,7 +151,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -160,7 +161,6 @@ spec:
     taskRef:
       name: github-push
     runAfter:
-    - push-dev-tag
     - commit-ops-test
     workspaces:
     - name: gitrepos
@@ -228,28 +228,39 @@ spec:
   #     - name: MESSAGE
   #       value: "e2e testsuite succesfully executed"
   - name: test-all
-    taskRef: 
+    taskRef:
       name: tkn
     runAfter:
     - argocd-sync-application
     params:
     - name: ARGS
-      value: 
+      value:
       - pipeline
-      - start 
-      - test-all 
-      - --showlog 
+      - start
+      - test-all
+      - --showlog
       - --nocolour
+
+  - name: trigger-staging
+    taskRef:
+      name: openshift-instantiate-template
+    runAfter:
+    - test-all
+    params:
+    - name: TEMPLATE
+      value: stage-production-pipelinerun
+    - name: PARAMS
+      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=$(params.CONFIGMAP_PREFIX) -p SOURCE_IMAGE=$(params.LOCAL_IMAGE) -p COMPONENT_NAME=$(params.COMPONENT_NAME)
 
   - name: cleanup
     taskRef:
       name: cleanup
     runAfter:
-    - test-all
+    - trigger-staging
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     - name: github-secret
       workspace: github-secret
@@ -263,14 +274,3 @@ spec:
     # - name: OPENSHIFT_IMAGESTREAM
     #   value: messaging
 
-  - name: trigger-staging
-    taskRef: 
-      name: openshift-instantiate-template
-    runAfter:
-    - test-all
-    params:
-    - name: TEMPLATE
-      value: stage-production-pipelinerun
-    - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=$(params.CONFIGMAP_PREFIX) -p SOURCE_IMAGE=$(params.LOCAL_IMAGE) -p COMPONENT_NAME=$(params.COMPONENT_NAME)
-  
