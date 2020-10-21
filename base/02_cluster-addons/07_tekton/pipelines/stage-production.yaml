@@ -4,7 +4,7 @@ metadata:
   name: stage-production
 spec:
   workspaces:
-  - name: gitrepos 
+  - name: gitrepos
   - name: config
   - name: github-secret
   - name: quay-secret
@@ -35,24 +35,10 @@ spec:
     - name: deleteExisting
       value: "true"
 
-  - name: checkout-staging-branch
-    taskRef:
-      name: git-checkout
-    runAfter:
-    - git-clone-ops
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    params:
-    - name: subdirectory
-      value: ops
-    - name: BRANCH
-      value: staging-approval
-
   - name: copy-image-to-remote-registry
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - git-clone-ops
     workspaces:
     - name: config
@@ -66,6 +52,20 @@ spec:
       value: $(params.SOURCE_IMAGE)
     - name: TARGET_IMAGE_CONFIGMAPKEY
       value: $(params.CONFIGMAP_PREFIX)_REMOTE_IMAGE
+
+  - name: checkout-staging-branch
+    taskRef:
+      name: git-checkout
+    runAfter:
+    - copy-image-to-remote-registry
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: subdirectory
+      value: ops
+    - name: BRANCH
+      value: staging-approval
 
   - name: modify-ops-prod
     taskRef:
@@ -86,7 +86,7 @@ spec:
       value: $(params.TAG)
     - name: subdirectory
       value: ops
-      
+
   - name: commit-ops-prod
     taskRef:
       name: git-commit
@@ -95,7 +95,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -106,7 +106,6 @@ spec:
       name: github-push
     runAfter:
     - commit-ops-prod
-    - copy-image-to-remote-registry
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -119,14 +118,14 @@ spec:
       value: --set-upstream origin staging-approval
 
   - name: github-pull-request
-    taskRef: 
+    taskRef:
       name: github-add-pull-request
     runAfter:
     - push-ops-prod
     workspaces:
     - name: github-secret
       workspace: github-secret
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: GITHUB_REPO_CONFIGMAPKEY
