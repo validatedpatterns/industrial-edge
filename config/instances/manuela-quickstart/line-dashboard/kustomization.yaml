@@ -16,7 +16,7 @@ bases:
 
 images:
 - name: line-dashboard
-  newName: quay.io/manuela/iot-frontend
+  newName: quay.io/redhat-edge-computing/iot-frontend
   newTag: quickstart
 
 configMapGenerator:

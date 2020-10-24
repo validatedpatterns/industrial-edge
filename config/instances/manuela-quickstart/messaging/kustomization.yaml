@@ -16,5 +16,5 @@ bases:
 
 images:
 - name: messaging
-  newName: quay.io/manuela/iot-consumer
+  newName: quay.io/redhat-edge-computing/iot-consumer
   newTag: quickstart
