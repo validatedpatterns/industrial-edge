@@ -7,49 +7,49 @@ spec:
   - name: 0.3.1-46
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-46
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-46
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-49
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-49
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-49
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-52
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-52
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-52
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-53
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-53
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-53
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-54
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-54
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-54
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-55
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-55
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-55
     importPolicy: {}
     referencePolicy:
       type: Local
   - name: 0.3.1-56
     from:
       kind: DockerImage
-      name: quay.io/manuela/iot-frontend:0.3.1-56
+      name: quay.io/redhat-edge-computing/iot-frontend:0.3.1-56
     importPolicy: {}
     referencePolicy:
       type: Local
