@@ -4,13 +4,6 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2-38
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-38
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-39
     from:
       kind: DockerImage
@@ -50,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-46
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-48
+    from:
+      kind: DockerImage
+      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-48
     importPolicy: {}
     referencePolicy:
       type: Local
