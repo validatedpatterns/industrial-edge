@@ -4,52 +4,31 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2-39
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-39
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-40
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-40
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-41
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-41
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-42
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-42
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-43
     from:
       kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-43
+      name: quay.io/manuela/iot-consumer:0.3.2-43
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-46
+  - name: 0.3.2-45
     from:
       kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-46
+      name: quay.io/manuela/iot-consumer:0.3.2-45
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-48
+  - name: 0.3.2-47
     from:
       kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-48
+      name: quay.io/manuela/iot-consumer:0.3.2-47
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-49
+    from:
+      kind: DockerImage
+      name: quay.io/redhat-edge-computing/iot-consumer:0.3.2-49
     importPolicy: {}
     referencePolicy:
       type: Local
