@@ -25,5 +25,5 @@ configMapGenerator:
 
 images:
 - name: machine-sensor
-  newName: quay.io/manuela/iot-software-sensor
+  newName: quay.io/redhat-edge-computing/iot-software-sensor
   newTag: quickstart
