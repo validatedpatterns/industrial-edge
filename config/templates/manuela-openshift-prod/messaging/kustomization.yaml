@@ -6,4 +6,4 @@ patchesStrategicMerge:
 - messaging-is.yaml
 images:
 - name: messaging
-  newTag: 0.3.2-47
+  newTag: 0.3.2-49
