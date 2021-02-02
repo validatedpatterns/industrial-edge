@@ -10,6 +10,7 @@ metadata:
     cloud: auto-detect
     vendor: auto-detect
     name: staging-aws
+    gitops-mgmt: argocd
   name: staging-aws
 spec:
   hubAcceptsClient: true

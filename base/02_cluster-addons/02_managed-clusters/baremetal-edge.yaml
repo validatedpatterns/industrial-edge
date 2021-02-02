@@ -10,6 +10,7 @@ metadata:
     cloud: auto-detect
     vendor: auto-detect
     name: baremetal-edge
+    gitops-mgmt: argocd
   name: baremetal-edge
 spec:
   hubAcceptsClient: true
