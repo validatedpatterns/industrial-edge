@@ -11,6 +11,7 @@ metadata:
     vendor: auto-detect
     name: baremetal-edge
     gitops-mgmt: argocd
+    manuela: factory
   name: baremetal-edge
 spec:
   hubAcceptsClient: true

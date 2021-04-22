@@ -11,6 +11,7 @@ metadata:
     vendor: auto-detect
     name: staging-gcp
     gitops-mgmt: argocd
+    manuela: factory
   name: staging-gcp
 spec:
   hubAcceptsClient: true
