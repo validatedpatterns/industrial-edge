@@ -17,5 +17,3 @@ bases:
   - 05_manuela-ci/
   - 07_tekton/
 
-transformers:
-  - site-config.yaml

@@ -10,6 +10,3 @@ patchesJson6902:
     kind: InstallConfig
     name: cluster
   path: install-config.name.patch.yaml
-
-transformers:
-- site-config.yaml

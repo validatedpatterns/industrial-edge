@@ -9,6 +9,3 @@ bases:
   - tekton/
   - odh-resources/
 
-transformers:
-  - site-config.yaml
-
