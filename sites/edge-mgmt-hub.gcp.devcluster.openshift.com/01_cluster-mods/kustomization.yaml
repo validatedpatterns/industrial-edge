@@ -1,2 +1,0 @@
-bases:
-- ../../../profiles/production.gcp/01_cluster-mods
