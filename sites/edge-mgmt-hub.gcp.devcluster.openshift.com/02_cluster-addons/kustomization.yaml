@@ -1,2 +1,2 @@
 bases:
-- ../../../profiles/production.gcp/02_cluster-addons
+- ../../../base/02_cluster-addons

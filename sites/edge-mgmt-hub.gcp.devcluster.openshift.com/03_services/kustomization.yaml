@@ -1,2 +1,2 @@
 bases:
-- ../../../profiles/production.gcp/03_services
+- ../../../base/03_services
