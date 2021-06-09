@@ -1,5 +1,0 @@
-apiVersion: kni.akraino.org/v1alpha1
-kind: SiteConfig
-metadata:
-  name: notImportantHere
-config: {}

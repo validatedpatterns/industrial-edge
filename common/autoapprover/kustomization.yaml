@@ -1,0 +1,4 @@
+resources:
+  - 00_sa.yaml
+  - 01_crb.yaml
+  - 02_approver.yaml

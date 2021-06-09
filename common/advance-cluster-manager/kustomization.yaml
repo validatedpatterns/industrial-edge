@@ -1,0 +1,6 @@
+resources:
+  - 00_namespace.yaml
+  - 01_operator-group.yaml
+  - 02_subscription.yaml
+  - 04_multiclusterhub.yaml
+

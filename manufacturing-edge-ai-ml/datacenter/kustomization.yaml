@@ -1,0 +1,17 @@
+resources:
+  - manuela-central/argocd-hub-centraldatacenter.yaml
+
+bases:
+  - ../../common/argocd/
+  - ../../common/openshift-pipelines/
+  - manuela-ci/
+  - ../../common/tekton/
+  - ../../common/advance-cluster-manager/
+  - ../../common/autoapprover/
+  - managed-clusters/
+  - ../../common/opendatahub/
+
+  - tekton/
+  - odh-resources/
+  - argocd-operator-subs/
+  - manuela-team-rolebindings/

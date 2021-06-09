@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: manuela-ml-workspace
 
 bases: 
-- ../manuela-ml-workspace
+- manuela-ml-workspace/
 
 resources:
 # Used with ODH 0.6.1+

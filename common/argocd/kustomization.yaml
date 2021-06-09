@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: argocd
 
 bases:
-- ../manuela-team-rolebindings
+- ../../manufacturing-edge-ai-ml/datacenter/manuela-team-rolebindings
 - ../jobs/installplan-approver
 
 resources:

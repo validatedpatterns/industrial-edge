@@ -10,7 +10,7 @@ metadata:
   name: argocd-label-sub
   namespace: argocd
   annotations:
-    apps.open-cluster-management.io/github-path: base/02_cluster-addons/03_argocd
+    apps.open-cluster-management.io/github-path: common/argocd
 spec:
   channel: argocd-operator-gitops/argocd-operator-channel
   name: argocd-sub
