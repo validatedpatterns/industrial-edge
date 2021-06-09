@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: environment
 data:
+  # TODO: Avoid specifying the github and quay org in multiple places
   GIT_EMAIL: "rnoriega@redhat.com"
   GIT_USERNAME: "oglok"
   GIT_DEV_REPO_URL: https://github.com/redhat-edge-computing/manuela-dev.git
@@ -28,6 +29,5 @@ data:
   IOT_ANOMALY_TEST_KUSTOMIZATION_PATH: config/instances/manuela-tst/kustomization.yaml
   IOT_ANOMALY_PROD_KUSTOMIZATION_PATH: config/templates/manuela-openshift-prod/anomaly-detection/kustomization.yaml
   IOT_ANOMALY_PROD_IMAGESTREAM_PATH: config/templates/manuela-openshift-prod/anomaly-detection/anomaly-detection-is.yaml
-  BUMPVERSION_REMOTE_IMAGE: quay.io/manuela/bumpversion
-  HTTPD_IONIC_REMOTE_IMAGE: quay.io/manuela/httpd-ionic
-  PUSHPROX_REMOTE_IMAGE: quay.io/manuela/pushprox
+  IMAGE_PROVIDER: quay.io
+  IMAGE_ORG: YOUR_QUAY_ORG

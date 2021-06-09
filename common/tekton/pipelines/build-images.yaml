@@ -12,9 +12,15 @@ spec:
   - name: PATH_CONTEXT
     type: string
     default: tekton/images/httpd-ionic
-  - name: OUTPUT_IMAGE_CONFIGMAPKEY
+  - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
     type: string
-    default: HTTPD_IONIC_REMOTE_IMAGE
+    default: quay.io
+  - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
+    type: string
+    default: IMAGE_ORG
+  - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
+    type: string
+    default: httpd-ionic
   - name: DEV_REVISION 
     type: string 
     default: master
@@ -56,5 +62,9 @@ spec:
       value: $(params.PATH_CONTEXT)
     - name: TAG
       value: latest
-    - name: OUTPUT_IMAGE_CONFIGMAPKEY
-      value: $(params.OUTPUT_IMAGE_CONFIGMAPKEY)
+    - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
+      value: $(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)
+    - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
+      value: $(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)
+    - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
+      value: $(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)
