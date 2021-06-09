@@ -12,6 +12,8 @@ spec:
   - name: image
     description: The image+tag that was created
   params:
+  # TODO: Split OUTPUT_IMAGE_CONFIGMAPKEY up into PROVIDER (quay.io), ORG (YOUR_QUAY_ORG), and image (iot-anomaly-detection)
+  #       In order to facilitate a cleaner/shorter environment config map
   - name: PATH_CONTEXT
     default: .
     description: The location of the path to run s2i from.

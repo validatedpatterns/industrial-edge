@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: manuela-ci
 
 bases:
-- ../manuela-team-rolebindings
+- ../../../common/team-rolebindings
 
 resources:
 - manuela-ci-namespace.yaml

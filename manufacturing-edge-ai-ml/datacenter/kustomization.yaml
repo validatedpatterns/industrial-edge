@@ -14,4 +14,4 @@ bases:
   - tekton/
   - odh-resources/
   - argocd-operator-subs/
-  - manuela-team-rolebindings/
+  - ../../common/team-rolebindings/

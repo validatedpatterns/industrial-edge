@@ -9,4 +9,4 @@ bases:
 - secrets
 - tasks
 - pipelines
-- templates
+  #- templates
