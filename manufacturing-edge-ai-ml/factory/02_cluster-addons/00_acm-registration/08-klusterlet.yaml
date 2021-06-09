@@ -1,0 +1,9 @@
+apiVersion: operator.open-cluster-management.io/v1
+kind: Klusterlet
+metadata:
+  name: klusterlet
+spec:
+  clusterName: spoke-cluster
+  namespace: open-cluster-management-agent
+  registrationImagePullSpec: registry.redhat.io/rhacm2/registration-rhel8@sha256:31959369a31dc75dc5c7844377f32a510b3dae3f274c0318418ae4cbf7d0568b
+  workImagePullSpec: registry.redhat.io/rhacm2/work-rhel8@sha256:9edb8e1a4a2b66fa9aef27676ed8e66851f4462287ca3548c58af164e8095897

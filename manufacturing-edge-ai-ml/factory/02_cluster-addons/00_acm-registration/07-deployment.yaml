@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: klusterlet
+  name: klusterlet
+  namespace: open-cluster-management-agent
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: klusterlet
+  template:
+    metadata:
+      labels:
+        app: klusterlet
+    spec:
+      containers:
+      - args:
+        - /registration-operator
+        - klusterlet
+        image: registry.redhat.io/rhacm2/registration-rhel8-operator@sha256:0630bca8263f93a4a1348e6bd5a8689157739e8ab09d4f3354acb4be1bf66dda
+        imagePullPolicy: IfNotPresent
+        livenessProbe:
+          httpGet:
+            path: /healthz
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 2
+          periodSeconds: 10
+        name: klusterlet
+        readinessProbe:
+          httpGet:
+            path: /healthz
+            port: 8443
+            scheme: HTTPS
+          initialDelaySeconds: 2
+      serviceAccountName: klusterlet

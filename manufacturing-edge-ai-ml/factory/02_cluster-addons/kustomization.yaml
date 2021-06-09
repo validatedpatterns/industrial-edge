@@ -1,0 +1,11 @@
+resources:
+- 00_acm-registration/00_klusterlet-crd.yaml
+- 00_acm-registration/03_klusterlet-role.yaml
+- 00_acm-registration/04_cluster-role.yaml
+- 00_acm-registration/05_role-bindings.yaml
+- 00_acm-registration/01_namespace.yaml
+- 00_acm-registration/06_hub-config.yaml
+- 00_acm-registration/02_service-account.yaml
+- 00_acm-registration/07-deployment.yaml
+- 00_acm-registration/08-klusterlet.yaml
+
