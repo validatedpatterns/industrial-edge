@@ -1,15 +1,1 @@
-
-- Remove any duplication with the common pieces from the datacenter
-- Move generic factory pieces into the 'common' area
-- Incorporate anything relevant from blueprint-industrial-edge.git/sites
-  - eg. sites/staging-edge.gcp.devcluster.openshift.com/03_services/argocd-gitops-factory/argocd-staging-gcp-*
-  - eg. sites/staging-edge.gcp.devcluster.openshift.com/02_cluster-addons/00_acm-registration/*
-- Remove the numbers from the directory and file names
-- Create a factoryequvalent of blueprints.git/manufacturing-edge-ai-ml/datacenter
-  - Document that we only a converged 3-node OCP cluster is required
-  - Document that we require hyperthreading (and find out why)
-- Refactor use of IOT_*_REMOTE_IMAGE to use IMAGE_PROVIDER and IMAGE_ORG (see also commit d26acb70a8aec7523d13d9ada997e91a3ad20bcd)
-- Include the kafaka cert section of https://github.com/redhat-edge-computing/industrial-edge-docs in blueprints.git/manufacturing-edge-ai-ml/datacenter/user.patch.yaml 
-- Update industrial-edge-docs.git with the new install process
-- Replace ArgoCD with OpenShift GitOps
-- Preproduce the demos in https://github.com/redhat-edge-computing/industrial-edge-docs/tree/master/docs
+See Jira
