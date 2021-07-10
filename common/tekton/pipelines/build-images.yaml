@@ -14,11 +14,11 @@ spec:
     default: tekton/images/httpd-ionic
   - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
     type: string
-    default: quay.io
+    default: IMAGE_PROVIDER
   - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
     type: string
     default: IMAGE_ORG
-  - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
+  - name: OUTPUT_IMAGE_NAME
     type: string
     default: httpd-ionic
   - name: DEV_REVISION 
@@ -66,5 +66,5 @@ spec:
       value: $(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)
     - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
       value: $(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)
-    - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
-      value: $(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)
+    - name: OUTPUT_IMAGE_NAME
+      value: $(params.OUTPUT_IMAGE_NAME)

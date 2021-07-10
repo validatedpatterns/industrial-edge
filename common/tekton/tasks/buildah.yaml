@@ -28,7 +28,7 @@ spec:
     type: string
   - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
     type: string
-  - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
+  - name: OUTPUT_IMAGE_NAME
     type: string
   - name: TAG
     default: latest 
@@ -40,7 +40,10 @@ spec:
   - name: build
     image: quay.io/buildah/stable:v1.11.0
     script: |
-      buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f $(params.DOCKERFILE) -t $(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)) .
+      PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
+      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY))
+      OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
+      buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f $(params.DOCKERFILE) -t $OUTPUT_IMAGE
     resources: {}
     securityContext:
       privileged: true
@@ -51,8 +54,11 @@ spec:
   - name: push
     image: quay.io/buildah/stable:v1.11.0
     script: |
-      buildah push --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)) docker://$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)):$(params.TAG)
-      echo -n "$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)/$(params.OUTPUT_IMAGE_NAME_CONFIGMAPKEY)):$(params.TAG)" >$(results.image.path)
+      PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
+      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY))
+      OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
+      buildah push --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
+      echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)
     resources: {}
     securityContext:
       privileged: true

@@ -37,7 +37,7 @@ objects:
       value: IMAGE_PROVIDER
     - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
       value: IMAGE_ORG
-    - name: OUTPUT_IMAGE_NAME_CONFIGMAPKEY
+    - name: OUTPUT_IMAGE_NAME
       value: pushprox
     - name: DEV_REVISION 
       value: pushprox
