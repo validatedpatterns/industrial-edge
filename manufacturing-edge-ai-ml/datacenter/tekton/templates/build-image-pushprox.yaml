@@ -35,8 +35,8 @@ objects:
       value: tekton/images/pushprox
     - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
       value: IMAGE_PROVIDER
-    - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
-      value: IMAGE_ORG
+    - name: OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY
+      value: IMAGE_ACCOUNT
     - name: OUTPUT_IMAGE_NAME
       value: pushprox
     - name: DEV_REVISION 

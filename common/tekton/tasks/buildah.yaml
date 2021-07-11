@@ -26,7 +26,7 @@ spec:
     type: string
   - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
     type: string
-  - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
+  - name: OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY
     type: string
   - name: OUTPUT_IMAGE_NAME
     type: string
@@ -41,7 +41,7 @@ spec:
     image: quay.io/buildah/stable:v1.11.0
     script: |
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
-      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY))
+      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
       buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f $(params.DOCKERFILE) -t $OUTPUT_IMAGE
     resources: {}
@@ -55,7 +55,7 @@ spec:
     image: quay.io/buildah/stable:v1.11.0
     script: |
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
-      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY))
+      ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
       buildah push --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
       echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)

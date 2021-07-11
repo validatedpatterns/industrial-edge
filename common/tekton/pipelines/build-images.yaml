@@ -15,9 +15,9 @@ spec:
   - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
     type: string
     default: IMAGE_PROVIDER
-  - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
+  - name: OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY
     type: string
-    default: IMAGE_ORG
+    default: IMAGE_ACCOUNT
   - name: OUTPUT_IMAGE_NAME
     type: string
     default: httpd-ionic
@@ -64,7 +64,7 @@ spec:
       value: latest
     - name: OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY
       value: $(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY)
-    - name: OUTPUT_IMAGE_ORG_CONFIGMAPKEY
-      value: $(params.OUTPUT_IMAGE_ORG_CONFIGMAPKEY)
+    - name: OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY
+      value: $(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY)
     - name: OUTPUT_IMAGE_NAME
       value: $(params.OUTPUT_IMAGE_NAME)
