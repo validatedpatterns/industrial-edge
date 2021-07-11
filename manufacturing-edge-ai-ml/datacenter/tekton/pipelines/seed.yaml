@@ -223,7 +223,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_FRONTEND_REMOTE_IMAGE
+      value: IOT_FRONTEND_IMAGE
 
   - name: copy-image-to-remote-registry-iot-consumer
     taskRef:
@@ -241,7 +241,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_CONSUMER_REMOTE_IMAGE
+      value: IOT_CONSUMER_IMAGE
 
   - name: copy-image-to-remote-registry-iot-anomaly
     taskRef:
@@ -259,7 +259,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_ANOMALY_REMOTE_IMAGE
+      value: IOT_ANOMALY_IMAGE
 
   - name: copy-image-to-remote-registry-iot-software-sensor
     taskRef:
@@ -277,7 +277,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_SWSENSOR_REMOTE_IMAGE
+      value: IOT_SWSENSOR_IMAGE
 
   - name: modify-ops-test-iot-frontend
     taskRef:

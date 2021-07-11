@@ -51,7 +51,7 @@ spec:
     - name: SOURCE_IMAGE
       value: $(params.SOURCE_IMAGE)
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: $(params.CONFIGMAP_PREFIX)_REMOTE_IMAGE
+      value: $(params.CONFIGMAP_PREFIX)_IMAGE
 
   - name: checkout-staging-branch
     taskRef:
