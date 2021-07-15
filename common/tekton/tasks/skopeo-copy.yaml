@@ -19,4 +19,4 @@ spec:
   - name: skopeo-copy
     image: quay.io/redhat-emea-ssa-team/skopeo-ubi:latest
     script: |
-      skopeo copy --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)
+      skopeo copy --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)

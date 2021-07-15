@@ -102,7 +102,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_SWSENSOR_REMOTE_IMAGE
+      value: IOT_SWSENSOR_IMAGE
 
   - name: push-dev-tag
     taskRef:

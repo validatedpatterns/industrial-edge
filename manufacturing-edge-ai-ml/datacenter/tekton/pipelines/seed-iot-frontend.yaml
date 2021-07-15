@@ -104,7 +104,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_FRONTEND_REMOTE_IMAGE
+      value: IOT_FRONTEND_IMAGE
 
   - name: push-dev-tag
     taskRef:

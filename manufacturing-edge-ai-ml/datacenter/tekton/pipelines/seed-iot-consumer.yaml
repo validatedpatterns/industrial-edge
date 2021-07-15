@@ -102,7 +102,7 @@ spec:
     - name: SOURCE_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_CONSUMER_REMOTE_IMAGE
+      value: IOT_CONSUMER_IMAGE
 
   - name: push-dev-tag
     taskRef:
