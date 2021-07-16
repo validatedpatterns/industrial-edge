@@ -43,7 +43,7 @@ spec:
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
-      buildah bud --tls-verify=$(params.TLSVERIFY) --layers -f $(params.DOCKERFILE) -t $OUTPUT_IMAGE
+      buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f $(params.DOCKERFILE) -t $OUTPUT_IMAGE
     resources: {}
     securityContext:
       privileged: true
@@ -57,7 +57,7 @@ spec:
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
-      buildah push --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
+      buildah push --storage-driver=vfs --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
       echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)
     resources: {}
     securityContext:

@@ -4,7 +4,7 @@ kind: Kustomization
 namespace: manuela-ci
 
 bases:
-# - persistent-volume-claims #TODO: Remove the creation of PVC when volumeClaimTemplates are working successfully
+- persistent-volume-claims #TODO: Remove the creation of PVC when volumeClaimTemplates are working successfully
 - configmaps
 - secrets
 - tasks
