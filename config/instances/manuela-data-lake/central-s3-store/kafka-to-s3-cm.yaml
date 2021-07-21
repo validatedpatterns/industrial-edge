@@ -13,6 +13,6 @@ data:
     s3.bucket.name=manuela-data-lake
     s3.message.aggregation.count=10
     s3.custom.endpoint.enabled=true
-    s3.custom.endpoint.url=s3-openshift-storage.apps.edge-mgmt-hub.gcp.devcluster.openshift.com
+    s3.custom.endpoint.url=s3-openshift-storage.apps.claudiol-dc-test.blueprints.rhecoeng.com
 
     
