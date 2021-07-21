@@ -9,8 +9,8 @@ spec:
   project: default
   source:
     #repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
-    repoURL: https://github.com/dagger-refuse-cool/manuela-gitops/?ref=claudiol-gitops-changes
-    targetRevision: HEAD
+    repoURL: https://github.com/dagger-refuse-cool/manuela-gitops.git
+    targetRevision: claudiol-gitops-changes
     path: config/instances/manuela-tst
   destination:
     server: https://kubernetes.default.svc
