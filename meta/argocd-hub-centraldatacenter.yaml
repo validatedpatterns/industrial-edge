@@ -8,9 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    #repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
     repoURL: https://github.com/dagger-refuse-cool/manuela-gitops.git
-      #targetRevision: HEAD
     targetRevision: claudiol-gitops-changes
     path: deployment/hub-centraldatacenter
   destination:
