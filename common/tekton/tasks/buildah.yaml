@@ -46,7 +46,7 @@ spec:
       buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f $(params.DOCKERFILE) -t $OUTPUT_IMAGE
     resources: {}
     securityContext:
-      privileged: true
+      privileged: false
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers
@@ -61,7 +61,7 @@ spec:
       echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)
     resources: {}
     securityContext:
-      privileged: true
+      privileged: false
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers
