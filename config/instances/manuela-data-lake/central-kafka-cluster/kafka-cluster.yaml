@@ -15,7 +15,7 @@ spec:
         type: route
         overrides:
           bootstrap:
-            host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.claudiol-dc-test.blueprints.rhecoeng.com
+            host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.claudiol-dc.blueprints.rhecoeng.com
         configuration:
           brokerCertChainAndKey:
             certificate: tls.crt
