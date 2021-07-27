@@ -3,4 +3,4 @@ kind: Route
 metadata:
   name: pushprox-proxy
 spec:
-  host: pushprox-proxy-manuela-argocd-aggregator.apps.edge-mgmt-hub.gcp.devcluster.openshift.com
+  host: pushprox-proxy-manuela-argocd-aggregator.apps.claudiol-dc-test.blueprints.rhecoeng.com

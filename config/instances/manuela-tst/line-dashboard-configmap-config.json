@@ -1,5 +1,5 @@
 {
-    "websocketHost": "http://messaging-manuela-tst-all.apps.edge-mgmt-hub.gcp.devcluster.openshift.com",
+    "websocketHost": "http://messaging-manuela-tst-all.apps.claudiol-dc-test.blueprints.rhecoeng.com",
     "websocketPath": "/api/service-web/socket",
     "SERVER_TIMEOUT": 20000
 }

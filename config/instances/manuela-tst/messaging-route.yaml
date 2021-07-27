@@ -3,4 +3,4 @@ kind: Route
 metadata:
   name: messaging
 spec:
-  host: messaging-manuela-tst-all.apps.edge-mgmt-hub.gcp.devcluster.openshift.com
+  host: messaging-manuela-tst-all.apps.claudiol-dc-test.blueprints.rhecoeng.com

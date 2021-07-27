@@ -8,8 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
-    targetRevision: HEAD
+    repoURL: https://github.com/dagger-refuse-cool/manuela-gitops.git
+    targetRevision: claudiol-gitops-changes
     path: deployment/hub-factorydatacenter
   destination:
     server: https://kubernetes.default.svc
