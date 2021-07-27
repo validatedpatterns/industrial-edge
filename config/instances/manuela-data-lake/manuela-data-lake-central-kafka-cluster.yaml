@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://github.com/dagger-refuse-cool/manuela-gitops.git
-    targetRevision: claudiol-gitops-changes
+    targetRevision: HEAD
     path: config/instances/manuela-data-lake/central-kafka-cluster
   destination:
     server: https://kubernetes.default.svc
