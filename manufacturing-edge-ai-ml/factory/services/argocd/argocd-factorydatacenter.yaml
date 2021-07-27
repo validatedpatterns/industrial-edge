@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://github.com/ipbabble/manuela-gitops.git
     targetRevision: HEAD
-    path: deployment/staging-gcp-factorydatacenter
+    path: deployment/staging-factorydatacenter
   destination:
     server: https://kubernetes.default.svc
     namespace: argocd
