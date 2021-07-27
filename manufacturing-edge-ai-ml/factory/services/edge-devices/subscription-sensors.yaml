@@ -1,0 +1,16 @@
+apiVersion: apps.open-cluster-management.io/v1
+kind: Subscription
+metadata:
+  name: manuela-machine-sensor-subscription
+  namespace: manuela-sensors-mcs
+  labels:
+    app: manuela-machine-sensors
+  annotations:
+    apps.open-cluster-management.io/github-path: config/instances/manuela-mcs-quickstart/machine-sensor
+    apps.open-cluster-management.io/github-branch: master
+spec:
+  name: manuela-machine-sensor-subscription
+  channel: manuela-sensors-mcs/manuela-mcs-gitops-channel-sensores
+  placement:
+    local: true
+
