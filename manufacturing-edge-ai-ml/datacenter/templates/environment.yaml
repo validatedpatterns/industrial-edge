@@ -1,0 +1,18 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: environment
+data:
+  GIT_EMAIL: "abeekhof@redhat.com"
+  GIT_USERNAME: "beekhof"
+  GIT_PROVIDER: {{ .Values.git.provider }}
+  GIT_ACCOUNT:  {{ .Values.git.account }}
+  IMAGE_PROVIDER: {{ .Values.quay.provider }}
+  IMAGE_ACCOUNT: {{ .Values.quay.account }}
+  IOT_CONSUMER_IMAGE: iot-consumer
+  IOT_FRONTEND_IMAGE: iot-frontend
+  IOT_SWSENSOR_IMAGE: iot-software-sensor
+  IOT_ANOMALY_IMAGE:  iot-anomaly-detection
+  GIT_DEV_REPO_URL: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/manuela-dev.git
+  GIT_OPS_REPO_TEST_URL: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/manuela-gitops.git
+  GIT_OPS_REPO_PROD_URL: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/manuela-gitops.git

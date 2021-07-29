@@ -1,0 +1,22 @@
+image:
+  ## Name of the image you want to build/deploy
+  ## Defaults to the release name
+  name:
+  ## Tag that you want to build/deploy
+  tag: latest
+
+git:
+  provider: github.com
+  account: dagger-refuse-cool
+
+  # Go to: https://github.com/settings/tokens
+  # Then: echo -n 'your string value' | base64
+  authToken: BASE64STRING
+  accountToken: BASE64STRING
+
+quay:
+  provider: quay.io
+  account: dagger-refuse-cool
+
+  # Quay -> Robot Accounts -> Kubernetes Secret -> View
+  authToken: BASE64STRING
