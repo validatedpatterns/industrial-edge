@@ -4,20 +4,6 @@ metadata:
   name: anomaly-detection
 spec:
   tags:
-  - name: 0.3.2-33
-    from:
-      kind: DockerImage
-      name: quay.io/redhat-edge-computing/iot-anomaly-detection:0.3.2-33
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-34
-    from:
-      kind: DockerImage
-      name: quay.io/dagger-refuse-cool/iot-anomaly-detection:0.3.2-34
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-35
     from:
       kind: DockerImage
@@ -36,6 +22,20 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/claudiol/iot-anomaly-detection:0.3.2-37
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-38
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-38
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-39
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-39
     importPolicy: {}
     referencePolicy:
       type: Local
