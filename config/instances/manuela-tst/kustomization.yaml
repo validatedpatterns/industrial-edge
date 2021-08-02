@@ -14,17 +14,20 @@ bases:
 configMapGenerator:
 - name: machine-sensor-1
   behavior: merge
-  env: machine-sensor-1-configmap.properties
+  envs: 
+    - machine-sensor-1-configmap.properties
 - name: machine-sensor-2
   behavior: merge
-  env: machine-sensor-2-configmap.properties
+  envs: 
+    - machine-sensor-2-configmap.properties
 - name: line-dashboard-configmap
   behavior: replace
   files:
   - config.json=line-dashboard-configmap-config.json
 - name: messaging-configmap
   behavior: merge
-  env: messaging-configmap.properties
+  envs: 
+    - messaging-configmap.properties
 patchesStrategicMerge:
 - line-dashboard-route.yaml
 - messaging-route.yaml
