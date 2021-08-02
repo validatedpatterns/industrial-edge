@@ -4,13 +4,6 @@ metadata:
   name: anomaly-detection
 spec:
   tags:
-  - name: 0.3.2-36
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-36
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-37
     from:
       kind: DockerImage
@@ -36,6 +29,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/claudiol/iot-anomaly-detection:0.3.2-40
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-41
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-41
     importPolicy: {}
     referencePolicy:
       type: Local
