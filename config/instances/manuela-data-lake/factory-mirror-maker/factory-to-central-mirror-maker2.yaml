@@ -8,7 +8,7 @@ spec:
   connectCluster: manuela-central
   clusters:
     - alias: manuela-central
-      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.apps.claudiol-dc.blueprints.rhecoeng.com:443'
+      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.apps.claudiol-dc-test.blueprints.rhecoeng.com:443'
       tls:
         trustedCertificates:
         - certificate: tls.crt
