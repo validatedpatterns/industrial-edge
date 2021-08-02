@@ -10,8 +10,6 @@ resources:
 
 configMapGenerator:
 - name: machine-sensor-1
-  envs: 
-  - machine-sensor-1-configmap.properties
+  env: machine-sensor-1-configmap.properties
 - name: machine-sensor-2
-  envs: 
-  - machine-sensor-2-configmap.properties
+  env: machine-sensor-2-configmap.properties
