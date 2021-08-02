@@ -9,5 +9,4 @@ resources:
 
 configMapGenerator:
 - name: messaging-configmap
-  envs:
-  - messaging-configmap.properties
+  env: messaging-configmap.properties
