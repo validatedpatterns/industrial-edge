@@ -10,4 +10,4 @@ spec:
   name: amq-broker
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: amq-broker-operator.v0.15.0
+  startingCSV: amq-broker-operator.v7.8.0
