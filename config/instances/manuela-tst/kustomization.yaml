@@ -14,20 +14,20 @@ bases:
 configMapGenerator:
 - name: machine-sensor-1
   behavior: merge
-  envs: 
-    - machine-sensor-1-configmap.properties
+  envs:
+  - machine-sensor-1-configmap.properties
 - name: machine-sensor-2
   behavior: merge
-  envs: 
-    - machine-sensor-2-configmap.properties
+  envs:
+  - machine-sensor-2-configmap.properties
 - name: line-dashboard-configmap
   behavior: replace
   files:
   - config.json=line-dashboard-configmap-config.json
 - name: messaging-configmap
   behavior: merge
-  envs: 
-    - messaging-configmap.properties
+  envs:
+  - messaging-configmap.properties
 patchesStrategicMerge:
 - line-dashboard-route.yaml
 - messaging-route.yaml
@@ -38,13 +38,13 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  newTag: 0.3.2-68
+  newTag: 0.3.2-69
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  newTag: 0.3.1-38
+  newTag: 0.3.1-40
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: 0.3.1-63
+  newTag: 0.3.1-64
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: 0.3.2-41
+  newTag: 0.3.2-42
