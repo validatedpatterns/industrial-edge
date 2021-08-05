@@ -1,9 +1,7 @@
-# kustomize barfs on this due to duplication
-#apiVersion: v1
-#kind: Namespace
-#metadata:
-#  name: argocd
-#---
+# This adds argoCD to all clusters managed by ACM
+#
+# Probably it needs to only apply to factory clusters
+# I remain to be convinced this is the best way to achieve the desired result
 apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
