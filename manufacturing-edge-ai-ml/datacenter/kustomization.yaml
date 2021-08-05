@@ -1,5 +1,6 @@
 resources:
   - manuela-central/argocd-hub-centraldatacenter.yaml
+  - manuela-central/argocd-manuela.yaml
 
 bases:
   - ../../common/argocd/
