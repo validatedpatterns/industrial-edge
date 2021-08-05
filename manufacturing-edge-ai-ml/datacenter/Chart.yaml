@@ -3,5 +3,5 @@ description: A Helm chart to build and deploy MANUela
 keywords:
 - runtimes
 - blueprint
-name: manuela
+name: datacenter
 version: 0.0.3
