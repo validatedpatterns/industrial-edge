@@ -3,27 +3,9 @@ kind: Application
 metadata:
   name: centraldatacenter
   namespace: argocd
-  finalizers:
-  - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
     repoURL: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/manuela-gitops.git
     targetRevision: HEAD
     path: deployment/hub-centraldatacenter
-  destination:
-    server: https://kubernetes.default.svc
-    namespace: argocd
-  syncPolicy:
-    automated: 
-      prune: true
-      selfHeal: true
-  ignoreDifferences:
-  - group: apps
-    kind: Deployment
-    jsonPointers:
-    - /spec/replicas
-  - group: route.openshift.io
-    kind: Route
-    jsonPointers:
-    - /status
