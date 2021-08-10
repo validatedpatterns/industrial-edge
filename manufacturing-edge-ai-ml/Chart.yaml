@@ -1,0 +1,14 @@
+apiVersion: v2
+description: A Helm chart to build and deploy MANUela
+keywords:
+- runtimes
+- blueprint
+name: manuela
+version: 0.0.1
+dependencies:
+- name: bootstrap
+  version: 0.0.1
+  condition: bootstrap.enabled
+- name: datacenter
+  version: 0.0.3
+#- 

@@ -1,3 +1,4 @@
+enabled: false
 global:
   git:
     provider: github.com
@@ -5,12 +6,12 @@ global:
 
     # Go to: https://github.com/settings/tokens
     # Then: echo -n 'your string value' | base64
-    authToken: BASE64STRING
-    accountToken: BASE64STRING
+    authToken: BASE64
+    accountToken: BASE64
 
   quay:
     provider: quay.io
     account: PLAINTEXT
 
     # Quay -> Robot Accounts -> Kubernetes Secret -> View
-    authToken: BASE64STRING
+    authToken: BASE64

@@ -5,4 +5,4 @@ metadata:
   namespace: argocd-operator-gitops
 spec:
   type: Git
-  pathname: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/blueprint-management-hub.git
+  pathname: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprint-management-hub.git

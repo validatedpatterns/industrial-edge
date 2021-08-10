@@ -4,5 +4,5 @@ metadata:
   name: acm-channel-blueprint-industrial-edge
   namespace: acm-blueprint-industrial-edge-gitops
 spec:
-  pathname: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/blueprint-industrial-edge.git
+  pathname: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprint-industrial-edge.git
   type: Git

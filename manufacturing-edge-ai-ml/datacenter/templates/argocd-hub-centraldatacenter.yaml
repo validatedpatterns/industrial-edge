@@ -6,6 +6,6 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://{{ .Values.git.provider }}/{{ .Values.git.account }}/manuela-gitops.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/manuela-gitops.git
     targetRevision: HEAD
     path: deployment/hub-centraldatacenter

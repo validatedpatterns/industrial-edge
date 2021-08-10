@@ -1,0 +1,6 @@
+bases:
+#- github.com/dagger-refuse-cool/blueprint-elements-library/manufacturing-edge-ai-ml/datacenter
+- ../datacenter
+
+patches:
+- helm.patch.yaml
