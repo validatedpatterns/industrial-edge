@@ -5,4 +5,4 @@ metadata:
   namespace: argocd-operator-gitops
 spec:
   type: Git
-  pathname: https://github.com/dagger-refuse-cool/blueprint-elements-library.git
+  pathname: https://github.com/dagger-refuse-cool/blueprints.git

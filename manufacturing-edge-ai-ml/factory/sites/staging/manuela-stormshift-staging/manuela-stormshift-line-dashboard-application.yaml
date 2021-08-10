@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/dagger-refuse-cool/blueprint-elements-library.git
+    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
     targetRevision: HEAD
     path: factory/sites/staging/manuela-stormshift-staging/line-dashboard
   destination:

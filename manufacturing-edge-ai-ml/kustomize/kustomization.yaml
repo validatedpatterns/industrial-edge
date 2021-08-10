@@ -1,5 +1,5 @@
 bases:
-#- github.com/dagger-refuse-cool/blueprint-elements-library/manufacturing-edge-ai-ml/datacenter
+#- github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/datacenter
 - ../datacenter
 
 patches:
