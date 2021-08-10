@@ -15,4 +15,4 @@ resources:
 - argocd-application-controller-cluster-admin-role-binding.yaml
 - endpoints-access-role.yaml
 - argocd-redis-ha-rolebinding.yaml
-- argocd.yaml
+# argocd.yaml
