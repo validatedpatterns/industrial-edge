@@ -187,7 +187,6 @@ spec:
     listKind: KlusterletAddonConfigList
     plural: klusterletaddonconfigs
     singular: klusterletaddonconfig
-  preserveUnknownFields: true
   scope: Namespaced
   versions:
   - name: v1

@@ -250,7 +250,6 @@ spec:
     shortNames:
     - mch
     singular: multiclusterhub
-  preserveUnknownFields: true
   scope: Namespaced
   versions:
   - name: v1

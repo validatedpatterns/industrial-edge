@@ -818,7 +818,6 @@ spec:
     listKind: ArgoCDList
     plural: argocds
     singular: argocd
-  preserveUnknownFields: true
   scope: Namespaced
   versions:
   - name: v1alpha1

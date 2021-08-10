@@ -156,7 +156,6 @@ spec:
     listKind: PlacementRuleList
     plural: placementrules
     singular: placementrule
-  preserveUnknownFields: true
   scope: Namespaced
   versions:
   - additionalPrinterColumns:

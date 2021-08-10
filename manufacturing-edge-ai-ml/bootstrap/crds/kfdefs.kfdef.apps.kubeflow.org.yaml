@@ -89,7 +89,6 @@ spec:
     listKind: KfDefList
     plural: kfdefs
     singular: kfdef
-  preserveUnknownFields: true
   scope: Namespaced
   versions:
   - name: v1
