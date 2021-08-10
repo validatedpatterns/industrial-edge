@@ -3,3 +3,7 @@ kind: Application
 metadata:
   name: manuela
   namespace: argocd
+spec:
+  destination:
+    namespace: argocd
+    server: https://kubernetes.default.svc

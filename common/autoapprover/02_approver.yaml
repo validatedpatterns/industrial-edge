@@ -4,6 +4,7 @@ metadata:
   name: autoapprover
   namespace: openshift-infra
 spec:
+  serviceName: autoapprover
   updateStrategy:
     type: RollingUpdate
   selector:
