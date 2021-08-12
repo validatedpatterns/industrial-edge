@@ -6,9 +6,9 @@ keywords:
 name: manuela
 version: 0.0.1
 dependencies:
-- name: bootstrap
+- name: secrets
   version: 0.0.1
-  condition: bootstrap.enabled
-- name: datacenter
-  version: 0.0.3
+  condition: secrets.enabled
+- name: applications
+  version: 0.0.1
 #- 
