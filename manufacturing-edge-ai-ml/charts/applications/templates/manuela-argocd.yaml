@@ -1,0 +1,45 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  name: manuela-argocd
+  namespace: manuela
+spec:
+  configManagementPlugins: "- name: kustomize-version\n  generate:\n    command: [sh,
+    -c]\n    args: [\"kustomize version 1>&2 && exit 1\"]\n- name: kustomize-with-helm\n
+    \ generate:\n    command: [\"kustomize\"]\n    args: [\"build\", \"--enable-helm\"]\n- name:
+    helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
+    dependency build\"]\n  generate:\n    command: [sh, -c]\n    args: [\"helm template
+    --release-name manuela-${MANUELA_VERSION} --set git.account={{ .Values.global.git.account }}
+    --set git.provider={{ .Values.global.git.provider }} . --post-renderer ./kustomize 2>/dev/null\"]
+    \ \n"
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: "2"
+        memory: 2Gi
+      requests:
+        cpu: 250m
+        memory: 1Gi
+  server:
+    route:
+      enabled: true
+  grafana:
+    enabled: false
+  ha:
+    enabled: false
+  initialSSHKnownHosts: {}
+  prometheus:
+    enabled: false
+  rbac:
+    defaultPolicy: role:admin
+  repo:
+    #image: quay.io/abeekhof/argocd
+    #version: v1.1.2-4.2
+    resources:
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi

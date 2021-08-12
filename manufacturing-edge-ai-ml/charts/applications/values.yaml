@@ -1,0 +1,10 @@
+global:
+  git:
+    provider: github.com
+    account: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    target: HEAD
+
+  quay:
+    provider: quay.io
+    account: PLAINTEXT

@@ -1,0 +1,50 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela
+  namespace: manuela
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: manuela
+  source:
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+    path: manufacturing-edge-ai-ml/charts/applications
+    targetRevision: {{ .Values.global.git.target }}
+    helm:
+	releaseName: manuela-release-v1
+	global:
+	  git:
+	    provider: {{ .Values.global.git.provider }}
+	    account: {{ .Values.global.git.account }}
+	    target: {{ .Values.global.git.target }}
+	    email: {{ .Values.global.git.email }}
+---
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela
+  namespace: manuela
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: manuela
+  source:
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+    path: manufacturing-edge-ai-ml/charts/pipelines
+    targetRevision: {{ .Values.global.git.target }}
+    helm:
+	releaseName: 0.0.1
+	global:
+	  git:
+	    provider: {{ .Values.global.git.provider }}
+	    account: {{ .Values.global.git.account }}
+	    target: {{ .Values.global.git.target }}
+	    email: {{ .Values.global.git.email }}
+    plugin:
+      env:
+      - name: MANUELA_VERSION
+        value: 0.0.1
+      name: helm-with-kustomize
