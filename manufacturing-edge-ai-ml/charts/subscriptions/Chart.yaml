@@ -1,0 +1,8 @@
+apiVersion: v2
+description: A Helm chart to build and deploy MANUela
+keywords:
+- subscriptions
+- runtimes
+- blueprint
+name: manuela-subscriptions
+version: 0.0.1

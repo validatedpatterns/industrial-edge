@@ -1,0 +1,6 @@
+subscription:
+  installPlanApproval: Automatic
+  argocd: v0.0.11
+  pipelines: v1.1.1
+  acm: release-2.0
+  opendatahub: v0.6.1
