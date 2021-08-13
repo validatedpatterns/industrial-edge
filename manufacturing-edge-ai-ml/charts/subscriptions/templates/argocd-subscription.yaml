@@ -7,9 +7,9 @@ metadata:
     operators.coreos.com/openshift-gitops-operator.openshift-operators: ""
 spec:
   channel: stable
-  installPlanApproval: {{ .Values.subscription.installPlanApproval }}
+  installPlanApproval: {{ .Values.installPlanApproval }}
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: openshift-gitops-operator.{{ .Values.subscription.gitops }}
+  startingCSV: openshift-gitops-operator.{{ .Values.version.gitops }}
   

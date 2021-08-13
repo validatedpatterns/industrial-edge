@@ -5,9 +5,9 @@ metadata:
   namespace: openshift-operators
 spec:
   channel: beta
-  installPlanApproval: {{ .Values.subscription.installPlanApproval }}
+  installPlanApproval: {{ .Values.installPlanApproval }}
   name: opendatahub-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: opendatahub-operator.{{ .Values.subscription.opendatahub }}
+  startingCSV: opendatahub-operator.{{ .Values.version.opendatahub }}
 

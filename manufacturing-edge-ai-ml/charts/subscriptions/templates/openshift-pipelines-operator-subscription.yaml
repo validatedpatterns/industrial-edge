@@ -5,8 +5,8 @@ metadata:
   namespace: openshift-operators
 spec:
   channel: preview
-  installPlanApproval: {{ .Values.subscription.installPlanApproval }}
+  installPlanApproval: {{ .Values.installPlanApproval }}
   name: openshift-pipelines-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: openshift-pipelines-operator.{{ .Values.subscription.pipelines }}
+  startingCSV: openshift-pipelines-operator.{{ .Values.version.pipelines }}

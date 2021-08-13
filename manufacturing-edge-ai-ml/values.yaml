@@ -22,3 +22,11 @@ secrets:
     # Then: echo -n 'your string value' | base64
     authToken: BASE64STRING
     accountToken: BASE64STRING
+
+subscriptions:
+  installPlanApproval: Automatic
+  version:
+    gitops: v1.2.0
+    pipelines: v1.1.1
+    acm: release-2.0
+    opendatahub: v0.6.1
