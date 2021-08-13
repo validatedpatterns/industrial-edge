@@ -1,0 +1,139 @@
+apiVersion: v1
+items:
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: openshift-gitops-edit
+    namespace: manuela-ci
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: edit
+  subjects:
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: manuela-ci
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      argocds.argoproj.io/name: openshift-gitops
+      argocds.argoproj.io/namespace: openshift-gitops
+    labels:
+      app.kubernetes.io/managed-by: openshift-gitops
+      app.kubernetes.io/name: argocd-application-controller
+      app.kubernetes.io/part-of: argocd
+    name: openshift-gitops-argocd-application-controller
+    namespace: manuela-ci
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openshift-gitops-argocd-application-controller
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      argocds.argoproj.io/name: openshift-gitops
+      argocds.argoproj.io/namespace: openshift-gitops
+    labels:
+      app.kubernetes.io/managed-by: openshift-gitops
+      app.kubernetes.io/name: argocd-redis-ha
+      app.kubernetes.io/part-of: argocd
+    name: openshift-gitops-argocd-redis-ha
+    namespace: manuela-ci
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openshift-gitops-argocd-redis-ha
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-redis-ha
+    namespace: openshift-gitops
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    annotations:
+      argocds.argoproj.io/name: openshift-gitops
+      argocds.argoproj.io/namespace: openshift-gitops
+    labels:
+      app.kubernetes.io/managed-by: openshift-gitops
+      app.kubernetes.io/name: argocd-server
+      app.kubernetes.io/part-of: argocd
+    name: openshift-gitops-argocd-server
+    namespace: manuela-ci
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: Role
+    name: openshift-gitops-argocd-server
+  subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-server
+    namespace: openshift-gitops
+- apiVersion: rbac.authorization.k8s.io/v1
+  kind: RoleBinding
+  metadata:
+    name: openshift-gitops-pipelines-scc-rolebinding
+    namespace: manuela-ci
+  roleRef:
+    apiGroup: rbac.authorization.k8s.io
+    kind: ClusterRole
+    name: pipelines-scc-clusterrole
+  subjects:
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: manuela-ci
+#- apiVersion: rbac.authorization.k8s.io/v1
+#  kind: RoleBinding
+#  metadata:
+#    annotations:
+#      openshift.io/description: Allows deploymentconfigs in this namespace to rollout
+#        pods in this namespace.  It is auto-managed by a controller; remove subjects
+#        to disable.
+#    name: system:deployers
+#    namespace: manuela-ci
+#  roleRef:
+#    apiGroup: rbac.authorization.k8s.io
+#    kind: ClusterRole
+#    name: system:deployer
+#  subjects:
+#  - kind: ServiceAccount
+#    name: deployer
+#    namespace: manuela-ci
+#- apiVersion: rbac.authorization.k8s.io/v1
+#  kind: RoleBinding
+#  metadata:
+#    annotations:
+#      openshift.io/description: Allows builds in this namespace to push images to
+#        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+#    name: system:image-builders
+#    namespace: manuela-ci
+#  roleRef:
+#    apiGroup: rbac.authorization.k8s.io
+#    kind: ClusterRole
+#    name: system:image-builder
+#  subjects:
+#  - kind: ServiceAccount
+#    name: builder
+#    namespace: manuela-ci
+#- apiVersion: rbac.authorization.k8s.io/v1
+#  kind: RoleBinding
+#  metadata:
+#    annotations:
+#      openshift.io/description: Allows all pods in this namespace to pull images from
+#        this namespace.  It is auto-managed by a controller; remove subjects to disable.
+#    name: system:image-pullers
+#    namespace: manuela-ci
+#  roleRef:
+#    apiGroup: rbac.authorization.k8s.io
+#    kind: ClusterRole
+#    name: system:image-puller
+#  subjects:
+#  - apiGroup: rbac.authorization.k8s.io
+#    kind: Group
+#    name: system:serviceaccounts:manuela-ci
+kind: List
+metadata:
