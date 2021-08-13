@@ -21,5 +21,3 @@ spec:
       name: helm-with-kustomize
   syncPolicy:
     automated: {}
-    syncOptions:
-    - CreateNamespace=true
