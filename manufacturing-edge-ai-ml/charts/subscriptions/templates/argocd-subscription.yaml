@@ -1,13 +1,15 @@
 apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
-  name: argocd-operator
-  namespace: argocd
+  name: openshift-gitops-operator
+  namespace: openshift-operators
+  labels:
+    operators.coreos.com/openshift-gitops-operator.openshift-operators: ""
 spec:
-  channel: alpha
+  channel: stable
   installPlanApproval: {{ .Values.subscription.installPlanApproval }}
-  name: argocd-operator
-  source: community-operators
+  name: openshift-gitops-operator
+  source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: argocd-operator.{{ .Values.subscription.argocd }}
+  startingCSV: openshift-gitops-operator.{{ .Values.subscription.gitops }}
   
