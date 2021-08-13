@@ -27,3 +27,7 @@ spec:
         value: {{ .Values.global.git.email }}
       - name: global.git.username
         value: {{ .Values.global.git.username }}
+  syncPolicy:
+    automated: {}
+    syncOptions:
+    - CreateNamespace=true

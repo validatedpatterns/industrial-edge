@@ -20,5 +20,6 @@ spec:
         value: 0.0.1
       name: helm-with-kustomize
   syncPolicy:
+    automated: {}
     syncOptions:
     - CreateNamespace=true
