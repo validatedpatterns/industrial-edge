@@ -1,5 +1,5 @@
 bases:
-  - ../../../common/tekton/
+  - tekton-common/
   - tekton/
   # ../../common/team-rolebindings/
 
