@@ -2,7 +2,7 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: manuela-pipelines
-  namespace: manuela
+  namespace: manuela-ci
   labels:
     app.kubernetes.io/instance: manuela
 spec:
