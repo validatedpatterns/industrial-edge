@@ -47,8 +47,8 @@ spec:
   rbac:
     defaultPolicy: role:admin
   repo:
-    #image: quay.io/abeekhof/argocd
-    #version: v1.1.2-4.2
+    image: quay.io/abeekhof/argocd
+    version: v1.1.2-4.2
     resources:
       limits:
         cpu: "1"
