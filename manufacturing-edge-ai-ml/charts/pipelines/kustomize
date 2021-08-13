@@ -1,6 +1,9 @@
-#!/bin/bash
+#!/bin/bash -x
 
-BASE=`basename $0`
+BASE=`dirname $0`
+if [ $BASE = $PWD ]; then 
+    BASE=./
+fi
 
 cat <&0 > "$BASE/helm.patch.yaml"
 

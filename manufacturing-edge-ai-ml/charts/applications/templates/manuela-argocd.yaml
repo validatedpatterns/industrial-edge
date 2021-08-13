@@ -12,7 +12,7 @@ spec:
     helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
     dependency build\"]\n  generate:\n    command: [sh, -c]\n    args: [\"helm template
     --release-name manuela-${BLUEPRINT_VERSION} --set git.account={{ .Values.global.git.account }}
-    --set git.provider={{ .Values.global.git.provider }} . --post-renderer ./kustomize 2>/dev/null\"]
+    --set git.provider={{ .Values.global.git.provider }} . --post-renderer ./kustomize\"]
     \ \n"
   controller:
     processors: {}
