@@ -1,0 +1,21 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela-pipelines
+  namespace: manuela
+  labels:
+    app.kubernetes.io/instance: manuela
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: manuela
+  source:
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+    path: manufacturing-edge-ai-ml/charts/pipelines
+    targetRevision: {{ .Values.global.git.target }}
+    plugin:
+      env:
+      - name: BLUEPRINT_VERSION
+        value: 0.0.1
+      name: helm-with-kustomize
