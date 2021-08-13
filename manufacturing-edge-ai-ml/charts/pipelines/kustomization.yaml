@@ -1,0 +1,10 @@
+resources:
+  - manuela-ci-namespace.yaml
+
+bases:
+  - ../../../common/tekton/
+  - tekton/
+  # ../../common/team-rolebindings/
+
+#patches:
+#- helm.patch.yaml

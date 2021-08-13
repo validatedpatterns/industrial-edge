@@ -1,0 +1,8 @@
+#!/bin/bash
+
+BASE=`basename $0`
+
+cat <&0 > "$BASE/helm.patch.yaml"
+
+#kubectl kustomize "$BASE" > "$BASE/result.yaml"
+kubectl kustomize "$BASE" && rm "$BASE/helm.patch.yaml" 
