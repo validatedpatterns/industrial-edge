@@ -25,3 +25,5 @@ spec:
         value: {{ .Values.global.git.target }}
       - name: global.git.email
         value: {{ .Values.global.git.email }}
+      - name: global.git.username
+        value: {{ .Values.global.git.username }}

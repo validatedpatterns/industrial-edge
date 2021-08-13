@@ -2,6 +2,7 @@ global:
   git:
     provider: github.com
     account: PLAINTEXT
+    username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     target: HEAD
 
