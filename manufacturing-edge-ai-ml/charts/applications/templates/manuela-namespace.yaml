@@ -8,3 +8,12 @@ metadata:
 spec:
   finalizers:
   - kubernetes
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: manuela-ci
+  labels:
+    manuela-role: pipeline
+    app.kubernetes.io/instance: manuela
+    argocd.argoproj.io/managed-by: openshift-gitops

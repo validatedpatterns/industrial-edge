@@ -1,5 +1,5 @@
-resources:
-  - manuela-ci-namespace.yaml
+#resources:
+#  - manuela-ci-namespace.yaml
 
 bases:
   - ../../../common/tekton/
