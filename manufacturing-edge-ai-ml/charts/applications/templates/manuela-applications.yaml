@@ -24,7 +24,7 @@ spec:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela
+  name: manuela-pipelines
   namespace: manuela
 spec:
   destination:
