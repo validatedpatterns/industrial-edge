@@ -27,6 +27,8 @@ spec:
         value: {{ .Values.version.acm }}
       - name: version.opendatahub
         value: {{ .Values.version.opendatahub }}
+      - name: version.seldon
+        value: {{ .Values.version.seldon }}
       - name: global.git.provider
         value: {{ .Values.global.git.provider }}
       - name: global.git.account
