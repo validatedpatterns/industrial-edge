@@ -3,5 +3,5 @@ bases:
   - tekton/
   # ../../common/team-rolebindings/
 
-#patches:
-#- helm.patch.yaml
+patches:
+- helm.patch.yaml
