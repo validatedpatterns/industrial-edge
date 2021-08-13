@@ -12,8 +12,36 @@
    ```
 
 1. Preview the changes
-   `cd blueprints/manufacturing-edge-ai-ml`
-   `helm template manuela . --values values-secret.yaml --debug`
+   ```
+   cd blueprints/manufacturing-edge-ai-ml
+   helm template manuela . --values values-secret.yaml --debug
+   ```
 1. Apply it to your cluster
-   `oc login`
-   `helm install manuela . --values values-secret.yaml`
+   ```
+   oc login
+   helm install manuela . --values values-secret.yaml
+   ```
+1. Check the operators have been installed
+
+   `UI -> Installed Operators`
+
+1. Obtain the ArgoCD secret
+
+   `oc get -n openshift-gitops secrets/openshift-gitops-cluster -o json | jq '.data' | grep admin.password | awk -F: '{print $2}' | tr -d \"\  | base64 -d`
+
+1. Obtain the Cluster ArgoCD location and log in
+
+   `oc get -n openshift-gitops routes/openshift-gitops-server`
+   
+1. Check all applications are synchronised
+
+1. Obtain the Manuela ArgoCD secret
+
+   `oc get -n manuela-ci secrets/manuela-argocd-cluster -o json | jq '.data' | grep admin.password | awk -F: '{print $2}' | tr -d \"\  | base64 -d`
+
+1. Obtain the Manuela ArgoCD location and log in
+
+   `oc get -n manuela-ci routes/manuela-argocd-server`
+
+1. Check all applications are synchronised
+
