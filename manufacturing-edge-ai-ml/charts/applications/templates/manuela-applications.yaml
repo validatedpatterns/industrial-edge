@@ -2,12 +2,12 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: manuela
-  namespace: manuela
+  namespace: openshift-gitops
 spec:
   destination:
     name: in-cluster
     namespace: default
-  project: manuela
+  project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     path: manufacturing-edge-ai-ml/charts/applications
@@ -29,6 +29,8 @@ kind: Application
 metadata:
   name: manuela-pipelines
   namespace: manuela
+  labels:
+    app.kubernetes.io/instance: manuela
 spec:
   destination:
     name: in-cluster
