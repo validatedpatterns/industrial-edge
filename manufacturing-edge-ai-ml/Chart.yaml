@@ -9,6 +9,8 @@ dependencies:
 - name: secrets
   version: 0.0.1
   condition: secrets.enabled
-- name: applications
+- name: manuela-subscriptions
+  version: 0.0.1
+- name: manuela-applications
   version: 0.0.1
 #- 

@@ -3,5 +3,5 @@ description: A Helm chart to create the initial manuela application
 keywords:
 - manuela
 - blueprint
-name: applications
+name: manuela-applications
 version: 0.0.1
