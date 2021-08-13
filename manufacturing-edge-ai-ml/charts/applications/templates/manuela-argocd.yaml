@@ -3,6 +3,8 @@ kind: ArgoCD
 metadata:
   name: manuela-argocd
   namespace: manuela
+  labels:
+    app.kubernetes.io/instance: manuela
 spec:
   configManagementPlugins: "- name: kustomize-version\n  generate:\n    command: [sh,
     -c]\n    args: [\"kustomize version 1>&2 && exit 1\"]\n- name: kustomize-with-helm\n

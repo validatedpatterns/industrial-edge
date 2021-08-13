@@ -3,6 +3,8 @@ kind: AppProject
 metadata:
   name: manuela
   namespace: manuela
+  labels:
+    app.kubernetes.io/instance: manuela
 spec:
   description: manuela blueprint
   destinations:
