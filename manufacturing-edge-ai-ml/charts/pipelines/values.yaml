@@ -1,4 +1,5 @@
 global:
+  bpversion: NA
   git:
     provider: github.com
     account: PLAINTEXT
