@@ -17,6 +17,10 @@ spec:
     helm:
       releaseName: manuela-release-v1
       parameters:
+      - name: global.quay.provider
+        value: {{ .Values.global.quay.provider }}
+      - name: global.quay.account
+        value: {{ .Values.global.quay.account }}
       - name: global.git.provider
         value: {{ .Values.global.git.provider }}
       - name: global.git.account
