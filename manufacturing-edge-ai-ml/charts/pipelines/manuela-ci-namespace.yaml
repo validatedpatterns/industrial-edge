@@ -4,4 +4,5 @@ metadata:
   name: manuela-ci
   labels:
     manuela-role: pipeline
+    app.kubernetes.io/instance: manuela
     argocd.argoproj.io/managed-by: manuela

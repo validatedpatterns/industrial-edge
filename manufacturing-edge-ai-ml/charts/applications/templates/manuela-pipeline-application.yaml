@@ -19,3 +19,6 @@ spec:
       - name: BLUEPRINT_VERSION
         value: 0.0.1
       name: helm-with-kustomize
+  syncPolicy:
+    syncOptions:
+    - CreateNamespace=true
