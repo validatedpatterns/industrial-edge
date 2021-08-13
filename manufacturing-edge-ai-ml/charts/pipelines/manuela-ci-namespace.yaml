@@ -4,3 +4,4 @@ metadata:
   name: manuela-ci
   labels:
     manuela-role: pipeline
+    argocd.argoproj.io/managed-by: manuela
