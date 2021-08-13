@@ -3,6 +3,8 @@ kind: Application
 metadata:
   name: manuela
   namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/instance: manuela
 spec:
   destination:
     name: in-cluster
