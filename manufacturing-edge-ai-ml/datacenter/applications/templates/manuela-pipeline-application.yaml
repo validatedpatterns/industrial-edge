@@ -12,7 +12,7 @@ spec:
   project: manuela
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
-    path: manufacturing-edge-ai-ml/charts/pipelines
+    path: manufacturing-edge-ai-ml/datacenter/pipelines
     targetRevision: {{ .Values.global.git.target }}
     plugin:
       env:
