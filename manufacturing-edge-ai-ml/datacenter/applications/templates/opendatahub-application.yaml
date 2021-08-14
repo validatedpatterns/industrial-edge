@@ -15,7 +15,8 @@ spec:
     path: manufacturing-edge-ai-ml/datacenter/applications
     targetRevision: {{ .Values.global.git.target }}
     kustomize:
-      commonLabels: manuela-opendatahub
+      commonLabels: 
+        app: manuela-opendatahub
       #namePrefix: manuela
   syncPolicy:
     automated: {}
