@@ -1,0 +1,35 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela-acm
+  namespace: manuela-ci
+  labels:
+    app.kubernetes.io/instance: manuela
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-ci
+  project: manuela
+  source:
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+    path: manufacturing-edge-ai-ml/charts/acm
+    targetRevision: {{ .Values.global.git.target }}
+    helm:
+      releaseName: manuela-release-v1
+      parameters:
+      - name: global.quay.provider
+        value: {{ .Values.global.quay.provider }}
+      - name: global.quay.account
+        value: {{ .Values.global.quay.account }}
+      - name: global.git.provider
+        value: {{ .Values.global.git.provider }}
+      - name: global.git.account
+        value: {{ .Values.global.git.account }}
+      - name: global.git.target
+        value: {{ .Values.global.git.target }}
+      - name: global.git.email
+        value: {{ .Values.global.git.email }}
+      - name: global.git.username
+        value: {{ .Values.global.git.username }}
+  syncPolicy:
+    automated: {}
