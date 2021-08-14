@@ -1,7 +1,0 @@
-apiVersion: v2
-description: A Helm chart to build and deploy MANUela
-keywords:
-- runtimes
-- blueprint
-name: datacenter
-version: 0.0.3
