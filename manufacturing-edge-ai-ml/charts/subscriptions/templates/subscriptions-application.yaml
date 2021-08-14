@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela
+  name: manuela-subscriptions
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: manuela
