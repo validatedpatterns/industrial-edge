@@ -15,7 +15,7 @@ spec:
     \ generate:\n    command: [\"kustomize\"]\n    args: [\"build\", \"--enable-helm\"]\n- name:
     helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
     dependency build\"]\n  generate:\n    command: [sh, -c]\n    args: [\"helm template
-    --release-name manuela-${BLUEPRINT_VERSION}
+    --release-name ${ARGOCD_APP_NAME}-${ARGOCD_APP_REVISION}
     --set global.quay.provider={{ .Values.global.quay.provider }}
     --set global.quay.account={{ .Values.global.quay.account }}
     --set global.git.provider={{ .Values.global.git.provider }}

@@ -1,0 +1,6 @@
+resources:
+ - manuela-admin-rolebinding.yaml
+ - manuela-ml-workspace-namespace.yaml
+ - manuela-ml-workspace-operatorgroup.yaml
+ - manuela-view-rolebinding.yaml
+ - odh-kfdef.yaml
