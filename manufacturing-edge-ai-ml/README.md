@@ -7,7 +7,7 @@
 
   DO NOT COMMIT THIS FILE
    ```
-   cp blueprints/manufacturing-edge-ai-ml/values.yaml blueprints/manufacturing-edge-ai-ml/secret-values.yaml
+   cp blueprints/manufacturing-edge-ai-ml/values.yaml blueprints/manufacturing-edge-ai-ml/values-secret.yaml
    vi blueprints/manufacturing-edge-ai-ml/values-secret.yaml
    ```
 
