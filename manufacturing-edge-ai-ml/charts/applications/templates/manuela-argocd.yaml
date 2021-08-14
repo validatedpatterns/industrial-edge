@@ -6,6 +6,7 @@ metadata:
   labels:
     app.kubernetes.io/instance: manuela
 spec:
+  applicationInstanceLabelKey: argocd.argoproj.io/instance
   # Not the greatest way to pass git/quay info to sub-applications, but it will do until
   # we can support helmChart with kustomize
   # The other option is to pass them in as environment variables eg. BLUEPRINT_VERSION
