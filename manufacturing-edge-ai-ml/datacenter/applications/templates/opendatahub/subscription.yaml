@@ -9,5 +9,5 @@ spec:
   name: opendatahub-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: opendatahub-operator.{{ .Values.version.opendatahub }}
+  startingCSV: opendatahub-operator.{{ .Values.subscriptions.version.opendatahub }}
 

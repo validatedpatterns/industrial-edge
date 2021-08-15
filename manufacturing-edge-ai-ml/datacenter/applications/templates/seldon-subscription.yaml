@@ -9,4 +9,4 @@ spec:
   name: seldon-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.{{ .Values.version.seldon }}
+  startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon }}
