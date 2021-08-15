@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manufacturing-edge-ai-ml
+  name: manuela-datacenter-applications
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: manuela
