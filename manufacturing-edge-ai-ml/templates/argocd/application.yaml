@@ -17,6 +17,18 @@ spec:
     helm:
       releaseName: manuela-release-v1
       parameters:
+      - name: subscriptions.installPlanApproval
+        value: {{ .Values.subscriptions.installPlanApproval }}
+      - name: subscriptions.version.gitops
+        value: {{ .Values.subscriptions.version.gitops }}
+      - name: subscriptions.version.pipelines
+        value: {{ .Values.subscriptions.version.pipelines }}
+      - name: subscriptions.version.acm
+        value: {{ .Values.subscriptions.version.acm }}
+      - name: subscriptions.version.opendatahub
+        value: {{ .Values.subscriptions.version.opendatahub }}
+      - name: subscriptions.version.seldon
+        value: {{ .Values.subscriptions.version.seldon }}
       - name: global.quay.provider
         value: {{ .Values.global.quay.provider }}
       - name: global.quay.account
