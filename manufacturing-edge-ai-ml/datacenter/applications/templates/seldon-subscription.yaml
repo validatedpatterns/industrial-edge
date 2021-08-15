@@ -10,3 +10,8 @@ spec:
   source: community-operators
   sourceNamespace: openshift-marketplace
   startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon }}
+
+#install-seldon-operator:
+#	oc new-project test-anomaly-detection
+#	oc apply -f manifests/test-anomaly-detection-operatorgroup.yaml
+#	oc apply -f manifests/seldon-subscription-v1.2.0.yaml
