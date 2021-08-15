@@ -3,6 +3,7 @@ kind: Namespace
 metadata:
   labels:
     name: manuela
+    argocd.argoproj.io/managed-by: openshift-gitops
   name: open-cluster-management
 spec:
   finalizers:
