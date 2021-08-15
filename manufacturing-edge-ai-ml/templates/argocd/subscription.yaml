@@ -11,5 +11,5 @@ spec:
   name: openshift-gitops-operator
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: openshift-gitops-operator.{{ .Values.version.gitops }}
+  startingCSV: openshift-gitops-operator.{{ .Values.subscriptions.version.gitops }}
   
