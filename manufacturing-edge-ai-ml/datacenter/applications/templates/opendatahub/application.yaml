@@ -14,7 +14,7 @@ spec:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     path: manufacturing-edge-ai-ml/datacenter/opendatahub
     targetRevision: {{ .Values.global.git.target }}
-    kustomize: {}
+    #kustomize: {}
     #namePrefix: manuela
   syncPolicy:
     automated: {}
