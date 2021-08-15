@@ -5,12 +5,4 @@ keywords:
 - blueprint
 name: manuela
 version: 0.0.1
-dependencies:
-- name: secrets
-  version: 0.0.1
-  condition: secrets.enabled
-- name: subscriptions
-  version: 0.0.1
-- name: manuela-applications
-  version: 0.0.1
-#- 
+- 
