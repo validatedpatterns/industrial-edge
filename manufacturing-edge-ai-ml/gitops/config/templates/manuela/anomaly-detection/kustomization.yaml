@@ -1,0 +1,7 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- seldon-subscription.yaml
+- iot-anomaly-detection-route.yaml    
+- iot-anomaly-detection-seldon.yaml

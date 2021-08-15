@@ -1,0 +1,6 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: messaging
+spec:
+  host: messaging-manuela-stormshift-messaging.apps.staging-edge.gcp.devcluster.openshift.com

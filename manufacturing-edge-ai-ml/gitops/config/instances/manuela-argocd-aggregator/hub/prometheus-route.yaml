@@ -1,0 +1,13 @@
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: prometheus
+spec:
+  host: prometheus-manuela-argocd-aggregator.apps.claudiol-dc-test.blueprints.rhecoeng.com
+  port:
+    targetPort: web
+  to:
+    kind: Service
+    name: prometheus-operated
+    weight: 100
+  wildcardPolicy: None

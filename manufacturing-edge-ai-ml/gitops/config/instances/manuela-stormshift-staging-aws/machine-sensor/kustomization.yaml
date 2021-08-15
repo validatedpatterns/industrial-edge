@@ -1,0 +1,23 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: manuela-stormshift-machine-sensor
+resources:
+- machine-sensor-namespace.yaml
+bases:
+#- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/machine-sensor
+- ../../../templates/manuela-openshift-prod/machine-sensor
+- ../../../templates/manuela-team-rolebindings
+configMapGenerator:
+- name: machine-sensor-1
+  behavior: merge
+  envs:
+   - machine-sensor-1-configmap.properties
+- name: machine-sensor-2
+  behavior: merge
+  envs:
+   - machine-sensor-2-configmap.properties
+
+images:
+- name: machine-sensor
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor

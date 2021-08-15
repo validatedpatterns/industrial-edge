@@ -1,0 +1,55 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: line-dashboard
+spec:
+  tags:
+  - name: 0.3.1-58
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-58
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-59
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-59
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-60
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-60
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-61
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-61
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-62
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-62
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-63
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-63
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-64
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-64
+    importPolicy: {}
+    referencePolicy:
+      type: Local

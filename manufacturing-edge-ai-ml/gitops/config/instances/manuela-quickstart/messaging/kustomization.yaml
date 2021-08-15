@@ -1,0 +1,20 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+namespace: manuela-quickstart-messaging
+resources:
+- messaging-namespace.yaml
+- messaging-operatorgroup.yaml
+patchesStrategicMerge:
+- route.yaml
+- messaging-deployment.yaml
+
+bases:
+#- github.com/sa-mw-dach/manuela-gitops/config/templates/manuela/messaging
+- ../../../templates/manuela-openshift/messaging
+- ../../../templates/installplan-approver
+
+images:
+- name: messaging
+  newName: quay.io/redhat-edge-computing/iot-consumer
+  newTag: quickstart

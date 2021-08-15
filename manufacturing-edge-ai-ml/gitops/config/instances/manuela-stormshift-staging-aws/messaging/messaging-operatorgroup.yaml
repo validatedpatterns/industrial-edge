@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: manuela-stormshift-messaging-
+  generation: 1
+  name: manuela-stormshift-messaging
+  namespace: manuela-stormshift-messaging
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  targetNamespaces:
+  - manuela-stormshift-messaging
