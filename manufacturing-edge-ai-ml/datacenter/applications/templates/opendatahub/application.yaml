@@ -12,11 +12,11 @@ spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
-    path: manufacturing-edge-ai-ml/datacenter/applications
+    path: manufacturing-edge-ai-ml/datacenter/opendatahub
     targetRevision: {{ .Values.global.git.target }}
     kustomize:
       commonLabels: 
-        app: manuela-opendatahub
+        - app: manuela-opendatahub
       #namePrefix: manuela
   syncPolicy:
     automated: {}
