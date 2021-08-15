@@ -1,4 +1,0 @@
-resources:
-- baremetal-edge.yaml
-- staging-aws.yaml
-- staging-gcp.yaml
