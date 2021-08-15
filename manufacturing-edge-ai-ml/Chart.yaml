@@ -3,6 +3,5 @@ description: A Helm chart to build and deploy MANUela
 keywords:
 - runtimes
 - blueprint
-name: manuela
+name: manufacturing-edge-ai-ml
 version: 0.0.1
-- 
