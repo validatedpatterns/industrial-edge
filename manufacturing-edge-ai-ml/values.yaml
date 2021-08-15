@@ -30,4 +30,4 @@ subscriptions:
     pipelines: v1.1.1
     acm: release-2.0
     opendatahub: v0.6.1
-    seldon: v1.2.1
+    seldon: v1.7.0

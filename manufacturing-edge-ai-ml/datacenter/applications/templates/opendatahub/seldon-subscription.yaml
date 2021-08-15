@@ -4,7 +4,7 @@ metadata:
   name: seldon-operator
   namespace: manuela-ml-workspace
 spec:
-  channel: alpha
+  channel: stable
   installPlanApproval: {{ .Values.installPlanApproval }}
   name: seldon-operator
   source: community-operators
