@@ -2,15 +2,15 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: manuela-tst-all
-  namespace: argocd
+  namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/FIXME/blueprints.git
-    targetRevision: HEAD
-    path: config/instances/manuela-tst
+    repoURL: https://{{ .Values.global.git.provider}}/{{ .Values.global.git.account }}/blueprints.git
+    targetRevision: {{ .Values.global.git.target }}
+    path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-tst
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-tst-all
