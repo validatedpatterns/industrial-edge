@@ -28,7 +28,7 @@
 
 1. Obtain the ArgoCD secret
 
-   `oc get -n openshift-gitops secrets/openshift-gitops-cluster -o jsonpath='{.data.admin\.password}' | base64 -d`
+   `oc -n openshift-gitops extract secrets/openshift-gitops-cluster --to=-`
 
 1. Obtain the Cluster ArgoCD location and log in
 
@@ -38,7 +38,7 @@
 
 1. Obtain the Manuela ArgoCD secret
 
-   `oc get -n manuela-ci secrets/manuela-argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d`
+   `oc -n manuela-ci extract secrets/manuela-argocd-cluster --to=-`
 
 1. Obtain the Manuela ArgoCD location and log in
 
