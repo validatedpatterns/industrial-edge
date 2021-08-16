@@ -3,7 +3,8 @@
 1. Fork this repo on GitHub 
 1. Clone the forked copy
    `git clone git@github.com:your-username/blueprints.git`
-1. Create a local copy of the Helm values file that includes credentials
+
+1. Create a local copy of the Helm values file that can safely include credentials
 
   DO NOT COMMIT THIS FILE
    ```
@@ -27,7 +28,7 @@
 
 1. Obtain the ArgoCD secret
 
-   `oc get -n openshift-gitops secrets/openshift-gitops-cluster -o json | jq '.data' | grep admin.password | awk -F: '{print $2}' | tr -d \"\  | base64 -d`
+   `oc get -n openshift-gitops secrets/openshift-gitops-cluster -o jsonpath='{.data.admin\.password}' | base64 -d`
 
 1. Obtain the Cluster ArgoCD location and log in
 
@@ -37,7 +38,7 @@
 
 1. Obtain the Manuela ArgoCD secret
 
-   `oc get -n manuela-ci secrets/manuela-argocd-cluster -o json | jq '.data' | grep admin.password | awk -F: '{print $2}' | tr -d \"\  | base64 -d`
+   `oc get -n manuela-ci secrets/manuela-argocd-cluster -o jsonpath='{.data.admin\.password}' | base64 -d`
 
 1. Obtain the Manuela ArgoCD location and log in
 
