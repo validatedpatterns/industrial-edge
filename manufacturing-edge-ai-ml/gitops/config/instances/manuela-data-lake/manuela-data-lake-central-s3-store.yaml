@@ -8,8 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    #LRC repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
-    repoURL: https://github.com/dagger-refuse-cool/manuela-gitops.git
+    #LRC repoURL: https://github.com/FIXME/blueprints.git
+    repoURL: https://github.com/FIXME/blueprints.git
     targetRevision: HEAD
     path: config/instances/manuela-data-lake/central-s3-store
   destination:

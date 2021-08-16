@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/redhat-edge-computing/manuela-gitops.git
+    repoURL: https://github.com/FIXME/blueprints.git
     targetRevision: HEAD
     path: config/instances/manuela-stormshift-staging-aws/machine-sensor
   destination:
