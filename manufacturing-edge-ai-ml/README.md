@@ -8,13 +8,13 @@
 
   DO NOT COMMIT THIS FILE
    ```
-   cp blueprints/manufacturing-edge-ai-ml/values.yaml blueprints/manufacturing-edge-ai-ml/values-secret.yaml
-   vi blueprints/manufacturing-edge-ai-ml/values-secret.yaml
+   cp blueprints/manufacturing-edge-ai-ml/main/values.yaml blueprints/manufacturing-edge-ai-ml/main/values-secret.yaml
+   vi blueprints/manufacturing-edge-ai-ml/main/values-secret.yaml
    ```
 
 1. Preview the changes
    ```
-   cd blueprints/manufacturing-edge-ai-ml
+   cd blueprints/manufacturing-edge-ai-ml/main
    helm template manuela . --values values-secret.yaml --debug
    ```
 1. Apply it to your cluster
