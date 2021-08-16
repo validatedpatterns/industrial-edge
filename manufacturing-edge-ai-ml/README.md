@@ -1,9 +1,9 @@
 # How to use
 
 1. Fork this repo on GitHub 
-1. Clone this repo  
+1. Clone the forked copy
    `git clone git@github.com:your-username/blueprints.git`
-1. Create a local copy that includes credentials
+1. Create a local copy of the Helm values file that includes credentials
 
   DO NOT COMMIT THIS FILE
    ```
