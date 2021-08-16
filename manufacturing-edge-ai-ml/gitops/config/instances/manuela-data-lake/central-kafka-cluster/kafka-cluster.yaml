@@ -15,6 +15,8 @@ spec:
         type: route
         overrides:
           bootstrap:
+            # Convert this directory into a helm chart and use templating to set this
+            # Or, figure out some way to use a value like 'kubernetes.default.svc'
             host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.claudiol-dc-test.blueprints.rhecoeng.com
         configuration:
           brokerCertChainAndKey:
