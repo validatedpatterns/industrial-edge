@@ -15,6 +15,7 @@ metadata:
     gitops-mgmt: argocd
     manuela: factory
   name: baremetal-edge
+  namespace: openshift-gitops
 spec:
   hubAcceptsClient: true
 ---
