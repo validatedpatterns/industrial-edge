@@ -45,8 +45,6 @@ spec:
   resourceExclusions: |
     - apiGroups:
       - tekton.dev
-      clusters:
-      - '*'
       kinds:
       - TaskRun
       - PipelineRun
