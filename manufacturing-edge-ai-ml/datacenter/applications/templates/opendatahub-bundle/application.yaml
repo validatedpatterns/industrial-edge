@@ -9,7 +9,7 @@ spec:
   destination:
     name: in-cluster
     namespace: default
-  project: default
+  project: datacenter
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     path: manufacturing-edge-ai-ml/datacenter/opendatahub
