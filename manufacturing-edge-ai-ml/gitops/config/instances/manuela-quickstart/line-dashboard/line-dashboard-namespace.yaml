@@ -1,6 +1,0 @@
-apiVersion: v1
-kind: Namespace
-metadata:
-  name: manuela-quickstart-line-dashboard
-  annotations:
-    argocd.argoproj.io/sync-wave: "-1"
