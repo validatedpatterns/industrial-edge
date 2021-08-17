@@ -2,7 +2,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: apply-argocd-to-ready-clusters
-  namespace: argocd
+  namespace: openshift-gitops
 spec:
   clusterConditions:
   - status: "True"

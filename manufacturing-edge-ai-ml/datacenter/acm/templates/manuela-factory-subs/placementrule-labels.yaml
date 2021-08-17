@@ -3,7 +3,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: apply-argocd-factory-to-label-clusters
-  namespace: argocd
+  namespace: openshift-gitops
 spec:
   clusterSelector:
     matchLabels:

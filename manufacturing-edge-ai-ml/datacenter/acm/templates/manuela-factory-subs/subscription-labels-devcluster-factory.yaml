@@ -3,7 +3,7 @@ apiVersion: apps.open-cluster-management.io/v1
 kind: Subscription
 metadata:
   name: argocd-devcluster-factory-label-sub
-  namespace: argocd
+  namespace: openshift-gitops
   annotations:
     apps.open-cluster-management.io/github-path: >-
       sites/staging-edge.devcluster.openshift.com/03_services/argocd-gitops-factory
