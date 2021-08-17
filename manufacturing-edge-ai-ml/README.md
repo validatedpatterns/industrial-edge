@@ -8,19 +8,19 @@
 
   DO NOT COMMIT THIS FILE
    ```
-   cp blueprints/manufacturing-edge-ai-ml/main/values.yaml blueprints/manufacturing-edge-ai-ml/main/values-secret.yaml
-   vi blueprints/manufacturing-edge-ai-ml/main/values-secret.yaml
+   cp blueprints/manufacturing-edge-ai-ml/main/values.yaml ~/values-secret.yaml
+   vi ~/values-secret.yaml
    ```
 
 1. Preview the changes
    ```
    cd blueprints/manufacturing-edge-ai-ml/main
-   helm template manuela . --values values-secret.yaml --debug
+   helm template manuela . --values ~/values-secret.yaml --debug
    ```
 1. Apply it to your cluster
    ```
    oc login
-   helm install manuela . --values values-secret.yaml
+   helm install manuela . --values ~/values-secret.yaml
    ```
 1. Check the operators have been installed
 
@@ -46,3 +46,6 @@
 
 1. Check all applications are synchronised
 
+# Structure
+
+https://docs.google.com/presentation/d/e/2PACX-1vSfbN_TbjfYnw-B6hHs-uUQ-8rRzUX27AW4eSxT7dVmBERiBgHS_FWWkgyg5fTsEWL2hj6RYyJqYi7_/pub?start=false&loop=false&delayms=3000
