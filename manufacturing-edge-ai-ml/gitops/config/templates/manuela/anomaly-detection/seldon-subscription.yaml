@@ -6,7 +6,7 @@ metadata:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   channel: stable
-  installPlanApproval: Manual
+  installPlanApproval: Automatic
   name: seldon-operator
   source: certified-operators
   sourceNamespace: openshift-marketplace
