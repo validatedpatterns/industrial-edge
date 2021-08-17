@@ -1,0 +1,26 @@
+openshift:
+  clustername: claudiol-dc1
+  domain: blueprints.rhecoeng.com
+
+messaging:
+  vibrationAlert: true
+  vibrationAnomaly: true 
+  nodeTlsReject: 0
+
+machineSensor1:
+  port: 80
+
+machineSensor2:
+  port: 80
+  sensorTemperature: false
+
+lineDashboard:
+  config: | 
+    { 
+      // Convert this directory into a helm chart and use templating to set this 
+      // Or, figure out some way to use a value like 'kubernetes.default.svc' 
+      "websocketHost": "http://messaging-manuela-tst-all.apps.claudiol-dc1.blueprints.rhecoeng.com" 
+      "websocketPath": "/api/service-web/socket"
+      "SERVER_TIMEOUT": 20000 
+    }
+

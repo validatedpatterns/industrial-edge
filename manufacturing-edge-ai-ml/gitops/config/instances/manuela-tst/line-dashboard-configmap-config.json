@@ -1,7 +1,0 @@
-{
-    // Convert this directory into a helm chart and use templating to set this
-    // Or, figure out some way to use a value like 'kubernetes.default.svc'
-    "websocketHost": "http://messaging-manuela-tst-all.apps.claudiol-dc-test.blueprints.rhecoeng.com",
-    "websocketPath": "/api/service-web/socket",
-    "SERVER_TIMEOUT": 20000
-}
