@@ -8,7 +8,7 @@ The starting point for deploying the blueprint
 
 A directory of Helm charts deployed by ArgoCD on the datacenter
 
-## datacenter/applications
+## datacenter/main
 
 An ArgoCD application that deploys all the other datacenter applications under `datacenter/` 
 
