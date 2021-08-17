@@ -9,7 +9,7 @@ spec:
   destination:
     name: in-cluster
     namespace: manuela-acm
-  project: datacenter
+  project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     path: manufacturing-edge-ai-ml/datacenter/acm
