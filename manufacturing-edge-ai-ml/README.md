@@ -1,8 +1,9 @@
 # How to use
 
 1. Fork this repo on GitHub 
-1. Clone the forked copy
-   `git clone git@github.com:your-username/blueprints.git`
+
+1. Clone your forked copy
+   `git clone git@github.com:YOUR_USERNAME_OR_ORG/blueprints.git`
 
 1. Create a local copy of the Helm values file that can safely include credentials
 
@@ -34,16 +35,6 @@
 
    `oc get -n openshift-gitops routes/openshift-gitops-server`
    
-1. Check all applications are synchronised
-
-1. Obtain the Manuela ArgoCD secret
-
-   `oc -n manuela-ci extract secrets/manuela-argocd-cluster --to=-`
-
-1. Obtain the Manuela ArgoCD location and log in
-
-   `oc get -n manuela-ci routes/manuela-argocd-server`
-
 1. Check all applications are synchronised
 
 # Structure
