@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: messaging-configmap
 data:
-  VIBRATION_ALERT_ENABLED={{ .Values.messaging.vibrationAlert }}
-  VIBRATION_ANOMALY_ENABLED={{ .Values.messaging.vibrationAnomaly }}
-  NODE_TLS_REJECT_UNAUTHORIZED={{ .Values.messaging.nodeTlsReject }}
+  VIBRATION_ALERT_ENABLED: {{ .Values.messaging.vibrationAlert }}
+  VIBRATION_ANOMALY_ENABLED: {{ .Values.messaging.vibrationAnomaly }}
+  NODE_TLS_REJECT_UNAUTHORIZED: {{ .Values.messaging.nodeTlsReject }}
 
