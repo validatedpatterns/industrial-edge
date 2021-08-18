@@ -1,0 +1,15 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: mqtt2kafka-config
+data:
+  application.properties: |
+    mqtt.broker.uri=tcp://broker-amq-mqtt-all-0-svc:61616
+    mqtt.broker.clientId=MQTT2KafkaRoute
+    mqtt.broker.topic.temperature=iot-sensor/sw/temperature
+    mqtt.broker.topic.vibration=iot-sensor/sw/vibration
+    
+    kafka.broker.uri=manuela-kafka-cluster-kafka-bootstrap:9092
+    kafka.broker.topic.temperature=iot-sensor-sw-temperature
+    kafka.broker.topic.vibration=iot-sensor-sw-vibration
+    
