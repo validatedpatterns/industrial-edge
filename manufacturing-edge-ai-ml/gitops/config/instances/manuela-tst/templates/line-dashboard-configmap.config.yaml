@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: line-dashboard-configmap-
+  name: line-dashboard-configmap
   namespace: manuela-tst-all
   labels:
     app.kubernetes.io/instance: manuela-tst-all
 data:
-  websocketHost: http://messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
-  websocketPath: /api/service-web/socket
-  SERVER_TIMEOUT: 20000
+  websocketHost: "http://messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}"
+  websocketPath: "/api/service-web/socket"
+  SERVER_TIMEOUT: "20000"
