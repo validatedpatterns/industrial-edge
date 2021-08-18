@@ -5,6 +5,10 @@ global:
     email: SOMEWHERE@EXAMPLE.COM
     target: HEAD
 
+  datacenter:
+    domain: example.com
+    clustername: cluster-example
+
   quay:
     provider: quay.io
     account: PLAINTEXT

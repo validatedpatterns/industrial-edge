@@ -43,6 +43,10 @@ spec:
         value: {{ .Values.global.git.email }}
       - name: global.git.username
         value: {{ .Values.global.git.username }}
+      - name: global.datacenter.domain
+        value: {{ .Values.global.datacenter.domain }}
+      - name: global.datacenter.clustername
+        value: {{ .Values.global.datacenter.clustername }}
   syncPolicy:
     automated: {}
     syncOptions:

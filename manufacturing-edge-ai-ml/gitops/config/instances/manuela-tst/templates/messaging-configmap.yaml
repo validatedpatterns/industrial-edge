@@ -1,7 +1,7 @@
 apiVersion: v1
 kind: ConfigMap
 metadata:
-  name: messaging-configmap-
+  name: messaging-configmap
 data:
   VIBRATION_ALERT_ENABLED={{ .Values.messaging.vibrationAlert }}
   VIBRATION_ANOMALY_ENABLED={{ .Values.messaging.vibrationAnomaly }}

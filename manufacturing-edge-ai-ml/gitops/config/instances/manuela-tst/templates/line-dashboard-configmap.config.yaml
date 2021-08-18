@@ -6,5 +6,6 @@ metadata:
   labels:
     app.kubernetes.io/instance: manuela-tst-all
 data:
-  //config.json: {{ toJson .Values.lineDashboard.config | toJson | quote }}
-  config.json: {{ toJson .Values.lineDashboard.config  }}
+  websocketHost: http://messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  websocketPath: /api/service-web/socket
+  SERVER_TIMEOUT: 20000

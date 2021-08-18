@@ -8,9 +8,15 @@ metadata:
 spec:
   project: datacenter
   source:
-    repoURL: https://{{ .Values.global.git.provider}}/{{ .Values.global.git.account }}/blueprints.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     targetRevision: {{ .Values.global.git.target }}
     path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-tst
+    helm:
+      parameters:
+      - name: global.datacenter.domain
+        value: {{ .Values.global.datacenter.domain }}
+      - name: global.datacenter.clustername
+        value: {{ .Values.global.datacenter.clustername }}
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-tst-all
