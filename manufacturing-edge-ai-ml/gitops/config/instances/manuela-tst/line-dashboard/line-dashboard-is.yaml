@@ -1,0 +1,10 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    app: line-dashboard
+  name: line-dashboard
+spec:
+  lookupPolicy:
+    local: false
+  tags: []

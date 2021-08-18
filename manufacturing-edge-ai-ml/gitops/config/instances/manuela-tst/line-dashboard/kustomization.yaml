@@ -1,0 +1,11 @@
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+resources:
+- line-dashboard-deployment.yaml
+- line-dashboard-svc.yaml
+
+configMapGenerator:
+- name: line-dashboard-configmap
+  files:
+  - config.json=line-dashboard-configmap-config.json
