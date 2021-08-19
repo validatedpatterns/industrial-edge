@@ -1,3 +1,10 @@
+# Prerequisites
+
+1. An OpenShift cluster ( Go to https://console.redhat.com/openshift/create )
+1. (Optional) A second OpenShift cluster
+1. A github account
+1. A quay account
+
 # How to use
 
 1. Fork this repo on GitHub 
