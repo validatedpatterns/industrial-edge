@@ -141,4 +141,3 @@ spec:
     - name: manifests
       uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v0.6.1'
   version: v0.6.1
-status: {}
