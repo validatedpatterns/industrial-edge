@@ -32,10 +32,10 @@ spec:
       - name: global.git.username
         value: {{ .Values.global.git.username }}
   ignoreDifferences:
-  - group: apps
-    kind: Deployment
+  - group: internal.open-cluster-management.io
+    kind: ManagedClusterInfo
     jsonPointers:
-    - /spec/replicas
+    - /spec
 {{ if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
