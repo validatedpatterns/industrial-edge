@@ -18,7 +18,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:latest
+            image: anomaly-detection:0.3.2-42
             env:
             - name: MODEL_FIILE
               value: "model.joblib"
