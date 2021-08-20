@@ -31,5 +31,14 @@ spec:
         value: {{ .Values.global.git.email }}
       - name: global.git.username
         value: {{ .Values.global.git.username }}
+  ignoreDifferences:
+  - group: apps
+    kind: Deployment
+    jsonPointers:
+    - /spec/replicas
+{{ if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
-    automated: {}
+    automated: 
+      prune: false
+      selfHeal: false
+{{ end }}

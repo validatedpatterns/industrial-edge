@@ -23,6 +23,9 @@ secrets:
     authToken: BASE64STRING
     accountToken: BASE64STRING
 
+gitops:
+  syncPolicy: Automatic
+
 subscriptions:
   installPlanApproval: Automatic
   version:
