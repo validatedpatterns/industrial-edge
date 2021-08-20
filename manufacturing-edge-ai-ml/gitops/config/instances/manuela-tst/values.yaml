@@ -22,7 +22,7 @@ machineSensor2:
   port: 80
   sensorTemperature: false
 
-subscription:
+subscriptions:
   version:
     seldon: 1.7.0
 
