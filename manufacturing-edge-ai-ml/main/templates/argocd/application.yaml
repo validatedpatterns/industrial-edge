@@ -45,9 +45,9 @@ spec:
         value: {{ .Values.global.git.username }}
       - name: gitops.syncPolicy
         value: {{ .Values.gitops.syncPolicy }}
-{{ if eq .Values.gitops.syncPolicy "Automatic" }}
+{{- if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false
       selfHeal: false
-{{ end }}
+{{- end }}

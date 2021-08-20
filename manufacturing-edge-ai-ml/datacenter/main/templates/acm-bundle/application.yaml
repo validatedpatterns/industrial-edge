@@ -36,9 +36,9 @@ spec:
     kind: ManagedClusterInfo
     jsonPointers:
     - /spec
-{{ if eq .Values.gitops.syncPolicy "Automatic" }}
+{{- if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false
       selfHeal: false
-{{ end }}
+{{- end }}

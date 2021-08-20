@@ -16,9 +16,9 @@ spec:
     targetRevision: {{ .Values.global.git.target }}
     #kustomize: {}
     #namePrefix: manuela
-{{ if eq .Values.gitops.syncPolicy "Automatic" }}
+{{- if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false
       selfHeal: false
-{{ end }}
+{{- end }}

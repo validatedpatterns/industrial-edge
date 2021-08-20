@@ -19,9 +19,9 @@ spec:
       - name: BLUEPRINT_VERSION
         value: 0.0.1
       name: helm-with-kustomize
-{{ if eq .Values.gitops.syncPolicy "Automatic" }}
+{{- if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false
       selfHeal: false
-{{ end }}
+{{- end }}
