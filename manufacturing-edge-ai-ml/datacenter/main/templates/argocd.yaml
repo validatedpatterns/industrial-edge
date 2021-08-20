@@ -5,6 +5,8 @@ metadata:
   - argoproj.io/finalizer
   name: openshift-gitops
   namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   applicationInstanceLabelKey: argocd.argoproj.io/instance
   # Not the greatest way to pass git/quay info to sub-applications, but it will do until
@@ -38,11 +40,11 @@ spec:
     processors: {}
     resources:
       limits:
-        cpu: "2"
-        memory: 2Gi
+        cpu: "4"
+        memory: 4Gi
       requests:
-        cpu: 250m
-        memory: 1Gi
+        cpu: 500m
+        memory: 2Gi
   dex:
     resources:
       limits:
