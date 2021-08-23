@@ -5,7 +5,7 @@ metadata:
   namespace: manuela-ml-workspace
 spec:
   channel: stable
-  installPlanApproval: {{ .Values.installPlanApproval }}
+  installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
   name: seldon-operator
   source: community-operators
   sourceNamespace: openshift-marketplace

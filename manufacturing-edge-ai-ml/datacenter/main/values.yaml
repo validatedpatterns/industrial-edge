@@ -9,6 +9,9 @@ global:
     provider: quay.io
     account: PLAINTEXT
 
+gitops:
+  syncPolicy: Automatic
+
 subscriptions:
   installPlanApproval: Automatic
   version:

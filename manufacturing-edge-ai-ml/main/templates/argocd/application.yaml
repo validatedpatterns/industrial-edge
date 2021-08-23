@@ -43,7 +43,11 @@ spec:
         value: {{ .Values.global.git.email }}
       - name: global.git.username
         value: {{ .Values.global.git.username }}
+      - name: gitops.syncPolicy
+        value: {{ .Values.gitops.syncPolicy }}
+{{- if eq .Values.gitops.syncPolicy "Automatic" }}
   syncPolicy:
-    automated: {}
-    syncOptions:
-    - CreateNamespace=true
+    automated: 
+      prune: false
+      selfHeal: false
+{{- end }}
