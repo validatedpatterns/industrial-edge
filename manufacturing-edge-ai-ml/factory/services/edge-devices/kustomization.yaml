@@ -1,4 +1,0 @@
-resources:
-  - namespace.yaml
-  - channel-sensors.yaml
-  - subscription-sensors.yaml

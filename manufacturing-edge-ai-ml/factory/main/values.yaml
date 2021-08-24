@@ -1,0 +1,19 @@
+global:
+  git:
+    provider: github.com
+    account: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    target: HEAD
+
+  quay:
+    provider: quay.io
+    account: PLAINTEXT
+
+subscriptions:
+  installPlanApproval: Automatic
+  version:
+    gitops: v1.2.0
+    pipelines: v1.1.1
+    acm: release-2.0
+    opendatahub: v0.6.1
+    seldon: v1.7.0
