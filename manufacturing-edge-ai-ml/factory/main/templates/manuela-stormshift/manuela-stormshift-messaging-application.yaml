@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-stormshift-machine-sensor
+  name: manuela-stormshift-messaging
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -10,10 +10,10 @@ spec:
   source:
     repoURL: https://github.com/dagger-refuse-cool/blueprints.git
     targetRevision: HEAD
-    path: factory/sites/staging/manuela-stormshift-staging/machine-sensor
+    path: factory/main/templates/manuela-stormshift-staging-aws/messaging
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-stormshift-machine-sensor
+    namespace: manuela-stormshift-messaging
   syncPolicy:
     automated: 
       prune: true

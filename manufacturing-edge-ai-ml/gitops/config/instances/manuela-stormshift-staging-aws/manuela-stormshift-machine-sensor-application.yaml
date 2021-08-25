@@ -8,7 +8,7 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/FIXME/blueprints.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: HEAD
     path: config/instances/manuela-stormshift-staging-aws/machine-sensor
   destination:

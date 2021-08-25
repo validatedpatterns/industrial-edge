@@ -8,9 +8,9 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: HEAD
-    path: factory/sites/staging/manuela-stormshift-staging/line-dashboard
+    path: factory/main/templates/manuela-stormshift/line-dashboard
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-line-dashboard

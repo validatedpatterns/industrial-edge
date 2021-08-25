@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     #LRC repoURL: https://github.com/FIXME/blueprints.git
-    repoURL: https://github.com/FIXME/blueprints.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: HEAD
     path: config/instances/manuela-data-lake/factory-mirror-maker
   destination:

@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-stormshift-line-dashboard
+  name: manuela-stormshift-machine-sensor
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
+    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
     targetRevision: HEAD
-    path: config/instances/manuela-stormshift-staging-aws/line-dashboard
+    path: factory/main/templates/manuela-stormshift-staging/machine-sensor
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-stormshift-line-dashboard
+    namespace: manuela-stormshift-machine-sensor
   syncPolicy:
     automated: 
       prune: true
