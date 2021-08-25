@@ -2,18 +2,18 @@ apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
   name: linedataserver
-  namespace: argocd
+  namespace: openshift-gitops
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  - argoproj.io/finalizer
 spec:
   project: default
   source:
-    repoURL: https://github.com/ipbabble/manuela-gitops.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: HEAD
     path: deployment/staging-linedataserver
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: openshift-gitops
   syncPolicy:
     automated: 
       prune: true

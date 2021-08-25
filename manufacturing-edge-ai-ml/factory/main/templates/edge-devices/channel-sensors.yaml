@@ -5,6 +5,6 @@ metadata:
   namespace: manuela-sensors-mcs
 spec:
   type: GitHub
-  pathname: https://github.com/ipbabble/manuela-gitops.git
+  pathname: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
 
 
