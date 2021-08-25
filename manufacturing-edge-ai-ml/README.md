@@ -62,18 +62,6 @@ TIP: It is recommended to have two shells open so that you can switch between da
    
 1. Check all applications are synchronised
 
-<<<<<<< HEAD
-=======
-1. Obtain the Manuela ArgoCD secret
-
-   `oc -n manuela-ci extract secrets/manuela-argocd-cluster --to=-`
-
-1. Obtain the Manuela ArgoCD location and log in
-
-   `oc -n openshift-gitops extract secrets/openshift-gitops-cluster --to=-`
-
-1. Check all applications are synchronised
-
 1. To deploy a edge cluster you will need to get the datacenter (or hub) cluster's token. You will need to install `clusteradm`.  On the existing datacenter cluster:
 
    `clusteradm get token`
@@ -98,7 +86,6 @@ TIP: It is recommended to have two shells open so that you can switch between da
 1. Use Helm to deploy the factory cluster assets.
 
 
->>>>>>> 7e9294d7f0ceeac995f4e8e020ad6137d0a8946e
 # Structure
 
 https://docs.google.com/presentation/d/e/2PACX-1vSfbN_TbjfYnw-B6hHs-uUQ-8rRzUX27AW4eSxT7dVmBERiBgHS_FWWkgyg5fTsEWL2hj6RYyJqYi7_/pub?start=false&loop=false&delayms=3000
