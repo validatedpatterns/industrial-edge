@@ -3,4 +3,4 @@ resources:
  - manuela-ml-workspace-namespace.yaml
  - manuela-ml-workspace-operatorgroup.yaml
  - manuela-view-rolebinding.yaml
- - odh-kfdef.yaml
+   # - odh-kfdef.yaml
