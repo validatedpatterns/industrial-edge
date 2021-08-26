@@ -6,7 +6,7 @@ metadata:
   namespace: openshift-gitops
   annotations:
     apps.open-cluster-management.io/github-path: >-
-      sites/staging-edge.devcluster.openshift.com/03_services/argocd-gitops-factory
+      manufacturing-edge-ai-ml/factory/main
 spec:
   channel: acm-blueprint-industrial-edge-gitops/acm-channel-blueprint-industrial-edge
   placement:

@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-stormshift-line-dashboard
+  name: manuela-data-lake-central-s3-store
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
-    targetRevision: HEAD
-    path: config/instances/manuela-stormshift-staging-aws/line-dashboard
+    targetRevision: master
+    path: config/instances/manuela-data-lake/central-s3-store
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-stormshift-line-dashboard
+    namespace: manuela-data-lake-central-s3-store
   syncPolicy:
     automated: 
       prune: true
