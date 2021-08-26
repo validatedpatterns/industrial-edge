@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-{{ .Values.deploy.site }}
+  name: manuela-{{ .Values.global.deploy.site }}
   namespace: openshift-gitops
   labels:
     app.kubernetes.io/instance: manuela
@@ -12,7 +12,7 @@ spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
-    path: manufacturing-edge-ai-ml/{{ .Values.deploy.site }}/main
+    path: manufacturing-edge-ai-ml/{{ .Values.global.deploy.site }}/main
     targetRevision: {{ .Values.global.git.target }}
     helm:
       releaseName: manuela-release-v1
@@ -47,6 +47,12 @@ spec:
         value: {{ .Values.global.datacenter.domain }}
       - name: global.datacenter.clustername
         value: {{ .Values.global.datacenter.clustername }}
+      - name: global.edge.clustername
+        value: {{ .Values.global.edge.clustername }}
+      - name: global.edge.domain
+        value: {{ .Values.global.edge.domain }}
+      - name: global.deploy.site
+        value: {{ .Values.global.deploy.site }}
       - name: gitops.syncPolicy
         value: {{ .Values.gitops.syncPolicy }}
 {{- if eq .Values.gitops.syncPolicy "Automatic" }}
