@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://{{ .Values.global.git.provider}}/{{ .Values.global.git.account }}/blueprints.git
     targetRevision: {{ .Values.global.git.target }}
-    path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-kafka-cluster
+    path: gitops/config/instances/manuela-data-lake/central-kafka-cluster
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-data-lake-central-kafka-cluster

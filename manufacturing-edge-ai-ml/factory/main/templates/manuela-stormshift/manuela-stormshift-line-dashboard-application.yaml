@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-data-lake-factory-mirror-maker
+  name: manuela-stormshift-line-dashboard
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
-    targetRevision: master
-    path: factory/sites/staging/manuela-data-lake/factory-mirror-maker
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
+    targetRevision: HEAD
+    path: factory/main/templates/manuela-stormshift/line-dashboard
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-factory-mirror-maker
+    namespace: manuela-stormshift-line-dashboard
   syncPolicy:
     automated: 
       prune: true

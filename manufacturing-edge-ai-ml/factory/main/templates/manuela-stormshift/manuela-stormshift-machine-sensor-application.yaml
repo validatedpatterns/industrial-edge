@@ -1,7 +1,7 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-data-lake-central-kafka-cluster
+  name: manuela-stormshift-machine-sensor
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
@@ -9,11 +9,11 @@ spec:
   project: default
   source:
     repoURL: https://github.com/dagger-refuse-cool/blueprints.git
-    targetRevision: master
-    path: factory/sites/staging/manuela-data-lake/central-kafka-cluster
+    targetRevision: HEAD
+    path: factory/main/templates/manuela-stormshift-staging/machine-sensor
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-central-kafka-cluster
+    namespace: manuela-stormshift-machine-sensor
   syncPolicy:
     automated: 
       prune: true

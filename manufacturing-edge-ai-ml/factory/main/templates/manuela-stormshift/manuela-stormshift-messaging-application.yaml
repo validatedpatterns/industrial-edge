@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: linedataserver
+  name: manuela-stormshift-messaging
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/ipbabble/manuela-gitops.git
+    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
     targetRevision: HEAD
-    path: deployment/staging-linedataserver
+    path: factory/main/templates/manuela-stormshift-staging-aws/messaging
   destination:
     server: https://kubernetes.default.svc
-    namespace: argocd
+    namespace: manuela-stormshift-messaging
   syncPolicy:
     automated: 
       prune: true
@@ -27,3 +27,11 @@ spec:
     kind: Route
     jsonPointers:
     - /status
+  - group: image.openshift.io
+    kind: ImageStream
+    jsonPointers:
+    - /spec/tags
+  - group: apps.openshift.io
+    kind: DeploymentConfig
+    jsonPointers:
+    - /spec/template/spec/containers/0/image

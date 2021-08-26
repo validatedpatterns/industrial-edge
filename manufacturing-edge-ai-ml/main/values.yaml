@@ -10,6 +10,17 @@ global:
     provider: quay.io
     account: PLAINTEXT
 
+  datacenter:
+    clustername: DATACENTER-CLUSTERNAME
+    domain: CLUSTER-DOMAINNAME
+
+  edge:
+    clustername: EDGE-CLUSTERNAME
+    domain: EDGE-DOMAINNAME
+
+deploy:
+    site: DATACENTER-OR-FACTORY
+
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
   enabled: false

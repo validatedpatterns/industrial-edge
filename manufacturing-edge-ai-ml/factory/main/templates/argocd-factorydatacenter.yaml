@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-stormshift-line-dashboard
-  namespace: argocd
+  name: factorydatacenter
+  namespace: openshift-gitops
   finalizers:
-  - resources-finalizer.argocd.argoproj.io
+  - argoproj.io/finalizer
 spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: HEAD
-    path: config/instances/manuela-stormshift-staging-aws/line-dashboard
+    path: deployment/staging-factorydatacenter
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-stormshift-line-dashboard
+    namespace: openshift-gitops
   syncPolicy:
     automated: 
       prune: true
@@ -27,11 +27,3 @@ spec:
     kind: Route
     jsonPointers:
     - /status
-  - group: image.openshift.io
-    kind: ImageStream
-    jsonPointers:
-    - /spec/tags
-  - group: apps.openshift.io
-    kind: DeploymentConfig
-    jsonPointers:
-    - /spec/template/spec/containers/0/image

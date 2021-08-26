@@ -1,19 +1,19 @@
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: manuela-data-lake-central-s3-store
+  name: manuela-data-lake-central-kafka-cluster
   namespace: argocd
   finalizers:
   - resources-finalizer.argocd.argoproj.io
 spec:
   project: default
   source:
-    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: master
-    path: factory/sites/staging/manuela-data-lake/central-s3-store
+    path: config/instances/manuela-data-lake/central-kafka-cluster
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-central-s3-store
+    namespace: manuela-data-lake-central-kafka-cluster
   syncPolicy:
     automated: 
       prune: true
