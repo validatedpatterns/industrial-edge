@@ -5,7 +5,7 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  channel: stable
+  channel: amq-streams-1.7.x
   installPlanApproval: Automatic
   name: amq-streams
   source: redhat-operators
