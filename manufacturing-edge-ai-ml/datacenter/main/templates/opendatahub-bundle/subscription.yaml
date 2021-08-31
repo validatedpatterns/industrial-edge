@@ -9,9 +9,7 @@ spec:
   name: opendatahub-operator
   source: {{ .Values.subscriptions.version.opendatahub.source }}
   sourceNamespace: openshift-marketplace
-{{- if eq .Values.subscriptions.useCSV "True" }}
   startingCSV: opendatahub-operator.{{ .Values.subscriptions.version.opendatahub.csv }}
-{{- end }}
   
 
 
