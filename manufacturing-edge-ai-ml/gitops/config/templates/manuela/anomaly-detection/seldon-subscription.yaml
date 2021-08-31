@@ -5,9 +5,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  channel: stable
-  installPlanApproval: Automatic
+  channel: {{ .Values.subscriptions.version.seldon.channel }}
+  installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
   name: seldon-operator
-  source: certified-operators
+  source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.v1.7.0
+{{- if eq .Values.subscriptions.useCSV "True" }}
+  startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon.csv }}
+{{- end }}

@@ -5,9 +5,12 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  channel: current
-  installPlanApproval: Automatic
-  name: amq-broker
-  source: redhat-operators
+  channel: {{ .Values.subscriptions.version.amqbroker.channel }}
+  installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
+  name: amq-streams
+  source: {{ .Values.subscriptions.version.amqbroker.source }}
   sourceNamespace: openshift-marketplace
-  startingCSV: amq-broker-operator.v7.8.0
+{{- if eq .Values.subscriptions.useCSV "True" }}
+  startingCSV: {{ .Values.subscriptions.version.amqbroker.csv }}
+{{- end }}
+

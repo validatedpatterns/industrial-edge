@@ -4,9 +4,14 @@ metadata:
   name: seldon-operator
   namespace: manuela-ml-workspace
 spec:
-  channel: stable
+  channel: {{ .Values.subscriptions.version.seldon.channel }}
   installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
   name: seldon-operator
-  source: community-operators
+  source: {{ .Values.subscriptions.version.seldon.source }}
   sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon }}
+{{- if eq .Values.subscriptions.useCSV "True" }}
+  startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon.csv }}
+{{- end }}
+
+
+

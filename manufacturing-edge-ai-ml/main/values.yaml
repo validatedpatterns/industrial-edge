@@ -39,9 +39,25 @@ gitops:
 
 subscriptions:
   installPlanApproval: Automatic
+  useCSV: "False"
   version:
-    gitops: v1.2.0
-    pipelines: v1.1.1
-    acm: release-2.0
-    opendatahub: v0.6.1
-    seldon: v1.7.0
+    gitops: 
+      channel:
+      csv: v1.2.0
+      source:
+    pipelines: 
+      channel:
+      csv: v1.1.1
+      source:
+    acm: 
+      channel:
+      csv: release-2.0
+      source:
+    opendatahub: 
+      channel:
+      csv: v0.6.1
+      source: 
+    seldon: 
+      channel:
+      csv: v1.7.0
+      source:

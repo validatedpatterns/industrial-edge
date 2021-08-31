@@ -5,9 +5,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
-  channel: 1.4.x
-  installPlanApproval: Automatic
+  channel: {{ .Values.subscriptions.version.redhatcamelk.channel }}
+  installPlanApproval: {{ .Values.subscriptions.installePlanApproval }}
   name: red-hat-camel-k
-  source: redhat-operators
+  source: {{ .Values.subscriptions.version.redhatcamelk.source }}
   sourceNamespace: openshift-marketplace
-  startingCSV: red-hat-camel-k-operator.v1.4.0
+{{- if eq .Values.subscriptions.useCSV "True" }}
+  startingCSV: red-hat-camel-k-operator.{{ .Values.subscriptions.version.redhatcamelk.csv }}
+{{- end }}

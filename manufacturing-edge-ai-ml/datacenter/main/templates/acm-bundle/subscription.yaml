@@ -6,6 +6,6 @@ metadata:
 spec:
   sourceNamespace: openshift-marketplace
   source: redhat-operators
-  channel: {{ .Values.subscriptions.version.acm }}
+  channel: {{ .Values.subscriptions.version.acm.channel }}
   installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
   name: advanced-cluster-management
