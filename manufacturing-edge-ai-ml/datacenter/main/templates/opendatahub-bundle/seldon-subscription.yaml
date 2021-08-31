@@ -2,7 +2,8 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: seldon-operator
-  namespace: manuela-ml-workspace
+    #namespace: manuela-ml-workspace
+  namespace: openshift-operators
 spec:
   channel: {{ .Values.subscriptions.version.seldon.channel }}
   installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
