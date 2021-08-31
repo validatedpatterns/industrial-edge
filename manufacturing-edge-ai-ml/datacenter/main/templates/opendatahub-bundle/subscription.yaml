@@ -4,7 +4,7 @@ metadata:
   name: opendatahub-operator
   namespace: openshift-operators
 spec:
-  channel: opendatahub-operator.{{ .Values.subscriptions.version.opendatahub.channel }}
+  channel: {{ .Values.subscriptions.version.opendatahub.channel }}
   installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
   name: opendatahub-operator
   source: {{ .Values.subscriptions.version.opendatahub.source }}
