@@ -9,7 +9,5 @@ spec:
   name: openshift-pipelines-operator-rh
   source: {{ .Values.subscriptions.version.pipelines.source }}
   sourceNamespace: openshift-marketplace
-{{- if eq ".Values.subscriptions.useCSV" "True" }}
   startingCSV: redhat-openshift-pipelines.{{ .Values.subscriptions.version.pipelines.csv }}
-{{- end }}
 
