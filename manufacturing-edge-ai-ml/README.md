@@ -116,3 +116,23 @@ https://docs.google.com/presentation/d/e/2PACX-1vSfbN_TbjfYnw-B6hHs-uUQ-8rRzUX27
    `helm delete manuela`
 
 1. Check all namespaces and operators have been removed
+
+# Diagrams
+
+The following diagrams show the different components deployed on the datacenter and the factory.
+
+## Logical
+
+![Logical](diagrams/manufacturing-logical.png)
+
+## Schematic with Networks
+
+![Schema - Networks](diagrams/manufacturing-schema-netw.png)
+
+## Schematic with Dataflows
+
+![Schema - Dataflow](diagrams/manufacturing-schema-df.png)
+
+## Editing the diagrams.
+
+To edit the diagrams in Draw.io you can load them [here](https://redhatdemocentral.gitlab.io/portfolio-architecture-tooling/index.html?#/portfolio-architecture-examples/projects/Mfg-AI-ML-0928.drawio) and save a local copy
