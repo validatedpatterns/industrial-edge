@@ -123,15 +123,15 @@ The following diagrams show the different components deployed on the datacenter 
 
 ## Logical
 
-![Logical](https://github.com/dagger-refuse-cool/blueprints/diagrams/manufacturing-logical.png)
+![Logical](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-logical.png)
 
 ## Schematic with Networks
 
-![Schema - Networks](https://github.com/dagger-refuse-cool/blueprints/diagrams/manufacturing-schema-netw.png)
+![Schema - Networks](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-schema-netw.png)
 
 ## Schematic with Dataflows
 
-![Schema - Dataflow](https://github.com/dagger-refuse-cool/blueprints/diagrams/manufacturing-schema-df.png)
+![Schema - Dataflow](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-schema-df.png)
 
 ## Editing the diagrams.
 
