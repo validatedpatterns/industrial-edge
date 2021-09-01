@@ -4,8 +4,8 @@ kind: Kustomization
 namespace: manuela-ci
 
 bases:
-- templates
 - pipelines
+- templates
 # Uncomment this Pipeline to start the parallel pipeline that requires RWX PVCs to run the tasks.
 #- seed-run.yaml
 # Seed PipelineRuns to build individual component images using RWO PVCs
