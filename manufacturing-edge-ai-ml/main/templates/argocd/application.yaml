@@ -93,9 +93,9 @@ spec:
         value: {{ .Values.global.edge.domain }}
       - name: global.deploy.site
         value: {{ .Values.global.deploy.site }}
-      - name: gitops.syncPolicy
-        value: {{ .Values.gitops.syncPolicy }}
-{{- if eq .Values.gitops.syncPolicy "Automatic" }}
+      - name: subscriptions.version.gitops.syncPolicy
+        value: {{ .Values.subscriptions.version.gitops.syncPolicy }}
+{{- if eq .Values.subscriptions.version.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false
