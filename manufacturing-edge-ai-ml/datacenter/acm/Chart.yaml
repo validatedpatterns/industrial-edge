@@ -1,7 +1,7 @@
 apiVersion: v2
-description: A Helm chart to configure opendatahub
+description: A Helm chart to configure acm
 keywords:
 - manuela
 - blueprint
-name: opendatahub
+name: acm
 version: 0.0.1
