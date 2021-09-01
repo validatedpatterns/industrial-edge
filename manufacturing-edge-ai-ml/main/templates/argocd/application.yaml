@@ -43,7 +43,7 @@ spec:
         value: {{ .Values.subscriptions.version.opendatahub.channel }}
       - name: subscriptions.version.opendatahub.csv
         value: {{ .Values.subscriptions.version.opendatahub.csv }}
-      - name: "subscriptions.version.opendatahub.source"
+      - name: subscriptions.version.opendatahub.source
         value: {{ .Values.subscriptions.version.opendatahub.source }}
       - name: subscriptions.version.seldon.channel
         value: {{ .Values.subscriptions.version.seldon.channel }}
