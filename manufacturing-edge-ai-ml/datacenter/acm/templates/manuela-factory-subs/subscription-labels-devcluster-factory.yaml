@@ -13,4 +13,4 @@ spec:
     placementRef:
       kind: PlacementRule
       name: apply-argocd-factory-to-label-clusters
-      apiGroup: apps.open-cluster-management.io
+        #apiGroup: apps.open-cluster-management.io
