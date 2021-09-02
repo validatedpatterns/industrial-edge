@@ -6,7 +6,7 @@ namespace: manuela-data-lake-central-s3-store
 resources:
 - manuela-data-lake-central-s3-store-namespace.yaml
 - manuela-data-lake-central-s3-store-operatorgroup.yaml
-- camel-k-operator-subscription.yaml
+  #- camel-k-operator-subscription.yaml
 - camel-k-integration-platform.yaml
 - kafka-to-s3-cm.yaml
 - kafka-to-s3-integration.yaml
