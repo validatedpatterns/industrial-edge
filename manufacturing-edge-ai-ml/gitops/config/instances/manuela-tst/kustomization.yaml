@@ -38,11 +38,7 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-<<<<<<< HEAD
   newTag: 0.3.2-74
-=======
-  newTag: 0.3.2-70
->>>>>>> 8baaee55d2151392e14dbffac5b8a4c7e4f75ae1
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
   newTag: 0.3.1-48
