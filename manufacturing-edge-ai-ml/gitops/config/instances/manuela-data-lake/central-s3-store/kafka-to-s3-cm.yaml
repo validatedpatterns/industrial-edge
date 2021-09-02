@@ -14,6 +14,6 @@ data:
     s3.message.aggregation.count=10
     s3.custom.endpoint.enabled=true
     # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.apps.claudiol-dc1.blueprints.rhecoeng.com
+    s3.custom.endpoint.url=s3-openshift-storage.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
 
     
