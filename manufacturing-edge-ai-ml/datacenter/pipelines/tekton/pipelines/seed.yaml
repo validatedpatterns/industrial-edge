@@ -469,4 +469,4 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin master
+      value: --set-upstream origin main
