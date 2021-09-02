@@ -2,6 +2,7 @@ apiVersion: operators.coreos.com/v1alpha1
 kind: Subscription
 metadata:
   name: red-hat-camel-k
+  namespace: manuela-data-lake-central-s3-store
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
