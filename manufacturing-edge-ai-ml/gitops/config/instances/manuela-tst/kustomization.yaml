@@ -11,26 +11,26 @@ bases:
 - ../../templates/manuela-openshift/anomaly-detection
 # - ../../templates/manuela-openshift/anomaly-detection
 - ../../templates/installplan-approver
-  #configMapGenerator:
-  #- name: machine-sensor-1
-  #behavior: merge
-  #envs:
-  #- machine-sensor-1-configmap.properties
-  #- name: machine-sensor-2
-  #behavior: merge
-  #envs:
-  #- machine-sensor-2-configmap.properties
-  #- name: line-dashboard-configmap
-  #behavior: replace
-  #files:
-  #- config.json=line-dashboard-configmap-config.json
-  #- name: messaging-configmap
-  #behavior: merge
-  #envs:
-  #- messaging-configmap.properties
-  #patchesStrategicMerge:
-  #- line-dashboard-route.yaml
-  #- messaging-route.yaml
+#configMapGenerator:
+#- name: machine-sensor-1
+#behavior: merge
+#envs:
+#- machine-sensor-1-configmap.properties
+#- name: machine-sensor-2
+#behavior: merge
+#envs:
+#- machine-sensor-2-configmap.properties
+#- name: line-dashboard-configmap
+#behavior: replace
+#files:
+#- config.json=line-dashboard-configmap-config.json
+#- name: messaging-configmap
+#behavior: merge
+#envs:
+#- messaging-configmap.properties
+#patchesStrategicMerge:
+#- line-dashboard-route.yaml
+#- messaging-route.yaml
 resources:
 - manuela-tst-all-namespace.yaml
 - manuela-tst-all-operatorgroup.yaml
@@ -38,7 +38,11 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+<<<<<<< HEAD
   newTag: 0.3.2-74
+=======
+  newTag: 0.3.2-70
+>>>>>>> 8baaee55d2151392e14dbffac5b8a4c7e4f75ae1
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
   newTag: 0.3.1-48
