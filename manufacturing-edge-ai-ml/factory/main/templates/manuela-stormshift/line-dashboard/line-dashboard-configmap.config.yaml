@@ -2,10 +2,10 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: line-dashboard-configmap
-  namespace: manuela-tst-all
+  namespace: manuela-stormshift-line-dashboard
   labels:
     app.kubernetes.io/instance: manuela-tst-all
 data:
-  websocketHost: "http://messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}"
+  websocketHost: "http://messaging-manuela-stormshift.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}"
   websocketPath: "/api/service-web/socket"
   SERVER_TIMEOUT: "20000"
