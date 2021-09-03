@@ -135,5 +135,4 @@ The following diagrams show the different components deployed on the datacenter 
 
 ## Editing the diagrams.
 
-To edit the diagrams in Draw.io you can load them [here](https://redhatdemocentral.gitlab.io/portfolio-architecture-tooling/index.html?#/portfolio-architec
-ture-examples/projects/Mfg-AI-ML-0928.drawio) and save a local copy
+To edit the diagrams in Draw.io you can load them [here](https://redhatdemocentral.gitlab.io/portfolio-architecture-tooling/index.html?#/portfolio-architecture-examples/projects/Mfg-AI-ML-0928.drawio) and save a local copy
