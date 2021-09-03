@@ -123,16 +123,17 @@ The following diagrams show the different components deployed on the datacenter 
 
 ## Logical
 
-![Logical](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-logical.png)
+![Logical](diagrams/manufacturing-logical.png)
 
 ## Schematic with Networks
 
-![Schema - Networks](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-schema-netw.png)
+![Schema - Networks](diagrams/manufacturing-schema-netw.png)
 
 ## Schematic with Dataflows
 
-![Schema - Dataflow](https://github.com/dagger-refuse-cool/blueprints/manufacturing-edge-ai-ml/diagrams/manufacturing-schema-df.png)
+![Schema - Dataflow](diagrams/manufacturing-schema-df.png)
 
 ## Editing the diagrams.
 
 To edit the diagrams in Draw.io you can load them [here](https://redhatdemocentral.gitlab.io/portfolio-architecture-tooling/index.html?#/portfolio-architecture-examples/projects/Mfg-AI-ML-0928.drawio) and save a local copy
+
