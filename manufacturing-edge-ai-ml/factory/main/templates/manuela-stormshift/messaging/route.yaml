@@ -4,3 +4,13 @@ metadata:
   name: messaging
 spec:
   host: messaging-manuela-stormshift-messaging.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  port:
+    targetPort: 3000-tcp
+  to:
+    kind: Service
+    name: messaging
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
+

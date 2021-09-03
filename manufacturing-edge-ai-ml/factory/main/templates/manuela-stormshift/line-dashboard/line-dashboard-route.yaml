@@ -4,3 +4,12 @@ metadata:
   name: line-dashboard
 spec:
   host: line-dashboard-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: line-dashboard
+    weight: 100
+  wildcardPolicy: None
+status:
+  ingress: []
