@@ -1,0 +1,14 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: red-hat-camel-k
+  namespace: openshift-operators
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  channel: {{ .Values.subscriptions.version.redhatcamelk.channel }}
+  installPlanApproval: {{ .Values.subscriptions.installePlanApproval }}
+  name: red-hat-camel-k
+  source: {{ .Values.subscriptions.version.redhatcamelk.source }}
+  sourceNamespace: openshift-marketplace
+  startingCSV: red-hat-camel-k-operator.{{ .Values.subscriptions.version.redhatcamelk.csv }}
