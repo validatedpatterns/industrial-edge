@@ -25,6 +25,18 @@ helm:
   gitops:
     syncPolicy: Automatic
 
+  messaging:
+    vibrationAlert: true
+    vibrationAnomaly: true
+    nodeTlsReject: 0 
+
+  machineSensor1:
+    port: 80
+
+  machineSensor2:
+    port: 80
+    sensorTemperature: true
+
   subscriptions:
     installPlanApproval: Automatic
     version:
