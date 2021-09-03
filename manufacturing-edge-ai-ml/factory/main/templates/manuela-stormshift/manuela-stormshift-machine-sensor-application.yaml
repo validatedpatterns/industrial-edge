@@ -8,8 +8,8 @@ metadata:
 spec:
   project: default
   source:
-    repoURL: https://github.com/dagger-refuse-cool/blueprints.git
-    targetRevision: HEAD
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
+    targetRevision: {{ .Values.global.git.target }}
     path: factory/main/templates/manuela-stormshift-staging/machine-sensor
   destination:
     server: https://kubernetes.default.svc

@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela-opendatahub
+  namespace: openshift-gitops
+  labels:
+    app.kubernetes.io/instance: manuela
+spec:
+  destination:
+    name: in-cluster
+    namespace: default
+  project: factorydatacenter
+  source:
+    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+    path: manufacturing-edge-ai-ml/factory/opendatahub
+    targetRevision: {{ .Values.global.git.target }}
+    #kustomize: {}
+    #namePrefix: manuela
+{{- if eq .Values.subscriptions.version.gitops.syncPolicy "Automatic" }}
+  syncPolicy:
+    automated: 
+      prune: false
+      selfHeal: false
+{{- end }}

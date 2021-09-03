@@ -1,0 +1,94 @@
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  finalizers:
+  - argoproj.io/finalizer
+  name: openshift-gitops
+  namespace: openshift-gitops
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  applicationInstanceLabelKey: argocd.argoproj.io/instance
+  # Not the greatest way to pass git/quay info to sub-applications, but it will do until
+  # we can support helmChart with kustomize
+  # The other option is to pass them in as environment variables eg. BLUEPRINT_VERSION
+  configManagementPlugins: "- name: kustomize-version\n  generate:\n    command: [sh,
+    -c]\n    args: [\"kustomize version 1>&2 && exit 1\"]\n- name: kustomize-with-helm\n
+    \ generate:\n    command: [\"kustomize\"]\n    args: [\"build\", \"--enable-helm\"]\n- name:
+    helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
+    dependency build\"]\n  generate:\n    command: [sh, -c]\n    args: [\"helm template
+    --release-name ${ARGOCD_APP_NAME}-v0.2021.8
+    --set global.quay.provider={{ .Values.global.quay.provider }}
+    --set global.quay.account={{ .Values.global.quay.account }}
+    --set global.git.provider={{ .Values.global.git.provider }}
+    --set global.git.account={{ .Values.global.git.account }}
+    --set global.git.username={{ .Values.global.git.username }}
+    --set global.git.email={{ .Values.global.git.email }}
+    --set global.git.target={{ .Values.global.git.target }}
+    --set global.bpversion=${BLUEPRINT_VERSION} .
+    --post-renderer ./kustomize\"]
+    \ \n"
+  applicationSet:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: "4"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 2Gi
+  dex:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  initialSSHKnownHosts: {}
+  rbac:
+    defaultPolicy: role:admin
+  repo:
+    resources:
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      kinds:
+      - TaskRun
+      - PipelineRun
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+    service:
+      type: ""
+  tls:
+    ca: {}
+status:
