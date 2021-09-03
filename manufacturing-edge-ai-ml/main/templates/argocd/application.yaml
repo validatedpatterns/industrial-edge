@@ -96,6 +96,20 @@ spec:
         value: "{{ .Values.global.deploy.site }}"
       - name: subscriptions.version.gitops.syncPolicy
         value: "{{ .Values.subscriptions.version.gitops.syncPolicy }}"
+{{- if eq .Values.global.deploy.site "factory" }}
+      - name: messaging.vibrationAlert 
+        value: "{{ .Values.messaging.vibrationAlert }}"
+      - name: messaging.vibrationAnomaly
+        value: "{{ .Values.messaging.vibrationAnomaly }}"
+      - name: messaging.nodeTlsReject
+        value: "{{ .Values.messaging.nodeTlsReject }}"
+      - name: machineSensor1.port
+        value: "{{ .Values.machineSensor1.port }}"
+      - name: machineSensor2.port
+        value: "{{ .Values.machineSensor2.port }}"
+      - name: machineSensor2.sensorTemperature
+        value: "{{ .Values.machineSensor2.sensorTemperature }}"
+{{- end }}
 {{- if eq .Values.subscriptions.version.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
