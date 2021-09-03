@@ -1,0 +1,8 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: machine-sensor-2
+data:
+    MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}"
+    MQTT_PORT: "{{ .Values.machineSensor2.port }}"
+    SENSOR_TEMPERATURE_ENABLED: "{{ .Values.machineSensor2.sensorTemperature }}"
