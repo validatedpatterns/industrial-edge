@@ -10,7 +10,5 @@ spec:
   name: amq-streams
   source: {{ .Values.subscriptions.version.amqbroker.source }}
   sourceNamespace: openshift-marketplace
-{{- if eq .Values.subscriptions.useCSV "True" }}
   startingCSV: {{ .Values.subscriptions.version.amqbroker.csv }}
-{{- end }}
 
