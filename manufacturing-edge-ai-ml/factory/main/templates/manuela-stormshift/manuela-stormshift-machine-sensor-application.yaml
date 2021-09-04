@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: {{ .Values.global.git.target }}
-    path: factory/main/templates/manuela-stormshift-staging/machine-sensor
+    path: factory/main/templates/manuela-stormshift/machine-sensor
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-machine-sensor
