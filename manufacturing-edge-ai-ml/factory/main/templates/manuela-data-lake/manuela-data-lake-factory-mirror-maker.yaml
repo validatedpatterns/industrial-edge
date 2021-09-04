@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: {{ .Values.global.git.target }}
-    path: factory/main/templates/manuela-data-lake/factory-mirror-maker
+    path: config/templates/manuela-data-lake/factory-mirror-maker
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-data-lake-factory-mirror-maker
