@@ -10,6 +10,4 @@ spec:
   name: red-hat-camel-k
   source: {{ .Values.subscriptions.version.redhatcamelk.source }}
   sourceNamespace: openshift-marketplace
-{{- if eq .Values.subscriptions.useCSV "True" }}
   startingCSV: red-hat-camel-k-operator.{{ .Values.subscriptions.version.redhatcamelk.csv }}
-{{- end }}
