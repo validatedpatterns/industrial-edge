@@ -10,7 +10,7 @@ spec:
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
     targetRevision: {{ .Values.global.git.target }}
-    path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-stormshift-staging-aws/machine-sensor
+    path: manufacturing-edge-ai-ml/factory/instances/manuela-stormshift/machine-sensor
   destination:
     server: https://kubernetes.default.svc
     namespace: manuela-stormshift-machine-sensor
