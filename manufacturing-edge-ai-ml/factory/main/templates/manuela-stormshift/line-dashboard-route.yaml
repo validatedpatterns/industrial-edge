@@ -2,6 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
 spec:
   host: line-dashboard-manuela-stormshift.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
   port:
