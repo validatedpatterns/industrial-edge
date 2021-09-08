@@ -74,17 +74,17 @@ There are a couple of ways to join the factory to the datacenter.
 * Using the ACM user interface
 * Using the `clusteradm` tool
 
-## Using the ACM UI
+# Factory setup using the ACM UI
 
-1. From the datacenter openshift console select ACM from the top right:
+1. From the datacenter openshift console select ACM from the top right
 
 ![](images/launch-acm-console.png "Launch ACM console")
 
-1. Select the "Import Cluster" option beside the highleded Create Cluster button.
+1. Select the "Import cluster" option beside the highleded Create Cluster button.
 
-![](images/import-cluster.png "Select Import Cluster")
+![](images/import-cluster.png "Select Import cluster")
 
-1. On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". After pressiming import you will be asked to copy a command that will be used on the factory cluster
+1. On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". After pressiming import you will be asked to copy a command that will be used on the factory cluster.
 
 ![](images/import-with-kubeconfig.png "Import using kubeconfig")
 
@@ -94,7 +94,7 @@ There are a couple of ways to join the factory to the datacenter.
 
 This will cause the factoy to be joined with the datacenter (hub). It will also result in OpenShift GitOps to be installed on the factory cluster. This in turn will push the application components to the cluster.
 
-## Using `clusteradm` tool
+## Factory setup using `clusteradm` tool
 
 You can also use `clusteradm` to join a cluster. The folloing instructions explain what needs to be done. `clusteradm` is still in testing.
 
