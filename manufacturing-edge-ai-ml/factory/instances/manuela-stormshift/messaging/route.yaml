@@ -3,7 +3,7 @@ kind: Route
 metadata:
   name: messaging
 spec:
-  host: messaging-manuela-stormshift-messaging.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  host: messaging-manuela-stormshift-messaging.apps.claudiol-factory.blueprints.rhecoeng.com
   port:
     targetPort: 3000-tcp
   to:
