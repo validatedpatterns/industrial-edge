@@ -48,12 +48,10 @@ spec:
                   destination:
                     server: https://kubernetes.default.svc
                     namespace: openshift-gitops
-{{- if eq .Values.subscriptions.version.gitops.syncPolicy "Automatic" }}
                   syncPolicy:
                     automated:
                       prune: false
                       selfHeal: true
-{{- end }}
                   ignoreDifferences:
                   - group: apps
                     kind: Deployment
