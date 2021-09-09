@@ -34,8 +34,8 @@ spec:
                 spec:
                   project: default
                   source:
-                    repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git
-                    targetRevision: {{ .Values.global.git.target }}
+                    repoURL: "https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git"
+                    targetRevision: "{{ .Values.global.git.target }}"
                     path: manufacturing-edge-ai-ml/factory/main
                     helm:
                     # All other values come from /.argocd-source.yaml 
