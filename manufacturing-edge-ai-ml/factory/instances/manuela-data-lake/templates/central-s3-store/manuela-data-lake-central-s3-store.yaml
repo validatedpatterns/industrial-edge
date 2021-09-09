@@ -13,7 +13,7 @@ spec:
     path: manufacturing-edge-ai-ml/factory/instances/manuela-data-lake/central-s3-store
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-central-s3-store
+    namespace: manuela-data-lake
   syncPolicy:
     automated: 
       prune: true

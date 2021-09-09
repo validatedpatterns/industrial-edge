@@ -4,9 +4,9 @@ metadata:
   generateName: manuela-data-lake-central-s3-store-
   generation: 1
   name: manuela-data-lake-central-s3-store
-  namespace: manuela-data-lake-central-s3-store
+  namespace: manuela-data-lake
   annotations:
     argocd.argoproj.io/sync-wave: "-1"
 spec:
   targetNamespaces:
-  - manuela-data-lake-central-s3-store
+  - manuela-data-lake
