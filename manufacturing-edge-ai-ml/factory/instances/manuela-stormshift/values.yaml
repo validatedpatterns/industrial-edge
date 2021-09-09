@@ -18,8 +18,20 @@ global:
     clustername: EDGE-CLUSTERNAME
     domain: EDGE-DOMAINNAME
 
-deploy:
+  deploy:
     site: DATACENTER-OR-FACTORY
+
+messaging:
+  vibrationAlert: true
+  vibrationAnomaly: true
+  nodeTlsReject: 0 
+
+machineSensor1:
+  port: 80
+
+machineSensor2:
+  port: 80
+  sensorTemperature: true
 
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
