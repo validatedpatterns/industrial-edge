@@ -1,25 +1,37 @@
 global:
   git:
     provider: github.com
-    account: PLAINTEXT
-    username: PLAINTEXT
-    email: SOMEWHERE@EXAMPLE.COM
-    target: HEAD
+    account: claudiol
+    email: claudiol@redhat.com
+    username: claudiol
+    target: claudiol-factory-argocd
 
   quay:
     provider: quay.io
-    account: PLAINTEXT
+    account: claudiol
 
   datacenter:
-    clustername: DATACENTER-CLUSTERNAME
-    domain: CLUSTER-DOMAINNAME
+    clustername: claudiol-factory
+    domain: blueprints.rhecoeng.com
 
   edge:
     clustername: EDGE-CLUSTERNAME
     domain: EDGE-DOMAINNAME
 
-deploy:
-    site: DATACENTER-OR-FACTORY
+  deploy:
+    site: factory
+
+messaging:
+  vibrationAlert: true
+  vibrationAnomaly: true
+  nodeTlsReject: 0 
+
+machineSensor1:
+  port: 80
+
+machineSensor2:
+  port: 80
+  sensorTemperature: true
 
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
@@ -39,25 +51,38 @@ gitops:
 
 subscriptions:
   installPlanApproval: Automatic
-  useCSV: "False"
+  useCSV: "True"  # Set to "True" (notice the ". String not boolean type) to include startingCSV in manifest
   version:
-    gitops: 
-      channel:
+    gitops:
+      channel: stable   
       csv: v1.2.0
-      source:
-    pipelines: 
-      channel:
-      csv: v1.1.1
-      source:
-    acm: 
-      channel:
-      csv: release-2.0
-      source:
-    opendatahub: 
-      channel:
-      csv: v0.6.1
-      source: 
-    seldon: 
-      channel:
+      source: redhat-operators
+      syncPolicy: Automatic 
+    pipelines:
+      channel: stable
+      csv: v1.5.0
+      source: redhat-operators
+    acm:
+      channel: release-2.3
+      csv: v2.3.1
+      source: redhat-operators
+    opendatahub:
+      channel: stable
+      csv: v1.1.0
+      source: community-operators
+    seldon:
+      channel: stable
       csv: v1.7.0
-      source:
+      source: community-operators
+    amqbroker:
+      channel: 7.x
+      csv: amq-broker-operator.v7.8.0
+      source: redhat-operators 
+    amqstreams:
+      channel: "amq-streams-1.7.x"
+      csv: v1.7.3
+      source: redhat-operators
+    redhatcamelk:
+      channel: 1.4.x
+      csv: v1.4.0
+      source: redhat-operators
