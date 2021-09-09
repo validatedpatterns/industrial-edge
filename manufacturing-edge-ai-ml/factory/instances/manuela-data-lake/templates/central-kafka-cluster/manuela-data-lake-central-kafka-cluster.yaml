@@ -13,7 +13,7 @@ spec:
     path: manufacturing-edge-ai-ml/factory/instances/manuela-data-lake/central-kafka-cluster
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-central-kafka-cluster
+    namespace: manuela-data-lake
   syncPolicy:
     automated: 
       prune: true
