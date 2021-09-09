@@ -1,0 +1,63 @@
+global:
+  git:
+    provider: github.com
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    target: HEAD
+
+  quay:
+    provider: quay.io
+    account: PLAINTEXT
+
+  datacenter:
+    clustername: DATACENTER-CLUSTERNAME
+    domain: CLUSTER-DOMAINNAME
+
+  edge:
+    clustername: EDGE-CLUSTERNAME
+    domain: EDGE-DOMAINNAME
+
+deploy:
+    site: DATACENTER-OR-FACTORY
+
+secrets:
+  # NEVER COMMIT THESE VALUES TO GIT
+  enabled: false
+  quay:
+    # Quay -> Robot Accounts -> Kubernetes Secret -> View
+    authToken: BASE64STRING
+
+  git:
+    # Go to: https://github.com/settings/tokens
+    # Then: echo -n 'your string value' | base64
+    authToken: BASE64STRING
+    accountToken: BASE64STRING
+
+gitops:
+  syncPolicy: Automatic
+
+subscriptions:
+  installPlanApproval: Automatic
+  useCSV: "False"
+  version:
+    gitops: 
+      channel:
+      csv: v1.2.0
+      source:
+    pipelines: 
+      channel:
+      csv: v1.1.1
+      source:
+    acm: 
+      channel:
+      csv: release-2.0
+      source:
+    opendatahub: 
+      channel:
+      csv: v0.6.1
+      source: 
+    seldon: 
+      channel:
+      csv: v1.7.0
+      source:
