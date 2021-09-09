@@ -39,12 +39,13 @@ spec:
                     path: manufacturing-edge-ai-ml/factory/main
                     helm:
                     # All other values come from /.argocd-source.yaml 
-                    - name: global.git.provider
-                      value: "{{ .Values.global.git.provider }}"
-                    - name: global.git.account
-                      value: "{{ .Values.global.git.account }}"
-                    - name: global.git.target
-                      value: "{{ .Values.global.git.target }}"
+                      parameters:
+                        - name: global.git.provider
+                          value: "{{ .Values.global.git.provider }}"
+                        - name: global.git.account
+                          value: "{{ .Values.global.git.account }}"
+                        - name: global.git.target
+                          value: "{{ .Values.global.git.target }}"
                   destination:
                     server: https://kubernetes.default.svc
                     namespace: openshift-gitops
