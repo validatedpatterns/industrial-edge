@@ -13,7 +13,7 @@ spec:
     path: manufacturing-edge-ai-ml/factory/instances/manuela-data-lake/factory-mirror-maker
   destination:
     server: https://kubernetes.default.svc
-    namespace: manuela-data-lake-factory-mirror-maker
+    namespace: manuela-data-lake
   syncPolicy:
     automated: 
       prune: true
