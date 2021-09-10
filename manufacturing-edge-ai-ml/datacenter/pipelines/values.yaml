@@ -5,7 +5,8 @@ global:
     account: PLAINTEXT
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
-    target: HEAD
+    ops_revision: main
+    dev_revision: main
 
   quay:
     provider: quay.io
