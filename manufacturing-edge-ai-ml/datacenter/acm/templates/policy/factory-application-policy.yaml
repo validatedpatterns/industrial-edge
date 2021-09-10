@@ -35,7 +35,7 @@ spec:
                   project: default
                   source:
                     repoURL: "https://{{ .Values.global.git.provider }}/{{ .Values.global.git.username }}/blueprints.git"
-                    targetRevision: "{{ .Values.global.git.target }}"
+                    targetRevision: "{{ .Values.global.git.ops_revision }}"
                     path: manufacturing-edge-ai-ml/factory/main
                     helm:
                     # All other values come from /.argocd-source.yaml 
@@ -44,8 +44,8 @@ spec:
                           value: "{{ .Values.global.git.provider }}"
                         - name: global.git.account
                           value: "{{ .Values.global.git.account }}"
-                        - name: global.git.target
-                          value: "{{ .Values.global.git.target }}"
+                        - name: global.git.ops_revision
+                          value: "{{ .Values.global.git.ops_revision }}"
                   destination:
                     server: https://kubernetes.default.svc
                     namespace: openshift-gitops
