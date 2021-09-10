@@ -9,6 +9,10 @@ global:
     provider: quay.io
     account: PLAINTEXT
 
+  datacenter:
+    clustername: DATACENTER-CLUSTERNAME
+    domain: CLUSTER-DOMAINNAME
+    
 subscriptions:
   installPlanApproval: Automatic
   version:

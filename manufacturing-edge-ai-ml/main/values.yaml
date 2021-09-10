@@ -30,13 +30,13 @@ subscriptions:
   useCSV: "False"
   version:
     gitops:
-      channel: stable   
+      channel: stable
       csv: v1.2.0
       source: redhat-operators
-      syncPolicy: Automatic 
+      syncPolicy: Automatic
     pipelines:
       channel: stable
-      csv: v1.5.0
+      csv: v1.5.1
       source: redhat-operators
     acm:
       channel: release-2.3
