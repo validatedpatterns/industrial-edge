@@ -24,7 +24,8 @@ spec:
     --set global.git.account={{ .Values.global.git.account }}
     --set global.git.username={{ .Values.global.git.username }}
     --set global.git.email={{ .Values.global.git.email }}
-    --set global.git.target={{ .Values.global.git.target }}
+    --set global.git.ops_revision={{ .Values.global.git.ops_revision }}
+    --set global.git.dev_revision={{ .Values.global.git.dev_revision }}
     --set global.bpversion=${BLUEPRINT_VERSION} .
     --post-renderer ./kustomize\"]
     \ \n"
