@@ -63,11 +63,10 @@ spec:
       if [[ "$(params.deleteExisting)" == "true" ]] ; then
         cleandir
       fi
-      
-        #-revision "$(params.revision)" \
 
       /ko-app/git-init \
         -url "$(cat $(workspaces.config.path)/$(params.url_configmapkey))" \
+        -revision "$(params.revision)" \
         -path "$CHECKOUT_DIR" \
         -sslVerify="$(params.sslVerify)" \
         -submodules="$(params.submodules)" \
@@ -81,6 +80,7 @@ spec:
         exit $EXIT_CODE
       fi
 
+      git checkout $(params.revision)
       echo "Branch info: $(git branch -v)"
 
       #git branch --set-upstream-to=origin/$(params.revision) main
