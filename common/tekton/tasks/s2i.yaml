@@ -133,6 +133,7 @@ spec:
   - name: push
     image: quay.io/buildah/stable:v1.11.0
     script: |
+      echo --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $(params.OUTPUT_IMAGE) docker://$(params.OUTPUT_IMAGE):$(params.TAG)
       buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $(params.OUTPUT_IMAGE) docker://$(params.OUTPUT_IMAGE):$(params.TAG)
       echo -n "$(params.OUTPUT_IMAGE):$(params.TAG)" >$(results.image.path)
     resources: {}
