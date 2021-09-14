@@ -63,10 +63,11 @@ spec:
       if [[ "$(params.deleteExisting)" == "true" ]] ; then
         cleandir
       fi
+      
+        #-revision "$(params.revision)" \
 
       /ko-app/git-init \
         -url "$(cat $(workspaces.config.path)/$(params.url_configmapkey))" \
-        #-revision "$(params.revision)" \
         -path "$CHECKOUT_DIR" \
         -sslVerify="$(params.sslVerify)" \
         -submodules="$(params.submodules)" \
