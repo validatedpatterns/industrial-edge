@@ -57,6 +57,8 @@ spec:
   - name: prepare-env
     image: quay.io/openshift-pipeline/s2i
     script: |
+      echo preparing env...
+
       if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then 
         echo "MAVEN_CLEAR_REPO=$(params.MAVEN_CLEAR_REPO)" > env-file
 
@@ -96,6 +98,7 @@ spec:
     # - --as-dockerfile
     # - /gen-source/Dockerfile.gen
     script: |
+      echo generate
       if [ -f /env-params/s2icommand ]; then
         source /env-params/s2icommand
       else
@@ -104,6 +107,7 @@ spec:
       if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
         echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
       fi
+      echo done generating
     resources: {}
     volumeMounts:
     - mountPath: /gen-source
@@ -114,11 +118,13 @@ spec:
   - name: build
     image: quay.io/buildah/stable:v1.11.0
     script: |
+      echo gen-source
       if [ -f /env-params/buildahcommand ]; then
         source /env-params/buildahcommand
       else 
         buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f /gen-source/Dockerfile.gen -t $(params.OUTPUT_IMAGE) .
       fi
+      echo done gen-source
     resources: {}
     securityContext:
       privileged: false # LRC Changed from true
@@ -133,9 +139,11 @@ spec:
   - name: push
     image: quay.io/buildah/stable:v1.11.0
     script: |
+      echo build
       echo --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $(params.OUTPUT_IMAGE) docker://$(params.OUTPUT_IMAGE):$(params.TAG)
       buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $(params.OUTPUT_IMAGE) docker://$(params.OUTPUT_IMAGE):$(params.TAG)
       echo -n "$(params.OUTPUT_IMAGE):$(params.TAG)" >$(results.image.path)
+      echo build done
     resources: {}
     securityContext:
       privileged: false # LRC Changed from true
