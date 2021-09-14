@@ -4,6 +4,7 @@ global:
     account: claudiol
     email: claudiol@redhat.com
     username: claudiol
+    target: claudiol-factory-argocd
     dev_revision: main
     ops_revision: main
 
@@ -80,7 +81,7 @@ subscriptions:
       csv: amq-broker-operator.v7.8.0
       source: redhat-operators 
     amqstreams:
-      channel: "amq-streams-1.7.x"
+      channel: amq-streams-1.7.x
       csv: v1.7.3
       source: redhat-operators
     redhatcamelk:

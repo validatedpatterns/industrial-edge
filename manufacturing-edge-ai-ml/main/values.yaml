@@ -4,6 +4,7 @@ global:
     account: PLAINTEXT
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
+    targetRevision: main
     dev_revision: main
     ops_revision: main
 
