@@ -80,6 +80,8 @@ spec:
         exit $EXIT_CODE
       fi
 
+      echo "Branch info: $(git branch -v)"
+
       git branch --set-upstream-to=origin/$(params.revision) main
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
