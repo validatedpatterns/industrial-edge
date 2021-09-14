@@ -64,11 +64,43 @@ TIP: It is recommended to have two shells open so that you can switch between da
    
 1. Check all applications are synchronised
 
-1. To deploy a edge cluster you will need to get the datacenter (or hub) cluster's token. You will need to install `clusteradm`.  On the existing datacenter cluster:
+## Having a factory (edge) cluster join the datacenter (hub) 
+
+Rather than provide instructions on creating a factory cluster it is assumed
+that an OpenShift cluster has already been created. Use the `openshift-install` program provided at [cloud.redhat.com](https://console.redhat.com/openshift/create "Create an OpenShift cluster")
+
+There are a couple of ways to join the factory to the datacenter.
+
+* Using the ACM user interface
+* Using the `clusteradm` tool
+
+# Factory setup using the ACM UI
+
+1. From the datacenter openshift console select ACM from the top right
+
+![](images/launch-acm-console.png "Launch ACM console")
+
+1. Select the "Import cluster" option beside the highleded Create Cluster button.
+
+![](images/import-cluster.png "Select Import cluster")
+
+1. On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". After pressiming import you will be asked to copy a command that will be used on the factory cluster.
+
+![](images/import-with-kubeconfig.png "Import using kubeconfig")
+
+1. On the factory we recommend you edit a shell command file, e.g. `join-cluster.sh` and paste the copied command into the file and save. Then run the command by running that shell script.
+
+   `sh join-cluster.sh` 
+
+This will cause the factoy to be joined with the datacenter (hub). It will also result in OpenShift GitOps to be installed on the factory cluster. This in turn will push the application components to the cluster.
+
+## Factory setup using `clusteradm` tool
+
+You can also use `clusteradm` to join a cluster. The folloing instructions explain what needs to be done. `clusteradm` is still in testing.
+
+1. To deploy a edge cluster you will need to get the datacenter (or hub) cluster's token. You will need to install `clusteradm`.  On the existing *datacenter cluster*:
 
    `clusteradm get token`
-
-## Factory
 
 1. When you run the `clusteradm` command above it replies with the token and also shows you the command to use on the factory. So first you must login to the factory cluster
 
@@ -84,8 +116,6 @@ TIP: It is recommended to have two shells open so that you can switch between da
 1. Back on the hub cluster accept the join reguest 
 
    `clusteradm accept --clusters <factory-cluster-name>`
-
-1. Use Helm to deploy the factory cluster assets.
 
 
 # Structure

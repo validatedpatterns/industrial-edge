@@ -13,6 +13,7 @@ global:
   datacenter:
     clustername: DATACENTER-CLUSTERNAME
     domain: CLUSTER-DOMAINNAME
+<<<<<<< HEAD
 
   edge:
     clustername: EDGE-CLUSTERNAME
@@ -37,6 +38,9 @@ secrets:
 gitops:
   syncPolicy: Automatic
 
+=======
+    
+>>>>>>> 14c54f770468b33ceafa6e7b1503cb2226d91190
 subscriptions:
   installPlanApproval: Automatic
   useCSV: "False"

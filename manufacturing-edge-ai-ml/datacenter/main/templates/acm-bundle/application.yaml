@@ -13,7 +13,7 @@ spec:
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
     path: manufacturing-edge-ai-ml/datacenter/acm
-    targetRevision: {{ .Values.global.git.target }}
+    targetRevision: {{ .Values.global.git.ops_revision }}
     helm:
       releaseName: manuela-release-v1
       parameters:
@@ -25,8 +25,8 @@ spec:
         value: {{ .Values.global.git.provider }}
       - name: global.git.account
         value: {{ .Values.global.git.account }}
-      - name: global.git.target
-        value: {{ .Values.global.git.target }}
+      - name: global.git.ops_revision
+        value: {{ .Values.global.git.ops_revision }}
       - name: global.git.email
         value: {{ .Values.global.git.email }}
       - name: global.git.username

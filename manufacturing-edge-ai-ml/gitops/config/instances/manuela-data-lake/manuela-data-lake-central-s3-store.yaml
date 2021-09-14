@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider}}/{{ .Values.global.git.account }}/blueprints.git
-    targetRevision: {{ .Values.global.git.target }}
+    targetRevision: {{ .Values.global.git.ops_revision }}
     path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-s3-store
   destination:
     server: https://kubernetes.default.svc

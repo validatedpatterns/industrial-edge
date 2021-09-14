@@ -9,7 +9,7 @@ spec:
   project: default
   source:
     repoURL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
-    targetRevision: claudiol-experiment
+    targetRevision: {{ .Values.global.git.ops_revision }}
     path: config/instances/manuela-tst
   destination:
     server: https://kubernetes.default.svc

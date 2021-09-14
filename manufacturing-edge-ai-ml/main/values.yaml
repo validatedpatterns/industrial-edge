@@ -4,7 +4,8 @@ global:
     account: PLAINTEXT
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
-    target: HEAD
+    dev_revision: main
+    ops_revision: main
 
   quay:
     provider: quay.io
@@ -18,7 +19,7 @@ global:
     clustername: EDGE-CLUSTERNAME
     domain: EDGE-DOMAINNAME
 
-deploy:
+  deploy:
     site: DATACENTER-OR-FACTORY
 
 gitops:
@@ -26,16 +27,16 @@ gitops:
 
 subscriptions:
   installPlanApproval: Automatic
-  useCSV: "True"  # Set to "True" (notice the ". String not boolean type) to include startingCSV in manifest
+  useCSV: "False"
   version:
     gitops:
-      channel: stable   
+      channel: stable
       csv: v1.2.0
       source: redhat-operators
-      syncPolicy: Automatic 
+      syncPolicy: Automatic
     pipelines:
       channel: stable
-      csv: v1.5.0
+      csv: v1.5.1
       source: redhat-operators
     acm:
       channel: release-2.3
@@ -74,4 +75,3 @@ secrets:
     # Then: echo -n 'your string value' | base64
     authToken: BASE64STRING
     accountToken: BASE64STRING
-
