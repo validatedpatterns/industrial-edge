@@ -66,7 +66,7 @@ spec:
 
       /ko-app/git-init \
         -url "$(cat $(workspaces.config.path)/$(params.url_configmapkey))" \
-        -revision "$(params.revision)" \
+        #-revision "$(params.revision)" \
         -path "$CHECKOUT_DIR" \
         -sslVerify="$(params.sslVerify)" \
         -submodules="$(params.submodules)" \
@@ -82,7 +82,9 @@ spec:
 
       echo "Branch info: $(git branch -v)"
 
-      git branch --set-upstream-to=origin/$(params.revision) main
+      #git branch --set-upstream-to=origin/$(params.revision) main
+      git branch --set-upstream-to=origin/$(params.revision)
+
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
       then
