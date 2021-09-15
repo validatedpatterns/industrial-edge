@@ -4,6 +4,7 @@ metadata:
   labels:
     application: messaging
   name: messaging
+  namespace: manuela-stormshift-messaging
 spec:
   replicas: 1
   revisionHistoryLimit: 10
