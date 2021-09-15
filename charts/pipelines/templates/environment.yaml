@@ -3,7 +3,6 @@ kind: ConfigMap
 metadata:
   name: environment
 data:
-  TEST: {{ .Values.global.bpversion }}
   IMAGE_PROVIDER: {{ .Values.global.quay.provider }}
   IMAGE_ACCOUNT: {{ .Values.global.quay.account }}
   GIT_EMAIL: {{ .Values.global.git.email }}
