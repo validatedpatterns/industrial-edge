@@ -6,6 +6,7 @@ metadata:
     template: openjdk18-web-basic-s2i
     app.kubernetes.io/part-of: ManuELA
   name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
 spec:
   replicas: 1
   revisionHistoryLimit: 10
