@@ -10,7 +10,7 @@ spec:
   - name: BRANCH
     description: branch to check out or to create
     type: string
-    default: master
+    default: main
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string

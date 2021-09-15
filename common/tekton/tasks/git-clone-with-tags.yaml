@@ -15,7 +15,7 @@ spec:
   - name: revision
     description: git revision to checkout (branch, tag, sha, ref…)
     type: string
-    default: master
+    default: main
   - name: submodules
     description: defines if the resource should initialize and fetch the submodules
     type: string
@@ -80,7 +80,10 @@ spec:
         exit $EXIT_CODE
       fi
 
-      git branch --set-upstream-to=origin/$(params.revision) master
+      # Seems the go git client checks out master regardless.  This allows for 'main' or another branch to be used
+      git checkout $(params.revision)
+      git branch --set-upstream-to=origin/$(params.revision)
+
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
       then
