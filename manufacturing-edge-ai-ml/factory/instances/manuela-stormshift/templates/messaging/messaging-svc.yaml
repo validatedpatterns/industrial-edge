@@ -4,6 +4,7 @@ metadata:
   labels:
     app: messaging
   name: messaging
+  namespace: manuela-stormshift-messaging
 spec:
   ports:
   - name: 3000-tcp
