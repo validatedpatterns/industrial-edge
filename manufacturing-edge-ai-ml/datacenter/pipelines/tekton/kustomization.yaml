@@ -7,10 +7,9 @@ bases:
 - templates
 - pipelines
 # Uncomment this Pipeline to start the parallel pipeline that requires RWX PVCs to run the tasks.
-#- seed-run.yaml
+- seed-run.yaml
 # Seed PipelineRuns to build individual component images using RWO PVCs
-#- seed-iot-anomaly-detection-run.yaml
-#- seed-iot-consumer-run.yaml
-#- seed-iot-frontend-run.yaml
-#- seed-iot-software-sensor-run.yaml
-
+- seed-iot-anomaly-detection-run.yaml
+- seed-iot-consumer-run.yaml
+- seed-iot-frontend-run.yaml
+- seed-iot-software-sensor-run.yaml
