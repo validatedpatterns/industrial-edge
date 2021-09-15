@@ -23,7 +23,7 @@ spec:
     spec:
       containers:
       - name: line-dashboard
-        image: line-dashboard:latest
+        image: line-dashboard:0.3.1-73
         #imagePullPolicy: Always
         ports:
         - containerPort: 8080
