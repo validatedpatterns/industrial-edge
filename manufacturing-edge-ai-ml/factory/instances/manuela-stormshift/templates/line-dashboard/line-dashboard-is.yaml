@@ -2,6 +2,7 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
 spec:
   tags:
   - name: 0.3.1-59
