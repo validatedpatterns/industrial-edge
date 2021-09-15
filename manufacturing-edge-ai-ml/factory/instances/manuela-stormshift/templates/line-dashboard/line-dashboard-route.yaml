@@ -4,6 +4,7 @@ metadata:
   labels:
     app: line-dashboard
   name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
 spec:
   host: line-dashboard-manuela-stormshift-line-dashboard.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
   port:
