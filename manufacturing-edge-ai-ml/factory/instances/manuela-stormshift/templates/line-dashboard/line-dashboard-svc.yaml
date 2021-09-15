@@ -4,6 +4,7 @@ metadata:
   labels:
     app: line-dashboard
   name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
 spec:
   ports:
   - name: 8080-tcp
