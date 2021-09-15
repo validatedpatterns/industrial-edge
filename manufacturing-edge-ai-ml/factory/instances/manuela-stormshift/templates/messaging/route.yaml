@@ -4,7 +4,7 @@ metadata:
   name: messaging
   namespace: manuela-stormshift-messaging
 spec:
-  host: messaging-manuela-stormshift-messaging.apps.claudiol-factory.blueprints.rhecoeng.com
+  host: messaging-manuela-stormshift-messaging.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
   port:
     targetPort: 3000-tcp
   to:
