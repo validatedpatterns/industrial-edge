@@ -14,6 +14,7 @@ site:
 
   namespaces:
   - open-cluster-management
+  - manuela-ml-workspace
 
   subscriptions:
   - name: advanced-cluster-management
@@ -21,6 +22,17 @@ site:
     source: redhat-operators
     channel: release-2.3
     csv: v2.3.2
+
+  - name: seldon-operator
+    namespace: manuela-ml-workspace
+    source: community-operators
+    channel: stable
+    csv: v1.7.0
+
+  - name: opendatahub-operator
+    source: community-operators
+    channel: stable
+    csv: v1.1.0
 
   projects:
   - datacenter
@@ -30,6 +42,11 @@ site:
     namespace: open-cluster-management
     project: datacenter
     path: common/acm
+
+  - name: odh
+    namespace: open-cluster-management
+    project: datacenter
+    path: charts/opendatahub
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
