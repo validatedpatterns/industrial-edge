@@ -4,3 +4,14 @@ global:
     useCSV: True
     syncPolicy: Manual
     installPlanApproval: Automatic
+
+  git:
+    provider: github.com
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    dev_revision: main
+
+  quay:
+    provider: quay.io
+    account: PLAINTEXT
