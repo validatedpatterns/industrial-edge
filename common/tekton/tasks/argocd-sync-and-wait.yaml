@@ -21,7 +21,8 @@ spec:
     default: v1.5.2
   - name: argocd-server
     type: string
-    default: argocd-server.argocd.svc
+    default: openshift-gitops-server.openshift-gitops.svc
+#   default: argocd-server.argocd.svc
   steps:
     - name: login
       image: argoproj/argocd:$(params.argocd-version)
