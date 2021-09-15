@@ -1,10 +1,11 @@
 apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
+  labels:
+    app: line-dashboard
   name: line-dashboard
-  namespace: manuela-stormshift-line-dashboard
 spec:
-  host: line-dashboard-manuela-stormshift.apps.claudiol-factory.blueprints.rhecoeng.com
+  host: line-dashboard-manuela-stormshift-line-dashboard.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
   port:
     targetPort: 8080-tcp
   to:
