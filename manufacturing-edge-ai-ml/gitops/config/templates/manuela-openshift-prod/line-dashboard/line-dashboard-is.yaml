@@ -4,27 +4,6 @@ metadata:
   name: line-dashboard
 spec:
   tags:
-  - name: 0.3.1-58
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-frontend:0.3.1-58
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-59
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-frontend:0.3.1-59
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-60
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-frontend:0.3.1-60
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-61
     from:
       kind: DockerImage
@@ -50,6 +29,27 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/claudiol/iot-frontend:0.3.1-64
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-65
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-frontend:0.3.1-65
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-66
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-frontend:0.3.1-66
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-66
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-frontend:0.3.1-66
     importPolicy: {}
     referencePolicy:
       type: Local
