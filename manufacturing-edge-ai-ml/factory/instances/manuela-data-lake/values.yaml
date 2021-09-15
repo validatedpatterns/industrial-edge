@@ -81,8 +81,8 @@ subscriptions:
       csv: amq-broker-operator.v7.8.0
       source: redhat-operators 
     amqstreams:
-      channel: amq-streams-1.7.x
-      csv: v1.7.1
+      channel: amq-streams-1.8.x
+      csv: v1.8.1
       source: redhat-operators
     redhatcamelk:
       channel: 1.4.x
