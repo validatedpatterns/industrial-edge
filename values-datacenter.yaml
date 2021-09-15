@@ -19,20 +19,20 @@ site:
   subscriptions:
   - name: advanced-cluster-management
     namespace: open-cluster-management
-    source: redhat-operators
     channel: release-2.3
-    csv: v2.3.2
+    csv: advanced-cluster-management.v2.3.2
 
   - name: seldon-operator
     namespace: manuela-ml-workspace
     source: community-operators
-    channel: stable
-    csv: v1.7.0
+    csv: seldon-operator.v1.7.0
 
   - name: opendatahub-operator
     source: community-operators
-    channel: stable
-    csv: v1.1.0
+    csv: opendatahub-operator.v1.1.0
+
+  - name: openshift-pipelines-operator-rh
+    csv: redhat-openshift-pipelines.v1.5.1
 
   projects:
   - datacenter
@@ -44,10 +44,17 @@ site:
     path: common/acm
 
   - name: odh
-    namespace: open-cluster-management
+    namespace: default
     project: datacenter
     path: charts/opendatahub
     kustomize: True
+
+  - name: pipelines
+    namespace: manuela-ci
+    project: datacenter
+    path: charts/opendatahub
+    plugin:
+      name: helm-with-kustomize
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate

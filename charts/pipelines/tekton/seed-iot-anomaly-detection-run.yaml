@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   name: seed-iot-anomaly-detection-run
-  namespace: manuela-ci
 spec:
   pipelineRef:
     name: seed-iot-anomaly-detection

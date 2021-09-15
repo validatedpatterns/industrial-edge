@@ -2,7 +2,6 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   name: seed-iot-software-sensor-run
-  namespace: manuela-ci
 spec:
   pipelineRef:
     name: seed-iot-software-sensor
