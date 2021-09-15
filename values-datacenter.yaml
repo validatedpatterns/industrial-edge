@@ -50,6 +50,7 @@ site:
 
   projects:
   - datacenter
+  - datalake
  
   applications:
   - name: acm
@@ -77,7 +78,7 @@ site:
 
   - name: central-kafka
     namespace: manuela-data-lake-central-kafka-cluster
-    project: datacenter
+    project: datalake
     path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-kafka-cluster
     kustomize: True
     ignoreDifferences:
@@ -98,9 +99,9 @@ site:
       jsonPointers:
       - /spec/template/spec/containers/0/image
 
-  - name: central-kafka
+  - name: central-s3
     namespace: manuela-data-lake-central-s3-store
-    project: datacenter
+    project: datalake
     path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-s3-store
     kustomize: True
     ignoreDifferences:
