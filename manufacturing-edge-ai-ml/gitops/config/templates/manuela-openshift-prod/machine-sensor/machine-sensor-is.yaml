@@ -11,13 +11,6 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-42
-    from:
-      kind: DockerImage
-      name: quay.io/martjack/iot-software-sensor:0.3.1-42
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-43
     from:
       kind: DockerImage
@@ -50,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/martjack/iot-software-sensor:0.3.1-48
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-49
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-software-sensor:0.3.1-49
     importPolicy: {}
     referencePolicy:
       type: Local
