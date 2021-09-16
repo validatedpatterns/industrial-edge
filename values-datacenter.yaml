@@ -174,7 +174,6 @@ site:
   - name: factory
     # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
     targetRevision: main
-    path: applications/factory
     helmOverrides:
     # Values must be strings!
     - name: site.isHubCluster
