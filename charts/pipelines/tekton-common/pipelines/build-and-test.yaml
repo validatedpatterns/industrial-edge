@@ -30,7 +30,7 @@ spec:
     default: ""
   - name: DEV_REVISION
     type: string
-    default: master
+    default: main
   tasks:
   - name: git-clone-dev
     taskRef:
@@ -64,7 +64,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_TEST_URL
     - name: revision
-      value: master
+      value: main
     - name: subdirectory
       value: ops
     - name: deleteExisting
@@ -171,7 +171,7 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin master
+      value: --set-upstream origin main
 
   - name: argocd-sync-application
     taskRef:

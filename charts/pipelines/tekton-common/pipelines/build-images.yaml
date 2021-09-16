@@ -23,7 +23,7 @@ spec:
     default: httpd-ionic
   - name: DEV_REVISION 
     type: string 
-    default: master
+    default: main
   tasks:
   - name: git-clone-dev
     taskRef:
