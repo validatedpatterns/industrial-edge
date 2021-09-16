@@ -2,7 +2,7 @@ global:
   valuesDirectoryURL: https://github.com/dagger-refuse-cool/edge-gitops/raw/main/
   options:
     useCSV: True
-    syncPolicy: Manual
+    syncPolicy: Automatic
     installPlanApproval: Automatic
 
   git:
