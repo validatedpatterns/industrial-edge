@@ -1,0 +1,15 @@
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: opendatahub-operator
+  namespace: openshift-operators
+spec:
+  channel: {{ .Values.subscriptions.version.opendatahub.channel }}
+  installPlanApproval: {{ .Values.subscriptions.installPlanApproval }}
+  name: opendatahub-operator
+  source: {{ .Values.subscriptions.version.opendatahub.source }}
+  sourceNamespace: openshift-marketplace
+  startingCSV: opendatahub-operator.{{ .Values.subscriptions.version.opendatahub.csv }}
+  
+
+

@@ -10,6 +10,4 @@ spec:
   name: seldon-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-{{- if eq .Values.subscriptions.useCSV "True" }}
   startingCSV: seldon-operator.{{ .Values.subscriptions.version.seldon.csv }}
-{{- end }}

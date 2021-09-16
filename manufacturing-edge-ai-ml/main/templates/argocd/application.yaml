@@ -21,6 +21,7 @@ spec:
         value: "{{ .Values.subscriptions.installPlanApproval }}"
       - name: subscriptions.useCSV
         value: "{{ .Values.subscriptions.useCSV }}"
+        forceString: true
       - name: subscriptions.version.gitops.channel
         value: "{{ .Values.subscriptions.version.gitops.channel }}"
       - name: subscriptions.version.gitops.csv
@@ -43,7 +44,7 @@ spec:
         value: "{{ .Values.subscriptions.version.opendatahub.channel }}"
       - name: subscriptions.version.opendatahub.csv
         value: "{{ .Values.subscriptions.version.opendatahub.csv }}"
-      - name: "subscriptions.version.opendatahub.source"
+      - name: subscriptions.version.opendatahub.source
         value: "{{ .Values.subscriptions.version.opendatahub.source }}"
       - name: subscriptions.version.seldon.channel
         value: "{{ .Values.subscriptions.version.seldon.channel }}"
@@ -95,9 +96,23 @@ spec:
         value: "{{ .Values.global.edge.domain }}"
       - name: global.deploy.site
         value: "{{ .Values.global.deploy.site }}"
-      - name: gitops.syncPolicy
-        value: "{{ .Values.gitops.syncPolicy }}"
-{{- if eq .Values.gitops.syncPolicy "Automatic" }}
+      - name: subscriptions.version.gitops.syncPolicy
+        value: "{{ .Values.subscriptions.version.gitops.syncPolicy }}"
+{{- if eq .Values.global.deploy.site "factory" }}
+      - name: messaging.vibrationAlert 
+        value: "{{ .Values.messaging.vibrationAlert }}"
+      - name: messaging.vibrationAnomaly
+        value: "{{ .Values.messaging.vibrationAnomaly }}"
+      - name: messaging.nodeTlsReject
+        value: "{{ .Values.messaging.nodeTlsReject }}"
+      - name: machineSensor1.port
+        value: "{{ .Values.machineSensor1.port }}"
+      - name: machineSensor2.port
+        value: "{{ .Values.machineSensor2.port }}"
+      - name: machineSensor2.sensorTemperature
+        value: "{{ .Values.machineSensor2.sensorTemperature }}"
+{{- end }}
+{{- if eq .Values.subscriptions.version.gitops.syncPolicy "Automatic" }}
   syncPolicy:
     automated: 
       prune: false

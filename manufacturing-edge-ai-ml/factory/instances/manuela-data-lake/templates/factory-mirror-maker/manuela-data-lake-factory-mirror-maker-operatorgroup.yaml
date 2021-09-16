@@ -1,0 +1,12 @@
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  generateName: manuela-data-lake-factory-mirror-maker-
+  generation: 1
+  name: manuela-data-lake-factory-mirror-maker
+  namespace: manuela-data-lake-factory-mirror-maker
+  annotations:
+    argocd.argoproj.io/sync-wave: "-1"
+spec:
+  targetNamespaces:
+  - manuela-data-lake-factory-mirror-maker

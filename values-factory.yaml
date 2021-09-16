@@ -4,6 +4,9 @@ global:
     useCSV: True
     syncPolicy: Automatic
     installPlanApproval: Automatic
+  datacenter:
+    domain: foo
+    cluster: bar
 
 site:
   name: factory
@@ -47,14 +50,10 @@ site:
   applications:
   - name: datalake
     project: factory
-    repoURL: https://github.com/claudiol/blueprints.git
-    targetRevision: claudiol-factory-argocd
     path: manufacturing-edge-ai-ml/factory/instances/manuela-data-lake
 
   - name: stormshift
     project: factory
-    repoURL: https://github.com/claudiol/blueprints.git
-    targetRevision: claudiol-factory-argocd
     path: manufacturing-edge-ai-ml/factory/instances/manuela-stormshift
 
 #

@@ -1,0 +1,40 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: Kafka
+metadata:
+  name: kafka-cluster
+  namespace: manuela-data-lake-central-kafka-cluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  kafka:
+    version: 2.6.0
+    replicas: 3
+    listeners:
+      plain: {}
+      tls: {}
+      external:
+        type: route
+        overrides:
+          bootstrap:
+            # Convert this directory into a helm chart and use templating to set this
+            # Or, figure out some way to use a value like 'kubernetes.default.svc'
+            host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+        configuration:
+          brokerCertChainAndKey:
+            certificate: tls.crt
+            key: tls.key
+            secretName: kafka-tls-certificate-and-key
+    config:
+      log.message.format.version: '2.6'
+      offsets.topic.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      transaction.state.log.replication.factor: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral  
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}

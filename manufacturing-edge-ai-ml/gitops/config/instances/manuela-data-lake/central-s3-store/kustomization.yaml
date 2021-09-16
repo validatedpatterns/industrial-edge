@@ -6,8 +6,3 @@ resources:
 - kafka-to-s3-cm.yaml
 - kafka-to-s3-integration.yaml
 - s3-secret.yaml
-
-
-#bases:
-#- ../../../templates/manuela-team-rolebindings
-#- ../../../templates/installplan-approver

@@ -2,8 +2,11 @@ global:
   git:
     provider: github.com
     account: PLAINTEXT
+    username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
-    target: HEAD
+    target: claudiol-factory-argocd
+    dev_revision: main
+    ops_revision: main
 
   quay:
     provider: quay.io
@@ -12,12 +15,64 @@ global:
   datacenter:
     clustername: DATACENTER-CLUSTERNAME
     domain: CLUSTER-DOMAINNAME
-    
+
+  edge:
+    clustername: EDGE-CLUSTERNAME
+    domain: EDGE-DOMAINNAME
+
+deploy:
+    site: DATACENTER-OR-FACTORY
+
+secrets:
+  # NEVER COMMIT THESE VALUES TO GIT
+  enabled: false
+  quay:
+    # Quay -> Robot Accounts -> Kubernetes Secret -> View
+    authToken: BASE64STRING
+
+  git:
+    # Go to: https://github.com/settings/tokens
+    # Then: echo -n 'your string value' | base64
+    authToken: BASE64STRING
+    accountToken: BASE64STRING
+
+gitops:
+  syncPolicy: Automatic
+
 subscriptions:
   installPlanApproval: Automatic
+  useCSV: "True"  # Set to "True" (notice the ". String not boolean type) to include startingCSV in manifest
   version:
-    gitops: v1.2.0
-    pipelines: v1.1.1
-    acm: release-2.0
-    opendatahub: v0.6.1
-    seldon: v1.7.0
+    gitops:
+      channel: stable   
+      csv: v1.2.0
+      source: redhat-operators
+      syncPolicy: Automatic 
+    pipelines:
+      channel: stable
+      csv: v1.5.0
+      source: redhat-operators
+    acm:
+      channel: release-2.3
+      csv: v2.3.1
+      source: redhat-operators
+    opendatahub:
+      channel: stable
+      csv: v1.1.0
+      source: community-operators
+    seldon:
+      channel: stable
+      csv: v1.7.0
+      source: community-operators
+    amqbroker:
+      channel: 7.x
+      csv: amq-broker-operator.v7.8.0
+      source: redhat-operators 
+    amqstreams:
+      channel: amq-streams-1.8.x
+      csv: v1.8.1
+      source: redhat-operators
+    redhatcamelk:
+      channel: 1.4.x
+      csv: v1.4.0
+      source: redhat-operators

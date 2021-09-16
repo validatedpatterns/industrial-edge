@@ -1,7 +1,0 @@
-apiVersion: operator.open-cluster-management.io/v1
-kind: Klusterlet
-metadata:
-  name: klusterlet
-spec:
-  clusterName: factory-edge
-
