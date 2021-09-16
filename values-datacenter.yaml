@@ -83,7 +83,7 @@ site:
   - name: pipelines
     namespace: manuela-ci
     project: datacenter
-    path: charts/opendatahub
+    path: charts/pipelines
     plugin:
       name: helm-with-kustomize
 
