@@ -176,8 +176,9 @@ site:
     targetRevision: main
     path: applications/factory
     helmOverrides:
+    # Values must be strings!
     - name: site.isHubCluster
-      value: false
+      value: "false"
     clusterSelector:
 #      matchLabels:
 #        site: factory
