@@ -81,7 +81,7 @@ spec:
       fi
 
       # Seems the go git client checks out master regardless.  This allows for 'main' or another branch to be used
-      git checkout $(params.revision)
+      #git checkout $(params.revision)
       git branch --set-upstream-to=origin/$(params.revision)
 
       EXIT_CODE="$?"
