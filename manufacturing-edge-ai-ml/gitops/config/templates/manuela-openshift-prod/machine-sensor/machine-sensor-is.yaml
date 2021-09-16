@@ -4,13 +4,6 @@ metadata:
   name: machine-sensor
 spec:
   tags:
-  - name: 0.3.1-43
-    from:
-      kind: DockerImage
-      name: quay.io/martjack/iot-software-sensor:0.3.1-43
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-44
     from:
       kind: DockerImage
@@ -50,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/martjack/iot-software-sensor:0.3.1-50
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-51
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-software-sensor:0.3.1-51
     importPolicy: {}
     referencePolicy:
       type: Local

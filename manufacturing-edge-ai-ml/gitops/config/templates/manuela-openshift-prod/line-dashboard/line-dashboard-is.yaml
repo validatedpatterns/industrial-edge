@@ -4,13 +4,6 @@ metadata:
   name: line-dashboard
 spec:
   tags:
-  - name: 0.3.1-65
-    from:
-      kind: DockerImage
-      name: quay.io/martjack/iot-frontend:0.3.1-65
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.1-66
     from:
       kind: DockerImage
@@ -50,6 +43,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/martjack/iot-frontend:0.3.1-72
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.1-73
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-frontend:0.3.1-73
     importPolicy: {}
     referencePolicy:
       type: Local
