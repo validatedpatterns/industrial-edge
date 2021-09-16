@@ -179,6 +179,8 @@ site:
     - name: site.isHubCluster
       value: false
     clusterSelector:
+#      matchLabels:
+#        site: factory
       matchExpressions:
       - key: vendor
         operator: In
