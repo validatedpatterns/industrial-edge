@@ -4,13 +4,6 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2-81
-    from:
-      kind: DockerImage
-      name: quay.io/martjack/iot-consumer:0.3.2-81
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-82
     from:
       kind: DockerImage
@@ -36,6 +29,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/martjack/iot-consumer:0.3.2-89
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-92
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-consumer:0.3.2-92
     importPolicy: {}
     referencePolicy:
       type: Local
