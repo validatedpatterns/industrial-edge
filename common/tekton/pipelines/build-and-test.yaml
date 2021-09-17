@@ -88,7 +88,7 @@ spec:
     taskRef:
       name: tkn
     runAfter:
-    - bump-build-version
+    - s2ibuild
     params:
     - name: ARGS
       value:
@@ -97,12 +97,21 @@ spec:
       - build-images
       - --showlog
       - --nocolour
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    - name: github-secret
+      workspace: github-secret
+    - name: quay-secret
+      workspace: quay-secret
 
   - name: run-seed
     taskRef:
       name: tkn
     runAfter:
-    - bump-build-version
+    - s2ibuild
     params:
     - name: ARGS
       value:
@@ -111,6 +120,17 @@ spec:
       - seed
       - --showlog
       - --nocolour
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    - name: github-secret
+      workspace: github-secret
+    - name: quay-secret
+      workspace: quay-secret
+    - name: build-artifacts
+      workspace: build-artifacts
 
   - name: s2i-build
     taskRef:
