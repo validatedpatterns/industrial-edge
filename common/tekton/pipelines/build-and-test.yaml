@@ -57,9 +57,30 @@ spec:
       - --showlog
       - --nocolour
 
+  - name: build-images
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-images
+      - name=gitrepos,claimName=build-images-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - --showlog
+      - --nocolour
+
   - name: git-clone-dev
     runAfter:
       - seed
+      - build-images
     taskRef:
       name: git-clone-with-tags
     workspaces:
@@ -110,58 +131,6 @@ spec:
       value: $(params.COMPONENT_NAME)
     - name: version_file_path
       value: $(params.PATH_CONTEXT)/VERSION
-
-#  - name: run-build-images
-#    taskRef:
-#      name: tkn
-#    runAfter:
-#    - s2i-build
-#    params:
-#    - name: ARGS
-#      value:
-#      - pipeline
-#      - start
-#      - build-images
-#      - --showlog
-#      - --nocolour
-#    workspaces:
-#    - name: gitrepos
-#      workspace: gitrepos
-#    - name: config
-#      workspace: config
-#    - name: github-secret
-#      workspace: github-secret
-#    - name: argocd-env-secret
-#      workspace: argocd-env-secret
-#    - name: quay-secret
-#      workspace: quay-secret
-
-#  - name: run-seed
-#    taskRef:
-#      name: tkn
-#    runAfter:
-#    - s2i-build
-#    params:
-#    - name: ARGS
-#      value:
-#      - pipeline
-#      - start
-#      - seed
-#      - --showlog
-#      - --nocolour
-#    workspaces:
-#    - name: gitrepos
-#      workspace: gitrepos
-#    - name: config
-#      workspace: config
-#    - name: github-secret
-#      workspace: github-secret
-#    - name: build-artifacts
-#      workspace: build-artifacts
-#    - name: argocd-env-secret
-#      workspace: argocd-env-secret
-#    - name: quay-secret
-#      workspace: quay-secret
 
   - name: s2i-build
     taskRef:
