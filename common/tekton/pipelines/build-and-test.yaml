@@ -33,7 +33,33 @@ spec:
     type: string
     default: main
   tasks:
+  - name: seed
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed
+      - --workspace
+      - name=gitrepos,claimName=build-images-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --showlog
+      - --nocolour
+
   - name: git-clone-dev
+    runAfter:
+      - seed
     taskRef:
       name: git-clone-with-tags
     workspaces:
