@@ -1,6 +1,5 @@
 apiVersion: tekton.dev/v1beta1
 kind: Task
-retries: 1
 metadata:
   name: s2i
 spec:
