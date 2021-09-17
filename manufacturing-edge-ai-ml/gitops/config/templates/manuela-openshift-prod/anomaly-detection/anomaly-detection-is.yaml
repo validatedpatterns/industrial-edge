@@ -4,38 +4,38 @@ metadata:
   name: anomaly-detection
 spec:
   tags:
-  - name: 0.3.2-41
+  - name: 0.3.2-47
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-41
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-47
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-42
+  - name: 0.3.2-48
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-42
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-48
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-43
+  - name: 0.3.2-49
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-anomaly-detection:0.3.2-43
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-49
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-44
+  - name: 0.3.2-50
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-anomaly-detection:0.3.2-44
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-50
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-44
+  - name: 0.3.2-53
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-anomaly-detection:0.3.2-44
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-53
     importPolicy: {}
     referencePolicy:
       type: Local

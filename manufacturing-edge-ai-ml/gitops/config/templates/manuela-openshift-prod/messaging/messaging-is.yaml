@@ -4,38 +4,38 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2-68
+  - name: 0.3.2-85
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-consumer:0.3.2-68
+      name: quay.io/martjack/iot-consumer:0.3.2-85
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-69
+  - name: 0.3.2-86
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-consumer:0.3.2-69
+      name: quay.io/martjack/iot-consumer:0.3.2-86
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-72
+  - name: 0.3.2-89
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-consumer:0.3.2-72
+      name: quay.io/martjack/iot-consumer:0.3.2-89
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-73
+  - name: 0.3.2-92
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-consumer:0.3.2-73
+      name: quay.io/martjack/iot-consumer:0.3.2-92
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-74
+  - name: 0.3.2-96
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-consumer:0.3.2-74
+      name: quay.io/martjack/iot-consumer:0.3.2-96
     importPolicy: {}
     referencePolicy:
       type: Local

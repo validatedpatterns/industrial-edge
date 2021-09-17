@@ -4,52 +4,52 @@ metadata:
   name: machine-sensor
 spec:
   tags:
-  - name: 0.3.1-37
+  - name: 0.3.1-47
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-software-sensor:0.3.1-37
+      name: quay.io/martjack/iot-software-sensor:0.3.1-47
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-38
+  - name: 0.3.1-48
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-software-sensor:0.3.1-38
+      name: quay.io/martjack/iot-software-sensor:0.3.1-48
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-39
+  - name: 0.3.1-49
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-software-sensor:0.3.1-39
+      name: quay.io/martjack/iot-software-sensor:0.3.1-49
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-40
+  - name: 0.3.1-50
     from:
       kind: DockerImage
-      name: quay.io/claudiol/iot-software-sensor:0.3.1-40
+      name: quay.io/martjack/iot-software-sensor:0.3.1-50
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-41
+  - name: 0.3.1-51
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-software-sensor:0.3.1-41
+      name: quay.io/martjack/iot-software-sensor:0.3.1-51
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-42
+  - name: 0.3.1-52
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-software-sensor:0.3.1-42
+      name: quay.io/martjack/iot-software-sensor:0.3.1-52
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.1-42
+  - name: 0.3.1-55
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-software-sensor:0.3.1-42
+      name: quay.io/martjack/iot-software-sensor:0.3.1-55
     importPolicy: {}
     referencePolicy:
       type: Local

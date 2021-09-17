@@ -41,7 +41,7 @@ spec:
     description: The precise commit SHA that was fetched by this Task
   steps:
   - name: clone
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
     script: |
       CHECKOUT_DIR="$(workspaces.gitrepos.path)/$(params.subdirectory)"
 
