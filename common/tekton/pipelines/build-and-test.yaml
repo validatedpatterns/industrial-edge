@@ -89,7 +89,6 @@ spec:
   - name: git-clone-dev
     runAfter:
       - seed
-      - build-images
     taskRef:
       name: git-clone-with-tags
     workspaces:
