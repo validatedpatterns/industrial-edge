@@ -62,7 +62,8 @@ spec:
       - --nocolour
 
   - name: seed
-    runAfter: build-images
+    runAfter:
+      - build-images
     taskRef:
       name: tkn
     params:
