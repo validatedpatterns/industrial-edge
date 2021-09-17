@@ -52,6 +52,7 @@ spec:
       - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
       - --param
       - OUTPUT_IMAGE_NAME=httpd-ionic
+      - --workspace
       - name=gitrepos,claimName=build-images-rwo
       - --workspace
       - name=config,config=environment
@@ -59,7 +60,6 @@ spec:
       - name=github-secret,secret=github
       - --workspace
       - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - --showlog
       - --nocolour
 
