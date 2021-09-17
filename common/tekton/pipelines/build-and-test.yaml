@@ -84,6 +84,34 @@ spec:
     - name: version_file_path
       value: $(params.PATH_CONTEXT)/VERSION
 
+  - name: run-build-images
+    taskRef:
+      name: tkn
+    runAfter:
+    - bump-build-version
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-images
+      - --showlog
+      - --nocolour
+
+  - name: run-seed
+    taskRef:
+      name: tkn
+    runAfter:
+    - bump-build-version
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed
+      - --showlog
+      - --nocolour
+
   - name: s2i-build
     taskRef:
       name: s2i
