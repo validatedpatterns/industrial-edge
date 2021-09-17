@@ -106,7 +106,7 @@ spec:
     - name: github-secret
       workspace: github-secret
     - name: argocd-env-secret
-      workspace: argo-env-secret
+      workspace: argocd-env-secret
     - name: quay-secret
       workspace: quay-secret
 
@@ -133,7 +133,7 @@ spec:
     - name: build-artifacts
       workspace: build-artifacts
     - name: argocd-env-secret
-      workspace: argo-env-secret
+      workspace: argocd-env-secret
     - name: quay-secret
       workspace: quay-secret
 
