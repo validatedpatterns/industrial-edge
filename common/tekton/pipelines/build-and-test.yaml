@@ -43,6 +43,8 @@ spec:
       - start
       - build-images
       - --param
+      - PATH_CONTEXT=tekton/images/httpd-ionic
+      - --param
       - DEV_REVISION=($params.DEV_REVISION)
       - --param
       - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
