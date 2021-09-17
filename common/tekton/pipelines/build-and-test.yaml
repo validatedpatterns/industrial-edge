@@ -88,7 +88,7 @@ spec:
     taskRef:
       name: tkn
     runAfter:
-    - s2ibuild
+    - s2i-build
     params:
     - name: ARGS
       value:
@@ -111,7 +111,7 @@ spec:
     taskRef:
       name: tkn
     runAfter:
-    - s2ibuild
+    - s2i-build
     params:
     - name: ARGS
       value:
