@@ -132,7 +132,7 @@ spec:
 
   - name: s2i-build-iot-consumer
     runAfter:
-      - s2i-build-iot-frontent
+      - s2i-build-iot-frontend
     taskRef:
       name: s2i
     workspaces:
