@@ -131,6 +131,8 @@ spec:
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
 
   - name: s2i-build-iot-consumer
+    runAfter:
+      - s2i-build-iot-frontent
     taskRef:
       name: s2i
     workspaces:
@@ -151,6 +153,8 @@ spec:
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
 
   - name: s2i-build-iot-anomaly
+    runAfter:
+      - s2i-build-iot-consumer
     taskRef:
       name: s2i
     workspaces:
@@ -171,6 +175,8 @@ spec:
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
 
   - name: s2i-build-iot-software-sensor
+    runAfter:
+      - s2i-build-iot-anomaly
     taskRef:
       name: s2i
     workspaces:
