@@ -247,6 +247,8 @@ spec:
       value: --insecure
     - name: argocd-version
       value: "v1.5.2"
+    - name: revision
+      value: $(params.OPS_REVISION)
 
   # - name: sensor-broker-test
   #   taskRef:
