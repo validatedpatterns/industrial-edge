@@ -85,57 +85,57 @@ spec:
     - name: version_file_path
       value: $(params.PATH_CONTEXT)/VERSION
 
-  - name: run-build-images
-    taskRef:
-      name: tkn
-    runAfter:
-    - s2i-build
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - build-images
-      - --showlog
-      - --nocolour
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    - name: github-secret
-      workspace: github-secret
-    - name: argocd-env-secret
-      workspace: argocd-env-secret
-    - name: quay-secret
-      workspace: quay-secret
+#  - name: run-build-images
+#    taskRef:
+#      name: tkn
+#    runAfter:
+#    - s2i-build
+#    params:
+#    - name: ARGS
+#      value:
+#      - pipeline
+#      - start
+#      - build-images
+#      - --showlog
+#      - --nocolour
+#    workspaces:
+#    - name: gitrepos
+#      workspace: gitrepos
+#    - name: config
+#      workspace: config
+#    - name: github-secret
+#      workspace: github-secret
+#    - name: argocd-env-secret
+#      workspace: argocd-env-secret
+#    - name: quay-secret
+#      workspace: quay-secret
 
-  - name: run-seed
-    taskRef:
-      name: tkn
-    runAfter:
-    - s2i-build
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - seed
-      - --showlog
-      - --nocolour
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    - name: github-secret
-      workspace: github-secret
-    - name: build-artifacts
-      workspace: build-artifacts
-    - name: argocd-env-secret
-      workspace: argocd-env-secret
-    - name: quay-secret
-      workspace: quay-secret
+#  - name: run-seed
+#    taskRef:
+#      name: tkn
+#    runAfter:
+#    - s2i-build
+#    params:
+#    - name: ARGS
+#      value:
+#      - pipeline
+#      - start
+#      - seed
+#      - --showlog
+#      - --nocolour
+#    workspaces:
+#    - name: gitrepos
+#      workspace: gitrepos
+#    - name: config
+#      workspace: config
+#    - name: github-secret
+#      workspace: github-secret
+#    - name: build-artifacts
+#      workspace: build-artifacts
+#    - name: argocd-env-secret
+#      workspace: argocd-env-secret
+#    - name: quay-secret
+#      workspace: quay-secret
 
   - name: s2i-build
     taskRef:
