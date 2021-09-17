@@ -9,6 +9,7 @@ spec:
   - name: github-secret
   - name: argocd-env-secret
   - name: build-artifacts
+  - name: quay-secret
   params:
   - name: S2I_BUILDER_IMAGE
     type: string
@@ -104,6 +105,8 @@ spec:
       workspace: config
     - name: github-secret
       workspace: github-secret
+    - name: argocd-env-secret
+      workspace: argo-env-secret
     - name: quay-secret
       workspace: quay-secret
 
@@ -127,10 +130,12 @@ spec:
       workspace: config
     - name: github-secret
       workspace: github-secret
-    - name: quay-secret
-      workspace: quay-secret
     - name: build-artifacts
       workspace: build-artifacts
+    - name: argocd-env-secret
+      workspace: argo-env-secret
+    - name: quay-secret
+      workspace: quay-secret
 
   - name: s2i-build
     taskRef:
