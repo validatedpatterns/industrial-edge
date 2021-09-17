@@ -33,7 +33,36 @@ spec:
     type: string
     default: main
   tasks:
+  - name: build-images
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-images
+      - --param
+      - DEV_REVISION=($params.DEV_REVISION)
+      - --param
+      - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
+      - --param
+      - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
+      - --param
+      - OUTPUT_IMAGE_NAME=httpd-ionic
+      - name=gitrepos,claimName=build-images-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - --showlog
+      - --nocolour
+
   - name: seed
+    runAfter: build-images
     taskRef:
       name: tkn
     params:
@@ -54,26 +83,6 @@ spec:
       - name=argocd-env-secret,secret=argocd-env
       - --workspace
       - name=quay-secret,secret=quay-build-secret
-      - --showlog
-      - --nocolour
-
-  - name: build-images
-    taskRef:
-      name: tkn
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - build-images
-      - name=gitrepos,claimName=build-images-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - --showlog
       - --nocolour
 
