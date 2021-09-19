@@ -9,6 +9,7 @@ spec:
   - name: github-secret
   - name: argocd-env-secret
   - name: build-artifacts
+  - name: quay-secret
   params:
   - name: S2I_BUILDER_IMAGE
     type: string
@@ -31,8 +32,69 @@ spec:
   - name: DEV_REVISION
     type: string
     default: main
+  - name: OPS_REVISION
+    type: string
+    default: main
   tasks:
+  - name: build-images
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-images
+      - --param
+      - PATH_CONTEXT=tekton/images/httpd-ionic
+      - --param
+      - DEV_REVISION=$(params.DEV_REVISION)
+      - --param
+      - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
+      - --param
+      - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
+      - --param
+      - OUTPUT_IMAGE_NAME=httpd-ionic
+      - --workspace
+      - name=gitrepos,claimName=build-images-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --showlog
+      - --nocolour
+
+  - name: seed
+    runAfter:
+      - build-images
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed
+      - --workspace
+      - name=gitrepos,claimName=build-images-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --showlog
+      - --nocolour
+
   - name: git-clone-dev
+    runAfter:
+      - seed
     taskRef:
       name: git-clone-with-tags
     workspaces:
@@ -188,6 +250,8 @@ spec:
       value: --insecure
     - name: argocd-version
       value: "v1.5.2"
+    - name: revision
+      value: $(params.OPS_REVISION)
 
   # - name: sensor-broker-test
   #   taskRef:

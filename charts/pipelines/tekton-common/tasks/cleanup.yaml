@@ -34,7 +34,7 @@ spec:
   #   type: string
   steps:
   - name: cleanup-git-tags
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.11.0
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
     script: |
       #list build tags for component in repo
       BUILD_TAG_GLOB="build-$(params.COMPONENT_NAME)-*"
