@@ -8,49 +8,7 @@ spec:
   - name: 0.3.1-35
     from:
       kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-35
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-36
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-36
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-37
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-37
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-38
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-38
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-39
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-39
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-40
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-40
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.1-48
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}/{{ .Values.global.quay.account }}/iot-software-sensor:0.3.1-48
+      name: quay.io/beekhof/iot-software-sensor:0.3.1-35
     importPolicy: {}
     referencePolicy:
       type: Local

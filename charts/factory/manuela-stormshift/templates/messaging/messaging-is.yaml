@@ -8,35 +8,7 @@ spec:
   - name: 0.3.2-65
     from:
       kind: DockerImage
-      name: {{ .Values.global.quay.provider }}.{{ .Values.global.quay.account }}/iot-consumer:0.3.2-65
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-67
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}.{{ .Values.global.quay.account }}/iot-consumer:0.3.2-67
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-68
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}.{{ .Values.global.quay.account }}/iot-consumer:0.3.2-68
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-69
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}.{{ .Values.global.quay.account }}/iot-consumer:0.3.2-69
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-70
-    from:
-      kind: DockerImage
-      name: {{ .Values.global.quay.provider }}.{{ .Values.global.quay.account }}/iot-consumer:0.3.2-70
+      name: quay.io/beekhof/iot-consumer:0.3.2-65
     importPolicy: {}
     referencePolicy:
       type: Local
