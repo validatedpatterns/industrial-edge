@@ -9,9 +9,9 @@ data:
   GIT_USERNAME: {{ .Values.global.git.username }}
   GIT_DEV_REPO_URL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/manuela-dev.git
   GIT_DEV_REPO_REVISION: {{ .Values.global.git.dev_revision }}
-  GIT_OPS_REPO_TEST_URL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+  GIT_OPS_REPO_TEST_URL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/manufacturing-edge-ai-ml.git
   GIT_OPS_REPO_TEST_REVISION: {{ .Values.global.git.ops_revision }}
-  GIT_OPS_REPO_PROD_URL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/blueprints.git
+  GIT_OPS_REPO_PROD_URL: https://{{ .Values.global.git.provider }}/{{ .Values.global.git.account }}/manufacturing-edge-ai-ml.git
   GIT_OPS_REPO_PROD_REVISION: {{ .Values.global.git.ops_revision }}
   IOT_CONSUMER_IMAGE: iot-consumer
   IOT_CONSUMER_YAML_PATH: '.images |= map(select(.name=="messaging").newTag'
