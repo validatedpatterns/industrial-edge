@@ -33,7 +33,7 @@ spec:
       ls -al $KUSTOMIZATION_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
-      yq -iY '$YAML_PATH |= $(params.TAG)' $KUSTOMIZATION_PATH 
+      yq w -i $KUSTOMIZATION_PATH "$YAML_PATH" $(params.TAG)
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: patch-imagestream
     image: mikefarah/yq:3.2.1
