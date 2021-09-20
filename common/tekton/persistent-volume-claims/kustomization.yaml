@@ -16,5 +16,4 @@ resources:
 #- iot-anomaly-detection.rwo.yaml
 - stage-production.rwo.yaml
 - build-artifacts.rwo.yaml
-- build-images.rwo.yaml
 - gitrepos.rwo.yaml
