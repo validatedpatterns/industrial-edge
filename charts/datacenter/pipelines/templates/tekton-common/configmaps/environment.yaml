@@ -3,6 +3,7 @@ kind: ConfigMap
 metadata:
   name: environment
 data:
+  DESCRIPTION: "Config keys for openshift-pipelines"
   IMAGE_PROVIDER: {{ .Values.global.quay.provider }}
   IMAGE_ACCOUNT: {{ .Values.global.quay.account }}
   GIT_EMAIL: {{ .Values.global.git.email }}

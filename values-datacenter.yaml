@@ -84,8 +84,6 @@ site:
     namespace: manuela-ci
     project: datacenter
     path: charts/datacenter/pipelines
-    plugin:
-      name: helm-with-kustomize
 
   - name: central-kafka
     namespace: manuela-data-lake-central-kafka-cluster
