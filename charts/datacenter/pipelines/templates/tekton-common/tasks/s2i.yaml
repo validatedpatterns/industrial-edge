@@ -79,7 +79,7 @@ spec:
         echo "------------------------------"
 
         echo "s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --image-scripts-url image:///usr/local/s2i --as-dockerfile /gen-source/Dockerfile.gen --environment-file /env-params/env-file" >s2icommand
-        echo "buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f /gen-source/Dockerfile.gen -t $(params.OUTPUT_IMAGE) -v $(workspaces.build-artifacts.path)/m2:/ba/m2 ." >buildahcommand
+        echo "buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f /gen-source/Dockerfile.gen -t `basename $(params.OUTPUT_IMAGE)` -v $(workspaces.build-artifacts.path)/m2:/ba/m2 ." >buildahcommand
       fi
     volumeMounts:
     - mountPath: /env-params
