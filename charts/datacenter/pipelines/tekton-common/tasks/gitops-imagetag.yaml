@@ -44,6 +44,7 @@ spec:
         REMOTE_IMAGE=$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_IMAGE)
 
         echo "Adding $(params.TAG) to image stream $IMAGESTREAM_PATH"
+        cat $IMAGESTREAM_PATH
         echo "{\"spec\":{\"tags\":[{\"name\":\"$(params.TAG)\",\"from\":{\"kind\":\"DockerImage\",\"name\":\"$REMOTE_IMAGE:$(params.TAG)\"},\"importPolicy\":{},\"referencePolicy\":{\"type\":\"Local\"}}]}}" | yq -P m -i -a $IMAGESTREAM_PATH -
         if [ $(yq r $IMAGESTREAM_PATH --length spec.tags) -gt $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER) ]; then
           yq -P d -i $IMAGESTREAM_PATH 'spec.tags[0]'
