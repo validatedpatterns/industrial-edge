@@ -1,6 +1,6 @@
 apiVersion: v2
-name: manuela-data-lake
-description: A Helm chart for Kubernetes
+name: manuela-stormshift
+description: A Helm chart to deploy the MANUela sample application
 
 # A chart can be either an 'application' or a 'library' chart.
 #

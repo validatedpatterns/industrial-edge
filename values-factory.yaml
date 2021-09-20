@@ -51,11 +51,13 @@ site:
   applications:
   - name: datalake
     project: factory
-    path: manufacturing-edge-ai-ml/factory/instances/manuela-data-lake
+    path: charts/factory/manuela-data-lake
 
   - name: stormshift
     project: factory
-    path: manufacturing-edge-ai-ml/factory/instances/manuela-stormshift
+    path: charts/factory/manuela-stormshift
+    plugin:
+      name: helm-with-kustomize
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate

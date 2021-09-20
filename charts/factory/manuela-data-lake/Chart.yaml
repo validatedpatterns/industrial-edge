@@ -1,6 +1,6 @@
 apiVersion: v2
-name: manuela-stormshift
-description: A Helm chart for Kubernetes
+name: datalake
+description: A Helm chart to configure kafka, camel-k, and s3 for use by AI/ML applications
 
 # A chart can be either an 'application' or a 'library' chart.
 #

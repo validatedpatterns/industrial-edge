@@ -77,20 +77,20 @@ site:
   - name: odh
     namespace: default
     project: datacenter
-    path: charts/opendatahub
+    path: charts/datacenter/opendatahub
     kustomize: True
 
   - name: pipelines
     namespace: manuela-ci
     project: datacenter
-    path: charts/pipelines
+    path: charts/datacenter/pipelines
     plugin:
       name: helm-with-kustomize
 
   - name: central-kafka
     namespace: manuela-data-lake-central-kafka-cluster
     project: datalake
-    path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-kafka-cluster
+    path: charts/datacenter/kafka
     kustomize: True
     ignoreDifferences:
     - group: apps
@@ -113,7 +113,7 @@ site:
   - name: central-s3
     namespace: manuela-data-lake-central-s3-store
     project: datalake
-    path: manufacturing-edge-ai-ml/gitops/config/instances/manuela-data-lake/central-s3-store
+    path: charts/datacenter/central-s3-store
     kustomize: True
     ignoreDifferences:
     - group: apps
@@ -136,7 +136,9 @@ site:
   - name: manuela-test
     namespace: manuela-tst-all
     project: datacenter
-    path: charts/manuela-tst
+    path: charts/datacenter/manuela-tst
+    plugin:
+      name: helm-with-kustomize
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate

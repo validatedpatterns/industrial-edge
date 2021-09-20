@@ -1,0 +1,12 @@
+resources:
+- helm.yaml
+
+images:
+- name: messaging
+  newTag: 0.3.2-70
+- name: machine-sensor
+  newTag: 0.3.1-48
+- name: line-dashboard
+  newTag: 0.3.1-73
+- name: anomaly-detection
+  newTag: 0.3.2-51
