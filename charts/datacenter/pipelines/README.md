@@ -6,7 +6,19 @@
 - [Versioning and Tagging](#Versioning-and-Tagging)
 - [Storing build artifacts across builds](#Storing-build-artifacts-across-builds)
 - [Open issues](#Open-issues)
-  
+
+## Technical Debt
+
+This whole directory should be considered technical debt.
+
+It works, for now, but we need to either use
+https://github.com/redhat-developer/kam/ from the openshift-pipelines folks, or
+investigate and replicate the best-practice patterns it creates.
+
+In the same way that values-datacenter.yaml has a list of `applications:`, we
+want to provide similar templating for "I have a repo with a Dockerfile I need
+to build and use"
+
 ## Design Considerations
 
 These pipelines are designed to be long, with simple reusable tasks. They do not use PipelineResources due to the unclear nature of their future. Instead, they use tasks, workspaces and persistent volume claims to achieve similar goals: Clone the repositories, build the code, deploy to test, test and then trigger a staging to production. For each component, there is a separate PVC to allow parallel component builds without two pipeline runs stepping on each others toes. In the future (post Tekton-v0.11), the PVCs can be created on the fly instead of having to be static. The git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repos reside on the same PVC.
