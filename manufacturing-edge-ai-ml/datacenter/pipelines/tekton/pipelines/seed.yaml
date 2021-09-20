@@ -93,7 +93,7 @@ spec:
 
   - name: seed-iot-software-sensor
     runAfter:
-      - seed-iot-consumer
+      - seed-iot-frontend
     taskRef:
       name: tkn
       kind: Task
