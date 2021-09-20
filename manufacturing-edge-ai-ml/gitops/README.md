@@ -1,1 +1,0 @@
-# manuela-gitops

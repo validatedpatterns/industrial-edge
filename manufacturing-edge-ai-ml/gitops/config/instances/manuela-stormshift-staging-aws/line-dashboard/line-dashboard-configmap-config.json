@@ -1,5 +1,0 @@
-{
-    "websocketHost": "http://messaging-manuela-stormshift-messaging.apps.claudiol-factory.blueprints.rhecoeng.com",
-    "websocketPath": "/api/service-web/socket",
-    "SERVER_TIMEOUT": 20000
-}
