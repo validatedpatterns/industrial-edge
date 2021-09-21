@@ -7,4 +7,11 @@ metadata:
 spec:
   lookupPolicy:
     local: false
-  tags: []
+  tags:
+  - name: 0.3.2-19
+    from:
+      kind: DockerImage
+      name: quay.io/abeekhof/iot-anomaly-detection:0.3.2-19
+    importPolicy: {}
+    referencePolicy:
+      type: Local
