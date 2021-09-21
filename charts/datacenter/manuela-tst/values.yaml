@@ -1,6 +1,6 @@
 global:
   datacenter:
-    clustername: claudiol-dc1
+    clustername: claudiol-dc
     domain: blueprints.rhecoeng.com
 
   git:
