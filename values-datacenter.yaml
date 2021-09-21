@@ -92,7 +92,6 @@ site:
     namespace: manuela-data-lake-central-kafka-cluster
     project: datalake
     path: charts/datacenter/kafka
-    kustomize: True
     ignoreDifferences:
     - group: apps
       kind: Deployment
