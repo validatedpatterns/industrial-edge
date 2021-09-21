@@ -2,7 +2,7 @@ apiVersion: camel.apache.org/v1
 kind: IntegrationPlatform
 metadata:
   name: camel-k
-  namespace: manuela-data-lake-central-s3-store
+  namespace: manuela-data-lake-factory-s3-store
   labels:
     app: "camel-k"
   annotations:
