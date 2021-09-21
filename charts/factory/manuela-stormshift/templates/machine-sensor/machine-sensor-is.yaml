@@ -12,3 +12,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.1-21
+    from:
+      kind: DockerImage
+      name: quay.io/abeekhof/iot-software-sensor:0.3.1-21
+    importPolicy: {}
+    referencePolicy:
+      type: Local
