@@ -4,6 +4,8 @@ metadata:
   name: line-dashboard
   namespace: manuela-stormshift-line-dashboard
 spec:
+  lookupPolicy:
+    local: true
   tags:
   - name: 0.3.1-36
     from:
