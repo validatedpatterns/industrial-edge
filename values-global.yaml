@@ -15,3 +15,7 @@ global:
   quay:
     provider: quay.io
     account: PLAINTEXT
+
+  datacenter:
+    domain: PLAINTEXT
+    clustername: PLAINTEXT
