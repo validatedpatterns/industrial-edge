@@ -56,7 +56,7 @@ spec:
       - --param
       - OUTPUT_IMAGE_NAME=httpd-ionic
       - --workspace
-      - name=gitrepos,claimName=build-images-rwo
+      - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
       - --workspace
@@ -78,7 +78,7 @@ spec:
       - start
       - seed
       - --workspace
-      - name=gitrepos,claimName=build-images-rwo
+      - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
       - --workspace
