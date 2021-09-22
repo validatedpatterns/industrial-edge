@@ -169,15 +169,15 @@ The following diagrams show the different components deployed on the datacenter 
 
 ## Logical
 
-![Logical](diagrams/manufacturing-logical.png)
+![Logical](docs/images/manufacturing-logical.png)
 
 ## Schematic with Networks
 
-![Schema - Networks](diagrams/manufacturing-schema-netw.png)
+![Schema - Networks](docs/images/manufacturing-schema-netw.png)
 
 ## Schematic with Dataflows
 
-![Schema - Dataflow](diagrams/manufacturing-schema-df.png)
+![Schema - Dataflow](docs/images/manufacturing-schema-df.png)
 
 ## Editing the diagrams.
 
