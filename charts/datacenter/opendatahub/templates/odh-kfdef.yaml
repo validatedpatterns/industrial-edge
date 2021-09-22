@@ -4,7 +4,6 @@ metadata:
   annotations:
     kfctl.kubeflow.io/force-delete: 'false'
   name: opendatahub
-  namespace: manuela-ml-workspace
 spec:
   applications:
 # common config map - should probably always be present

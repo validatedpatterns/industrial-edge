@@ -78,10 +78,9 @@ site:
       - /spec/loggingCA
 
   - name: odh
-    namespace: default
+    namespace: manuela-ml-workspace
     project: datacenter
     path: charts/datacenter/opendatahub
-    kustomize: True
 
   - name: pipelines
     namespace: manuela-ci
