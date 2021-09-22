@@ -4,7 +4,7 @@ images:
 - name: messaging
   newTag: 0.3.2-78
 - name: machine-sensor
-  newTag: 0.3.1-21
+  newTag: 0.3.1-51
 - name: line-dashboard
   newTag: 0.3.1-76
 - name: anomaly-detection
