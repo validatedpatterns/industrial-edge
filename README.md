@@ -19,21 +19,28 @@ service](https://console.redhat.com/openshift/create).
 
 1. Clone the forked copy
 
-   `git clone git@github.com:your-username/blueprints.git`
+   `git clone git@github.com:your-username/manufacturing-edge-ai-ml.git`
 
 1. Create a local copy of the Helm values file that can safely include credentials
 
   DO NOT COMMIT THIS FILE
   You do not want to push personal credentials to GitHub.
    ```
-   cp blueprints/manufacturing-edge-ai-ml/main/values.yaml ~/values-secret.yaml
+   cp values-secret.yaml.template ~/values-secret.yaml
    vi ~/values-secret.yaml
+   ```
+
+1. Customize the deployment for your cluster
+
+   ```
+   vi values-global.yaml
+   git commit values-global.yaml
+   git push
    ```
 
 1. Preview the changes
    ```
-   cd blueprints/manufacturing-edge-ai-ml/main
-   helm template manuela . --values ~/values-secret.yaml --debug
+   make show
    ```
 ## Datacenter
 
@@ -48,7 +55,7 @@ TIP: It is recommended to have two shells open so that you can switch between da
 
 1. Apply the changes to your cluster
 
-   `helm install manuela . --values ~/values-secret.yaml`
+   make install
    
 1. Check the operators have been installed 
 
@@ -139,6 +146,8 @@ That's it! Go to your factory (edge) OpenShift console and check for the open-cl
 https://docs.google.com/presentation/d/e/2PACX-1vSfbN_TbjfYnw-B6hHs-uUQ-8rRzUX27AW4eSxT7dVmBERiBgHS_FWWkgyg5fTsEWL2hj6RYyJqYi7_/pub?start=false&loop=false&delayms=3000
 
 # Uninstalling
+
+**Probably wont work**
 
 1. Turn off auto-sync
 
