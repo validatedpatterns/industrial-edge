@@ -8,10 +8,10 @@ site:
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
-#  - manuela-ml-workspace
+  - manuela-factory-ml-workspace
  
   operatorgroupExcludes:
-  - manuela-ml-workspace
+  - manuela-factory-ml-workspace
 
   subscriptions:
   - name: opendatahub-operator
