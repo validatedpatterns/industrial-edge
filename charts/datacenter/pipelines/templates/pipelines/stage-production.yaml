@@ -29,7 +29,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_PROD_URL
     - name: revision
-      value: {{ .Values.global.git.dev_revision }}
+      value: {{ .Values.global.targetRevision }}
     - name: subdirectory
       value: ops
     - name: deleteExisting
@@ -133,4 +133,4 @@ spec:
     - name: GIT_BRANCH_HEAD
       value: staging-approval
     - name: GIT_BRANCH_BASE
-      value: {{ .Values.global.git.dev_revision }}
+      value: {{ .Values.global.targetRevision }}
