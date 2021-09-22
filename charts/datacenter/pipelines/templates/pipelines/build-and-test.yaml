@@ -217,7 +217,7 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      value: manuela-tst-all
+      value: manuela-test-manufacturing-edge-ai-ml-datacenter
     - name: flags
       value: --insecure
     - name: argocd-version
