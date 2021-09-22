@@ -5,7 +5,6 @@ global:
     email: claudiol@redhat.com
     username: claudiol
     dev_revision: main
-    ops_revision: main
 
   quay:
     provider: quay.io

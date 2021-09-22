@@ -126,7 +126,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_TEST_URL
     - name: revision
-      value: main
+      value: {{ .Values.global.git.dev_revision }}
     - name: subdirectory
       value: ops
     - name: deleteExisting

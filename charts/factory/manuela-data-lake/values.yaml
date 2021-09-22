@@ -6,7 +6,6 @@ global:
     username: claudiol
     target: claudiol-factory-argocd
     dev_revision: main
-    ops_revision: main
 
   quay:
     provider: quay.io
