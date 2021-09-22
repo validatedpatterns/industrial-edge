@@ -1,0 +1,119 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: seed
+spec:
+  workspaces:
+  - name: gitrepos
+  - name: config
+  - name: github-secret
+  - name: argocd-env-secret
+  - name: quay-secret
+  - name: build-artifacts
+  tasks:
+
+  - name: seed-iot-anomaly-detection
+    taskRef:
+      name: tkn
+      kind: Task
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed-iot-anomaly-detection
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: seed-iot-consumer
+    runAfter:
+      - seed-iot-anomaly-detection
+    taskRef:
+      name: tkn
+      kind: Task
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed-iot-consumer
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: seed-iot-frontend
+    runAfter:
+      - seed-iot-consumer
+    taskRef:
+      name: tkn
+      kind: Task
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed-iot-frontend
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: seed-iot-software-sensor
+    runAfter:
+      - seed-iot-frontend
+    taskRef:
+      name: tkn
+      kind: Task
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - seed-iot-software-sensor
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=argocd-env-secret,secret=argocd-env
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour

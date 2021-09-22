@@ -1,0 +1,27 @@
+manufacturing-edge-ai-ml
+└── gitops
+    └── deployment
+        ├── execenv-centraldatacenter
+        │   ├── hub-centraldatacenter-configmap.yaml
+        │   ├── manuela-data-lake-central-kafka-cluster.yaml -> ../../config/instances/manuela-data-lake/manuela-data-lake-central-kafka-cluster.yaml
+        │   └── manuela-tst-all-application.yaml -> ../../config/instances/manuela-tst/manuela-tst-all-application.yaml
+        ├── execenv-factorydatacenter
+        │   ├── execenv-factorydatacenter-placeholder-configmap.yaml
+        │   ├── manuela-data-lake-central-s3-store.yaml -> ../../config/instances/manuela-data-lake/manuela-data-lake-central-s3-store.yaml
+        │   ├── manuela-data-lake-factory-mirror-maker.yaml -> ../../config/instances/manuela-data-lake/manuela-data-lake-factory-mirror-maker.yaml
+        │   ├── manuela-stormshift-line-dashboard-application.yaml -> ../../config/instances/manuela-stormshift/manuela-stormshift-line-dashboard-application.yaml
+        │   └── manuela-stormshift-messaging-application.yaml -> ../../config/instances/manuela-stormshift/manuela-stormshift-messaging-application.yaml
+        ├── execenv-linedataserver
+        │   ├── execenv-linedataserver-placeholder-configmap.yaml
+        │   └── manuela-stormshift-machine-sensor-application.yaml -> ../../config/instances/manuela-stormshift/manuela-stormshift-machine-sensor-application.yaml
+        ├── groups.yml
+        ├── hub-centraldatacenter
+        │   ├── hub-centraldatacenter-configmap.yaml
+        │   ├── manuela-data-lake-central-kafka-cluster.yaml -> ../../config/instances/manuela-data-lake/manuela-data-lake-central-kafka-cluster.yaml
+        │   ├── manuela-data-lake-central-s3-store.yaml -> ../../config/instances/manuela-data-lake/manuela-data-lake-central-s3-store.yaml
+        │   └── manuela-tst-all-application.yaml -> ../../config/instances/manuela-tst/manuela-tst-all-application.yaml
+        └── nwpath-linedataserver-factorydatacenter
+            ├── manuela-stormshift-http-firewallrule.yaml
+            └── manuela-stormshift-https-firewallrule.yaml
+
+7 directories, 17 files

@@ -1,25 +1,18 @@
-global:
-  valuesDirectoryURL: https://github.com/dagger-refuse-cool/manufacturing-edge-ai-ml/raw/main/
-  options:
-    useCSV: True
-    syncPolicy: Automatic
-    installPlanApproval: Automatic
-  datacenter:
-    domain: foo
-    cluster: bar
-
 site:
   name: factory
 
   namespaces:
-  - manuela-data-lake-central-kafka-cluster
-  - manuela-data-lake-central-s3-store
+  - manuela-data-lake-factory-kafka-cluster
+  - manuela-data-lake-factory-s3-store
   - manuela-data-lake-factory-mirror-maker
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
-  - manuela-ml-workspace
+  - manuela-factory-ml-workspace
  
+  operatorgroupExcludes:
+  - manuela-factory-ml-workspace
+
   subscriptions:
   - name: opendatahub-operator
     source: community-operators
@@ -58,6 +51,11 @@ site:
     path: charts/factory/manuela-stormshift
     plugin:
       name: helm-with-kustomize
+
+  - name: odh
+    namespace: manuela-factory-ml-workspace
+    project: datacenter
+    path: charts/datacenter/opendatahub
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
