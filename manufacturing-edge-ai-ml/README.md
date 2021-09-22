@@ -69,9 +69,10 @@ TIP: It is recommended to have two shells open so that you can switch between da
 Rather than provide instructions on creating a factory cluster it is assumed
 that an OpenShift cluster has already been created. Use the `openshift-install` program provided at [cloud.redhat.com](https://console.redhat.com/openshift/create "Create an OpenShift cluster")
 
-There are a couple of ways to join the factory to the datacenter.
+There are a three ways to join the factory to the datacenter.
 
 * Using the ACM user interface
+* Using the `cm` tool
 * Using the `clusteradm` tool
 
 # Factory setup using the ACM UI
@@ -80,19 +81,30 @@ There are a couple of ways to join the factory to the datacenter.
 
 ![](images/launch-acm-console.png "Launch ACM console")
 
-1. Select the "Import cluster" option beside the highleded Create Cluster button.
+2. Select the "Import cluster" option beside the highleded Create Cluster button.
 
 ![](images/import-cluster.png "Select Import cluster")
 
-1. On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". After pressiming import you will be asked to copy a command that will be used on the factory cluster.
+3. On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". After pressiming import you will be asked to copy a command that will be used on the factory cluster.
 
 ![](images/import-with-kubeconfig.png "Import using kubeconfig")
 
-1. On the factory we recommend you edit a shell command file, e.g. `join-cluster.sh` and paste the copied command into the file and save. Then run the command by running that shell script.
+Skip to the section [Factory is joined](#factory-is-joined)
 
-   `sh join-cluster.sh` 
+## Factory setup using `cm` tool
 
-This will cause the factoy to be joined with the datacenter (hub). It will also result in OpenShift GitOps to be installed on the factory cluster. This in turn will push the application components to the cluster.
+1. Install the `cm` (cluster management) CLI tool. See details [here](https://github.com/open-cluster-management/cm-cli/#installation)
+
+1. Obtain the KUBECONFIG file from the edge/factory cluster.
+
+1. On the command line login into the hub/datacenter cluster (use `oc login` or export the KUBECONFIG).
+
+1. Run the following command:
+```
+cm attach cluster --cluster <cluster-name> --cluster-kubeconfig <path-to-KUBECONFIG>
+``` 
+
+Skip to the section [Factory is joined](#factory-is-joined)
 
 ## Factory setup using `clusteradm` tool
 
@@ -117,6 +129,10 @@ You can also use `clusteradm` to join a cluster. The folloing instructions expla
 
    `clusteradm accept --clusters <factory-cluster-name>`
 
+Skip to the next section, [Factory is joined](#factory-is-joined)
+
+## Factory is joined
+That's it! Go to your factory (edge) OpenShift console and check for the open-cluster-management-agent pod being launched. Be patient, it will take a while for the ACm agent and agent-addons to launch. After that, the operator OpenShifdt GitOps will run. When it's finished coming up launch the OpenShift GitOps (ArgoCD) console from the top right of the OpenShift console. 
 
 # Structure
 

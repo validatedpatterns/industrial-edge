@@ -43,3 +43,4 @@ objects:
           resources:
             requests:
               storage: 1Gi
+

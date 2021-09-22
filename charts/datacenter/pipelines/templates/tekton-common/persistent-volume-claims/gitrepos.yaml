@@ -1,11 +1,11 @@
 apiVersion: v1
 kind: PersistentVolumeClaim
 metadata:
-  name: iot-anomaly-detection
+  name: gitrepos
 spec:
   resources:
     requests:
-      storage: 128Mi
+      storage: 1Gi
   volumeMode: Filesystem
   accessModes:
     - ReadWriteMany

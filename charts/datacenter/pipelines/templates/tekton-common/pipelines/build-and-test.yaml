@@ -34,7 +34,7 @@ spec:
     default: main
   - name: OPS_REVISION
     type: string
-    default: main
+    default: {{ .Values.global.targetRevision }}
   tasks:
   - name: build-images
     taskRef:
@@ -56,7 +56,7 @@ spec:
       - --param
       - OUTPUT_IMAGE_NAME=httpd-ionic
       - --workspace
-      - name=gitrepos,claimName=build-images-rwo
+      - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
       - --workspace
@@ -78,7 +78,7 @@ spec:
       - start
       - seed
       - --workspace
-      - name=gitrepos,claimName=build-images-rwo
+      - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
       - --workspace
@@ -126,7 +126,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_TEST_URL
     - name: revision
-      value: main
+      value: {{ .Values.global.git.dev_revision }}
     - name: subdirectory
       value: ops
     - name: deleteExisting
@@ -233,7 +233,7 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin main
+      value: --set-upstream {{ .Values.global.targetRevision }}
 
   - name: argocd-sync-application
     taskRef:
