@@ -118,7 +118,7 @@ spec:
       workspace: github-secret
     params:
     - name: PUSH_FLAGS
-      value: origin $(tasks.bump-build-version-iot-frontend.results.git-tag)
+      value: --tags
 
 
   - name: modify-ops-test-iot-frontend
@@ -188,5 +188,3 @@ spec:
     params:
     - name: subdirectory
       value: ops
-    - name: PUSH_FLAGS
-      value: --set-upstream {{ .Values.global.targetRevision }}

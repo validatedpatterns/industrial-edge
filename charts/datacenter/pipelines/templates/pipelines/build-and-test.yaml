@@ -183,7 +183,7 @@ spec:
       workspace: github-secret
     params:
     - name: PUSH_FLAGS
-      value: origin $(tasks.bump-build-version.results.git-tag)
+      value: --tags
 
   - name: modify-ops-test
     taskRef:
@@ -232,8 +232,6 @@ spec:
     params:
     - name: subdirectory
       value: ops
-    - name: PUSH_FLAGS
-      value: --set-upstream {{ .Values.global.targetRevision }}
 
   - name: argocd-sync-application
     taskRef:
