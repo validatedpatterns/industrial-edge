@@ -34,7 +34,7 @@ spec:
     default: main
   - name: OPS_REVISION
     type: string
-    default: main
+    default: {{ .Values.global.targetRevision }}
   tasks:
   - name: build-images
     taskRef:
@@ -233,7 +233,7 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin main
+      value: --set-upstream {{ .Values.global.targetRevision }}
 
   - name: argocd-sync-application
     taskRef:

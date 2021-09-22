@@ -187,4 +187,4 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin main
+      value: --set-upstream {{ .Values.global.targetRevision }}
