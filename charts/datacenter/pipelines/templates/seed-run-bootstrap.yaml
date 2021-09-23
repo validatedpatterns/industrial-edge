@@ -1,0 +1,28 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  name: seed-run-bootstrap
+  labels:
+    argocd.argoproj.io/instance: pipelines-manufacturing-edge-ai-ml-datacenter
+    tekton.dev/pipeline: seed
+spec:
+  pipelineRef:
+    name: seed
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: gitrepos
+      persistentVolumeClaim:
+        claimName: gitrepos-rwo
+    - configMap:
+        name: environment
+      name: config
+    - name: github-secret
+      secret:
+        secretName: github
+    - name: build-artifacts
+      persistentVolumeClaim:
+        claimName: build-artifacts-rwo
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret
