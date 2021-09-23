@@ -1,43 +1,29 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  name: seed-run
+  generateName: seed-run-
   namespace: manuela-ci
+  labels:
+    argocd.argoproj.io/instance: pipelines-manufacturing-edge-ai-ml-datacenter
+    tekton.dev/pipeline: seed
 spec:
   pipelineRef:
     name: seed
   serviceAccountName: pipeline
   timeout: 1h0m0s
   workspaces:
-  - configMap:
-      name: environment
-    name: config
-  - name: github-secret
-    secret:
-      secretName: github
-  - name: argocd-env-secret
-    secret:
-      secretName: argocd-env
-  - name: quay-secret
-    secret:
-      secretName: quay-build-secret
-  - name: build-artifacts
-    # persistentVolumeClaim:
-    #   claimName: build-artifacts
-    volumeClaimTemplate:
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 1Gi
-  - name: gitrepos
-    # persistentVolumeClaim:
-    #   claimName: iot-consumer
-    volumeClaimTemplate:
-      spec:
-        accessModes:
-          - ReadWriteOnce
-        resources:
-          requests:
-            storage: 128Mi
+    - name: gitrepos
+      persistentVolumeClaim:
+        claimName: gitrepos-rwo
+    - configMap:
+        name: environment
+      name: config
+    - name: github-secret
+      secret:
+        secretName: github
+    - name: build-artifacts
+      persistentVolumeClaim:
+        claimName: build-artifacts-rwo
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret
