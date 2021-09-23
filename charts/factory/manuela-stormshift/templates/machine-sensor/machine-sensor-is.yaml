@@ -28,3 +28,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.1-53
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-software-sensor:0.3.1-53
+    importPolicy: {}
+    referencePolicy:
+      type: Local

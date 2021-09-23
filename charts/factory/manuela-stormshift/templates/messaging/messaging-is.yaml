@@ -21,3 +21,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.2-80
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-consumer:0.3.2-80
+    importPolicy: {}
+    referencePolicy:
+      type: Local
