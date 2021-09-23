@@ -17,7 +17,8 @@ secret:
 	make -f common/Makefile TARGET_NAMESPACE=$(ARGO_TARGET_NAMESPACE) argosecret
 
 sleep-seed:
-	while [ 1 ]; do make seed 1>/dev/null 2>/dev/null && echo "Bootstrap seed running" && break; sleep 5; done
+	echo "Waiting for pipeline seed to be created in manuela-ci"
+	while [ 1 ]; do oc get -n manuela-ci pipeline seed 1>/dev/null 2>/dev/null && make seed 1>/dev/null 2>/dev/null && echo "Bootstrap seed now running" && break; sleep 5; done
 
 seed:
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
