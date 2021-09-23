@@ -2,6 +2,7 @@ apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
   name: seed-run-bootstrap
+  namespace: manuela-ci
   labels:
     argocd.argoproj.io/instance: pipelines-manufacturing-edge-ai-ml-datacenter
     tekton.dev/pipeline: seed
