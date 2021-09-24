@@ -8,4 +8,4 @@ images:
 - name: line-dashboard
   newTag: 0.3.1-79
 - name: anomaly-detection
-  newTag: 0.3.2-57
+  newTag: 0.3.2-58
