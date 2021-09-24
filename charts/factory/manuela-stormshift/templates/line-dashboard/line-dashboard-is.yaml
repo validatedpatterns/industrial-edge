@@ -28,3 +28,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.1-79
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-frontend:0.3.1-79
+    importPolicy: {}
+    referencePolicy:
+      type: Local
