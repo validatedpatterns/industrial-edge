@@ -8,13 +8,6 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - name: 0.3.2-54
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-54
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-56
     from:
       kind: DockerImage
@@ -40,6 +33,13 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/claudiol/iot-anomaly-detection:0.3.2-59
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-60
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-anomaly-detection:0.3.2-60
     importPolicy: {}
     referencePolicy:
       type: Local
