@@ -167,7 +167,7 @@ spec:
     taskRef:
       name: git-clone-with-tags
     runAfter:
-      - build-images
+    - build-images
     workspaces:
     - name: gitrepos
       workspace: gitrepos
