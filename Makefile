@@ -22,3 +22,6 @@ sleep-seed:
 
 seed:
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
+
+build-and-test:
+	oc create -f charts/datacenter/pipelines/extra/build-and-test-run.yaml
