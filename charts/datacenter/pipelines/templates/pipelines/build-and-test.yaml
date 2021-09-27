@@ -67,6 +67,8 @@ spec:
       - --nocolour
 
   - name: build-iot-anomaly-detection
+    runAfter:
+      - build-images
     taskRef:
       name: tkn
     params:
