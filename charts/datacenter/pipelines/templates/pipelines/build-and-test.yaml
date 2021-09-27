@@ -39,8 +39,8 @@ spec:
   - name: build-images
     taskRef:
       name: tkn
-    #runAfter: 
-    #- build-iot-software-sensor
+    runAfter: 
+    - bump-build-version
     params:
     - name: ARGS
       value:
@@ -167,8 +167,6 @@ spec:
   - name: git-clone-dev
     taskRef:
       name: git-clone-with-tags
-    runAfter:
-    - build-images
     workspaces:
     - name: gitrepos
       workspace: gitrepos
