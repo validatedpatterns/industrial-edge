@@ -32,7 +32,7 @@ site:
     csv: opendatahub-operator.v1.1.0
 
   - name: openshift-pipelines-operator-rh
-    csv: redhat-openshift-pipelines.v1.5.1
+    csv: redhat-openshift-pipelines.v1.5.2
 
   # TODO: Allow namespace to be a list
   - name: amq-streams
