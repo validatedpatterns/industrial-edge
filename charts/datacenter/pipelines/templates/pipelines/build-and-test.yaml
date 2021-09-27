@@ -163,6 +163,8 @@ spec:
       - --nocolour
   
   - name: git-clone-dev
+    runAfter:
+      - build-iot-software-sensor
     taskRef:
       name: git-clone-with-tags
     workspaces:
