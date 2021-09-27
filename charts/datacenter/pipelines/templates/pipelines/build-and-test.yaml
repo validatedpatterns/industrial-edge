@@ -37,6 +37,7 @@ spec:
     default: {{ .Values.global.targetRevision }}
   tasks:
   - name: build-images
+    runAfter: build-iot-software-sensor
     taskRef:
       name: tkn
     params:
@@ -164,7 +165,7 @@ spec:
   
   - name: git-clone-dev
     runAfter:
-      - build-iot-software-sensor
+      - build-images
     taskRef:
       name: git-clone-with-tags
     workspaces:
