@@ -66,9 +66,103 @@ spec:
       - --showlog
       - --nocolour
 
+  - name: build-iot-anomaly-detection
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-iot-anomaly-detection
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: build-iot-consumer
+    runAfter:
+      - build-iot-anomaly-detection
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-iot-consumer
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: build-iot-frontend
+    runAfter:
+      - build-iot-consumer
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-iot-frontend
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+
+  - name: build-iot-software-sensor
+    runAfter:
+      - build-iot-frontend
+    taskRef:
+      name: tkn
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-iot-software-sensor
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
+  
   - name: git-clone-dev
     runAfter:
-      - build-images
+      - build-iot-software-sensor
     taskRef:
       name: git-clone-with-tags
     workspaces:
