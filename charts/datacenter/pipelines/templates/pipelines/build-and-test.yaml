@@ -39,8 +39,8 @@ spec:
   - name: build-images
     taskRef:
       name: tkn
-    runAfter: 
-    - build-iot-software-sensor
+    #runAfter: 
+    #- build-iot-software-sensor
     params:
     - name: ARGS
       value:
@@ -70,7 +70,7 @@ spec:
 
   - name: build-iot-anomaly-detection
     runAfter:
-    - build-images
+    - bump-buildversion
     taskRef:
       name: tkn
     params:
@@ -222,7 +222,7 @@ spec:
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version
+    - bump-buildversion
     workspaces:
     - name: gitrepos
       workspace: gitrepos
