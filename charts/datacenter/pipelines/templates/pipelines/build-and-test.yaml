@@ -37,10 +37,10 @@ spec:
     default: {{ .Values.global.targetRevision }}
   tasks:
   - name: build-images
-    runAfter: 
-    - build-iot-software-sensor
     taskRef:
       name: tkn
+    runAfter: 
+    - build-iot-software-sensor
     params:
     - name: ARGS
       value:
@@ -70,7 +70,7 @@ spec:
 
   - name: build-iot-anomaly-detection
     runAfter:
-      - build-images
+    - build-images
     taskRef:
       name: tkn
     params:
