@@ -39,8 +39,6 @@ spec:
   - name: build-images
     taskRef:
       name: tkn
-    runAfter: 
-    - bump-build-version
     params:
     - name: ARGS
       value:
@@ -70,7 +68,7 @@ spec:
 
   - name: build-iot-anomaly-detection
     runAfter:
-    - s2i-build
+      - build-images
     taskRef:
       name: tkn
     params:
@@ -165,6 +163,8 @@ spec:
       - --nocolour
   
   - name: git-clone-dev
+    runAfter:
+      - build-iot-software-sensor
     taskRef:
       name: git-clone-with-tags
     workspaces:
