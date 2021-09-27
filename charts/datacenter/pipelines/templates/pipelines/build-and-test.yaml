@@ -222,7 +222,7 @@ spec:
     taskRef:
       name: s2i
     runAfter:
-    - bump-buildversion
+    - bump-build-version
     workspaces:
     - name: gitrepos
       workspace: gitrepos
