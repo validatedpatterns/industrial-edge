@@ -32,7 +32,7 @@ spec:
   workspaces:
     - name: gitrepos
       persistentVolumeClaim:
-        claimName: gitrepos
+        claimName: gitrepos-rwo
     - configMap:
         name: environment
       name: config
