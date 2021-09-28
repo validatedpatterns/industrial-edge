@@ -30,9 +30,9 @@ spec:
           protocol: TCP
         volumeMounts:
         # the following mountpath is used for images which are based on the HTTPD base images, i.e. built using the CI/CD pipelines
-        - mountPath: /var/www/html/conf/config.json
+        - mountPath: /var/www/html/conf
           name: line-dashboard-configmap-vol
-          #subPath: config.json
+          subPath: config.json
         # the following mountpath is used for images based directly on the NodeJS builder image, i.e. when deploying images built in the iotdemo namespace during quickstart
         - mountPath: /opt/app-root/output/conf/config.json
           name: line-dashboard-configmap-vol
