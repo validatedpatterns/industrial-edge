@@ -1,0 +1,6 @@
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mqtt2kafka-config
+  namespace: manuela-tst-all
+# DO NOT DELETE. NEEDED BY THE mqtt2kafka-integration SERVICE
