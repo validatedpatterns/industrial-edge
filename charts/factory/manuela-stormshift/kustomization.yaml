@@ -6,6 +6,6 @@ images:
 - name: machine-sensor
   newTag: 0.3.1-92
 - name: line-dashboard
-  newTag: 0.3.1-115
+  newTag: 0.3.1-116
 - name: anomaly-detection
   newTag: 0.3.2-101
