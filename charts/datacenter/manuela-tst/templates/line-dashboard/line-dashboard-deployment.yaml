@@ -30,7 +30,7 @@ spec:
           protocol: TCP
         volumeMounts:
         # the following mountpath is used for images which are based on the HTTPD base images, i.e. built using the CI/CD pipelines
-        - mountPath: /var/www/html/conf/config.json
+        - mountPath: /var/www/html/conf
           name: line-dashboard-configmap-vol
           subPath: config.json
         # the following mountpath is used for images based directly on the NodeJS builder image, i.e. when deploying images built in the iotdemo namespace during quickstart
@@ -65,4 +65,10 @@ spec:
         configMap:
           defaultMode: 438
           name: line-dashboard-configmap
-        
+            items:
+              - key: websocketHost
+                path: config.json/websocketHost
+              - key: websocketPath
+                path: config.json/websocketPath
+              - key: SERVER_TIMEOUT
+                path: config.json/SERVER_TIMEOUT
