@@ -1,0 +1,74 @@
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: mqtt2kafka-integration
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+    - type: configmap
+      value: mqtt2kafka-config
+  profile: OpenShift
+  sources:
+    - content: |
+        package com.redhat.manuela.routes;
+
+        import org.apache.camel.builder.RouteBuilder;
+        import org.apache.camel.component.kafka.KafkaConstants;
+        import org.apache.camel.model.OnCompletionDefinition;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+
+
+        public class MQTT2KafkaRoute extends RouteBuilder {
+            
+            private static final Logger LOGGER = LoggerFactory.getLogger(MQTT2KafkaRoute.class);
+            
+            @Override
+            public void configure() throws Exception {
+                storeTemperatureInKafka();
+                storeVibrationInKafka();
+                // readTemperatureFromKafka();
+                // readVibrationFromKafka();
+            }
+
+            private void storeTemperatureInKafka() {
+                from("paho:{{ .Values.mqtt.broker.topic.temperature }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-temp")
+                    .log("Reading message form MQTT: ${body}")
+                    // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+            }
+
+            private void storeVibrationInKafka() {
+                from("paho:{{ .Values.mqtt.broker.topic.vibration }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-vibr")
+                    .log("Reading message form MQTT: ${body}")
+                    // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+            }
+
+            private void readTemperatureFromKafka() {
+                from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
+                    .log("Reading message from Kafka: ${body}")
+                    .log("    on the topic ${headers[kafka.TOPIC]}")
+                    .log("    on the partition ${headers[kafka.PARTITION]}")
+                    .log("    with the offset ${headers[kafka.OFFSET]}")
+                    .log("    with the key ${headers[kafka.KEY]}");
+            }
+
+            private void readVibrationFromKafka() {
+                from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
+                    .log("Reading message from Kafka: ${body}")
+                    .log("    on the topic ${headers[kafka.TOPIC]}")
+                    .log("    on the partition ${headers[kafka.PARTITION]}")
+                    .log("    with the offset ${headers[kafka.OFFSET]}")
+                    .log("    with the key ${headers[kafka.KEY]}");
+            }
+
+            @Override
+            public OnCompletionDefinition onCompletion() {
+                return super.onCompletion();
+            }
+        }
+      name: MQTT2KafkaRoute.java
