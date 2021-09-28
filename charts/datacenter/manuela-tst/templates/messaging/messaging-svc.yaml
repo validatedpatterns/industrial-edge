@@ -1,0 +1,17 @@
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: messaging
+  name: messaging
+spec:
+  ports:
+  - name: 3000-tcp
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: messaging
+    deploymentconfig: messaging
+  sessionAffinity: None
+  type: ClusterIP
