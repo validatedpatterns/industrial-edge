@@ -22,3 +22,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.2-100
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-100
+    importPolicy: {}
+    referencePolicy:
+      type: Local
