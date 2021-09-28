@@ -65,10 +65,10 @@ spec:
         configMap:
           defaultMode: 438
           name: line-dashboard-configmap
-            items:
-              - key: websocketHost
-                path: config.json/websocketHost
-              - key: websocketPath
-                path: config.json/websocketPath
-              - key: SERVER_TIMEOUT
-                path: config.json/SERVER_TIMEOUT
+          items:
+          - key: websocketHost
+            path: config.json/websocketHost
+          - key: websocketPath
+            path: config.json/websocketPath
+          - key: SERVER_TIMEOUT
+            path: config.json/SERVER_TIMEOUT
