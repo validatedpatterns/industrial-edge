@@ -28,7 +28,7 @@ spec:
         - containerPort: 8080
           name: http
           protocol: TCP
-        volumeMounts: []
+        volumeMounts:
         # the following mountpath is used for images which are based on the HTTPD base images, i.e. built using the CI/CD pipelines
         - mountPath: /var/www/html/conf/config.json
           name: line-dashboard-configmap-vol
