@@ -6,15 +6,15 @@ global:
 
   git:
     provider: github.com
-    account: mhjacks
-    username: mhjacks
-    email: mhjacks@redhat.com
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: EMAIL@EXAMPLE.COM
     dev_revision: main
 
   quay:
     provider: quay.io
-    account: martjack
+    account: PLAINTEXT
 
   datacenter:
-    domain: blueprints.rhecoeng.com
-    clustername: mhjacks-dc
+    domain: PLAINTEXT
+    clustername: PLAINTEXT
