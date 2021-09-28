@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: seed-iot-software-sensor
+  name: build-iot-consumer
 spec:
   workspaces:
   - name: gitrepos
@@ -49,7 +49,7 @@ spec:
     - name: deleteExisting
       value: "true"
 
-  - name: bump-build-version-iot-software-sensor
+  - name: bump-build-version-iot-consumer
     taskRef:
       name: bumpversion
     runAfter:
@@ -59,15 +59,15 @@ spec:
       workspace: gitrepos
     params:
     - name: component_name
-      value: iot-swsensor
+      value: iot-consumer
     - name: version_file_path
-      value: components/iot-software-sensor/VERSION
+      value: components/iot-consumer/VERSION
 
-  - name: s2i-build-iot-software-sensor
+  - name: s2i-build-iot-consumer
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-software-sensor
+    - bump-build-version-iot-consumer 
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -77,19 +77,19 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: PATH_CONTEXT
-      value: components/iot-software-sensor
+      value: components/iot-consumer
     - name: BUILDER_IMAGE
-      value: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+      value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
     - name: TAG
-      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
+      value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
     - name: OUTPUT_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
 
-  - name: copy-image-to-remote-registry-iot-software-sensor
+  - name: copy-image-to-remote-registry-iot-consumer
     taskRef:
       name: skopeo-copy
     runAfter: 
-    - s2i-build-iot-software-sensor
+    - s2i-build-iot-consumer
     workspaces:
     - name: config
       workspace: config
@@ -97,17 +97,17 @@ spec:
       workspace: quay-secret
     params:
     - name: TAG
-      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
+      value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
     - name: SOURCE_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_SWSENSOR_IMAGE
+      value: IOT_CONSUMER_IMAGE
 
   - name: push-dev-tag
     taskRef:
       name: github-push
     runAfter:
-    - copy-image-to-remote-registry-iot-software-sensor 
+    - copy-image-to-remote-registry-iot-consumer
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -117,7 +117,8 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-  - name: modify-ops-test-iot-software-sensor
+
+  - name: modify-ops-test-iot-consumer
     taskRef:
       name: gitops-imagetag
     runAfter:
@@ -129,31 +130,11 @@ spec:
       workspace: config
     params:
     - name: CONFIGMAP_PREFIX
-      value: IOT_SWSENSOR
+      value: IOT_CONSUMER
     - name: ENVIRONMENT
       value: TEST
     - name: TAG
-      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
-    - name: subdirectory
-      value: ops
-
-  - name: modify-ops-prod-iot-software-sensor
-    taskRef:
-      name: gitops-imagetag
-    runAfter: 
-    - modify-ops-test-iot-software-sensor
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    params:
-    - name: CONFIGMAP_PREFIX
-      value: IOT_SWSENSOR
-    - name: ENVIRONMENT
-      value: PROD
-    - name: TAG
-      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
+      value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
     - name: subdirectory
       value: ops
 
@@ -161,7 +142,7 @@ spec:
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-prod-iot-software-sensor
+    - modify-ops-test-iot-consumer
     workspaces:
     - name: gitrepos
       workspace: gitrepos

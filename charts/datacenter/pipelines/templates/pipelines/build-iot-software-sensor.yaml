@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: seed-iot-software-sensor
+  name: build-iot-software-sensor
 spec:
   workspaces:
   - name: gitrepos
@@ -137,31 +137,11 @@ spec:
     - name: subdirectory
       value: ops
 
-  - name: modify-ops-prod-iot-software-sensor
-    taskRef:
-      name: gitops-imagetag
-    runAfter: 
-    - modify-ops-test-iot-software-sensor
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    params:
-    - name: CONFIGMAP_PREFIX
-      value: IOT_SWSENSOR
-    - name: ENVIRONMENT
-      value: PROD
-    - name: TAG
-      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
-    - name: subdirectory
-      value: ops
-
   - name: commit-ops
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-prod-iot-software-sensor
+    - modify-ops-test-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
