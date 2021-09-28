@@ -2,10 +2,10 @@ resources:
 - helm.yaml
 images:
 - name: messaging
-  newTag: 0.3.2-83
+  newTag: 0.3.2-86
 - name: machine-sensor
-  newTag: 0.3.1-54
+  newTag: 0.3.1-56
 - name: line-dashboard
-  newTag: 0.3.1-79
+  newTag: 0.3.1-81
 - name: anomaly-detection
-  newTag: 0.3.2-58
+  newTag: 0.3.2-61

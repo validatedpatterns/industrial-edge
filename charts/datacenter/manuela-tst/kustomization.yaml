@@ -5,13 +5,13 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  newTag: 0.3.2-83
+  newTag: 0.3.2-87
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  newTag: 0.3.1-54
+  newTag: 0.3.1-56
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  newTag: 0.3.1-79
+  newTag: 0.3.1-81
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: 0.3.2-58
+  newTag: 0.3.2-61

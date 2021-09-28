@@ -7,27 +7,6 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.2-78
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-consumer:0.3.2-78
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-80
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-consumer:0.3.2-80
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-81
-    from:
-      kind: DockerImage
-      name: quay.io/claudiol/iot-consumer:0.3.2-81
-    importPolicy: {}
-    referencePolicy:
-      type: Local
   - name: 0.3.2-82
     from:
       kind: DockerImage
@@ -39,6 +18,27 @@ spec:
     from:
       kind: DockerImage
       name: quay.io/claudiol/iot-consumer:0.3.2-83
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-84
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-consumer:0.3.2-84
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-85
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-consumer:0.3.2-85
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-86
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-consumer:0.3.2-86
     importPolicy: {}
     referencePolicy:
       type: Local
