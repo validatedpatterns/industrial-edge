@@ -28,3 +28,10 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+  - name: 0.3.2-168
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-consumer:0.3.2-168
+    importPolicy: {}
+    referencePolicy:
+      type: Local
