@@ -8,7 +8,7 @@ metadata:
 data: 
   "config.json": |-
     {
-      "websocketHost": "http://line-dashboard-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}",
+      "websocketHost": "http://messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}",
       "websocketPath": "/api/service-web/socket",
       "SERVER_TIMEOUT": "20000"
     }
