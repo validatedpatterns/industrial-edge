@@ -2,7 +2,7 @@ resources:
 - helm.yaml
 images:
 - name: messaging
-  newTag: 0.3.2-171
+  newTag: 0.3.2-173
 - name: machine-sensor
   newTag: 0.3.1-95
 - name: line-dashboard
