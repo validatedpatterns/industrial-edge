@@ -8,19 +8,6 @@ metadata:
     tekton.dev/pipeline: build-and-test
 spec:
   params:
-    - name: S2I_BUILDER_IMAGE
-      value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
-    - name: LOCAL_IMAGE
-      value: >-
-        image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-    - name: PATH_CONTEXT
-      value: components/iot-consumer
-    - name: COMPONENT_NAME
-      value: iot-consumer
-    - name: CONFIGMAP_PREFIX
-      value: IOT_CONSUMER
-    - name: CHAINED_BUILD_DOCKERFILE
-      value: ''
     - name: DEV_REVISION
       value: main
     - name: OPS_REVISION

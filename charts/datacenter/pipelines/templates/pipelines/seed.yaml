@@ -9,9 +9,50 @@ spec:
   - name: github-secret
   - name: quay-secret
   - name: build-artifacts
+  params:
+  - name: DEV_REVISION
+    type: string
+    default: {{ .Values.global.git.dev_revision }}
+  - name: OPS_REVISION
+    type: string
+    default: {{ .Values.global.git.targetRevision }}
   tasks:
+  - name: build-base-images
+    taskRef:
+      name: tkn
+      kind: Task
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - build-base-images
+      - --param
+      - PATH_CONTEXT=tekton/images/httpd-ionic
+      - --param
+      - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
+      - --param
+      - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
+      - --param
+      - OUTPUT_IMAGE_NAME=http-ionic
+      - --param
+      - DEV_REVISION=$(params.DEV_REVISION)
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=github
+      - --workspace
+      - name=quay-secret,secret=quay-build-secret
+      - --workspace
+      - name=build-artifacts,claimName=build-artifacts-rwo
+      - --showlog
+      - --nocolour
 
   - name: seed-iot-anomaly-detection
+    runAfter:
+      - build-base-images
     taskRef:
       name: tkn
       kind: Task
