@@ -364,7 +364,7 @@ spec:
     - name: TEMPLATE
       value: stage-production-pipelinerun
     - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot_consumer
+      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot-consumer
 
   - name: cleanup
     taskRef:
@@ -382,7 +382,7 @@ spec:
     - name: subdirectory
       value: dev
     - name: COMPONENT_NAME
-      value: iot_consumer
+      value: iot-consumer
     # - name: OPENSHIFT_NAMESPACE
     #   value: manuela-tst-all
     # - name: OPENSHIFT_IMAGESTREAM
