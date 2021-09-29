@@ -1,0 +1,31 @@
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: "*"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  annotations:
+    deployment_version: "1"
+  name: anomaly-detection
+  predictors:
+  - annotations:
+        predictor_version: "0.1"
+    componentSpecs:
+    - spec:
+        containers:
+          - name: anomaly-detection
+            image: anomaly-detection:0.3.2-42
+            env:
+            - name: MODEL_FIILE
+              value: "model.joblib"
+    graph:
+      endpoint:
+        type: REST
+      name: anomaly-detection
+      type: MODEL
+    name: predictor
+    replicas: 1
