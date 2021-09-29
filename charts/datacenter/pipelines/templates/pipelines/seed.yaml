@@ -32,7 +32,7 @@ spec:
       - --param
       - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
       - --param
-      - IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
+      - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
       - --param
       - OUTPUT_IMAGE_NAME=http-ionic
       - --param
