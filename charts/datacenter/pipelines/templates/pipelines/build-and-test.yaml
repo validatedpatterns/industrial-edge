@@ -13,7 +13,7 @@ spec:
   params:
   - name: DEV_REVISION
     type: string
-    default: {{ .Values.global.dev_revision }}
+    default: {{ .Values.global.git.dev_revision }}
   - name: OPS_REVISION
     type: string
     default: {{ .Values.global.targetRevision }}
