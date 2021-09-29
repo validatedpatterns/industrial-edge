@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-images
+  name: build-base-images
 spec:
   workspaces:
   - name: gitrepos 
