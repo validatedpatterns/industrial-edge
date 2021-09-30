@@ -22,7 +22,7 @@ spec:
     spec:
       containers:
       - name: line-dashboard
-        image: line-dashboard:0.3.1-115
+        image: line-dashboard:0.3.1-81
         #imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -30,7 +30,7 @@ spec:
           protocol: TCP
         volumeMounts:
         # the following mountpath is used for images which are based on the HTTPD base images, i.e. built using the CI/CD pipelines
-        - mountPath: /var/www/html/conf
+        - mountPath: /var/www/html/conf/
           name: line-dashboard-configmap-vol
         # the following mountpath is used for images based directly on the NodeJS builder image, i.e. when deploying images built in the iotdemo namespace during quickstart
         - mountPath: /opt/app-root/output/conf

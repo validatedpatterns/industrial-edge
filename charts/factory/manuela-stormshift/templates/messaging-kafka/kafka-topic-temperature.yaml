@@ -1,0 +1,16 @@
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: iot-sensor-sw-temperature
+  namespace: manuela-stormshift-messaging
+  labels:
+    strimzi.io/cluster: manuela-kafka-cluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
+ 
