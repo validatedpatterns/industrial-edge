@@ -1,15 +1,3 @@
-global:
-  datacenter:
-    clustername: claudiol-dc
-    domain: blueprints.rhecoeng.com
-
-  git:
-    provider: github.com
-    account: claudiol
-    email: claudiol@redhat.com
-    username: claudiol
-    target: claudiol-experiment
-
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true 
