@@ -1,3 +1,3 @@
 [submodule "common"]
 	path = common
-	url = git@github.com/mhjacks/common.git
+	url = https://github.com/mhjacks/common
