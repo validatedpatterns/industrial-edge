@@ -145,7 +145,7 @@ That's it! Go to your factory (edge) OpenShift console and check for the open-cl
 
 # Structure
 
-https://docs.google.com/presentation/d/e/2PACX-1vSfbN_TbjfYnw-B6hHs-uUQ-8rRzUX27AW4eSxT7dVmBERiBgHS_FWWkgyg5fTsEWL2hj6RYyJqYi7_/pub?start=false&loop=false&delayms=3000
+https://slides.com/beekhof/hybrid-cloud-patterns
 
 # Uninstalling
 
