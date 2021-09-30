@@ -23,15 +23,30 @@ global:
 
 messaging:
   vibrationAlert: true
-  vibrationAnomaly: true
-  nodeTlsReject: 0 
+  vibrationAnomaly: true 
+  nodeTlsReject: 0
 
 machineSensor1:
   port: 80
 
 machineSensor2:
   port: 80
-  sensorTemperature: true
+  sensorTemperature: false
+
+mqtt:
+  broker:
+    uri: "tcp://broker-amq-mqtt-all-0-svc:61616"
+    clientId: "MQTT2KafkaRoute"
+    topic:
+      temperature: "iot-sensor/sw/temperature"
+      vibration: "iot-sensor/sw/vibration"
+
+kafka:
+  broker:
+    uri: "manuela-kafka-cluster-kafka-bootstrap:9092"
+    topic:
+      temperature: "iot-sensor-sw-temperature"
+      vibration: "iot-sensor-sw-vibration"
 
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
