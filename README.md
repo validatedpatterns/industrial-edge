@@ -26,11 +26,14 @@ service](https://console.redhat.com/openshift/create).
 
 1. Clone the forked copy
 
-   `git clone --recurse-submodules git@github.com:your-username/manufacturing-edge-ai-ml.git`
+   ```
+   git clone --recurse-submodules git@github.com:your-username/manufacturing-edge-ai-ml.git
+   ```
 
 1. Create a local copy of the Helm values file that can safely include credentials
 
   DO NOT COMMIT THIS FILE
+  
   You do not want to push personal credentials to GitHub.
    ```
    cp values-secret.yaml.template ~/values-secret.yaml
@@ -52,23 +55,33 @@ service](https://console.redhat.com/openshift/create).
 
 1. Login to your cluster using oc login or exporting the KUBECONFIG
 
-   `oc login`  
+   ```
+   oc login
+   ```
 
    or 
    
-   `export KUBECONFIG=~/my-ocp-env/datacenter`
+   ```
+   export KUBECONFIG=~/my-ocp-env/datacenter
+   ```
 
 1. Apply the changes to your cluster
 
+   ```
    make install
+   ```
    
 1. Check the operators have been installed 
 
-   `UI -> Installed Operators`
+   ```
+   UI -> Installed Operators
+   ```
 
 1. Obtain the ArgoCD urls and passwords
 
-   `for name in openshift datacenter factory; do oc -n $name-gitops get route $name-gitops-server -o jsonpath='{.spec.host}'; echo ; oc -n $name-gitops extract secrets/$name-gitops-cluster --to=-; done`
+   ```
+   for name in openshift datacenter factory; do oc -n $name-gitops get route $name-gitops-server -o jsonpath='{.spec.host}'; echo ; oc -n $name-gitops extract secrets/$name-gitops-cluster --to=-; done
+   ```
    
 1. Check all applications are synchronised
 
