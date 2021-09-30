@@ -1,6 +1,6 @@
 # Start Here
 
-If you've followed a link to this repo and are not really sure what it contains
+If you've followed a link to this repo, but are not really sure what it contains
 or how to use it, head over to http://hybrid-cloud-patterns.io/industrial-edge/ 
 for additional context before continuing. 
 
@@ -10,6 +10,7 @@ for additional context before continuing.
 1. (Optional) A second OpenShift cluster
 1. A github account
 1. A quay account
+1. The helm binary, see https://helm.sh/docs/intro/install/ 
 
 The use of this blueprint depends on having at least one running Red Hat
 OpenShift cluster. It is desirable to have a cluster for deploying the data
