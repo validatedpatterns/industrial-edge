@@ -1,0 +1,9 @@
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: line-dashboard
+  namespace: manuela-stormshift-line-dashboard
+spec:
+  lookupPolicy:
+    local: true
+  tags:
