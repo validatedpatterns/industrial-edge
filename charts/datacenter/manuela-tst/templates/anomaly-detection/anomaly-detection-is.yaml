@@ -8,3 +8,10 @@ spec:
   lookupPolicy:
     local: false
   tags:
+  - name: 0.3.2-113
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-113
+    importPolicy: {}
+    referencePolicy:
+      type: Local
