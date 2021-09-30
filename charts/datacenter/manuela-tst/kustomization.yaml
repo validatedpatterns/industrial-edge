@@ -14,4 +14,4 @@ images:
   newTag: 0.3.1-123
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  newTag: 0.3.2-111
+  newTag: 0.3.2-112
