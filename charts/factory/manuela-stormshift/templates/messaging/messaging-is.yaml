@@ -7,3 +7,10 @@ spec:
   lookupPolicy:
     local: true
   tags:
+  - name: 0.3.2-178
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-consumer:0.3.2-178
+    importPolicy: {}
+    referencePolicy:
+      type: Local
