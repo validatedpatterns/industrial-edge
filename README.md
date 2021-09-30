@@ -1,3 +1,9 @@
+# Start Here
+
+If you've followed a link to this repo and are not really sure what it contains
+or how to use it, head over to http://hybrid-cloud-patterns.io/industrial-edge/ 
+for additional context before continuing. 
+
 # Prerequisites
 
 1. An OpenShift cluster ( Go to https://console.redhat.com/openshift/create )
@@ -61,13 +67,9 @@ TIP: It is recommended to have two shells open so that you can switch between da
 
    `UI -> Installed Operators`
 
-1. Obtain the ArgoCD secret
+1. Obtain the ArgoCD urls and passwords
 
-   `oc -n openshift-gitops extract secrets/openshift-gitops-cluster --to=-`
-
-1. Obtain the Cluster ArgoCD location and log in
-
-   `oc get -n openshift-gitops routes/openshift-gitops-server`
+   `for name in openshift datacenter factory; do oc -n $name-gitops get route $name-gitops-server -o jsonpath='{.spec.host}'; echo ; oc -n $name-gitops extract secrets/$name-gitops-cluster --to=-; done`
    
 1. Check all applications are synchronised
 
