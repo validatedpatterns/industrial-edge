@@ -2,6 +2,7 @@ apiVersion: route.openshift.io/v1
 kind: Route
 metadata:
   name: anomaly-detection
+  namespace: manuela-stormshift-messaging
   labels:
     component: serving
 spec:

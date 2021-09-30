@@ -2,6 +2,7 @@ apiVersion: machinelearning.seldon.io/v1
 kind: SeldonDeployment
 metadata:
   name: anomaly-detection
+  namespace: manuela-stormshift-messaging
   labels:
     component: serving
   annotations:
@@ -18,7 +19,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:0.3.2-42
+            image: anomaly-detection:0.3.2-61
             env:
             - name: MODEL_FIILE
               value: "model.joblib"
