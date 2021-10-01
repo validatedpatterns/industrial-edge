@@ -4,7 +4,7 @@ metadata:
   generateName: build-and-test-run-
   namespace: manuela-ci
   labels:
-    argocd.argoproj.io/instance: pipelines-manufacturing-edge-ai-ml-datacenter
+    argocd.argoproj.io/instance: pipelines-industrial-edge-datacenter
     tekton.dev/pipeline: build-and-test
 spec:
   params:
