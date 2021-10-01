@@ -4,7 +4,7 @@ metadata:
   labels:
     application: anomaly-detection
   name: anomaly-detection
-  namespace: manuela-stormshift-imaging
+  namespace: manuela-stormshift-messaging
 spec:
   lookupPolicy:
     local: false
