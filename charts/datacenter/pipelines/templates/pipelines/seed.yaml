@@ -15,7 +15,7 @@ spec:
     default: {{ .Values.global.git.dev_revision }}
   - name: OPS_REVISION
     type: string
-    default: {{ .Values.global.git.targetRevision }}
+    default: {{ .Values.global.git.ops_revision }}
   tasks:
   - name: build-base-images
     taskRef:
