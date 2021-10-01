@@ -12,6 +12,3 @@ spec:
     name: messaging
     weight: 100
   wildcardPolicy: None
-status:
-  ingress: []
-

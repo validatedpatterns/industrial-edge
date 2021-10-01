@@ -14,5 +14,3 @@ spec:
     name: line-dashboard
     weight: 100
   wildcardPolicy: None
-status:
-  ingress: []
