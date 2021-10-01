@@ -16,7 +16,7 @@ spec:
     default: {{ .Values.global.git.dev_revision }}
   - name: OPS_REVISION
     type: string
-    default: {{ .Values.global.targetRevision }}
+    default: {{ .Values.global.git.ops_revision }}
   tasks:
   - name: build-base-images
     taskRef:
@@ -178,7 +178,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_TEST_URL
     - name: revision
-      value: {{ .Values.global.targetRevision }}
+      value: {{ .Values.global.git.ops_revision }}
     - name: subdirectory
       value: ops
     - name: deleteExisting
