@@ -1,5 +1,4 @@
 global:
-  pattern: industrial-edge
   options:
     useCSV: False
     syncPolicy: Automatic
