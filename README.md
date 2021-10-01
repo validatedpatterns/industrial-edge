@@ -27,7 +27,7 @@ service](https://console.redhat.com/openshift/create).
 1. Clone the forked copy
 
    ```
-   git clone --recurse-submodules git@github.com:your-username/manufacturing-edge-ai-ml.git
+   git clone --recurse-submodules git@github.com:your-username/industrial-edge.git
    ```
 
 1. Create a local copy of the Helm values file that can safely include credentials
