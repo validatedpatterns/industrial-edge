@@ -8,17 +8,38 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - name: 0.3.2-19
+  - name: 0.3.2-113
     from:
       kind: DockerImage
-      name: quay.io/abeekhof/iot-anomaly-detection:0.3.2-19
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-113
     importPolicy: {}
     referencePolicy:
       type: Local
-  - name: 0.3.2-91
+  - name: 0.3.2-114
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-anomaly-detection:0.3.2-91
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-114
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-115
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-115
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-117
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-117
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-118
+    from:
+      kind: DockerImage
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-118
     importPolicy: {}
     referencePolicy:
       type: Local

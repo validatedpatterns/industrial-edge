@@ -2,10 +2,14 @@ resources:
 - helm.yaml
 images:
 - name: messaging
-  newTag: 0.3.2-7
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
+  newTag: 0.3.2-182
 - name: machine-sensor
-  newTag: 0.3.1-87
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor
+  newTag: 0.3.1-107
 - name: line-dashboard
-  newTag: 0.3.1-109
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-line-dashboard/line-dashboard
+  newTag: 0.3.1-131
 - name: anomaly-detection
-  newTag: 0.3.2-91
+  newName: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection
+  newTag: 0.3.2-119

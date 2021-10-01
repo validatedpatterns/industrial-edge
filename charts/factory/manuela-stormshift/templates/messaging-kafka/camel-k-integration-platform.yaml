@@ -1,0 +1,13 @@
+apiVersion: camel.apache.org/v1
+kind: IntegrationPlatform
+metadata:
+  name: camel-k
+  namespace: manuela-stormshift-messaging
+  labels:
+    app: "camel-k"
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+  - type: repository
+    value: https://maven.repository.redhat.com/earlyaccess/all@id=redhat.ea

@@ -10,6 +10,7 @@ global:
     username: mhjacks
     email: mhjacks@redhat.com
     dev_revision: main
+    ops_revision: main
 
   quay:
     provider: quay.io

@@ -4,8 +4,11 @@ metadata:
   name: line-dashboard-configmap
   namespace: manuela-stormshift-line-dashboard
   labels:
-    app.kubernetes.io/instance: manuela-tst-all
+    app.kubernetes.io/instance: manuela-stormshift
 data:
-  websocketHost: "http://messaging-manuela-stormshift.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}"
-  websocketPath: "/api/service-web/socket"
-  SERVER_TIMEOUT: "20000"
+  "config.json": |-
+    {
+      "websocketHost": "http://messaging-manuela-stormshift-messaging.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}",
+      "websocketPath": "/api/service-web/socket",
+      "SERVER_TIMEOUT": "20000"
+    }

@@ -1,16 +1,17 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: line-dashboard
-  namespace: manuela-stormshift-line-dashboard
+  labels:
+    application: anomaly-detection
+  name: anomaly-detection
 spec:
   lookupPolicy:
-    local: true
+    local: false
   tags:
-  - name: 0.3.1-131
+  - name: 0.3.2-119
     from:
       kind: DockerImage
-      name: quay.io/martjack/iot-frontend:0.3.1-131
+      name: quay.io/martjack/iot-anomaly-detection:0.3.2-119
     importPolicy: {}
     referencePolicy:
       type: Local

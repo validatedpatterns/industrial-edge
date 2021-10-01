@@ -11,32 +11,14 @@ spec:
   - name: build-artifacts
   - name: quay-secret
   params:
-  - name: S2I_BUILDER_IMAGE
-    type: string
-    default: registry.access.redhat.com/rhscl/nodejs-10-rhel7
-  - name: LOCAL_IMAGE
-    type: string
-    default: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  - name: PATH_CONTEXT
-    type: string
-    default: components/iot-consumer
-  - name: COMPONENT_NAME
-    type: string
-    default: iot-consumer
-  - name: CONFIGMAP_PREFIX
-    type: string
-    default: IOT_CONSUMER
-  - name: CHAINED_BUILD_DOCKERFILE
-    type: string
-    default: ""
   - name: DEV_REVISION
     type: string
-    default: main
+    default: {{ .Values.global.git.dev_revision }}
   - name: OPS_REVISION
     type: string
-    default: {{ .Values.global.targetRevision }}
+    default: {{ .Values.global.git.ops_revision }}
   tasks:
-  - name: build-images
+  - name: build-base-images
     taskRef:
       name: tkn
     params:
@@ -44,7 +26,7 @@ spec:
       value:
       - pipeline
       - start
-      - build-images
+      - build-base-images
       - --param
       - PATH_CONTEXT=tekton/images/httpd-ionic
       - --param
@@ -68,7 +50,7 @@ spec:
 
   - name: build-iot-anomaly-detection
     runAfter:
-      - build-images
+      - build-base-images
     taskRef:
       name: tkn
     params:
@@ -196,7 +178,7 @@ spec:
     - name: url_configmapkey
       value: GIT_OPS_REPO_TEST_URL
     - name: revision
-      value: {{ .Values.global.targetRevision }}
+      value: {{ .Values.global.git.ops_revision }}
     - name: subdirectory
       value: ops
     - name: deleteExisting
@@ -212,11 +194,11 @@ spec:
       workspace: gitrepos
     params:
     - name: component_name
-      value: $(params.COMPONENT_NAME)
+      value: iot_consumer
     - name: version_file_path
-      value: $(params.PATH_CONTEXT)/VERSION
+      value: components/iot-consumer/VERSION
 
-  - name: s2i-build
+  - name: build-messaging-image
     taskRef:
       name: s2i
     runAfter:
@@ -230,21 +212,21 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: PATH_CONTEXT
-      value: $(params.PATH_CONTEXT)
+      value: components/iot-consumer
     - name: BUILDER_IMAGE
-      value: $(params.S2I_BUILDER_IMAGE)
+      value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
     - name: TAG
       value: $(tasks.bump-build-version.results.image-tag)
     - name: OUTPUT_IMAGE
-      value: $(params.LOCAL_IMAGE)
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
     - name: CHAINED_BUILD_DOCKERFILE
-      value: $(params.CHAINED_BUILD_DOCKERFILE)
+      value: ""
 
   - name: push-dev-tag
     taskRef:
       name: github-push
     runAfter:
-    - s2i-build
+    - build-messaging-image
 #    - bump-build-version
     workspaces:
     - name: gitrepos
@@ -267,7 +249,7 @@ spec:
       workspace: config
     params:
     - name: CONFIGMAP_PREFIX
-      value: $(params.CONFIGMAP_PREFIX)
+      value: IOT_CONSUMER
     - name: ENVIRONMENT
       value: TEST
     - name: TAG
@@ -313,7 +295,7 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      value: manuela-test-manufacturing-edge-ai-ml-datacenter
+      value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
     - name: flags
       value: --insecure
     - name: argocd-version
@@ -382,7 +364,7 @@ spec:
     - name: TEMPLATE
       value: stage-production-pipelinerun
     - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=$(params.CONFIGMAP_PREFIX) -p SOURCE_IMAGE=$(params.LOCAL_IMAGE) -p COMPONENT_NAME=$(params.COMPONENT_NAME)
+      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot-consumer
 
   - name: cleanup
     taskRef:
@@ -400,7 +382,7 @@ spec:
     - name: subdirectory
       value: dev
     - name: COMPONENT_NAME
-      value: $(params.COMPONENT_NAME)
+      value: iot-consumer
     # - name: OPENSHIFT_NAMESPACE
     #   value: manuela-tst-all
     # - name: OPENSHIFT_IMAGESTREAM
