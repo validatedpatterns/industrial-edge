@@ -12,7 +12,7 @@ global:
     username: PLAINTEXT
     email: EMAIL@EXAMPLE.COM
     dev_revision: main
-    ops_revision: main
+    targetRevision: main
 
   quay:
     provider: quay.io
