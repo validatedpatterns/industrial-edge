@@ -295,13 +295,17 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      value: manuela-test
     - name: flags
       value: --insecure
     - name: argocd-version
       value: "v1.5.2"
     - name: revision
       value: $(params.OPS_REVISION)
+    - name: argocd-server
+      # datacenter-gitops-server.industrial-edge-datacenter.svc
+      value: "{{ .Values.site.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.site.name }}.svc"
 
   # - name: sensor-broker-test
   #   taskRef:

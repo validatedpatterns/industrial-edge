@@ -45,7 +45,7 @@ site:
     channel: amq-streams-1.7.x
     csv: amqstreams.v1.7.1
 
-  - name: amqbroker
+  - name: amq-broker
     namespace: manuela-tst-all
     channel: 7.8.x
     csv: amq-broker-operator.v7.8.1-opr-3
