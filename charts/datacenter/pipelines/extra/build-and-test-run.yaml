@@ -7,11 +7,6 @@ metadata:
     argocd.argoproj.io/instance: pipelines-industrial-edge-datacenter
     tekton.dev/pipeline: build-and-test
 spec:
-  params:
-    - name: DEV_REVISION
-      value: main
-    - name: OPS_REVISION
-      value: main
   pipelineRef:
     name: build-and-test
   serviceAccountName: pipeline
