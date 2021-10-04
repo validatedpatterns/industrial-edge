@@ -1,5 +1,8 @@
 BOOTSTRAP=1
 ARGO_TARGET_NAMESPACE=manuela-ci
+PATTERN=industrial-edge
+COMPONENT=datacenter
+SECRET_NAME="argocd-env"
 
 .PHONY: default
 default: show
@@ -9,12 +12,14 @@ default: show
 
 install: deploy
 ifeq ($(BOOTSTRAP),1)
-	make -f common/Makefile TARGET_NAMESPACE=$(ARGO_TARGET_NAMESPACE) argosecret
+	make secret
 	make sleep-seed
 endif
 
 secret:
-	make -f common/Makefile TARGET_NAMESPACE=$(ARGO_TARGET_NAMESPACE) argosecret
+	make -f common/Makefile \
+		PATTERN=$(PATTERN) TARGET_NAMESPACE=$(ARGO_TARGET_NAMESPACE) \
+		SECRET_NAME=$(SECRET_NAME) COMPONENT=$(COMPONENT) argosecret
 
 sleep-seed:
 	echo "Waiting for pipeline seed to be created in manuela-ci"
