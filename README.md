@@ -79,10 +79,40 @@ service](https://console.redhat.com/openshift/create).
 
 1. Obtain the ArgoCD urls and passwords
 
+   The URLs and login credentials for ArgoCD change depending on the pattern
+   name and the site names they control.  Follow the instructions below to find
+   them, however you choose to deploy the pattern.
+
+   Display the fully qualified domain names, and matching login credentials, for
+   all ArgoCD instances:
+
    ```
-   for name in openshift datacenter factory; do oc -n $name-gitops get route $name-gitops-server -o jsonpath='{.spec.host}'; echo ; oc -n $name-gitops extract secrets/$name-gitops-cluster --to=-; done
+   ARGO_CMD=`oc get -A secrets | grep gitops-cluster | awk '{print "oc -n "$1" get routes; oc -n "$1" extract secrets/"$2" --to=-; echo ''"}'`
+   eval $ARGO_CMD
    ```
-   
+
+   The result should look something like:
+
+   ```
+NAME                       HOST/PORT                                                                                         PATH   SERVICES                   PORT    TERMINATION            WILDCARD
+datacenter-gitops-server   datacenter-gitops-server-industrial-edge-datacenter.apps.mycluster.mydomain.com          datacenter-gitops-server   https   passthrough/Redirect   None
+# admin.password
+2F6kgITU3DsparWyC
+
+NAME                    HOST/PORT                                                                                   PATH   SERVICES                PORT    TERMINATION            WILDCARD
+factory-gitops-server   factory-gitops-server-industrial-edge-factory.apps.mycluster.mydomain.com          factory-gitops-server   https   passthrough/Redirect   None
+# admin.password
+K4ctDIm3fH7ldhs8p
+
+NAME                      HOST/PORT                                                                              PATH   SERVICES                  PORT    TERMINATION            WILDCARD
+cluster                   cluster-openshift-gitops.apps.mycluster.mydomain.com                          cluster                   8080    reencrypt/Allow        None
+kam                       kam-openshift-gitops.apps.mycluster.mydomain.com                              kam                       8443    passthrough/None       None
+openshift-gitops-server   openshift-gitops-server-openshift-gitops.apps.mycluster.mydomain.com          openshift-gitops-server   https   passthrough/Redirect   None
+# admin.password
+WNklRCD8EFg2zK034
+   ```
+
+
 1. Check all applications are synchronised
 
 # Pattern Layout and Structure
