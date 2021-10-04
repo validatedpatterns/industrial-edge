@@ -295,7 +295,8 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      value: manuela-test
     - name: flags
       value: --insecure
     - name: argocd-version
