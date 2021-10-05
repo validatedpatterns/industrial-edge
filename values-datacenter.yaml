@@ -12,6 +12,7 @@ site:
   - manuela-ci
   - manuela-data-lake-central-s3-store
   - manuela-data-lake-central-kafka-cluster
+  - staging
 
   operatorgroupExcludes:
   - manuela-ml-workspace
