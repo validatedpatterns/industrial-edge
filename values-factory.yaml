@@ -54,7 +54,7 @@ site:
 
   - name: odh
     namespace: manuela-factory-ml-workspace
-    project: datacenter
+    project: factory
     path: charts/datacenter/opendatahub
 
 #
