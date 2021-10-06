@@ -6,7 +6,7 @@ metadata:
   name: line-dashboard
   namespace: manuela-stormshift-line-dashboard
 spec:
-  host: line-dashboard-manuela-stormshift-line-dashboard.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  subdomain: line-dashboard-manuela-stormshift-line-dashboard
   port:
     targetPort: 8080-tcp
   to:

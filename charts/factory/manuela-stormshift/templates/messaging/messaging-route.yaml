@@ -4,7 +4,7 @@ metadata:
   name: messaging
   namespace: manuela-stormshift-messaging
 spec:
-  host: messaging-manuela-stormshift-messaging.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
+  subdomain: messaging-manuela-stormshift-messaging
   port:
     targetPort: 3000-tcp
   to:
