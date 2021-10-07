@@ -1,8 +1,8 @@
 # Start Here
 
 If you've followed a link to this repo, but are not really sure what it contains
-or how to use it, head over to http://hybrid-cloud-patterns.io/industrial-edge/ 
-for additional context before continuing. 
+or how to use it, head over to http://hybrid-cloud-patterns.io/industrial-edge/
+for additional context before continuing.
 
 # Prerequisites
 
@@ -10,7 +10,7 @@ for additional context before continuing.
 1. (Optional) A second OpenShift cluster
 1. A github account
 1. A quay account
-1. The helm binary, see https://helm.sh/docs/intro/install/ 
+1. The helm binary, see https://helm.sh/docs/intro/install/
 
 The use of this blueprint depends on having at least one running Red Hat
 OpenShift cluster. It is desirable to have a cluster for deploying the data
@@ -22,9 +22,10 @@ service](https://console.redhat.com/openshift/create).
 
 # How to deploy
 
+1. Fork the [manuela-dev](https://github.com/hybrid-cloud-patterns/manuela-dev) repo on GitHub.  It is necessary to fork this repo because the GitOps framework will push tags to this repo that match the versions of software that it will deploy.
 1. Fork this repo on GitHub. It is necessary to fork because your fork will be updated as part of the GitOps and DevOps processes.
 
-1. Clone the forked copy
+1. Clone the forked copy of this repo.
 
    ```
    git clone --recurse-submodules git@github.com:your-username/industrial-edge.git
@@ -33,7 +34,7 @@ service](https://console.redhat.com/openshift/create).
 1. Create a local copy of the Helm values file that can safely include credentials
 
   DO NOT COMMIT THIS FILE
-  
+
   You do not want to push personal credentials to GitHub.
    ```
    cp values-secret.yaml.template ~/values-secret.yaml
@@ -44,6 +45,7 @@ service](https://console.redhat.com/openshift/create).
 
    ```
    vi values-global.yaml
+   git add values-global.yaml
    git commit values-global.yaml
    git push
    ```
@@ -59,8 +61,8 @@ service](https://console.redhat.com/openshift/create).
    oc login
    ```
 
-   or 
-   
+   or
+
    ```
    export KUBECONFIG=~/my-ocp-env/datacenter
    ```
@@ -70,8 +72,8 @@ service](https://console.redhat.com/openshift/create).
    ```
    make install
    ```
-   
-1. Check the operators have been installed 
+
+1. Check the operators have been installed
 
    ```
    UI -> Installed Operators
