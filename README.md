@@ -16,7 +16,7 @@ for additional context before continuing.
 - iot-consumer
 - iot-frontend
 - iot-software-sensor
-1. The helm binary, see https://helm.sh/docs/intro/install/
+5. The helm binary, see https://helm.sh/docs/intro/install/
 
 The use of this blueprint depends on having at least one running Red Hat
 OpenShift cluster. It is desirable to have a cluster for deploying the data
