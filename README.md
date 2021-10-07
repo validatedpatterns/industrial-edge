@@ -8,8 +8,14 @@ for additional context before continuing.
 
 1. An OpenShift cluster ( Go to https://console.redhat.com/openshift/create )
 1. (Optional) A second OpenShift cluster
-1. A github account
-1. A quay account
+1. A github account (and a token for it with repos permissions, to read from and write to your forks)
+1. A quay account with the following repos set as public:
+- http-ionic
+- httpd-ionic
+- iot-anomaly-detection
+- iot-consumer
+- iot-frontend
+- iot-software-sensor
 1. The helm binary, see https://helm.sh/docs/intro/install/
 
 The use of this blueprint depends on having at least one running Red Hat
