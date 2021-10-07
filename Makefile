@@ -25,6 +25,7 @@ sleep:
 	scripts/sleep-seed.sh
 
 sleep-seed: sleep seed
+	true
 
 seed:
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
