@@ -20,3 +20,7 @@ global:
   datacenter:
     clustername: PLAINTEXT
     domain: PLAINTEXT
+
+  edge:
+    clustername: PLAINTEXT
+    domain: PLAINTEXT
