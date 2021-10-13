@@ -70,7 +70,7 @@ service](https://console.redhat.com/openshift/create).
    or
 
    ```
-   export KUBECONFIG=~/my-ocp-env/datacenter
+   export KUBECONFIG=~/my-ocp-env/datacenter/kubeconfig
    ```
 
 1. Apply the changes to your cluster
@@ -82,8 +82,9 @@ service](https://console.redhat.com/openshift/create).
 1. Check the operators have been installed
 
    ```
-   UI -> Installed Operators
+   OpenShift UI -> Installed Operators
    ```
+   It takes time for all the operators and other components to be installed. It is useful to go back and forth between the OpenShift GitOps UI (see the following two steps) and the OpenShift UI to watch as applications and oeprators come up.  
 
 1. Obtain the ArgoCD urls and passwords
 
@@ -121,8 +122,70 @@ service](https://console.redhat.com/openshift/create).
    ```
 
 
-1. Check all applications are synchronised
+1. Check all applications are synchronized
 
+# Factory (Edge) setup
+
+It's time to connect a "remote" factory cluster to the data center (hub).
+
+## Factory setup using the ACM UI
+
+1. Locate the kubeconfig for your factory (edge) cluster 
+
+1. Import the kubeconfig into hub (data center) cluster
+
+   Select the `Import Cluster` option beside the highlighted Create Cluster button.
+
+   On the "Import an existing cluster" page, enter the cluster name and choose Kubeconfig as the "import mode". Copy the kubeconfig details into the space provided. 
+
+   Note: After pressing `Import` you will be prompted to copy a command that can be used on the factory cluster. INGORE this message. It will go away, and is only useful if something goes wrong and you need to manually import. 
+
+## Factory setup using `cm` tool
+
+1. If you don't already have the `cm` tool then build from [here](https://github.com/open-cluster-management/cm-cli)
+
+1. Locate the factory's kubeconfig path.
+
+1. While logged into the data center (hub) run the following command on the hub:
+   ```
+   cm attach cluster --cluster <cluster-name> --cluster-kubeconfig <path-of-kubeconfig>
+   ```
+ 
+## Factory setup using `clusteradm` tool
+
+You can also use `clusteradm` to join a cluster. The following instructions explain what needs to be done. clusteradm is still in testing. It's useful to have two shells available for these steps. One logged into factory (edge) and one logged into data center (hub). Move over and back based on the location of the command needs below.
+
+1. If you don't already have the `clusteradm` tool then download from [here](https://github.com/open-cluster-management-io/clusteradm/releases)
+
+1. Get the a token from the data center (hub) cluster using this the following command on the data center (hub) cluster:
+
+   ```
+    clusteradm get token
+   ``` 
+
+   This will return a token that you can copy.
+      
+1. On the factory request to join to the data center (hub) 
+
+   ```
+   clusteradm join --hub-token <paste-token>
+   ```
+
+1. Back on the hub cluster UI accept the join request.
+ 
+## The factory has joined
+
+You are done! Now be patient because it takes some time for everything to happen on the factory. What will happen is:
+
+1. The hub will push down an ACM agent to the factory (edge).
+
+1. Once the agent is installed it will install OpenShift GitOps.
+
+1. OpenShift GitOps takes over and installs everything else. 
+ 
+You can check your Installed Operators on your factory (edge) OpenShift cluster and wait to see the OpenShift GitOps operator install. If you're really impatient, you can also check Workloads for the  `open-cluster-management-agent`  project to appear. This happens before OpenShift GitOps is installed.  
+
+When OpenShift GitOps installed and ready, launch the OpenShift GitOps (ArgoCD) console from up at the top right of the OpenShift console.
 # Pattern Layout and Structure
 
 https://slides.com/beekhof/hybrid-cloud-patterns
