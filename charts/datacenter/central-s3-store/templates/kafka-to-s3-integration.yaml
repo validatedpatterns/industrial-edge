@@ -13,6 +13,11 @@ spec:
   profile: OpenShift
   sources:
     - content: |
+        // camel-k: language=java
+        // camel-k: dependency=camel:camel-core
+        // camel-k: dependency=camel:camel-kafka
+        // camel-k: dependency=camel:camel-aws-s3
+        // camel-k: dependency=mvn:com.amazonaws
         package com.redhat.manuela.routes;
         import java.io.ByteArrayInputStream;
         import java.util.Iterator;
