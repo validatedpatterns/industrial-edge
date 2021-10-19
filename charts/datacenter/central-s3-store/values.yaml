@@ -1,0 +1,15 @@
+global:
+  datacenter:
+    domain: your.domain
+    clustername: yourcluster
+s3:
+  bucket:
+    name: manuela-data-lake
+
+kafka:
+  broker:
+    uri: "manuela-kafka-cluster-kafka-bootstrap:9092"
+    topic:
+      temperature: "iot-sensor-sw-temperature"
+      vibration: "iot-sensor-sw-vibration"
+
