@@ -27,7 +27,7 @@ spec:
         import org.apache.camel.Processor;
         import org.apache.camel.PropertyInject;
         import org.apache.camel.builder.RouteBuilder;
-        import org.apache.camel.component.aws.s3.S3Constants;
+        import org.apache.camel.component.aws2.s3.AWS2S3Constants;
         import org.apache.camel.model.OnCompletionDefinition;
         import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
         import org.slf4j.Logger;
