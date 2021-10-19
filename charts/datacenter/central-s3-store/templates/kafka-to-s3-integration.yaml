@@ -90,27 +90,6 @@ spec:
             private void storeVibrationInS3() {
                 from("kafka:{{.Values.kafka.broker.topic.vibration}}?brokers={{.Values.kafka.broker.uri}}")
                     .convertBodyTo(String.class)
-                    .aggregate(simple(\"true\"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
-                    .process(new Processor() {
-                            @Override
-                            public void process(Exchange exchange) throws Exception {
-                                List<Exchange> data = exchange.getIn().getBody(List.class);
-                                StringBuffer sb = new StringBuffer();
-                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
-                                    String ex = (String) iterator.next();
-                                    sb.append(ex+"\\n");
-                                }
-                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
-                            }
-                        })
-                    // .to(\"file:/var/tmp/\");
-                    .setHeader(S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
-                    .to("aws-s3:\/\/{{.Values.s3.bucket.name}}?amazonS3Client=#client")
-                    .log(\"Uploaded Vibration dataset to S3\");
-            }
-            private void storeTemperatureInS3() {
-                from("kafka:{{.Values.kafka.broker.topic.temperature}}?brokers={{.Values.kafka.broker.uri}}")
-                    .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
                             @Override
@@ -125,8 +104,29 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
+                    .setHeader(S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
+                    .to("aws-s3://{{.Values.s3.bucket.name}}?amazonS3Client=#client")
+                    .log("Uploaded Vibration dataset to S3");
+            }
+            private void storeTemperatureInS3() {
+                from("kafka:{{.Values.kafka.broker.topic.temperature}}?brokers={{.Values.kafka.broker.uri}}")
+                    .convertBodyTo(String.class)
+                    .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
+                    .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                List<Exchange> data = exchange.getIn().getBody(List.class);
+                                StringBuffer sb = new StringBuffer();
+                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+                                    String ex = (String) iterator.next();
+                                    sb.append(ex+"\n");
+                                }
+                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
+                            }
+                        })
+                    // .to(\"file:/var/tmp/\");
                     .setHeader(S3Constants.KEY, simple("manuela-temperature-${date:now}.txt"))
-                    .to("aws-s3:\/\/{{.Values.s3.bucket.name}}?amazonS3Client=#client")
+                    .to("aws-s3://{{.Values.s3.bucket.name}}?amazonS3Client=#client")
                     .log("Uploaded Temperature dataset to S3");
             }
             @Override
