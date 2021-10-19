@@ -2,9 +2,17 @@ global:
   datacenter:
     domain: your.domain
     clustername: yourcluster
+
 s3:
   bucket:
     name: manuela-data-lake
+    region: us-west-1
+    message:
+      aggregation:
+        count: 10
+    custom:
+      endpoint:
+        enabled: true
 
 kafka:
   broker:
