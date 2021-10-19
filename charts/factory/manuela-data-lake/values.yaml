@@ -39,7 +39,8 @@ s3:
     name: manuela-data-lake
     region: us-west-1
     message:
-      aggregation.count: 10
+      aggregation:
+        count: 10
     custom:
       endpoint:
         enabled: true
