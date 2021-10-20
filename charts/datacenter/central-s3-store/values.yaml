@@ -1,3 +1,7 @@
+global:
+  datacenter:
+    clustername: claudiol-dc
+    domain: blueprints.rhecoeng.com
 s3:
   bucket:
     name: manuela-data-lake
