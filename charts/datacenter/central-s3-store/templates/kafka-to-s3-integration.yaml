@@ -13,11 +13,7 @@ spec:
   profile: OpenShift
   sources:
     - content: |
-        // camel-k: language=java
-        // camel-k: dependency=camel:camel-core
-        // camel-k: dependency=camel:camel-kafka
-        // camel-k: dependency=camel:camel-aws-s3
-        // camel-k: dependency=mvn:com.amazonaws
+       // dependency=camel:camel-endpointdsl
         package com.redhat.manuela.routes;
         import java.io.ByteArrayInputStream;
         import java.util.Iterator;
@@ -28,25 +24,26 @@ spec:
         import org.apache.camel.PropertyInject;
         import org.apache.camel.builder.RouteBuilder;
         import org.apache.camel.component.aws2.s3.AWS2S3Constants;
+        import org.apache.camel.builder.endpoint.dsl.AWS2S3EndpointBuilderFactory;
         import org.apache.camel.model.OnCompletionDefinition;
         import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
         import org.slf4j.Logger;
         import org.slf4j.LoggerFactory;
 
-        import com.amazonaws.ClientConfiguration;
-        import com.amazonaws.Protocol;
-        import com.amazonaws.SDKGlobalConfiguration;
-        import com.amazonaws.auth.AWSStaticCredentialsProvider;
-        import com.amazonaws.auth.BasicAWSCredentials;
-        import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-        import com.amazonaws.services.s3.AmazonS3;
-        import com.amazonaws.services.s3.AmazonS3ClientBuilder;
+        //import com.amazonaws.ClientConfiguration;
+        //import com.amazonaws.Protocol;
+        //import com.amazonaws.SDKGlobalConfiguration;
+        //import com.amazonaws.auth.AWSStaticCredentialsProvider;
+        //import com.amazonaws.auth.BasicAWSCredentials;
+        //import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
+        //import com.amazonaws.services.s3.AmazonS3;
+        //import com.amazonaws.services.s3.AmazonS3ClientBuilder;
 
 
         public class Kafka2S3Route extends RouteBuilder {
 
             private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
-            private AmazonS3 s3Client;
+            //private AmazonS3 s3Client;
 
             @PropertyInject("s3.custom.endpoint.enabled")
             private String s3_custom_endpoint_enabled;
@@ -65,35 +62,42 @@ spec:
             private String s3_region;
             @Override
             public void configure() throws Exception {
-                setupAWSClient();
+                //setupAWSClient();
                 storeTemperatureInS3();
                 storeVibrationInS3();
             }
-           private void setupAWSClient() {
+           //private void setupAWSClient() {
                 // key: wtFLMAxRcAUqJ2FCnCYW
                 // secret-key: 6kit6yLBeiRkC51PuM8G8vYbwhjVBlNhT0RuVtJj
-                if(Boolean.valueOf(s3_custom_endpoint_enabled)) {
-                    LOGGER.info("Custom S3 endpoint is enabled. Using: "+s3_custom_endpoint_url);
-                    System.setProperty(SDKGlobalConfiguration.DISABLE_CERT_CHECKING_SYSTEM_PROPERTY, "true");
-                    s3Client = AmazonS3ClientBuilder.standard()
-                        .withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
-                        .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
-                        .withEndpointConfiguration(new EndpointConfiguration(s3_custom_endpoint_url, ""))
-                        .enablePathStyleAccess()
-                        .build();
-                } else {
-                    LOGGER.info("Using AWS S3 endpoint");
-                    s3Client = AmazonS3ClientBuilder.standard()
-                        .withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
-                        .withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
-                        .withRegion(s3_region)
-                        .enablePathStyleAccess()
-                        .build();
-                }
-                bindToRegistry("client", s3Client);
-            }
+                //if(Boolean.valueOf(s3_custom_endpoint_enabled)) {
+                    //LOGGER.info("Custom S3 endpoint is enabled. Using: "+s3_custom_endpoint_url);
+                    //System.setProperty(SDKGlobalConfiguration.DISABLE_CERT_CHECKING_SYSTEM_PROPERTY, "true");
+                    //s3Client = AmazonS3ClientBuilder.standard()
+                        //.withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
+                        //.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
+                        //.withEndpointConfiguration(new EndpointConfiguration(s3_custom_endpoint_url, ""))
+                        //.enablePathStyleAccess()
+                        //.build();
+                //} else {
+                    //LOGGER.info("Using AWS S3 endpoint");
+                    //s3Client = AmazonS3ClientBuilder.standard()
+                        //.withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
+                        //.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
+                        //.withRegion(s3_region)
+                        //.enablePathStyleAccess()
+                        //.build();
+                //}
+                //bindToRegistry("client", s3Client);
+            //}
             private void storeVibrationInS3() {
-                from("kafka:{{.Values.kafka.broker.topic.vibration}}?brokers={{.Values.kafka.broker.uri}}")
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                + secret
+                + region;
+
+                from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
@@ -109,12 +113,18 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
-                    .to("aws-s3://{{.Values.s3.bucket.name}}?amazonS3Client=#client")
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
+                    .to("aws2-s3://{{ .Values.s3.bucket.name }}?" + s3params)
                     .log("Uploaded Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
-                from("kafka:{{.Values.kafka.broker.topic.temperature}}?brokers={{.Values.kafka.broker.uri}}")
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                   + secret
+                   + region;
+                from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
@@ -130,8 +140,8 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(S3Constants.KEY, simple("manuela-temperature-${date:now}.txt"))
-                    .to("aws-s3://{{.Values.s3.bucket.name}}?amazonS3Client=#client")
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-temperature-${date:now}.txt"))
+                    .to("aws2-s3://{{ .Values.s3.bucket.name }}?" + s3params)
                     .log("Uploaded Temperature dataset to S3");
             }
             @Override
