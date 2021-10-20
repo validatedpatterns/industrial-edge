@@ -30,20 +30,9 @@ spec:
         import org.slf4j.Logger;
         import org.slf4j.LoggerFactory;
 
-        //import com.amazonaws.ClientConfiguration;
-        //import com.amazonaws.Protocol;
-        //import com.amazonaws.SDKGlobalConfiguration;
-        //import com.amazonaws.auth.AWSStaticCredentialsProvider;
-        //import com.amazonaws.auth.BasicAWSCredentials;
-        //import com.amazonaws.client.builder.AwsClientBuilder.EndpointConfiguration;
-        //import com.amazonaws.services.s3.AmazonS3;
-        //import com.amazonaws.services.s3.AmazonS3ClientBuilder;
-
-
         public class Kafka2S3Route extends RouteBuilder {
 
             private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
-            //private AmazonS3 s3Client;
 
             @PropertyInject("s3.custom.endpoint.enabled")
             private String s3_custom_endpoint_enabled;
@@ -62,33 +51,9 @@ spec:
             private String s3_region;
             @Override
             public void configure() throws Exception {
-                //setupAWSClient();
                 storeTemperatureInS3();
                 storeVibrationInS3();
             }
-           //private void setupAWSClient() {
-                // key: wtFLMAxRcAUqJ2FCnCYW
-                // secret-key: 6kit6yLBeiRkC51PuM8G8vYbwhjVBlNhT0RuVtJj
-                //if(Boolean.valueOf(s3_custom_endpoint_enabled)) {
-                    //LOGGER.info("Custom S3 endpoint is enabled. Using: "+s3_custom_endpoint_url);
-                    //System.setProperty(SDKGlobalConfiguration.DISABLE_CERT_CHECKING_SYSTEM_PROPERTY, "true");
-                    //s3Client = AmazonS3ClientBuilder.standard()
-                        //.withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
-                        //.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
-                        //.withEndpointConfiguration(new EndpointConfiguration(s3_custom_endpoint_url, ""))
-                        //.enablePathStyleAccess()
-                        //.build();
-                //} else {
-                    //LOGGER.info("Using AWS S3 endpoint");
-                    //s3Client = AmazonS3ClientBuilder.standard()
-                        //.withClientConfiguration(new ClientConfiguration().withProtocol(Protocol.HTTPS))
-                        //.withCredentials(new AWSStaticCredentialsProvider(new BasicAWSCredentials(s3_accessKey, s3_secretKey)))
-                        //.withRegion(s3_region)
-                        //.enablePathStyleAccess()
-                        //.build();
-                //}
-                //bindToRegistry("client", s3Client);
-            //}
             private void storeVibrationInS3() {
                 String key = "accessKey=" + s3_accessKey;
                 String secret="&secretKey=" + s3_secretKey;
