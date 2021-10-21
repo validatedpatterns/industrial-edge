@@ -2,7 +2,7 @@ apiVersion: camel.apache.org/v1
 kind: Integration
 metadata:
   name: kafka-to-s3-integration
-  namespace: manuela-data-lake-central-s3-store
+  namespace: manuela-data-lake-factory-s3-store
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:

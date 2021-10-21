@@ -2,6 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kafka-to-s3-config
+  namespace: manuela-data-lake-central-s3-store
 data:
   application.properties: |
     

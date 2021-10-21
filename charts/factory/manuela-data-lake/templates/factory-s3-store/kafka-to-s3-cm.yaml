@@ -6,14 +6,14 @@ metadata:
 data:
   application.properties: |
     
-    kafka.broker.uri=kafka-cluster-kafka-bootstrap.manuela-data-lake-factory-kafka-cluster.svc:9092
+    kafka.broker.uri=kafka-cluster-kafka-bootstrap.manuela-data-lake-factory-s3-store.svc:9092
     kafka.broker.topic.temperature=manuela-factory.iot-sensor-sw-temperature
     kafka.broker.topic.vibration=manuela-factory.iot-sensor-sw-vibration
 
-    s3.region=us-west-1
-    s3.bucket.name=manuela-data-lake
-    s3.message.aggregation.count=10
-    s3.custom.endpoint.enabled=true
+    s3.region={{ .Values.s3.bucket.region }}
+    s3.bucket.name={{ .Values.s3.bucket.name }}
+    s3.message.aggregation.count={{ .Values.s3.bucket.message.aggregation.count }}
+    s3.custom.endpoint.enabled={{ .Values.s3.bucket.custom.endpoint.enabled }}
     # Convert this directory into a helm chart and use templating to set this
     s3.custom.endpoint.url=s3-openshift-storage.apps.{{ .Values.global.edge.clustername }}.{{ .Values.global.edge.domain }}
 
