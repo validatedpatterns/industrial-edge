@@ -5,7 +5,7 @@ metadata:
 data:
   application.properties: |
     
-    kafka.broker.uri=manuela-kafka-cluster-kafka-bootstrap.manuela-data-lake-central-kafka-cluster.svc:9092
+    kafka.broker.uri=manuela-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
     kafka.broker.topic.temperature=iot-sensor-sw-temperature
     kafka.broker.topic.vibration=iot-sensor-sw-vibration
 
