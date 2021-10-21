@@ -8,7 +8,7 @@ s3:
     region: us-west-1
     message:
       aggregation:
-        count: 10
+        count: 100
     custom:
       endpoint:
         enabled: true
