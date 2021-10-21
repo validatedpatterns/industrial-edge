@@ -47,10 +47,10 @@ s3:
 
 kafka:
   broker:
-    uri: "manuela-kafka-cluster-kafka-bootstrap:9092"
+    uri: "kafka-cluster-kafka-bootstrap.manuela-data-lake-factor-s3-store.svc:9092" 
     topic:
-      temperature: "iot-sensor-sw-temperature"
-      vibration: "iot-sensor-sw-vibration"
+      temperature: "manuela-factory.iot-sensor-sw-temperature"
+      vibration: "manuela-factory.iot-sensor-sw-vibration"
 
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
