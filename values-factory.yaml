@@ -2,9 +2,9 @@ site:
   name: factory
 
   namespaces:
-  - manuela-data-lake-factory-kafka-cluster
-  - manuela-data-lake-factory-s3-store
-  - manuela-data-lake-factory-mirror-maker
+  - factory-lake
+  - factory-s3-store
+  - factory-mirror-maker
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
@@ -25,6 +25,11 @@ site:
 
   - name: amq-streams
     namespace: manuela-stormshift-messaging
+    channel: amq-streams-1.7.x
+    csv: amqstreams.v1.7.1
+
+  - name: amq-streams
+    namespace: factory-lake
     channel: amq-streams-1.7.x
     csv: amqstreams.v1.7.1
 
