@@ -43,6 +43,10 @@ site:
     channel: 1.4.x
     csv: red-hat-camel-k-operator.v1.4.0
 
+  - name: red-hat-camel-k
+    namespace: factory-s3-store
+    channel: 1.4.x
+
   projects:
   - factory
 

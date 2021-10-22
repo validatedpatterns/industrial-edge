@@ -47,7 +47,7 @@ s3:
 
 kafka:
   broker:
-    uri: "kafka-cluster-kafka-bootstrap.manuela-data-lake-factor-s3-store.svc:9092" 
+    uri: "kafka-cluster-kafka-bootstrap.factory-s3-store.svc:9092" 
     topic:
       temperature: "manuela-factory.iot-sensor-sw-temperature"
       vibration: "manuela-factory.iot-sensor-sw-vibration"
