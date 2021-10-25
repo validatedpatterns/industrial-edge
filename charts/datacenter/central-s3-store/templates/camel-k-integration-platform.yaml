@@ -9,4 +9,4 @@ metadata:
 spec:
   configuration:
   - type: repository
-    value: https://maven.repository.redhat.com/earlyaccess/all@id=redhat.ea
+    value: https://maven.repository.redhat.com/ga/all@id=redhat.ea

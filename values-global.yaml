@@ -24,3 +24,4 @@ global:
   edge:
     clustername: PLAINTEXT
     domain: PLAINTEXT
+
