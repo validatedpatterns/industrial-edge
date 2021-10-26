@@ -123,6 +123,12 @@ service](https://console.redhat.com/openshift/create).
 
 1. Check all applications are synchronised
 
+# Deploying the factory applications
+
+Once the data center has been setup correctly and confirmed to be working, it is time to attach one or more factories to the architecture (see diagrams below).
+
+For instructions on deploying the factory please read the following [document](http://hybrid-cloud-patterns.io/industrial-edge/factory/).
+
 # Pattern Layout and Structure
 
 https://slides.com/beekhof/hybrid-cloud-patterns
@@ -153,6 +159,16 @@ https://slides.com/beekhof/hybrid-cloud-patterns
    `helm delete manuela`
 
 1. Check all namespaces and operators have been removed
+
+# More reading
+
+## General Hybrid Cloud Patterns reading
+
+For more general patterns documentation please refer to the hybrid cloud patterns docs [here](http://hybrid-cloud-patterns.io/).
+
+## Industrial Edge application demos
+
+Once the data center and the factory have been deployed you will want to check out and test the Industrial Edge 2.0 demo code. You can find that [here](http://hybrid-cloud-patterns.io/industrial-edge/application/) 
 
 # Diagrams
 
