@@ -8,19 +8,19 @@ global:
 
   git:
     provider: github.com
-    account: PLAINTEXT
-    username: PLAINTEXT
-    email: EMAIL@EXAMPLE.COM
+    account: ipbabble
+    username: ipbabble
+    email: whenry@redhat.com
     dev_revision: main
 
   quay:
     provider: quay.io
-    account: PLAINTEXT
+    account: ipbabble
 
   datacenter:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: wh-datacenter
+    domain: blueprints.rhecoeng.com
 
   edge:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: wh-factory
+    domain: blueprints.rhecoeng.com
