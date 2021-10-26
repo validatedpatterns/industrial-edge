@@ -27,9 +27,9 @@ global:
     account: PLAINTEXT
 
   datacenter:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: wh-datacenter
+    domain: blueprints.rhecoeng.com
 
   edge:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: wh-factory
+    domain: blueprints.rhecoeng.com
