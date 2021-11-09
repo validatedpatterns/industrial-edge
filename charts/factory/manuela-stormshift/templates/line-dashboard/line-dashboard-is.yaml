@@ -7,3 +7,10 @@ spec:
   lookupPolicy:
     local: true
   tags:
+  - name: 0.3.1-35
+    from:
+      kind: DockerImage
+      name: quay.io/ipbabble/iot-frontend:0.3.1-35
+    importPolicy: {}
+    referencePolicy:
+      type: Local
