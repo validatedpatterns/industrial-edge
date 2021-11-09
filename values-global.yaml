@@ -18,7 +18,7 @@ global:
     account: ipbabble
 
   datacenter:
-    clustername: wh-datacenter
+    clustername: whenry-dc-2
     domain: blueprints.rhecoeng.com
 
   edge:
