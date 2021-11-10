@@ -27,7 +27,7 @@ global:
     account: PLAINTEXT
 
   datacenter:
-    clustername: whenry-dc-2
+    clustername: whenry-dc
     domain: blueprints.rhecoeng.com
 
   edge:
