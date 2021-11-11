@@ -8,19 +8,18 @@ global:
 
   git:
     provider: github.com
-    account: PLAINTEXT
-    username: PLAINTEXT
-    email: EMAIL@EXAMPLE.COM
+    account: claudiol
+    username: claudiol
+    email: claudiol@redhat.com
     dev_revision: main
 
   quay:
     provider: quay.io
-    account: PLAINTEXT
+    account: claudiol
 
   datacenter:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
-
+    clustername: claudiol-dc
+    domain: blueprints.rhecoeng.com
   edge:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: claudiol-dc
+    domain: blueprints.rhecoeng.com
