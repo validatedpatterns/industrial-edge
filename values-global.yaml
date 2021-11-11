@@ -31,5 +31,5 @@ global:
     domain: blueprints.rhecoeng.com
 
   edge:
-    clustername: wh-factory
-    domain: blueprints.rhecoeng.com
+    clustername: PLAINTEXT
+    domain: PLAINTEXT
