@@ -34,6 +34,24 @@ machineSensor2:
   port: 80
   sensorTemperature: true
 
+s3:
+  bucket:
+    name: manuela-data-lake
+    region: us-west-1
+    message:
+      aggregation:
+        count: 10
+    custom:
+      endpoint:
+        enabled: true
+
+kafka:
+  broker:
+    uri: "kafka-cluster-kafka-bootstrap.factory-lake.svc:9092" 
+    topic:
+      temperature: "manuela-factory.iot-sensor-sw-temperature"
+      vibration: "manuela-factory.iot-sensor-sw-vibration"
+
 secrets:
   # NEVER COMMIT THESE VALUES TO GIT
   enabled: false
