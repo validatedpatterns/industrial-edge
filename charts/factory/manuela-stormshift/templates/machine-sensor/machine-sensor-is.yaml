@@ -7,3 +7,10 @@ spec:
   lookupPolicy:
     local: true
   tags:
+  - name: 0.3.1-76
+    from:
+      kind: DockerImage
+      name: quay.io/claudiol/iot-software-sensor:0.3.1-76
+    importPolicy: {}
+    referencePolicy:
+      type: Local
