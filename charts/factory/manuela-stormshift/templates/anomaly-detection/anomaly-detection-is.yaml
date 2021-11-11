@@ -9,3 +9,17 @@ spec:
   lookupPolicy:
     local: false
   tags:
+  - name: 0.3.2-18
+    from:
+      kind: DockerImage
+      name: quay.io/ipbabble/iot-anomaly-detection:0.3.2-18
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+  - name: 0.3.2-19
+    from:
+      kind: DockerImage
+      name: quay.io/ipbabble/iot-anomaly-detection:0.3.2-19
+    importPolicy: {}
+    referencePolicy:
+      type: Local
