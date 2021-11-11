@@ -12,7 +12,7 @@ data:
 
 
   APP_NAME: "iot-sensor"
-  DEVICE_ID: "pump-2"
+  DEVICE_ID: "pump-1"
   DEVICE_METRICS: "temperature,vibration,gps,light"
   MACHINE_ID: "floor-1-line-1-extruder-1"
 
