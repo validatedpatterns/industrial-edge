@@ -1,6 +1,6 @@
 bases:
-  - tekton-common/
-  - tekton/
+- tekton-common/
+- tekton/
 
 patches:
 - helm.patch.yaml

@@ -6,15 +6,24 @@ global:
     syncPolicy: Automatic
     installPlanApproval: Automatic
 
+  # Source code repository to be used
   git:
-    provider: github.com
+    hostname: github.com
     account: PLAINTEXT
     username: PLAINTEXT
     email: EMAIL@EXAMPLE.COM
     dev_revision: main
 
-  quay:
-    provider: quay.io
+  # Image Registry to be used.
+  # Supported: Quay.io and OpenShift Integrated Image Registry
+  # Use the exposed route as the hostname for the OpenShift Registry
+  imageregistry:
+    type: quay
+    # type: openshift
+    hostname: quay.io
+    # hostname: registry.apps.cluster-hm874.hm874.sandbox1007.opentlc.com
+    # Account is only necessary for external registries (like Quay.io)
+    # Ignored for OpenShift Registry
     account: PLAINTEXT
 
   datacenter:
@@ -24,4 +33,3 @@ global:
   edge:
     clustername: PLAINTEXT
     domain: PLAINTEXT
-

@@ -14,22 +14,14 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
               storage: 128Gi
-      # persistentVolumeClaim:
-      #   claimName: build-images
     params:
     - name: PATH_CONTEXT
       value: tekton/images/httpd-ionic

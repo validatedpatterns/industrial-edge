@@ -14,22 +14,14 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
               storage: 128Mi
-      # persistentVolumeClaim:
-      #   claimName: build-images
     params:
     - name: PATH_CONTEXT
       value: tekton/images/pushprox
@@ -39,5 +31,5 @@ objects:
       value: IMAGE_ACCOUNT
     - name: OUTPUT_IMAGE_NAME
       value: pushprox
-    - name: DEV_REVISION 
+    - name: DEV_REVISION
       value: pushprox

@@ -14,28 +14,21 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
     - name: build-artifacts
-      # persistentVolumeClaim:
-      #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
               storage: 1Gi
     - name: gitrepos
-      # persistentVolumeClaim:
-      #   claimName: iot-software-sensor
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:

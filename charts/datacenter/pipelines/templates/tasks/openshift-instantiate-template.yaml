@@ -10,6 +10,6 @@ spec:
     type: string
   steps:
     - name: instantiate-template
-      image: quay.io/openshift/origin-cli:latest
+      image: image-registry.openshift-image-registry.svc:5000/openshift/cli
       script: |
         oc process $(params.TEMPLATE) $(params.PARAMS) | oc create -f -

@@ -14,12 +14,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
@@ -28,8 +22,6 @@ objects:
           resources:
             requests:
               storage: 128Mi
-      # persistentVolumeClaim:
-      #   claimName: build-images
     params:
     - name: PATH_CONTEXT
       value: tekton/images/bumpversiontask
