@@ -5,6 +5,8 @@ metadata:
     application: machine-sensor-1
     template: openjdk18-web-basic-s2i
     app.kubernetes.io/part-of: ManuELA
+  annotations:
+    checksum/config: {{ include (print $.Template.BasePath"/machine-sensor-1-configmap.yaml") . | sha256sum }}
   name: machine-sensor-1
   namespace: manuela-tst-all
 spec:
