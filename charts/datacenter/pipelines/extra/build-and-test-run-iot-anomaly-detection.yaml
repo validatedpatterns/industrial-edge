@@ -8,7 +8,7 @@ metadata:
     tekton.dev/pipeline: build-and-test-iot-anomaly-detection
 spec:
   pipelineRef:
-    name: build-and-test
+    name: build-and-test-iot-anomaly-detection
   serviceAccountName: pipeline
   timeout: 1h0m0s
   workspaces:
