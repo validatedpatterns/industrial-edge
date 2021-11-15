@@ -32,3 +32,9 @@ seed:
 
 build-and-test:
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run.yaml
+
+build-and-test-iot-anomaly-detection:
+	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-anomaly-detection.yaml
+
+build-and-test-iot-consumer:
+	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
