@@ -173,7 +173,7 @@ spec:
     - name: subdirectory
       value: ops
 
- - name: argocd-sync-application
+  - name: argocd-sync-application
     taskRef:
       name: argocd-sync-and-wait
     runAfter:
