@@ -33,3 +33,5 @@ global:
   edge:
     clustername: PLAINTEXT
     domain: PLAINTEXT
+
+  last_updated: PLACEHOLDER

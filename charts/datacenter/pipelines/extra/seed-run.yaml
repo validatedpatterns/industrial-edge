@@ -12,18 +12,12 @@ spec:
   serviceAccountName: pipeline
   timeout: 1h0m0s
   workspaces:
-    - name: gitrepos
-      persistentVolumeClaim:
-        claimName: gitrepos-rwo
-    - configMap:
-        name: environment
-      name: config
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: build-artifacts
-      persistentVolumeClaim:
-        claimName: build-artifacts-rwo
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
+  - configMap:
+      name: environment
+    name: config
+  - name: gitrepos
+    persistentVolumeClaim:
+      claimName: gitrepos-rwo
+  - name: build-artifacts
+    persistentVolumeClaim:
+      claimName: build-artifacts-rwo
