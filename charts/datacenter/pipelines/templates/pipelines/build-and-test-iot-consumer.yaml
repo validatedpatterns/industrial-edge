@@ -9,6 +9,7 @@ spec:
   - name: github-secret
   - name: quay-secret
   - name: build-artifacts
+  - name: argocd-env-secret
   params:
   - name: DEV_REVISION
     type: string
@@ -194,6 +195,21 @@ spec:
     - name: argocd-server
       #value: datacenter-gitops-server.industrial-edge-datacenter.svc
       value: "{{ .Values.site.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.site.name }}.svc"
+
+  - name: test-all
+    taskRef:
+      name: tkn
+    runAfter:
+    - argocd-sync-application
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - test-all
+      - --showlog
+      - --nocolour
+
 
   - name: trigger-staging
     taskRef:

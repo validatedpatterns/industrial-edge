@@ -9,6 +9,7 @@ spec:
   - name: github-secret
   - name: quay-secret
   - name: build-artifacts
+  - name: argocd-env-secret
   params:
   - name: DEV_REVISION
     type: string
