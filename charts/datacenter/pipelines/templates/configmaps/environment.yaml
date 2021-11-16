@@ -33,5 +33,4 @@ data:
   IOT_ANOMALY_YAML_PATH: 'images(name==anomaly-detection).newTag'
   IOT_ANOMALY_TEST_KUSTOMIZATION_PATH: charts/datacenter/manuela-tst/kustomization.yaml
   IOT_ANOMALY_PROD_KUSTOMIZATION_PATH: charts/factory/manuela-stormshift/kustomization.yaml
-  # This seems wrong!!!
   IOT_ANOMALY_PROD_IMAGESTREAM_PATH: charts/factory/manuela-stormshift/templates/anomaly-detection/anomaly-detection-is.yaml
