@@ -73,12 +73,12 @@ spec:
         -depth="$(params.depth)"
       cd "$CHECKOUT_DIR"
 
-      git fetch --tags
-      EXIT_CODE="$?"
-      if [ "$EXIT_CODE" != 0 ]
-      then
-        exit $EXIT_CODE
-      fi
+      # git fetch --tags
+      # EXIT_CODE="$?"
+      # if [ "$EXIT_CODE" != 0 ]
+      # then
+      #   exit $EXIT_CODE
+      # fi
 
       # Seems the go git client checks out master regardless.  This allows for 'main' or another branch to be used
       git checkout $(params.revision)
