@@ -9,6 +9,13 @@ spec:
   - name: github-secret
   - name: quay-secret
   - name: build-artifacts
+  params:
+  - name: DEV_REVISION
+    type: string
+    default: {{ .Values.global.git.dev_revision }}
+  - name: OPS_REVISION
+    type: string
+    default: {{ .Values.global.targetRevision }}
 
   tasks:
   - name: git-clone-dev
