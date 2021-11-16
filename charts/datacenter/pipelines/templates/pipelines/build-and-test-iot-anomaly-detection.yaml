@@ -217,7 +217,7 @@ spec:
     - name: TEMPLATE
       value: stage-production-pipelinerun
     - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_ANOMALY -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection -p COMPONENT_NAME=iot-anomaly-detection
+      value: -p TAG=$(tasks.bump-build-version-iot-anomaly.results.image-tag) -p CONFIGMAP_PREFIX=IOT_ANOMALY -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection -p COMPONENT_NAME=iot-anomaly-detection
 
   - name: cleanup
     taskRef:
