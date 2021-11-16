@@ -1,0 +1,22 @@
+global:
+  datacenter:
+    clustername: claudiol-dc
+    domain: blueprints.rhecoeng.com
+s3:
+  bucket:
+    name: manuela-data-lake
+    region: us-west-1
+    message:
+      aggregation:
+        count: 100
+    custom:
+      endpoint:
+        enabled: true
+
+kafka:
+  broker:
+    uri: "manuela-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
+    topic:
+      temperature: "iot-sensor-sw-temperature"
+      vibration: "iot-sensor-sw-vibration"
+
