@@ -27,11 +27,11 @@ global:
     account: PLAINTEXT
 
   datacenter:
-    clustername: whenry-dc
-    domain: blueprints.rhecoeng.com
+    clustername: datacenter-XXXXX
+    domain: BASEDOMAIN
 
   edge:
-    clustername: PLAINTEXT
-    domain: PLAINTEXT
+    clustername: edge-XXXXX
+    domain: BASEDOMAIN
 
   last_updated: PLACEHOLDER
