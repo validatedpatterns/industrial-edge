@@ -1,3 +1,6 @@
+main:
+  siteName: datacenter
+
 global:
   pattern: industrial-edge
 
