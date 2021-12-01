@@ -1,0 +1,804 @@
+---
+# Source: pattern-site/templates/gitops-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: industrial-edge-datacenter
+  # The name here needs to be consistent with
+  # - acm/templates/policies/application-policies.yaml
+  # - site/templates/applications.yaml
+  # - any references to secrets and route URLs in documentation
+  name: industrial-edge-datacenter
+spec: {}
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: open-cluster-management
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: manuela-ml-workspace
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: manuela-tst-all
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: manuela-ci
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: manuela-data-lake-central-s3-store
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: manuela-data-lake-central-kafka-cluster
+spec:
+---
+# Source: pattern-site/templates/namespaces.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: pattern
+    argocd.argoproj.io/managed-by: industrial-edge-datacenter
+  name: staging
+spec:
+---
+# Source: pattern-site/templates/argocd-super-role.yaml
+# WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openshift-gitops-cluster-admin-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+  # NOTE: THIS MUST BE FIXED FOR MULTITENANT SETUP
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-server
+    namespace: openshift-gitops
+---
+# Source: pattern-site/templates/argocd-super-role.yaml
+# WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: industrial-edge-datacenter-cluster-admin-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    # This is the {ArgoCD.name}-argocd-application-controller
+    name: datacenter-gitops-argocd-application-controller
+    namespace: industrial-edge-datacenter
+  # NOTE: THIS MUST BE FIXED FOR MULTITENANT SETUP
+  - kind: ServiceAccount
+    # This is the {ArgoCD.name}-argocd-server
+    name: datacenter-gitops-argocd-server
+    namespace: industrial-edge-datacenter
+---
+# Source: pattern-site/templates/projects.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: datacenter
+  namespace: industrial-edge-datacenter
+spec:
+  description: "Pattern datacenter"
+  destinations:
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - '*'
+status: {}
+---
+# Source: pattern-site/templates/projects.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: AppProject
+metadata:
+  name: datalake
+  namespace: industrial-edge-datacenter
+spec:
+  description: "Pattern datalake"
+  destinations:
+  - namespace: '*'
+    server: '*'
+  clusterResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  namespaceResourceWhitelist:
+  - group: '*'
+    kind: '*'
+  sourceRepos:
+  - '*'
+status: {}
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: acm
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: open-cluster-management
+  project: datacenter
+  source:
+    repoURL: 
+    targetRevision: main
+    path: common/acm
+    helm:
+      valueFiles:
+      - "https://github.com/pattern-clone/pattern/raw/main//values-global.yaml"
+      - "https://github.com/pattern-clone/pattern/raw/main//values-datacenter.yaml"
+      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
+      parameters:
+        - name: global.repoURL
+          value: $ARGOCD_APP_SOURCE_REPO_URL
+        - name: global.targetRevision
+          value: $ARGOCD_APP_SOURCE_TARGET_REVISION
+        - name: global.namespace
+          value: $ARGOCD_APP_NAMESPACE
+        - name: global.pattern
+          value: industrial-edge
+        - name: global.valuesDirectoryURL
+          value: https://github.com/pattern-clone/pattern/raw/main/
+  ignoreDifferences: [
+  {
+    "group": "internal.open-cluster-management.io",
+    "jsonPointers": [
+      "/spec/loggingCA"
+    ],
+    "kind": "ManagedClusterInfo"
+  }
+]
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: odh
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-ml-workspace
+  project: datacenter
+  source:
+    repoURL: 
+    targetRevision: main
+    path: charts/datacenter/opendatahub
+    helm:
+      valueFiles:
+      - "https://github.com/pattern-clone/pattern/raw/main//values-global.yaml"
+      - "https://github.com/pattern-clone/pattern/raw/main//values-datacenter.yaml"
+      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
+      parameters:
+        - name: global.repoURL
+          value: $ARGOCD_APP_SOURCE_REPO_URL
+        - name: global.targetRevision
+          value: $ARGOCD_APP_SOURCE_TARGET_REVISION
+        - name: global.namespace
+          value: $ARGOCD_APP_NAMESPACE
+        - name: global.pattern
+          value: industrial-edge
+        - name: global.valuesDirectoryURL
+          value: https://github.com/pattern-clone/pattern/raw/main/
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: pipelines
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-ci
+  project: datacenter
+  source:
+    repoURL: 
+    targetRevision: main
+    path: charts/datacenter/pipelines
+    helm:
+      valueFiles:
+      - "https://github.com/pattern-clone/pattern/raw/main//values-global.yaml"
+      - "https://github.com/pattern-clone/pattern/raw/main//values-datacenter.yaml"
+      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
+      parameters:
+        - name: global.repoURL
+          value: $ARGOCD_APP_SOURCE_REPO_URL
+        - name: global.targetRevision
+          value: $ARGOCD_APP_SOURCE_TARGET_REVISION
+        - name: global.namespace
+          value: $ARGOCD_APP_NAMESPACE
+        - name: global.pattern
+          value: industrial-edge
+        - name: global.valuesDirectoryURL
+          value: https://github.com/pattern-clone/pattern/raw/main/
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: central-kafka
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-data-lake-central-kafka-cluster
+  project: datalake
+  source:
+    repoURL: 
+    targetRevision: main
+    path: charts/datacenter/kafka
+    helm:
+      valueFiles:
+      - "https://github.com/pattern-clone/pattern/raw/main//values-global.yaml"
+      - "https://github.com/pattern-clone/pattern/raw/main//values-datacenter.yaml"
+      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
+      parameters:
+        - name: global.repoURL
+          value: $ARGOCD_APP_SOURCE_REPO_URL
+        - name: global.targetRevision
+          value: $ARGOCD_APP_SOURCE_TARGET_REVISION
+        - name: global.namespace
+          value: $ARGOCD_APP_NAMESPACE
+        - name: global.pattern
+          value: industrial-edge
+        - name: global.valuesDirectoryURL
+          value: https://github.com/pattern-clone/pattern/raw/main/
+  ignoreDifferences: [
+  {
+    "group": "apps",
+    "jsonPointers": [
+      "/spec/replicas"
+    ],
+    "kind": "Deployment"
+  },
+  {
+    "group": "route.openshift.io",
+    "jsonPointers": [
+      "/status"
+    ],
+    "kind": "Route"
+  },
+  {
+    "group": "image.openshift.io",
+    "jsonPointers": [
+      "/spec/tags"
+    ],
+    "kind": "ImageStream"
+  },
+  {
+    "group": "apps.openshift.io",
+    "jsonPointers": [
+      "/spec/template/spec/containers/0/image"
+    ],
+    "kind": "DeploymentConfig"
+  }
+]
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: central-s3
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-data-lake-central-s3-store
+  project: datalake
+  source:
+    repoURL: 
+    targetRevision: main
+    path: charts/datacenter/central-s3-store
+  ignoreDifferences: [
+  {
+    "group": "apps",
+    "jsonPointers": [
+      "/spec/replicas"
+    ],
+    "kind": "Deployment"
+  },
+  {
+    "group": "route.openshift.io",
+    "jsonPointers": [
+      "/status"
+    ],
+    "kind": "Route"
+  },
+  {
+    "group": "image.openshift.io",
+    "jsonPointers": [
+      "/spec/tags"
+    ],
+    "kind": "ImageStream"
+  },
+  {
+    "group": "apps.openshift.io",
+    "jsonPointers": [
+      "/spec/template/spec/containers/0/image"
+    ],
+    "kind": "DeploymentConfig"
+  }
+]
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/applications.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: manuela-test
+  namespace: industrial-edge-datacenter
+spec:
+  destination:
+    name: in-cluster
+    namespace: manuela-tst-all
+  project: datacenter
+  source:
+    repoURL: 
+    targetRevision: main
+    path: charts/datacenter/manuela-tst
+    plugin: {
+  "name": "helm-with-kustomize"
+}
+  syncPolicy:
+    automated: {}
+    #  selfHeal: true
+---
+# Source: pattern-site/templates/argocd.yaml
+apiVersion: argoproj.io/v1alpha1
+kind: ArgoCD
+metadata:
+  finalizers:
+  - argoproj.io/finalizer
+  # Changing the name affects the ClusterRoleBinding, the generated secret,
+  # route URL, and argocd.argoproj.io/managed-by annotations
+  name: datacenter-gitops
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  applicationInstanceLabelKey: argocd.argoproj.io/instance
+  # Not the greatest way to pass git/quay info to sub-applications, but it will do until
+  # we can support helmChart with kustomize
+  # The other option is to pass them in as environment variables eg. BLUEPRINT_VERSION
+  configManagementPlugins: "- name: kustomize-version\n  generate:\n    command: [sh,
+    -c]\n    args: [\"kustomize version 1>&2 && exit 1\"]\n- name: kustomize-with-helm\n
+    \ generate:\n    command: [\"kustomize\"]\n    args: [\"build\", \"--enable-helm\"]\n- name:
+    helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
+    dependency build\"]\n  generate:\n    command: [/bin/bash, -c]\n    args: [\"helm template . --name-template ${ARGOCD_APP_NAME:0:52}
+    -f https://github.com/pattern-clone/pattern/raw/main//values-global.yaml
+    -f https://github.com/pattern-clone/pattern/raw/main//values-datacenter.yaml
+    --set global.repoURL=$ARGOCD_APP_SOURCE_REPO_URL
+    --set global.targetRevision=$ARGOCD_APP_SOURCE_TARGET_REVISION
+    --set global.namespace=$ARGOCD_APP_NAMESPACE
+    --set global.pattern=industrial-edge
+    --set global.valuesDirectoryURL=https://github.com/pattern-clone/pattern/raw/main/
+    --post-renderer ./kustomize\"]
+    \ \n"
+  applicationSet:
+    resources:
+      limits:
+        cpu: "2"
+        memory: 1Gi
+      requests:
+        cpu: 250m
+        memory: 512Mi
+  controller:
+    processors: {}
+    resources:
+      limits:
+        cpu: "4"
+        memory: 4Gi
+      requests:
+        cpu: 500m
+        memory: 2Gi
+  dex:
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 250m
+        memory: 128Mi
+  initialSSHKnownHosts: {}
+  rbac:
+    defaultPolicy: role:admin
+  repo:
+    resources:
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 250m
+        memory: 256Mi
+  resourceExclusions: |
+    - apiGroups:
+      - tekton.dev
+      kinds:
+      - TaskRun
+      - PipelineRun
+  server:
+    autoscale:
+      enabled: false
+    grpc:
+      ingress:
+        enabled: false
+    ingress:
+      enabled: false
+    resources:
+      limits:
+        cpu: 500m
+        memory: 256Mi
+      requests:
+        cpu: 125m
+        memory: 128Mi
+    route:
+      enabled: true
+    service:
+      type: ""
+  tls:
+    ca: {}
+status:
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: open-cluster-management-operator-group
+  namespace: open-cluster-management
+spec:
+  targetNamespaces:
+  - open-cluster-management
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: manuela-tst-all-operator-group
+  namespace: manuela-tst-all
+spec:
+  targetNamespaces:
+  - manuela-tst-all
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: manuela-ci-operator-group
+  namespace: manuela-ci
+spec:
+  targetNamespaces:
+  - manuela-ci
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: manuela-data-lake-central-s3-store-operator-group
+  namespace: manuela-data-lake-central-s3-store
+spec:
+  targetNamespaces:
+  - manuela-data-lake-central-s3-store
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: manuela-data-lake-central-kafka-cluster-operator-group
+  namespace: manuela-data-lake-central-kafka-cluster
+spec:
+  targetNamespaces:
+  - manuela-data-lake-central-kafka-cluster
+---
+# Source: pattern-site/templates/operatorgroup.yaml
+apiVersion: operators.coreos.com/v1
+kind: OperatorGroup
+metadata:
+  name: staging-operator-group
+  namespace: staging
+spec:
+  targetNamespaces:
+  - staging
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: advanced-cluster-management
+  namespace: open-cluster-management
+spec:
+  name: advanced-cluster-management
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: release-2.3
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: seldon-operator
+  namespace: manuela-ml-workspace
+spec:
+  name: seldon-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: opendatahub-operator
+  namespace: openshift-operators
+spec:
+  name: opendatahub-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-pipelines-operator-rh
+  namespace: openshift-operators
+spec:
+  name: openshift-pipelines-operator-rh
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: manuela-data-lake-central-kafka-cluster
+spec:
+  name: amq-streams
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: amq-streams-1.7.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: manuela-tst-all
+spec:
+  name: amq-streams
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: amq-streams-1.7.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-broker
+  namespace: manuela-tst-all
+spec:
+  name: amq-broker
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 7.8.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: red-hat-camel-k
+  namespace: manuela-data-lake-central-s3-store
+spec:
+  name: red-hat-camel-k
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 1.4.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subsciptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: red-hat-camel-k
+  namespace: manuela-tst-all
+spec:
+  name: red-hat-camel-k
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 1.4.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: advanced-cluster-management
+  namespace: open-cluster-management
+spec:
+  name: advanced-cluster-management
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: release-2.3
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: seldon-operator
+  namespace: manuela-ml-workspace
+spec:
+  name: seldon-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: opendatahub-operator
+  namespace: openshift-operators
+spec:
+  name: opendatahub-operator
+  source: community-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: openshift-pipelines-operator-rh
+  namespace: openshift-operators
+spec:
+  name: openshift-pipelines-operator-rh
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: stable
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: manuela-data-lake-central-kafka-cluster
+spec:
+  name: amq-streams
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: amq-streams-1.7.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-streams
+  namespace: manuela-tst-all
+spec:
+  name: amq-streams
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: amq-streams-1.7.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: amq-broker
+  namespace: manuela-tst-all
+spec:
+  name: amq-broker
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 7.8.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: red-hat-camel-k
+  namespace: manuela-data-lake-central-s3-store
+spec:
+  name: red-hat-camel-k
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 1.4.x
+  installPlanApproval: Automatic
+---
+# Source: pattern-site/templates/subscriptions.yaml
+apiVersion: operators.coreos.com/v1alpha1
+kind: Subscription
+metadata:
+  name: red-hat-camel-k
+  namespace: manuela-tst-all
+spec:
+  name: red-hat-camel-k
+  source: redhat-operators
+  sourceNamespace: openshift-marketplace
+  channel: 1.4.x
+  installPlanApproval: Automatic

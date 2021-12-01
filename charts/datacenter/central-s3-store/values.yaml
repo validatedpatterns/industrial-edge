@@ -1,10 +1,11 @@
 global:
   datacenter:
-    clustername: claudiol-dc
-    domain: blueprints.rhecoeng.com
+    clustername: datacenter-XXXXX
+    domain: BASEDOMAIN
+
 s3:
   bucket:
-    name: manuela-data-lake
+    name: BUCKETNAME
     region: us-west-1
     message:
       aggregation:

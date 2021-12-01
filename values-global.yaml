@@ -9,16 +9,17 @@ global:
     syncPolicy: Automatic
     installPlanApproval: Automatic
 
-  git:
-    provider: github.com
-    account: ipbabble
-    username: ipbabble
-    email: whenry@redhat.com
-    dev_revision: main
+  imageregistry:
+    account: PLAINTEXT
+    hostname: quay.io
+    type: quay
 
-  quay:
-    provider: quay.io
-    account: ipbabble
+  git:
+    hostname: github.com
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    dev_revision: main
 
   datacenter:
     clustername: datacenter-XXXXX

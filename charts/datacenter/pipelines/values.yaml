@@ -1,11 +1,19 @@
+site:
+  name: datacenter
+
 global:
+  pattern: industrial-edge
+  repoURL: "https://github.com/beekhof/industrial-edge.git"
+  targetRevision: main
+
   git:
-    provider: github.com
+    hostname: github.com
     account: PLAINTEXT
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
 
-  quay:
-    provider: quay.io
+  imageregistry:
     account: PLAINTEXT
+    hostname: quay.io
+    type: quay

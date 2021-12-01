@@ -1,4 +1,4 @@
 global:
   datacenter:
-    domain: your.domain
-    clustername: yourcluster
+    clustername: datacenter-XXXXX
+    domain: BASEDOMAIN

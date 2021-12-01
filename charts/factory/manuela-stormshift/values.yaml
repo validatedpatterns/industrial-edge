@@ -1,25 +1,23 @@
 global:
+  imageregistry:
+    account: PLAINTEXT
+    hostname: quay.io
+    type: quay
+
   git:
-    provider: github.com
-    account: claudiol
-    email: claudiol@redhat.com
-    username: claudiol
+    hostname: github.com
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
 
-  quay:
-    provider: quay.io
-    account: claudiol
-
   datacenter:
-    clustername: claudiol-factory
-    domain: blueprints.rhecoeng.com
+    clustername: datacenter-XXXXX
+    domain: BASEDOMAIN
 
   edge:
-    clustername: EDGE-CLUSTERNAME
-    domain: EDGE-DOMAINNAME
-
-  deploy:
-    site: factory
+    clustername: edge-XXXXX
+    domain: BASEDOMAIN
 
 messaging:
   vibrationAlert: true
@@ -47,16 +45,3 @@ kafka:
     topic:
       temperature: "iot-sensor-sw-temperature"
       vibration: "iot-sensor-sw-vibration"
-
-secrets:
-  # NEVER COMMIT THESE VALUES TO GIT
-  enabled: false
-  quay:
-    # Quay -> Robot Accounts -> Kubernetes Secret -> View
-    authToken: BASE64STRING
-
-  git:
-    # Go to: https://github.com/settings/tokens
-    # Then: echo -n 'your string value' | base64
-    authToken: BASE64STRING
-    accountToken: BASE64STRING

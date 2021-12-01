@@ -1,3 +1,8 @@
+global:
+  datacenter:
+    clustername: datacenter-XXXXX
+    domain: BASEDOMAIN
+
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true 

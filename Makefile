@@ -3,11 +3,16 @@ ARGO_TARGET_NAMESPACE=manuela-ci
 PATTERN=industrial-edge
 COMPONENT=datacenter
 SECRET_NAME="argocd-env"
+TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL://' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
+CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
+TESTDIR=tests
+TEST_VARIANT=normal
 
 .PHONY: default
 default: show
 
 %:
+	echo "Delegating $* target"
 	make -f common/Makefile $*
 
 install: deploy
@@ -38,3 +43,11 @@ build-and-test-iot-anomaly-detection:
 
 build-and-test-iot-consumer:
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
+
+CHARTS=$(wildcard charts/*/*)
+
+unit:
+	@for t in $(CHARTS); do scripts/test.sh $$t naked ""; if [ $$? != 0 ]; then exit 1; fi; done
+	@for t in $(CHARTS); do scripts/test.sh $$t normal "$(CHART_OPTS)"; if [ $$? != 0 ]; then exit 1; fi; done
+#	#@for t in $(UNITS); do make $$t; if [ $$? != 0 ]; then exit 1; fi; done
+
