@@ -46,8 +46,7 @@ build-and-test-iot-consumer:
 
 CHARTS=$(wildcard charts/*/*)
 
-unit:
+tests:
 	@for t in $(CHARTS); do scripts/test.sh $$t naked ""; if [ $$? != 0 ]; then exit 1; fi; done
 	@for t in $(CHARTS); do scripts/test.sh $$t normal "$(CHART_OPTS)"; if [ $$? != 0 ]; then exit 1; fi; done
-#	#@for t in $(UNITS); do make $$t; if [ $$? != 0 ]; then exit 1; fi; done
 
