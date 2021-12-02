@@ -1,9 +1,9 @@
 site:
-  name: datacenter
+  name: example
 
 global:
   pattern: industrial-edge
-  repoURL: "https://github.com/beekhof/industrial-edge.git"
+  repoURL: "https://github.com/pattern-clone/industrial-edge"
   targetRevision: main
 
   git:

@@ -5,8 +5,6 @@ COMPONENT=datacenter
 SECRET_NAME="argocd-env"
 TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL://' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
 CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
-TESTDIR=tests
-TEST_VARIANT=normal
 
 .PHONY: default
 default: show
@@ -44,9 +42,7 @@ build-and-test-iot-anomaly-detection:
 build-and-test-iot-consumer:
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
 
-CHARTS=$(wildcard charts/*/*)
-
-tests:
-	@for t in $(CHARTS); do scripts/test.sh $$t naked ""; if [ $$? != 0 ]; then exit 1; fi; done
-	@for t in $(CHARTS); do scripts/test.sh $$t normal "$(CHART_OPTS)"; if [ $$? != 0 ]; then exit 1; fi; done
+test:
+	make -f common/Makefile CHARTS="$(wildcard charts/datacenter/*)" PATTERN_OPTS="-f values-datacenter.yaml" test
+	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
 
