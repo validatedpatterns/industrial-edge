@@ -1,4 +1,4 @@
-site:
+clusterGroup:
   name: datacenter
 
   proposedOptions:
@@ -176,11 +176,11 @@ site:
     # targetRevision: main
     helmOverrides:
     # Values must be strings!
-    - name: site.isHubCluster
+    - name: clusterGroup.isHubCluster
       value: "false"
     clusterSelector:
 #      matchLabels:
-#        site: factory
+#        clusterGroup: factory
       matchExpressions:
       - key: vendor
         operator: In

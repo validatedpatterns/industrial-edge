@@ -1,4 +1,4 @@
-site:
+clusterGroup:
   name: factory
 
   namespaces:
