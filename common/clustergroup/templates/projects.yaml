@@ -5,7 +5,7 @@ metadata:
   name: {{ . }}
   namespace: {{ $.Values.global.pattern }}-{{ $.Values.clusterGroup.name }}
 spec:
-#  description: "Pattern {{ . }}"
+  description: "Pattern {{ . }}"
   destinations:
   - namespace: '*'
     server: '*'
