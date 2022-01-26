@@ -1,5 +1,5 @@
 main:
-  siteName: datacenter
+  clusterGroupName: datacenter
 
 global:
   pattern: industrial-edge
