@@ -1,4 +1,5 @@
 BOOTSTRAP=1
+NAME=$(shell basename `pwd`)
 ARGO_TARGET_NAMESPACE=manuela-ci
 PATTERN=industrial-edge
 COMPONENT=datacenter
@@ -16,7 +17,7 @@ default: show-secrets show
 	make -f common/Makefile $*
 
 show-secrets:
-	helm template charts/datacenter/secrets/ --name-template pre-secrets $(HELM_OPTS)
+	helm template charts/datacenter/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
 
 create-secrets:
 	helm install $(NAME)-secrets charts/datacenter/secrets $(HELM_OPTS)
