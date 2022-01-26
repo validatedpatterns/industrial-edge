@@ -184,7 +184,7 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}
       value: manuela-test
     - name: flags
       value: --insecure
@@ -194,7 +194,7 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       #value: datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "{{ .Values.site.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.site.name }}.svc"
+      value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
 
   - name: test-all
     taskRef:
