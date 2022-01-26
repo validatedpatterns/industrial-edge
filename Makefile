@@ -20,7 +20,9 @@ show-secrets:
 	helm template charts/datacenter/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
 
 create-secrets:
+ifeq ($(BOOTSTRAP),1)
 	helm install $(NAME)-secrets charts/datacenter/secrets $(HELM_OPTS)
+endif
 
 install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
