@@ -5,6 +5,7 @@ COMPONENT=datacenter
 SECRET_NAME="argocd-env"
 TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL://' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
 CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
+HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set main.options.bootstrap=$(BOOTSTRAP) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 
 .PHONY: default
 default: show
@@ -13,7 +14,10 @@ default: show
 	echo "Delegating $* target"
 	make -f common/Makefile $*
 
-install: deploy
+create-secrets:
+	helm install $(NAME)-secrets charts/datacenter/secrets -f $(HELM_OPTS)
+
+install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
 	make secret
 	make sleep-seed
@@ -45,4 +49,4 @@ build-and-test-iot-consumer:
 test:
 	make -f common/Makefile CHARTS="$(wildcard charts/datacenter/*)" PATTERN_OPTS="-f values-datacenter.yaml" test
 	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
-
+(
