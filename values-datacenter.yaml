@@ -1,5 +1,6 @@
 clusterGroup:
   name: datacenter
+  isHubCluster: true
 
   proposedOptions:
     manageGitops: True
