@@ -3,19 +3,23 @@ ARGO_TARGET_NAMESPACE=manuela-ci
 PATTERN=industrial-edge
 COMPONENT=datacenter
 SECRET_NAME="argocd-env"
+SECRETS=~/values-secret.yaml
 TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL://' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
 CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
 HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set main.options.bootstrap=$(BOOTSTRAP) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 
 .PHONY: default
-default: show
+default: show-secrets show
 
 %:
 	echo "Delegating $* target"
 	make -f common/Makefile $*
 
+show-secrets:
+	helm template charts/datacenter/secrets/ --name-template pre-secrets $(HELM_OPTS)
+
 create-secrets:
-	helm install $(NAME)-secrets charts/datacenter/secrets -f $(HELM_OPTS)
+	helm install $(NAME)-secrets charts/datacenter/secrets $(HELM_OPTS)
 
 install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
