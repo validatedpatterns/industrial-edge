@@ -12,6 +12,9 @@ spec:
   - name: GIT_EMAIL_CONFIGMAPKEY
     default: GIT_EMAIL
     type: string
+  - name: GIT_USERNAME_CONFIGMAPKEY
+    default: GIT_USERNAME
+    type: string
   - name: MESSAGE
     description: commit message
     type: string
@@ -25,7 +28,7 @@ spec:
     script: |
       git diff
       git config --global user.email "$(cat $(workspaces.config.path)/$(params.GIT_EMAIL_CONFIGMAPKEY))"
-      git config --global user.name "Tekton Automation"
+      git config --global user.name "$(cat $(workspaces.config.path)/$(params.GIT_USERNAME_CONFIGMAPKEY))"
       git add .
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
