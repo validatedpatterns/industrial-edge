@@ -18,9 +18,15 @@ spec:
     - configMap:
         name: environment
       name: config
+    - name: github-secret
+      secret:
+        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
     - name: build-artifacts
       persistentVolumeClaim:
         claimName: build-artifacts-rwo
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret

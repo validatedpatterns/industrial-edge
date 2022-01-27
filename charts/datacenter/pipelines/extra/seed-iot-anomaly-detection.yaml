@@ -14,9 +14,15 @@ objects:
     - name: config
       configMap:
         name: environment
+    - name: github-secret
+      secret:
+        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
+    - name: quay-secret
+      secret:
+        secretName: quay-build-secret
     - name: build-artifacts
       # persistentVolumeClaim:
       #   claimName: build-artifacts
