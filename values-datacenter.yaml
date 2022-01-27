@@ -171,7 +171,7 @@ clusterGroup:
 #    repoURL: https://github.com/vendor/applications.git
 #    targetRevision: main
 
-  managedSites:
+  managedClusterGroups:
   - name: factory
     # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
     # targetRevision: main
