@@ -59,8 +59,6 @@ clusterGroup:
   - name: stormshift
     project: factory
     path: charts/factory/manuela-stormshift
-#    plugin:
-#      name: helm-with-kustomize
 
   - name: odh
     namespace: manuela-factory-ml-workspace

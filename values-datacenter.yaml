@@ -136,8 +136,6 @@ clusterGroup:
     namespace: manuela-tst-all
     project: datacenter
     path: charts/datacenter/manuela-tst
-    plugin:
-      name: helm-with-kustomize
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
