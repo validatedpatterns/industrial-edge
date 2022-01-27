@@ -11,13 +11,8 @@ global:
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
 
-  datacenter:
-    clustername: datacenter-XXXXX
-    domain: BASEDOMAIN
-
-  edge:
-    clustername: edge-XXXXX
-    domain: BASEDOMAIN
+  localClusterDomain: local.example.com
+  hubClusterDomain: hub.example.com
 
 messaging:
   vibrationAlert: true
