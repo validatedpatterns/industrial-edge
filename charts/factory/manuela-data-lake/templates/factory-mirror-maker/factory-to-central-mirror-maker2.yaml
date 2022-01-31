@@ -9,7 +9,7 @@ spec:
   connectCluster: manuela-central
   clusters:
     - alias: manuela-central
-      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.apps.{{ .Values.global.hubClusterDomain }}:443'
+      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
       tls:
         trustedCertificates:
         - certificate: tls.crt

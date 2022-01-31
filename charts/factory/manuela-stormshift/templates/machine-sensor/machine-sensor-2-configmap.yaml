@@ -4,7 +4,7 @@ metadata:
   name: machine-sensor-2
   namespace: manuela-stormshift-machine-sensor
 data:
-    MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-stormshift-messaging.apps.{{ .Values.global.localClusterDomain }}"
+    MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-stormshift-messaging.{{ .Values.global.localClusterDomain }}"
     MQTT_PORT: "{{ .Values.machineSensor2.port }}"
     SENSOR_TEMPERATURE_ENABLED: "{{ .Values.machineSensor2.sensorTemperature }}"
     APP_NAME: "iot-sensor"
