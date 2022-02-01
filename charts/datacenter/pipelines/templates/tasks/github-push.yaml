@@ -6,7 +6,6 @@ spec:
   workspaces:
   - name: gitrepos
     description: The git repo will be cloned onto the volume backing this workspace
-  - name: github-secret
   params:
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into

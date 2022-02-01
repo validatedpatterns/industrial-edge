@@ -107,8 +107,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags

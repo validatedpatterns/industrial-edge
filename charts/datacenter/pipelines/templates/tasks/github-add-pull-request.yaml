@@ -4,7 +4,6 @@ metadata:
   name: github-add-pull-request
 spec:
   workspaces:
-  - name: github-secret
   - name: config
   params:
   - name: PULL_REQUEST_BODY
