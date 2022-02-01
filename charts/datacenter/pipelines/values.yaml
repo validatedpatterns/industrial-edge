@@ -1,4 +1,4 @@
-clusterGroup:
+site:
   name: example
 
 global:

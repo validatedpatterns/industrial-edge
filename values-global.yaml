@@ -12,11 +12,10 @@ global:
   imageregistry:
     account: PLAINTEXT
     hostname: quay.io
-    provider: quay.io
+    type: quay
 
   git:
     hostname: github.com
-    provider: github.com
     account: PLAINTEXT
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
