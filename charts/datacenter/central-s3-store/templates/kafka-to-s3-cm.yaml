@@ -15,6 +15,6 @@ data:
     s3.message.aggregation.count={{ .Values.s3.bucket.message.aggregation.count }}
     s3.custom.endpoint.enabled={{ .Values.s3.bucket.custom.endpoint.enabled }}
     # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.apps.{{ .Values.global.localClusterDomain }}
+    s3.custom.endpoint.url=s3-openshift-storage.{{ .Values.global.localClusterDomain }}
 
     

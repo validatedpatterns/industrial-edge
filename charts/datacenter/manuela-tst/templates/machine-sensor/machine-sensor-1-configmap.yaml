@@ -3,7 +3,7 @@ kind: ConfigMap
 metadata:
   name: machine-sensor-1
 data:
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.apps.{{ .Values.global.localClusterDomain }}
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.{{ .Values.global.localClusterDomain }}
   #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
