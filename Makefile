@@ -19,18 +19,24 @@ default: show-secrets show
 	make -f common/Makefile $*
 
 show-secrets:
-	helm template charts/datacenter/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
+	helm template charts/secrets/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
 
 create-secrets:
 ifeq ($(BOOTSTRAP),1)
-	helm install $(NAME)-secrets charts/datacenter/secrets $(HELM_OPTS)
+	helm install $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
 endif
+
+upgrade-secrets:
+	helm upgrade $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
 
 install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
 	make secret
 	make sleep-seed
 endif
+
+upgrade: upgrade-secrets
+	make -f common/Makefile upgrade
 
 secret:
 	make -f common/Makefile \
