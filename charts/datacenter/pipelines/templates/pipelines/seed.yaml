@@ -6,8 +6,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
   params:
   - name: DEV_REVISION
@@ -42,10 +40,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -66,10 +60,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -92,10 +82,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -117,10 +103,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -141,10 +123,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog

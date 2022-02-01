@@ -14,12 +14,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:

@@ -4,10 +4,8 @@ metadata:
   name: build-base-images
 spec:
   workspaces:
-  - name: gitrepos 
+  - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   params:
   - name: PATH_CONTEXT
     type: string
@@ -21,8 +19,8 @@ spec:
   - name: OUTPUT_IMAGE_NAME
     type: string
     default: httpd-ionic
-  - name: DEV_REVISION 
-    type: string 
+  - name: DEV_REVISION
+    type: string
     default: main
   tasks:
   - name: git-clone-dev
@@ -51,8 +49,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: pushsecret
-      workspace: quay-secret
     - name: config
       workspace: config
     params:

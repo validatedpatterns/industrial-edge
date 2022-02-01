@@ -14,9 +14,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
