@@ -121,7 +121,7 @@ spec:
     - name: config
       workspace: config
     - name: github-secret
-      workspace: github
+      workspace: github-secret
     params:
     - name: GITHUB_REPO_CONFIGMAPKEY
       value: GIT_OPS_REPO_PROD_URL
