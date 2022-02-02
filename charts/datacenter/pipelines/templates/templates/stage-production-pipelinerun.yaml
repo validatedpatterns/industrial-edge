@@ -24,6 +24,9 @@ objects:
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
+    - name: github-secret
+      secret:
+        secretName: git-repo-credentials
     - name: gitrepos
       volumeClaimTemplate:
         spec:

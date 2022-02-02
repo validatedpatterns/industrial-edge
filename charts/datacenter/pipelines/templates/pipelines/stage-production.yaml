@@ -6,6 +6,7 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
+  - name: github-secret
   params:
   - name: TAG
     type: string
@@ -119,6 +120,8 @@ spec:
     workspaces:
     - name: config
       workspace: config
+    - name: github-secret
+      workspace: github
     params:
     - name: GITHUB_REPO_CONFIGMAPKEY
       value: GIT_OPS_REPO_PROD_URL
