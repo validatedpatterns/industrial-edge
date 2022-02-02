@@ -46,8 +46,8 @@ spec:
       diff /scratch/tags /scratch/keep | grep \^-build | cut -c2- > /scratch/delete
 
       #delete build tags
-      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
-      git config --global credential.helper store 'store --file ~/.git-credentials'
+      #echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
+      #git config --global credential.helper store 'store --file ~/.git-credentials'
 
       for TAG in $(cat /scratch/delete); do
         git push origin :$TAG

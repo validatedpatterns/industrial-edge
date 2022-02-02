@@ -19,8 +19,8 @@ spec:
   - name: push
     image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
     script: |
-      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
-      git config --global credential.helper store 'store --file ~/.git-credentials'
+      #echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
+      #git config --global credential.helper store 'store --file ~/.git-credentials'
       git remote -v
       git branch
       git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git pull --ff-only --no-edit
