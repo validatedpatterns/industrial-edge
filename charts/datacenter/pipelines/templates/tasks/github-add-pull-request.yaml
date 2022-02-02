@@ -5,6 +5,7 @@ metadata:
 spec:
   workspaces:
   - name: config
+  - name: github-secret
   params:
   - name: PULL_REQUEST_BODY
     description: The body to be used for the pull request
@@ -31,4 +32,4 @@ spec:
     script: |
       GITREPO=$(cat $(workspaces.config.path)/$(params.GITHUB_REPO_CONFIGMAPKEY))
       PULLREQUEST_API_ENDPOINT=$(echo -n "$GITREPO" | sed "s|github.com|api.github.com/repos|" | sed "s/\.git$//g")/pulls
-      curl -v $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'
+      curl -v -u :$(cat $(workspaces.github-secret.path)/password) $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'
