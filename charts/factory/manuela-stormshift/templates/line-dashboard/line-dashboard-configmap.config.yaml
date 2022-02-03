@@ -8,7 +8,7 @@ metadata:
 data:
   "config.json": |-
     {
-      "websocketHost": "http://messaging-manuela-stormshift-messaging.apps.{{ .Values.global.edge.clustername }}.{{ .Values.global.edge.domain }}",
+      "websocketHost": "http://messaging-manuela-stormshift-messaging.{{ .Values.global.localClusterDomain }}",
       "websocketPath": "/api/service-web/socket",
       "SERVER_TIMEOUT": "20000"
     }

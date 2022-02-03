@@ -8,7 +8,6 @@ spec:
     description: The git repo will be cloned onto the volume backing this workspace
   - name: config
     description: configmap contents
-  - name: github-secret
   params:
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
@@ -39,7 +38,7 @@ spec:
       #list build tags for component in repo
       BUILD_TAG_GLOB="build-$(params.COMPONENT_NAME)-*"
       git tag --sort "version:refname" -l $BUILD_TAG_GLOB >/scratch/tags
-     
+
       #identify build tags to keep
       tail -n $(params.NUMBER_OF_TAGS_TO_KEEP) /scratch/tags >/scratch/keep
 
@@ -47,10 +46,7 @@ spec:
       diff /scratch/tags /scratch/keep | grep \^-build | cut -c2- > /scratch/delete
 
       #delete build tags
-      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
-      git config --global credential.helper store 'store --file ~/.git-credentials'
-
-      for TAG in $(cat /scratch/delete); do 
+      for TAG in $(cat /scratch/delete); do
         git push origin :$TAG
         EXIT_CODE="$?"
         if [ "$EXIT_CODE" != 0 ]
@@ -60,7 +56,7 @@ spec:
       done
     volumeMounts:
     - mountPath: /scratch
-      name: scratch  
+      name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   # - name: cleanup-test-images
   #   image: quay.io/openshift/origin-cli:latest
@@ -71,7 +67,7 @@ spec:
   #     then
   #       exit $EXIT_CODE
   #     fi
-  #     for TAG in $(cat /scratch/delete_istags); do 
+  #     for TAG in $(cat /scratch/delete_istags); do
   #       oc tag -n $(params.OPENSHIFT_NAMESPACE) -d $(params.OPENSHIFT_IMAGESTREAM):$TAG
   #       EXIT_CODE="$?"
   #       if [ "$EXIT_CODE" != 0 ]
@@ -81,7 +77,7 @@ spec:
   #     done
   #   volumeMounts:
   #   - mountPath: /scratch
-  #     name: scratch  
+  #     name: scratch
   #   workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   volumes:
   - emptyDir: {}

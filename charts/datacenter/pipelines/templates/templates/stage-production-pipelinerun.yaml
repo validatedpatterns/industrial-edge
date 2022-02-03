@@ -21,15 +21,12 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
-    - name: quay-secret
+    - name: github-secret
       secret:
-        secretName: quay-build-secret
+        secretName: git-repo-credentials
     - name: gitrepos
       volumeClaimTemplate:
         spec:

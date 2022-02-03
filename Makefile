@@ -1,23 +1,42 @@
 BOOTSTRAP=1
+NAME=$(shell basename `pwd`)
 ARGO_TARGET_NAMESPACE=manuela-ci
 PATTERN=industrial-edge
 COMPONENT=datacenter
 SECRET_NAME="argocd-env"
-TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL://' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
+SECRETS=~/values-secret.yaml
+TARGET_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
+HUBCLUSTER_APPS_DOMAIN=$(shell oc get ingresses.config/cluster -o jsonpath={.spec.domain})
+TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL:[[:space:]]*//' -e 's%:[a-z].*@%@%' -e 's%:%/%' -e 's%git@%https://%' )
 CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
+HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set main.options.bootstrap=$(BOOTSTRAP) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 
 .PHONY: default
-default: show
+default: show-secrets show
 
 %:
 	echo "Delegating $* target"
 	make -f common/Makefile $*
 
-install: deploy
+show-secrets:
+	helm template charts/secrets/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
+
+create-secrets:
+ifeq ($(BOOTSTRAP),1)
+	helm install $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
+endif
+
+upgrade-secrets:
+	helm upgrade $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
+
+install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
 	make secret
 	make sleep-seed
 endif
+
+upgrade: upgrade-secrets
+	make -f common/Makefile upgrade
 
 secret:
 	make -f common/Makefile \
@@ -45,4 +64,3 @@ build-and-test-iot-consumer:
 test:
 	make -f common/Makefile CHARTS="$(wildcard charts/datacenter/*)" PATTERN_OPTS="-f values-datacenter.yaml" test
 	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
-

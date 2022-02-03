@@ -34,7 +34,7 @@ spec:
   - name: OUTPUT_IMAGE
     type: string
   - name: TAG
-    default: latest 
+    default: latest
     type: string
 # only for java builds
   - name: MAVEN_ARGS_APPEND
@@ -50,14 +50,14 @@ spec:
     description: The base URL of a mirror used for retrieving artifacts
     type: string
   - name: CHAINED_BUILD_DOCKERFILE
-    default: "" 
+    default: ""
     description: If a chained build is to be executed, the second part of the DOCKERFILE
     type: string
   steps:
   - name: prepare-env
     image: quay.io/openshift-pipeline/s2i
     script: |
-      if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then 
+      if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then
         echo "MAVEN_CLEAR_REPO=$(params.MAVEN_CLEAR_REPO)" > env-file
 
         [[ '$(params.MAVEN_ARGS_APPEND)' != "" ]] &&
@@ -67,7 +67,7 @@ spec:
           echo "MAVEN_MIRROR_URL=$(params.MAVEN_MIRROR_URL)" >> env-file
 
         #create build artifacts cache directory
-        if [[ ! -d $(workspaces.build-artifacts.path)/m2 ]]; then 
+        if [[ ! -d $(workspaces.build-artifacts.path)/m2 ]]; then
            mkdir $(workspaces.build-artifacts.path)/m2
            chmod a+rwx $(workspaces.build-artifacts.path)/m2
         fi
@@ -100,7 +100,7 @@ spec:
         source /env-params/s2icommand
       else
         s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --as-dockerfile /gen-source/Dockerfile.gen
-      fi 
+      fi
       if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
         echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
       fi
@@ -116,7 +116,7 @@ spec:
     script: |
       if [ -f /env-params/buildahcommand ]; then
         source /env-params/buildahcommand
-      else 
+      else
         buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f /gen-source/Dockerfile.gen -t `basename $(params.OUTPUT_IMAGE)` .
       fi
     resources: {}
@@ -126,7 +126,7 @@ spec:
     - mountPath: /var/lib/containers
       name: varlibcontainers
     - mountPath: /gen-source
-      name: gen-source    
+      name: gen-source
     - mountPath: /env-params
       name: envparams
     workingDir: /gen-source

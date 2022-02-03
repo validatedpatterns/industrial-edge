@@ -1,5 +1,5 @@
 main:
-  siteName: datacenter
+  clusterGroupName: datacenter
 
 global:
   pattern: industrial-edge
@@ -20,11 +20,3 @@ global:
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
-
-  datacenter:
-    clustername: datacenter-XXXXX
-    domain: BASEDOMAIN
-
-  edge:
-    clustername: edge-XXXXX
-    domain: BASEDOMAIN

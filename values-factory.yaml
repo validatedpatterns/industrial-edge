@@ -1,5 +1,6 @@
-site:
+clusterGroup:
   name: factory
+  isHubCluster: false
 
   namespaces:
   - factory-lake
