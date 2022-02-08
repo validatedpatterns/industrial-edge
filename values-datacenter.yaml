@@ -150,7 +150,7 @@ clusterGroup:
 
   - name: vault
     namespace: vault
-    project: hub
+    project: datacenter
     chart: vault
     repoURL: https://helm.releases.hashicorp.com
     targetRevision: v0.19.0
