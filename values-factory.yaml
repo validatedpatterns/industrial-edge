@@ -6,6 +6,7 @@ clusterGroup:
   - factory-lake
   - factory-s3-store
   - factory-mirror-maker
+  - k8s-external-secrets
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
@@ -50,6 +51,7 @@ clusterGroup:
 
   projects:
   - factory
+  - k8s-external-secrets
 
   applications:
   - name: datalake
@@ -66,6 +68,11 @@ clusterGroup:
     namespace: manuela-factory-ml-workspace
     project: factory
     path: charts/datacenter/opendatahub
+
+  - name: k8s-external-secrets
+    namespace: k8s-external-secrets
+    project: k8s-external-secrets
+    path: charts/region/k8s-external-secrets
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate

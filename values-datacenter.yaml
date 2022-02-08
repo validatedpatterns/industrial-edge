@@ -7,6 +7,7 @@ clusterGroup:
     isHubCluster: True
 
   namespaces:
+  - k8s-external-secrets
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
@@ -65,6 +66,7 @@ clusterGroup:
   projects:
   - datacenter
   - datalake
+  - k8s-external-secrets
  
   applications:
   - name: acm
@@ -138,6 +140,11 @@ clusterGroup:
     path: charts/datacenter/manuela-tst
     plugin:
       name: helm-with-kustomize
+
+  - name: k8s-external-secrets
+    namespace: k8s-external-secrets
+    project: k8s-external-secrets
+    path: charts/k8s-external-secrets
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
