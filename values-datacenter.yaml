@@ -7,7 +7,7 @@ clusterGroup:
     isHubCluster: True
 
   namespaces:
-  - datacenter-k8s-external-secrets
+  - k8s-external-secrets
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
@@ -67,6 +67,7 @@ clusterGroup:
   projects:
   - datacenter
   - datalake
+  - k8s-external-secrets
   - vault
 
   applications:
@@ -146,8 +147,8 @@ clusterGroup:
       name: helm-with-kustomize
 
   - name: k8s-external-secrets
-    namespace: datacenter-k8s-external-secrets
-    project: datacenter
+    namespace: k8s-external-secrets
+    project: k8s-external-secrets
     path: charts/k8s-external-secrets
 
   - name: vault
