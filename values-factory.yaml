@@ -6,12 +6,11 @@ clusterGroup:
   - factory-lake
   - factory-s3-store
   - factory-mirror-maker
-  - k8s-external-secrets
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
   - manuela-factory-ml-workspace
- 
+
   operatorgroupExcludes:
   - manuela-factory-ml-workspace
 
@@ -51,7 +50,6 @@ clusterGroup:
 
   projects:
   - factory
-  - k8s-external-secrets
 
   applications:
   - name: datalake
@@ -69,11 +67,6 @@ clusterGroup:
     project: factory
     path: charts/datacenter/opendatahub
 
-  - name: k8s-external-secrets
-    namespace: k8s-external-secrets
-    project: k8s-external-secrets
-    path: charts/k8s-external-secrets
-
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
@@ -85,15 +78,15 @@ clusterGroup:
 #    targetRevision: stable
 #    overrides:
 #    - name: myparam
-#      value: myparam 
-#  
+#      value: myparam
+#
 #  - name: pipelines
 #    namespace: staging
 #    project: datacenter
 #    path: applications/pipeline
 #    repoURL: https://github.com/you/applications.git
 #    targetRevision: main
-#  
+#
 #   Additional applications
 #   Be sure to include additional resources your apps will require
 #   +X machines
