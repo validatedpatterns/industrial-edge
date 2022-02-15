@@ -13,7 +13,6 @@ vault_ready_check()
 {
 #NAME                                   READY   STATUS    RESTARTS   AGE
 #vault-0                                1/1     Running   0          44m
-#vault-agent-injector-8d9cfcd47-skklw   1/1     Running   0          121m
 	oc get po -n vault | grep vault-0 | awk '{ print $2, $3 }' 2>/dev/null
 }
 
@@ -70,6 +69,12 @@ vault_init()
 
 	# The vault is ready to be initialized when it is "Running" but not "ready".  Unsealing it makes it ready
 	rdy_check=`get_vault_ready`
+
+	if [ "$rdy_check" = "1/1 Running" ]; then
+		echo "Vault is already ready, exiting"
+		exit 0
+	fi
+
 	until [ "$rdy_check" = "0/1 Running" ]
 	do
 		echo $rdy_check
