@@ -86,10 +86,13 @@ vault_init()
 	vault_unseal $file
 	vault_login $file
 
-	vault_pki_init $file
 	vault_kubernetes_init $file
-	vault_secrets_init $file
 	vault_policy_init $file
+
+	# Do not need pki init or secrets init by default
+	# But this is how you could call them if you need them
+	#vault_pki_init $file
+	#vault_secrets_init $file
 }
 
 # Retrieves the root token specified in the file $1
