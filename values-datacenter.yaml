@@ -158,7 +158,7 @@ clusterGroup:
     - name: global.openshift
       value: "true"
     - name: injector.enabled
-      value: "true"
+      value: "false"
     - name: ui.enabled
       value: "true"
     - name: ui.serviceType
