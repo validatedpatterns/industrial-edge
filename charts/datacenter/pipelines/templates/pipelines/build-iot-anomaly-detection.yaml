@@ -6,8 +6,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -93,8 +91,6 @@ spec:
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
@@ -111,8 +107,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -159,8 +153,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops

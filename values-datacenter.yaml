@@ -1,5 +1,6 @@
-site:
+clusterGroup:
   name: datacenter
+  isHubCluster: true
 
   proposedOptions:
     manageGitops: True
@@ -26,7 +27,7 @@ site:
   - name: seldon-operator
     namespace: manuela-ml-workspace
     source: community-operators
-    csv: seldon-operator.v1.7.0
+    csv: seldon-operator.v1.12.0
 
   - name: opendatahub-operator
     source: community-operators
@@ -170,17 +171,17 @@ site:
 #    repoURL: https://github.com/vendor/applications.git
 #    targetRevision: main
 
-  managedSites:
+  managedClusterGroups:
   - name: factory
     # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
     # targetRevision: main
     helmOverrides:
     # Values must be strings!
-    - name: site.isHubCluster
+    - name: clusterGroup.isHubCluster
       value: "false"
     clusterSelector:
 #      matchLabels:
-#        site: factory
+#        clusterGroup: factory
       matchExpressions:
       - key: vendor
         operator: In

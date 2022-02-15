@@ -5,7 +5,6 @@ metadata:
     app: messaging
   name: messaging
 spec:
-  host: messaging-manuela-tst-all.apps.{{ .Values.global.datacenter.clustername }}.{{ .Values.global.datacenter.domain }}
   port:
     targetPort: 3000-tcp
   to:

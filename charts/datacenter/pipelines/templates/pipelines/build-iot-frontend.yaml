@@ -6,8 +6,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -90,13 +88,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-frontend
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-frontend
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
@@ -113,8 +109,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -148,7 +142,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -162,8 +156,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops

@@ -7,7 +7,6 @@ spec:
   - name: gitrepos
     description: The git repo will be cloned onto the volume backing this workspace
   - name: config
-  - name: pushsecret
   results:
   - name: image
     description: The image+tag that was created
@@ -31,7 +30,7 @@ spec:
   - name: OUTPUT_IMAGE_NAME
     type: string
   - name: TAG
-    default: latest 
+    default: latest
     type: string
   - name: DOCKERFILE
     default: Dockerfile
@@ -57,7 +56,7 @@ spec:
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
-      buildah push --storage-driver=vfs --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
+      buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
       echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)
     resources: {}
     securityContext:

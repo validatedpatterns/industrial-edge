@@ -5,6 +5,7 @@ global:
   targetRevision: main
 
 
-site:
-  managedSites:
+clusterGroup:
+  managedClusterGroups:
 
+pushHubCA: false

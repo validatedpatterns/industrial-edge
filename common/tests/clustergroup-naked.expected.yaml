@@ -1,3 +1,58 @@
+---
+# Source: pattern-clustergroup/templates/gitops-namespace.yaml
+apiVersion: v1
+kind: Namespace
+metadata:
+  labels:
+    name: common-example
+  # The name here needs to be consistent with
+  # - acm/templates/policies/application-policies.yaml
+  # - clustergroup/templates/applications.yaml
+  # - any references to secrets and route URLs in documentation
+  name: common-example
+spec: {}
+---
+# Source: pattern-clustergroup/templates/argocd-super-role.yaml
+# WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: openshift-gitops-cluster-admin-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-application-controller
+    namespace: openshift-gitops
+  # NOTE: THIS MUST BE FIXED FOR MULTITENANT SETUP
+  - kind: ServiceAccount
+    name: openshift-gitops-argocd-server
+    namespace: openshift-gitops
+---
+# Source: pattern-clustergroup/templates/argocd-super-role.yaml
+# WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: common-example-cluster-admin-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: cluster-admin
+subjects:
+  - kind: ServiceAccount
+    # This is the {ArgoCD.name}-argocd-application-controller
+    name: example-gitops-argocd-application-controller
+    namespace: common-example
+  # NOTE: THIS MUST BE FIXED FOR MULTITENANT SETUP
+  - kind: ServiceAccount
+    # This is the {ArgoCD.name}-argocd-server
+    name: example-gitops-argocd-server
+    namespace: common-example
+---
+# Source: pattern-clustergroup/templates/argocd.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
@@ -5,7 +60,7 @@ metadata:
   - argoproj.io/finalizer
   # Changing the name affects the ClusterRoleBinding, the generated secret,
   # route URL, and argocd.argoproj.io/managed-by annotations
-  name: {{ .Values.site.name }}-gitops
+  name: example-gitops
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
@@ -18,13 +73,15 @@ spec:
     \ generate:\n    command: [\"kustomize\"]\n    args: [\"build\", \"--enable-helm\"]\n- name:
     helm-with-kustomize\n  init:\n    command: [\"/bin/sh\", \"-c\"]\n    args: [\"helm
     dependency build\"]\n  generate:\n    command: [/bin/bash, -c]\n    args: [\"helm template . --name-template ${ARGOCD_APP_NAME:0:52}
-    -f {{ .Values.global.valuesDirectoryURL }}/values-global.yaml
-    -f {{ .Values.global.valuesDirectoryURL }}/values-{{ .Values.site.name }}.yaml
+    -f https://github.com/pattern-clone/common/raw/main/values-global.yaml
+    -f https://github.com/pattern-clone/common/raw/main/values-example.yaml
     --set global.repoURL=$ARGOCD_APP_SOURCE_REPO_URL
     --set global.targetRevision=$ARGOCD_APP_SOURCE_TARGET_REVISION
     --set global.namespace=$ARGOCD_APP_NAMESPACE
-    --set global.pattern={{ .Values.global.pattern }}
-    --set global.valuesDirectoryURL={{ .Values.global.valuesDirectoryURL }}
+    --set global.pattern=common
+    --set global.hubClusterDomain=
+    --set global.localClusterDomain=
+    --set global.valuesDirectoryURL=https://github.com/pattern-clone/common/raw/main
     --post-renderer ./kustomize\"]
     \ \n"
   applicationSet:
@@ -45,6 +102,7 @@ spec:
         cpu: 500m
         memory: 2Gi
   dex:
+    openShiftOAuth: true
     resources:
       limits:
         cpu: 500m

@@ -6,10 +6,8 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
   - name: argocd-env-secret
   - name: build-artifacts
-  - name: quay-secret
   params:
   - name: DEV_REVISION
     type: string
@@ -41,10 +39,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --showlog
       - --nocolour
 
@@ -63,10 +57,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -88,10 +78,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -112,10 +98,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -135,10 +117,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -231,8 +209,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -279,8 +255,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -305,7 +279,7 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       # datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "{{ .Values.site.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.site.name }}.svc"
+      value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
 
   # - name: sensor-broker-test
   #   taskRef:
@@ -380,8 +354,6 @@ spec:
       workspace: gitrepos
     - name: config
       workspace: config
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: dev
