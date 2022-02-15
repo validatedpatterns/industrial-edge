@@ -17,5 +17,5 @@ with open(secretfile) as f:
         for (name, value) in data['secrets'][k].items():
             values += f' {name}="{value}" '
 
-        print(f'vault kv put secret/hub/{k} {values}')
+        print(f'secret/hub/{k} {values}')
         values = ''

@@ -172,20 +172,21 @@ vault_kubernetes_init()
 	vault_token=$(oc sa get-token -n vault vault)
 	k8s_host='kubernetes_host=https://$KUBERNETES_PORT_443_TCP_ADDR:443'
 
-	vault_exec $file "vault auth enable kubernetes"
-	vault_exec $file "vault write auth/kubernetes/config token_reviewer_jwt=$vault_token $k8s_host kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt issuer=https://kubernetes.default.svc"
+	vault_exec $file "vault auth enable --path=hub kubernetes"
+	vault_exec $file "vault write auth/hub/config token_reviewer_jwt=$vault_token kubernetes_host=$k8s_host kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt issuer=https://kubernetes.default.svc"
 }
 
 vault_policy_init()
 {
 	file="$1"
 
-	vault_exec $file 'vault policy write hub-policy - << EOF
-path "secret/*"
-  { capabilities = ["read"]
+	vault_exec $file 'vault policy write hub-secret - << EOF
+path "secret/data/hub/*"
+  { capabilities = ["create", "read", "update", "delete", "list"]
 }
 EOF
 '
+	vault_exec $file 'vault write auth/hub/role/hub-role bound_service_account_names="k8s-external-secrets-kubernetes-external-secrets" bound_service_account_namespaces="k8s-external-secrets"  policies="default,hub-secret" ttl="15m"'
 }
 
 vault_secrets_init()
