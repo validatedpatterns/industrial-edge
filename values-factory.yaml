@@ -10,7 +10,7 @@ clusterGroup:
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
   - manuela-factory-ml-workspace
- 
+
   operatorgroupExcludes:
   - manuela-factory-ml-workspace
 
@@ -78,15 +78,15 @@ clusterGroup:
 #    targetRevision: stable
 #    overrides:
 #    - name: myparam
-#      value: myparam 
-#  
+#      value: myparam
+#
 #  - name: pipelines
 #    namespace: staging
 #    project: datacenter
 #    path: applications/pipeline
 #    repoURL: https://github.com/you/applications.git
 #    targetRevision: main
-#  
+#
 #   Additional applications
 #   Be sure to include additional resources your apps will require
 #   +X machines

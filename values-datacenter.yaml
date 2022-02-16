@@ -7,6 +7,7 @@ clusterGroup:
     isHubCluster: True
 
   namespaces:
+  - k8s-external-secrets
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
@@ -14,6 +15,7 @@ clusterGroup:
   - manuela-data-lake-central-s3-store
   - manuela-data-lake-central-kafka-cluster
   - staging
+  - vault
 
   operatorgroupExcludes:
   - manuela-ml-workspace
@@ -21,8 +23,8 @@ clusterGroup:
   subscriptions:
   - name: advanced-cluster-management
     namespace: open-cluster-management
-    channel: release-2.3
-    csv: advanced-cluster-management.v2.3.2
+    channel: release-2.4
+    csv: advanced-cluster-management.v2.4.1
 
   - name: seldon-operator
     namespace: manuela-ml-workspace
@@ -65,7 +67,9 @@ clusterGroup:
   projects:
   - datacenter
   - datalake
- 
+  - k8s-external-secrets
+  - vault
+
   applications:
   - name: acm
     namespace: open-cluster-management
@@ -139,6 +143,37 @@ clusterGroup:
     plugin:
       name: helm-with-kustomize
 
+  - name: k8s-external-secrets
+    namespace: k8s-external-secrets
+    project: k8s-external-secrets
+    path: charts/k8s-external-secrets
+
+  - name: vault
+    namespace: vault
+    project: datacenter
+    chart: vault
+    repoURL: https://helm.releases.hashicorp.com
+    targetRevision: v0.19.0
+    overrides:
+    - name: global.openshift
+      value: "true"
+    - name: injector.enabled
+      value: "false"
+    - name: ui.enabled
+      value: "true"
+    - name: ui.serviceType
+      value: LoadBalancer
+    - name: server.route.enabled
+      value: "true"
+    - name: server.route.host
+      value: null
+    - name: server.route.tls.termination
+      value: edge
+    - name: server.image.repository
+      value: "registry.connect.redhat.com/hashicorp/vault"
+    - name: server.image.tag
+      value: "1.9.2-ubi"
+
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
@@ -150,15 +185,15 @@ clusterGroup:
 #    targetRevision: stable
 #    overrides:
 #    - name: myparam
-#      value: myparam 
-#  
+#      value: myparam
+#
 #  - name: pipelines
 #    namespace: staging
 #    project: datacenter
 #    path: applications/pipeline
 #    repoURL: https://github.com/you/applications.git
 #    targetRevision: main
-#  
+#
 #   Additional applications
 #   Be sure to include additional resources your apps will require
 #   +X machines
