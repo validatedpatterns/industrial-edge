@@ -177,23 +177,18 @@ vault_kubernetes_init()
 {
 	file="$1"
 
-	#vault_token=$(oc sa get-token -n vault vault)
-	secret_name="$(oc get -n k8s-external-secrets serviceaccount k8s-external-secrets-kubernetes-external-secrets -o jsonpath='{.secrets}' | jq -r '.[] | select(.name | test ("k8s-external-secrets-kubernetes-external-secrets-token-")).name')"
-	#vault_token=$(oc sa get-token -n vault vault)
-	vault_token="$(oc get secret -n k8s-external-secrets ${secret_name} -o go-template='{{ .data.token | base64decode }}')"
-	k8s_host='kubernetes_host=https://$KUBERNETES_PORT_443_TCP_ADDR:443'
-	k8s_cacert_b64="$(oc config view --raw -o go-template="{{ range .clusters }}{{ index .cluster \"certificate-authority-data\" }}{{ end }}")"
-
-	vault_exec $file "echo $k8s_cacert_b64 | base64 -d > /tmp/ca.crt"
 	vault_exec $file "vault auth enable --path=hub kubernetes"
-	#vault_exec $file "vault write auth/hub/config token_reviewer_jwt=$vault_token kubernetes_host=$k8s_host kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt issuer=https://kubernetes.default.svc"
-	vault_exec $file "vault write auth/hub/config token_reviewer_jwt=$vault_token kubernetes_host=$k8s_host kubernetes_ca_cert=@/tmp/ca.crt issuer=https://kubernetes.default.svc"
 }
 
 vault_policy_init()
 {
 	file="$1"
 
+	k8s_host='https://$KUBERNETES_PORT_443_TCP_ADDR:443'
+	secret_name="$(oc get -n k8s-external-secrets serviceaccount k8s-external-secrets-kubernetes-external-secrets -o jsonpath='{.secrets}' | jq -r '.[] | select(.name | test ("k8s-external-secrets-kubernetes-external-secrets-token-")).name')"
+	sa_token="$(oc get secret -n k8s-external-secrets ${secret_name} -o go-template='{{ .data.token | base64decode }}')"
+
+	vault_exec $file "vault write auth/hub/config token_reviewer_jwt=$sa_token kubernetes_host=$k8s_host kubernetes_ca_cert=@/var/run/secrets/kubernetes.io/serviceaccount/ca.crt issuer=https://kubernetes.default.svc"
 	vault_exec $file 'vault policy write hub-secret - << EOF
 path "secret/data/hub/*"
   { capabilities = ["create", "read", "update", "delete", "list"]
