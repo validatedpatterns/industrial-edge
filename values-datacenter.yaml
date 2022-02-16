@@ -180,7 +180,6 @@ clusterGroup:
     project: k8s-external-secrets
     path: charts/datacenter/secrets/external-secrets
 
-#
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
 #  - name: pipelines
