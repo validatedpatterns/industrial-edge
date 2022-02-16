@@ -32,8 +32,12 @@ upgrade-secrets:
 install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
 	make secret
-	echo "Please load your secrets into Vault"
+	echo "Please run make vault-init now"
 endif
+
+vault-init:
+	make -f common/Makefile vault-init
+	echo "Please load your secrets into the vault now"
 
 upgrade: upgrade-secrets
 	make -f common/Makefile upgrade
