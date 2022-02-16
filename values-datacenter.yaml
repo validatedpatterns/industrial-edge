@@ -8,6 +8,7 @@ clusterGroup:
 
   namespaces:
   - k8s-external-secrets
+  - external-secrets
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
@@ -173,6 +174,11 @@ clusterGroup:
     namespace: k8s-external-secrets
     project: k8s-external-secrets
     path: charts/datacenter/k8s-external-secrets
+
+  - name: external-secrets
+    namespace: external-secrets
+    project: k8s-external-secrets
+    path: charts/datacenter/secrets/external-secrets
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
