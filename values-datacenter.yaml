@@ -143,11 +143,6 @@ clusterGroup:
     plugin:
       name: helm-with-kustomize
 
-  - name: k8s-external-secrets
-    namespace: k8s-external-secrets
-    project: k8s-external-secrets
-    path: charts/k8s-external-secrets
-
   - name: vault
     namespace: vault
     project: datacenter
@@ -173,6 +168,11 @@ clusterGroup:
       value: "registry.connect.redhat.com/hashicorp/vault"
     - name: server.image.tag
       value: "1.9.2-ubi"
+
+  - name: k8s-external-secrets
+    namespace: k8s-external-secrets
+    project: k8s-external-secrets
+    path: charts/datacenter/k8s-external-secrets
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
