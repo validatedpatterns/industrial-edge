@@ -1,6 +1,6 @@
-vault:
-  mountPoint: hub
-  role: hub-role
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
 
 gitsecret:
   key: secret/data/hub/git
