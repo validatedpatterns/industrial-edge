@@ -7,7 +7,7 @@ clusterGroup:
     isHubCluster: True
 
   namespaces:
-  - k8s-external-secrets
+  - golang-external-secrets
   - external-secrets
   - open-cluster-management
   - manuela-ml-workspace
@@ -68,7 +68,7 @@ clusterGroup:
   projects:
   - datacenter
   - datalake
-  - k8s-external-secrets
+  - golang-external-secrets
   - vault
 
   applications:
@@ -170,14 +170,14 @@ clusterGroup:
     - name: server.image.tag
       value: "1.9.2-ubi"
 
-  - name: k8s-external-secrets
-    namespace: k8s-external-secrets
-    project: k8s-external-secrets
-    path: charts/datacenter/k8s-external-secrets
+  - name: golang-external-secrets
+    namespace: golang-external-secrets
+    project: golang-external-secrets
+    path: common/golang-external-secrets
 
   - name: external-secrets
     namespace: external-secrets
-    project: k8s-external-secrets
+    project: golang-external-secrets
     path: charts/datacenter/external-secrets
 
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
