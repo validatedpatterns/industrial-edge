@@ -173,7 +173,7 @@ clusterGroup:
   - name: golang-external-secrets
     namespace: golang-external-secrets
     project: golang-external-secrets
-    path: charts/datacenter/golang-external-secrets
+    path: common/golang-external-secrets
 
   - name: external-secrets
     namespace: external-secrets
