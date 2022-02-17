@@ -7,7 +7,7 @@ clusterGroup:
     isHubCluster: True
 
   namespaces:
-  - k8s-external-secrets
+  - golang-external-secrets
   - external-secrets
   - open-cluster-management
   - manuela-ml-workspace
