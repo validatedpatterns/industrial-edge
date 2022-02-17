@@ -19,21 +19,25 @@ default: show-secrets show
 	make -f common/Makefile $*
 
 show-secrets:
-	helm template charts/secrets/secrets/ --name-template $(NAME)-secrets $(HELM_OPTS)
+	helm template charts/secrets/pipeline-setup/ --name-template $(NAME)-secrets $(HELM_OPTS)
 
 create-secrets:
 ifeq ($(BOOTSTRAP),1)
-	helm install $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
+	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
 endif
 
 upgrade-secrets:
-	helm upgrade $(NAME)-secrets charts/secrets/secrets $(HELM_OPTS)
+	helm upgrade $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
 
 install: create-secrets deploy
 ifeq ($(BOOTSTRAP),1)
 	make secret
-	make sleep-seed
+	echo "Please run make vault-init now"
 endif
+
+vault-init:
+	make -f common/Makefile vault-init
+	echo "Please load your secrets into the vault now"
 
 upgrade: upgrade-secrets
 	make -f common/Makefile upgrade
@@ -49,7 +53,7 @@ sleep:
 sleep-seed: sleep seed
 	true
 
-seed:
+seed: sleep
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
 
 build-and-test:

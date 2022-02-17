@@ -1,0 +1,12 @@
+vault:
+  mountPoint: hub
+  role: hub-role
+
+gitsecret:
+  key: secret/data/hub/git
+
+imageregistrysecret:
+  key: secret/data/hub/imageregistry
+
+s3secret:
+  key: secret/data/hub/aws
