@@ -56,14 +56,11 @@ clusterGroup:
     csv: amq-broker-operator.v7.8.1-opr-3
 
   - name: red-hat-camel-k
-    namespace: manuela-data-lake-central-s3-store
-    channel: 1.4.x
-    csv: red-hat-camel-k-operator.v1.4.0
-
-  - name: red-hat-camel-k
-    namespace: manuela-tst-all
-    channel: 1.4.x
-    csv: red-hat-camel-k-operator.v1.4.0
+    namespaces: 
+      - manuela-data-lake-central-s3-store
+      - manuela-tst-all
+    channel: 1.6.x
+    csv: red-hat-camel-k-operator.v1.6.3
 
   projects:
   - datacenter
