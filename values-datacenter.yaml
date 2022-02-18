@@ -52,8 +52,8 @@ clusterGroup:
 
   - name: amq-broker-rhel8
     namespace: manuela-tst-all
-    channel: 7.8.x
-    csv: amq-broker-operator.v7.8.1-opr-3
+    channel: 7.x
+    csv: amq-broker-operator.v7.9.2-opr-1
 
   - name: red-hat-camel-k
     namespaces: 
