@@ -52,15 +52,11 @@ clusterGroup:
 
   - name: amq-broker-rhel8
     namespace: manuela-tst-all
-    channel: 7.x
-    csv: amq-broker-operator.v7.9.2-opr-1
 
   - name: red-hat-camel-k
     namespaces: 
       - manuela-data-lake-central-s3-store
       - manuela-tst-all
-    channel: 1.6.x
-    csv: red-hat-camel-k-operator.v1.6.3
 
   projects:
   - datacenter
