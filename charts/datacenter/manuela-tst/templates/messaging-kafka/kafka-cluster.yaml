@@ -9,18 +9,17 @@ spec:
     version: 2.6.0
     replicas: 3
     listeners:
-      
-      - name: plain (9)
-        port: 9092 (10)
-        type: internal (11)
-        tls: false (12)
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
         configuration:
-          useServiceDnsDomain: true (13)
+          useServiceDnsDomain: true
       - name: tls
         port: 9093
         type: internal
         tls: true
-        authentication: (14)
+        authentication:
           type: tls
     config:
       log.message.format.version: '2.6'
