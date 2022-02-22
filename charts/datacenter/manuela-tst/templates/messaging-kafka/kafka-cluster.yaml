@@ -9,8 +9,8 @@ spec:
     version: 2.6.0
     replicas: 3
     listeners:
-      #plain: {}
-      #tls: {}
+      - name: plain 
+      - name: tls
     config:
       log.message.format.version: '2.6'
       offsets.topic.replication.factor: 3
