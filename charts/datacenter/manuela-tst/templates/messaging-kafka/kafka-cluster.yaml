@@ -8,7 +8,20 @@ spec:
   kafka:
     version: 2.6.0
     replicas: 3
-    listeners: []
+    listeners:
+      
+      - name: plain (9)
+        port: 9092 (10)
+        type: internal (11)
+        tls: false (12)
+        configuration:
+          useServiceDnsDomain: true (13)
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication: (14)
+          type: tls
     config:
       log.message.format.version: '2.6'
       offsets.topic.replication.factor: 3
