@@ -26,15 +26,15 @@ clusterGroup:
 
   - name: amq-streams
     namespace: manuela-stormshift-messaging
-    channel: amq-streams-1.7.x
+    channel: amq-streams-1.x
     csv: amqstreams.v1.7.1
 
   - name: amq-streams
     namespace: factory-lake
-    channel: amq-streams-1.7.x
+    channel: amq-streams-1.x
     csv: amqstreams.v1.7.1
 
-  - name: amq-broker
+  - name: amq-broker-rhel8
     namespace: manuela-stormshift-messaging
     channel: 7.8.x
     csv: amq-broker-operator.v7.8.1-opr-3

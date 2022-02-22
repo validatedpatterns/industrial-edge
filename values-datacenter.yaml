@@ -42,15 +42,15 @@ clusterGroup:
   # TODO: Allow namespace to be a list
   - name: amq-streams
     namespace: manuela-data-lake-central-kafka-cluster
-    channel: amq-streams-1.7.x
+    channel: amq-streams-1.x
     csv: amqstreams.v1.7.1
 
   - name: amq-streams
     namespace: manuela-tst-all
-    channel: amq-streams-1.7.x
+    channel: amq-streams-1.x
     csv: amqstreams.v1.7.1
 
-  - name: amq-broker
+  - name: amq-broker-rhel8
     namespace: manuela-tst-all
     channel: 7.8.x
     csv: amq-broker-operator.v7.8.1-opr-3
