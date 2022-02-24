@@ -31,7 +31,7 @@ spec:
                   namespace: factory-s3-store
                 apiVersion: v1
                 data:
-                  application.properties: '{{ `{{ fromSecret "external-secrets" "s3-secret" "appliction.properties" }}` }}'
+                  application.properties: '{{ `{{hub (lookup "v1" "Secret" "external-secrets" "s3-secret").data.s3Secret hub}}` }}'
 ---
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
