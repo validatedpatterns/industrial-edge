@@ -39,31 +39,31 @@ clusterGroup:
   - name: openshift-pipelines-operator-rh
     csv: redhat-openshift-pipelines.v1.5.2
 
-  # TODO: Allow namespace to be a list
+ # TODO: Allow namespace to be a list
   - name: amq-streams
     namespace: manuela-data-lake-central-kafka-cluster
-    channel: amq-streams-1.x
-    csv: amqstreams.v1.7.1
+    channel: amq-streams-2.x
+    csv: amqstreams.v2.0.1-0
 
   - name: amq-streams
     namespace: manuela-tst-all
-    channel: amq-streams-1.x
-    csv: amqstreams.v1.7.1
+    channel: amq-streams-2.x
+    csv: amqstreams.v2.0.1-0
 
   - name: amq-broker-rhel8
     namespace: manuela-tst-all
-    channel: 7.8.x
-    csv: amq-broker-operator.v7.8.1-opr-3
+    channel: 7.x
+    csv: amq-broker-operator.v7.8.4-opr-3
 
   - name: red-hat-camel-k
     namespace: manuela-data-lake-central-s3-store
-    channel: 1.4.x
-    csv: red-hat-camel-k-operator.v1.4.0
+    channel: 1.6.x
+    csv: red-hat-camel-k-operator.v1.6.3
 
   - name: red-hat-camel-k
     namespace: manuela-tst-all
-    channel: 1.4.x
-    csv: red-hat-camel-k-operator.v1.4.0
+    channel: 1.6.x
+    csv: red-hat-camel-k-operator.v1.6.3
 
   projects:
   - datacenter
