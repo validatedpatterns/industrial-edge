@@ -1,5 +1,5 @@
-apiVersion: kafka.strimzi.io/v1alpha1
-kind: KafkaMirrorMaker2
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker
 metadata:
   name: factory-to-central
   namespace: factory-mirror-maker
