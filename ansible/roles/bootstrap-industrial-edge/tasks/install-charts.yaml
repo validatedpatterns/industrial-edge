@@ -1,0 +1,48 @@
+---
+# tasks file for install-charts
+# helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
+- name: " [install-charts] Installing pipeline-setup helm chart"
+  kubernetes.core.helm:
+    name: industrial-edge-secrets
+    chart_ref: "{{ pattern_repo_dir }}/charts/secrets/pipeline-setup"
+    release_namespace: default
+    values:
+      main:
+        git:
+          revision: "{{ target_branch }}"
+          repoURL: "{{ target_repo }}"
+        options:
+          bootstrap: "{{ bootstrap }}"
+      global:
+        hubClusterDomain: "{{ hubcluster_apps_domain }}"
+    values_files:
+      - "{{ values_secrets }}"
+      - "{{ values-global }}"
+  wait: yes
+  
+- name: " [install-charts] Installing Validated Pattern Framework helm chart"
+  kubernetes.core.helm:
+    name: industrial-edge
+    chart_ref: "{{ pattern_repo_dir }}/common/install"
+    release_namespace: default
+    values:
+      main:
+        git:
+          revision: "{{ target_branch }}"
+          repoURL: "{{ target_repo }}"
+        options:
+          bootstrap: "{{ bootstrap }}"
+      global:
+        hubClusterDomain: "{{ hubcluster_apps_domain }}"
+    values_files:
+      - "{{ values_secret }}"
+      - "{{ values-global }}"
+  wait: yes
+  
+- name:  " [install-charts] Verify complete"
+  debug:
+    msg: "ok"
+
+
+#echo "Bootstrap seed now running" && break;
+
