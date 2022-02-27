@@ -10,6 +10,7 @@
 - name: "[pattern-info] Getting current branch"
   set_fact:
     secrets_file: "{{ lookup('env', 'HOME') }}/values-secret.yaml"
+    globals_file: "{{ pattern_repo_dir }}/values-global.yaml"
     bootstrap: 1
     target_branch: "{{ lookup('pipe', 'git rev-parse  --abbrev-ref HEAD') }}"
   
