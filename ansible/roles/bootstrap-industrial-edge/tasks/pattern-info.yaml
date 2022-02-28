@@ -17,7 +17,7 @@
 #TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL:[[:space:]]*//' -e 's%^git@%%' -e 's%^https://%%' -e 's%:%/%' -e 's%^%https://%')
 - name: "[git_info] Setting TARGET_REPO fact"
   set_fact:
-      target_repo: "{{ response['config_values']['remote.upstream.url'] | regex_replace('.*URL:[[:space:]]*', '') | regex_replace('^git@', '') | regex_replace('^https://','') | regex_replace(':','/') | regex_replace('^','https://') }}"
+      target_repo: "{{ response['config_values']['remote.origin.url'] | regex_replace('.*URL:[[:space:]]*', '') | regex_replace('^git@', '') | regex_replace('^https://','') | regex_replace(':','/') | regex_replace('^','https://') }}"
 
 #oc get ingresses.config/cluster -o jsonpath={.spec.domain}
 - name: "[pattern-info] Retrieving Cluster Domain"
