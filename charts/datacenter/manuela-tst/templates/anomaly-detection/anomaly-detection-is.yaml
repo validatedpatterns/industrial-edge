@@ -8,3 +8,10 @@ spec:
   lookupPolicy:
     local: false
   tags:
+  - name: 0.3.2
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
+    importPolicy: {}
+    referencePolicy:
+      type: Local
