@@ -4,7 +4,7 @@ metadata:
   name: factory-to-central
   namespace: factory-mirror-maker
 spec:
-  version: 2.6.0
+  version: 3.1.0
   replicas: 1
   connectCluster: manuela-central
   clusters:
