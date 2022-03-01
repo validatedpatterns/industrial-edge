@@ -2,7 +2,7 @@ apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
   name: machine-sensor
-  namespace: manuela-stormshift-machine-sensor
+  namespace: manuela-tst-all
 spec:
   lookupPolicy:
     local: true

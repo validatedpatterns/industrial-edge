@@ -26,27 +26,27 @@ clusterGroup:
 
   - name: amq-streams
     namespace: manuela-stormshift-messaging
-    channel: amq-streams-1.7.x
-    csv: amqstreams.v1.7.1
+    channel: amq-streams-2.x
+    csv: amqstreams.v2.0.1-0
 
   - name: amq-streams
     namespace: factory-lake
-    channel: amq-streams-1.7.x
-    csv: amqstreams.v1.7.1
+    channel: amq-streams-2.x
+    csv: amqstreams.v2.0.1-0
 
-  - name: amq-broker
+  - name: amq-broker-rhel8
     namespace: manuela-stormshift-messaging
-    channel: 7.8.x
+    channel: 7.x
     csv: amq-broker-operator.v7.8.1-opr-3
 
   - name: red-hat-camel-k
     namespace: manuela-stormshift-messaging
-    channel: 1.4.x
-    csv: red-hat-camel-k-operator.v1.4.0
+    channel: 1.6.x
+    csv: red-hat-camel-k-operator.v1.6.3
 
   - name: red-hat-camel-k
     namespace: factory-s3-store
-    channel: 1.4.x
+    channel: 1.6.x
 
   projects:
   - factory

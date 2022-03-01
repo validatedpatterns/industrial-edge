@@ -7,17 +7,10 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.2-39
+  - name: 0.3.2
     from:
       kind: DockerImage
-      name: quay.io/ipbabble/iot-consumer:0.3.2-39
-    importPolicy: {}
-    referencePolicy:
-      type: Local
-  - name: 0.3.2-40
-    from:
-      kind: DockerImage
-      name: quay.io/ipbabble/iot-consumer:0.3.2-40
+      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
     importPolicy: {}
     referencePolicy:
       type: Local
