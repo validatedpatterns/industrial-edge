@@ -31,7 +31,8 @@ ifeq ($(BOOTSTRAP),1)
 	make vault-init
 	make load-secrets
 	make argosecret
-	make sleep-seed
+#	seed now optional!
+#	make sleep-seed
 endif
 
 vault-init:

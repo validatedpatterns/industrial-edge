@@ -1,8 +1,8 @@
 apiVersion: image.openshift.io/v1
 kind: ImageStream
 metadata:
-  name: machine-sensor
-  namespace: manuela-stormshift-machine-sensor
+  name: line-dashboard
+  namespace: manuela-tst-all
 spec:
   lookupPolicy:
     local: true
@@ -10,7 +10,7 @@ spec:
   - name: 0.3.1
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+      name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
     importPolicy: {}
     referencePolicy:
       type: Local

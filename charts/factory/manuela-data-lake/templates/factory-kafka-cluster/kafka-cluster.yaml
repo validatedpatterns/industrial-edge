@@ -27,7 +27,7 @@ spec:
             key: tls.key
             secretName: kafka-tls-certificate-and-key
           bootstrap: 
-            host: bootstrap-manuela-data-lake-central-kafka-cluster.{{ .Values.global.localClusterDomain }}
+            host: bootstrap-factory-lake-central-kafka-cluster.{{ .Values.global.localClusterDomain }}
         configuration:
           brokerCertChainAndKey:
             certificate: tls.crt
