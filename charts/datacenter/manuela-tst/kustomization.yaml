@@ -5,17 +5,13 @@ resources:
 images:
 - name: messaging
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  #newName: quay.io/hybridcloudpatterns/iot-consumer
   newTag: 0.3.2
 - name: machine-sensor
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  #newName: quay.io/hybridcloudpatterns/iot-software-sensor
-  newTag: latest
+  newTag: 0.3.1
 - name: line-dashboard
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  #newName: quay.io/hybridcloudpatterns/iot-frontend
-  newTag: latest
+  newTag: 0.3.1
 - name: anomaly-detection
   newName: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  #newName: quay.io/hybridcloudpatterns/iot-anomaly-detection
   newTag: 0.3.2
