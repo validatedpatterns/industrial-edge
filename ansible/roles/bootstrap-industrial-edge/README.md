@@ -16,6 +16,61 @@ the Industrial Edge validated pattern onto an OpenShift cluster.
 | Kubernetes Python Cli | The kubernetes.core collection requires the Kubernetes Python client to interact with Kubernetes' APIs. | **pip3 install kubernetes** |
 | Python 3 | Python2 is deprecated from 1st January 2020. Please switch to Python3. | RHEL: <br> **yum -y install rh-python36** |
 
+## Bootstrap Role tasks that will be executed
+The bootstrap-industrial-edge role will execute on your localhost.  The high level tasks that are executed are listed below.
+
+```sh
+playbook: ansible/site.yaml
+
+  play #1 (localhost): Industrial Edge bootstrap	TAGS: []
+    tasks:
+      bootstrap-industrial-edge : {{ role_name }}: Getting pattern information	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: debug	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Deploying Helm Charts	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Initialize Vault	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Load Secrets to Vault	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Retrieve ArgoCD Secrets	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Verify Tekton pipelines and tasks	TAGS: []
+```
+
+### Task: Getting pattern information
+
+This task gathers the validated pattern information.  This information will be used by the validated pattern framework and passed to ArgoCD to support the validated pattern deployment.  The task sets up the following facts for other tasks to use:
+    * secrets_file                                                         
+    * globals_file                                                              
+    * bootstrap
+    * target_branch
+    * target_repo
+    * hubcluster_apps_domain
+
+### Task: Deploying Helm Charts
+
+Our validated pattern framework makes use of Helm Charts to deploy supporting components for the Industrial Edge application workload. There are two Helm charts that get installed for the Industrial Edge validated pattern which are described in the table below.
+
+| Chart | Description | Location |
+| ----- | ----- | ----- |
+| industrial-edge-secrets | A Helm chart to build and deploy secrets for industrial-edge pipelines | industrial-edge/charts/secrets/pipeline-setup |
+| industrial-edge | A Helm chart to build and deploy the validated pattern | industrial-edge/common/install | 
+
+
+### Task: Initialize Vault
+
+In the Industrial Edge validated pattern we have included Vault as our secrets management tool. Secret management is essential for cloud native solutions and as usual it is ignored until the very end of the software development cycle.  Our Red Hat validated patterns make use of the HashiCorp vault technology to store passwords, private keys, and API credentials used by the applications workloads.
+
+This task initializes the Vault environment.
+
+### Task: Load Secrets to Vault
+
+The Industrial Edge validated pattern applications, and pipelines, make use of secrets that are stored in the Vault environment.  This task is an imperative task that loads the secrets defined in the values-secret.yaml file which are specific to the Industrial Edge application workloads. 
+
+### Task: Retrieve ArgoCD Secrets
+
+This tasks retrieves the ArgoCD secrets that are created during the deployment of the openshift-gitops operator.
+
+### Task: Verify Tekton pipelines and tasks
+
+This task verifies that the indsutrial-edge-secrets Helm chart created the appropriate tasks to support the Industrial Edge pipelines.
+
 
 ## Role Variables
 ------------
