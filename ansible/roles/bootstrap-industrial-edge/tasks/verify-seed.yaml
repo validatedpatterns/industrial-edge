@@ -25,7 +25,7 @@
   failed_when: response.failed == 'true'
 
 #oc get -n manuela-ci secret git-repo-credentials 1>/dev/null 2>/dev/null && \
-- name:  " [verify-seed] Verifying that Tekton Task tkn exist"
+- name:  " [verify-seed] Verifying that the git-repo-credentials exist"
   kubernetes.core.k8s:
     state: present
     api_version: v1
@@ -37,7 +37,7 @@
   failed_when: response.failed == 'true'
 
 #oc get -n manuela-ci secret image-registry-credentials 1>/dev/null 2>/dev/null 
-- name:  " [verify-seed] Verifying that Tekton Task tkn exist"
+- name:  " [verify-seed] Verifying that the image-registry-credentials exist"
   kubernetes.core.k8s:
     state: present
     api_version: v1

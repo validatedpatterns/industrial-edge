@@ -10,7 +10,7 @@ secret_name: "argocd-env"
 
 # Values file variables
 values_secret: "{{ lookup('env', 'HOME') }}/values-secret.yaml"
-values_global: "{{ pattern_repo_dir }}/values-secret.yaml"
+values_global: "{{ pattern_repo_dir }}/values-global.yaml"
 
 # KUBECONFIG variable
 kubeconfig: "{{ lookup('env', 'KUBECONFIG') }}"
