@@ -22,10 +22,6 @@ spec:
         type: route
         tls: true
         configuration:
-          brokerCertChainAndKey:
-            certificate: tls.crt
-            key: tls.key
-            secretName: kafka-tls-certificate-and-key
           bootstrap: 
             host: bootstrap-manuela-data-lake-central-kafka-cluster.{{ .Values.global.localClusterDomain }}
     config:
