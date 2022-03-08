@@ -118,7 +118,6 @@ clusterGroup:
     namespace: manuela-data-lake-central-s3-store
     project: datalake
     path: charts/datacenter/central-s3-store
-    kustomize: True
     ignoreDifferences:
     - group: apps
       kind: Deployment
