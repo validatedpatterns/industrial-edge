@@ -24,11 +24,6 @@ spec:
         configuration:
           bootstrap:
             host: bootstrap-factory-lake-central-kafka-cluster.{{ .Values.global.localClusterDomain }}
-        configuration:
-          brokerCertChainAndKey:
-            certificate: tls.crt
-            key: tls.key
-            secretName: kafka-tls-certificate-and-key
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
