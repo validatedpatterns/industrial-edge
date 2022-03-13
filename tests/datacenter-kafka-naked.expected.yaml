@@ -1,6 +1,6 @@
 ---
 # Source: kafka/templates/kafka-cluster.yaml
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: kafka-cluster
@@ -9,23 +9,24 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   kafka:
-    version: 2.6.0
     replicas: 3
     listeners:
-      plain: {}
-      tls: {}
-      external:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+      - name: external
+        port: 9094
         type: route
-        overrides:
-          bootstrap:
-            host: bootstrap-manuela-data-lake-central-kafka-cluster.apps.datacenter-XXXXX.BASEDOMAIN
+        tls: true
         configuration:
-          brokerCertChainAndKey:
-            certificate: tls.crt
-            key: tls.key
-            secretName: kafka-tls-certificate-and-key
+          bootstrap: 
+            host: bootstrap-manuela-data-lake-central-kafka-cluster.
     config:
-      log.message.format.version: '2.6'
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
       transaction.state.log.replication.factor: 3
