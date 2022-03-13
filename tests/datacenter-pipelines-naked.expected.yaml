@@ -86,8 +86,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
   - name: argocd-env-secret
   params:
@@ -176,13 +174,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-anomaly
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-anomaly
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
@@ -199,8 +195,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -247,8 +241,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -310,8 +302,6 @@ spec:
       workspace: gitrepos
     - name: config
       workspace: config
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: dev
@@ -327,8 +317,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
   - name: argocd-env-secret
   params:
@@ -396,7 +384,7 @@ spec:
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-consumer 
+    - bump-build-version-iot-consumer
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -417,13 +405,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-consumer
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-consumer
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
@@ -440,8 +426,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -475,7 +459,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -489,8 +473,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -553,8 +535,6 @@ spec:
       workspace: gitrepos
     - name: config
       workspace: config
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: dev
@@ -570,10 +550,8 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
   - name: argocd-env-secret
   - name: build-artifacts
-  - name: quay-secret
   params:
   - name: DEV_REVISION
     type: string
@@ -605,10 +583,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --showlog
       - --nocolour
 
@@ -627,10 +601,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -652,10 +622,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -676,10 +642,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -699,10 +661,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -795,8 +753,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -843,8 +799,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -869,7 +823,7 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       # datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "example-gitops-server.industrial-edge-example.svc"
+      value: "testgroup-gitops-server.industrial-edge-testgroup.svc"
 
   # - name: sensor-broker-test
   #   taskRef:
@@ -944,8 +898,6 @@ spec:
       workspace: gitrepos
     - name: config
       workspace: config
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: dev
@@ -963,10 +915,8 @@ metadata:
   name: build-base-images
 spec:
   workspaces:
-  - name: gitrepos 
+  - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   params:
   - name: PATH_CONTEXT
     type: string
@@ -980,8 +930,8 @@ spec:
   - name: OUTPUT_IMAGE_NAME
     type: string
     default: httpd-ionic
-  - name: DEV_REVISION 
-    type: string 
+  - name: DEV_REVISION
+    type: string
     default: main
   tasks:
   - name: git-clone-dev
@@ -1010,8 +960,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: pushsecret
-      workspace: quay-secret
     - name: config
       workspace: config
     params:
@@ -1037,8 +985,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1124,8 +1070,6 @@ spec:
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
@@ -1142,8 +1086,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -1190,8 +1132,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -1205,8 +1145,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1266,7 +1204,7 @@ spec:
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-consumer 
+    - bump-build-version-iot-consumer
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -1287,13 +1225,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-consumer
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-consumer
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
@@ -1310,8 +1246,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -1345,7 +1279,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -1359,8 +1293,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -1374,8 +1306,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1458,13 +1388,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-frontend
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-frontend
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
@@ -1481,8 +1409,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -1516,7 +1442,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -1530,8 +1456,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -1545,8 +1469,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1627,13 +1549,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-software-sensor
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-software-sensor
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
@@ -1646,12 +1566,10 @@ spec:
     taskRef:
       name: github-push
     runAfter:
-    - copy-image-to-remote-registry-iot-software-sensor 
+    - copy-image-to-remote-registry-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -1684,7 +1602,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -1698,8 +1616,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -1713,8 +1629,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1795,13 +1709,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-anomaly
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-anomaly
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
@@ -1818,8 +1730,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -1886,8 +1796,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -1901,8 +1809,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -1962,7 +1868,7 @@ spec:
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-consumer 
+    - bump-build-version-iot-consumer
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -1983,13 +1889,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-consumer
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-consumer
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-consumer.results.image-tag)
@@ -2006,8 +1910,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -2061,7 +1963,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -2075,8 +1977,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -2090,8 +1990,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -2179,8 +2077,6 @@ spec:
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
@@ -2197,8 +2093,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -2266,8 +2160,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -2281,8 +2173,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
 
   tasks:
@@ -2363,13 +2253,11 @@ spec:
   - name: copy-image-to-remote-registry-iot-software-sensor
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-software-sensor
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
@@ -2382,12 +2270,10 @@ spec:
     taskRef:
       name: github-push
     runAfter:
-    - copy-image-to-remote-registry-iot-software-sensor 
+    - copy-image-to-remote-registry-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: PUSH_FLAGS
       value: --tags
@@ -2415,7 +2301,7 @@ spec:
   - name: modify-ops-prod-iot-software-sensor
     taskRef:
       name: gitops-imagetag
-    runAfter: 
+    runAfter:
     - modify-ops-test-iot-software-sensor
     workspaces:
     - name: gitrepos
@@ -2440,7 +2326,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -2454,8 +2340,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -2469,8 +2353,6 @@ spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: github-secret
-  - name: quay-secret
   - name: build-artifacts
   params:
   - name: DEV_REVISION
@@ -2505,10 +2387,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -2529,10 +2407,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -2555,10 +2429,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -2579,10 +2449,6 @@ spec:
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
       - name=config,config=environment
-      - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
       - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
@@ -2605,10 +2471,6 @@ spec:
       - --workspace
       - name=config,config=environment
       - --workspace
-      - name=github-secret,secret=github
-      - --workspace
-      - name=quay-secret,secret=quay-build-secret
-      - --workspace
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
@@ -2623,7 +2485,6 @@ spec:
   - name: gitrepos
   - name: config
   - name: github-secret
-  - name: quay-secret
   params:
   - name: TAG
     type: string
@@ -2659,8 +2520,6 @@ spec:
     workspaces:
     - name: config
       workspace: config
-    - name: pushsecret
-      workspace: quay-secret
     params:
     - name: TAG
       value: $(params.TAG)
@@ -2725,8 +2584,6 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: github-secret
-      workspace: github-secret
     params:
     - name: subdirectory
       value: ops
@@ -2739,10 +2596,10 @@ spec:
     runAfter:
     - push-ops-prod
     workspaces:
-    - name: github-secret
-      workspace: github-secret
     - name: config
       workspace: config
+    - name: github-secret
+      workspace: github-secret
     params:
     - name: GITHUB_REPO_CONFIGMAPKEY
       value: GIT_OPS_REPO_PROD_URL
@@ -2851,7 +2708,6 @@ spec:
   - name: gitrepos
     description: The git repo will be cloned onto the volume backing this workspace
   - name: config
-  - name: pushsecret
   results:
   - name: image
     description: The image+tag that was created
@@ -2875,7 +2731,7 @@ spec:
   - name: OUTPUT_IMAGE_NAME
     type: string
   - name: TAG
-    default: latest 
+    default: latest
     type: string
   - name: DOCKERFILE
     default: Dockerfile
@@ -2901,7 +2757,7 @@ spec:
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
       OUTPUT_IMAGE="$PROVIDER/$ACCOUNT/$(params.OUTPUT_IMAGE_NAME)"
-      buildah push --storage-driver=vfs --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
+      buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) $OUTPUT_IMAGE docker://$OUTPUT_IMAGE:$(params.TAG)
       echo -n "$OUTPUT_IMAGE:$(params.TAG)" >$(results.image.path)
     resources: {}
     securityContext:
@@ -2960,7 +2816,7 @@ spec:
       echo -n "$LAST_TAG" >/scratch/VERSION
     volumeMounts:
     - mountPath: /scratch
-      name: scratch  
+      name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: bump-tag
     image: quay.io/manuela/bumpversiontask:latest
@@ -2972,7 +2828,7 @@ spec:
       tag = False
       parse = (?P<prefix>.*)\-(?P<major>\d+)\.(?P<minor>\d+)\.(?P<patch>\d+)\-(?P<build>\d+)
       serialize = {prefix}-{major}.{minor}.{patch}-{build:03d}
-      
+
       [bumpversion:part:build]
 
       [bumpversion:file:VERSION]
@@ -2983,7 +2839,7 @@ spec:
       sed "s/build-$(params.component_name)-//" /scratch/VERSION >$(results.image-tag.path)
     volumeMounts:
     - mountPath: /scratch
-      name: scratch  
+      name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: tag-repo
     image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
@@ -2997,7 +2853,7 @@ spec:
       echo -n "$VERSION" > $(results.git-tag.path)
     volumeMounts:
     - mountPath: /scratch
-      name: scratch  
+      name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   volumes:
   - emptyDir: {}
@@ -3014,7 +2870,6 @@ spec:
     description: The git repo will be cloned onto the volume backing this workspace
   - name: config
     description: configmap contents
-  - name: github-secret
   params:
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
@@ -3045,7 +2900,7 @@ spec:
       #list build tags for component in repo
       BUILD_TAG_GLOB="build-$(params.COMPONENT_NAME)-*"
       git tag --sort "version:refname" -l $BUILD_TAG_GLOB >/scratch/tags
-     
+
       #identify build tags to keep
       tail -n $(params.NUMBER_OF_TAGS_TO_KEEP) /scratch/tags >/scratch/keep
 
@@ -3053,10 +2908,7 @@ spec:
       diff /scratch/tags /scratch/keep | grep \^-build | cut -c2- > /scratch/delete
 
       #delete build tags
-      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
-      git config --global credential.helper store 'store --file ~/.git-credentials'
-
-      for TAG in $(cat /scratch/delete); do 
+      for TAG in $(cat /scratch/delete); do
         git push origin :$TAG
         EXIT_CODE="$?"
         if [ "$EXIT_CODE" != 0 ]
@@ -3066,7 +2918,7 @@ spec:
       done
     volumeMounts:
     - mountPath: /scratch
-      name: scratch  
+      name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   # - name: cleanup-test-images
   #   image: quay.io/openshift/origin-cli:latest
@@ -3077,7 +2929,7 @@ spec:
   #     then
   #       exit $EXIT_CODE
   #     fi
-  #     for TAG in $(cat /scratch/delete_istags); do 
+  #     for TAG in $(cat /scratch/delete_istags); do
   #       oc tag -n $(params.OPENSHIFT_NAMESPACE) -d $(params.OPENSHIFT_IMAGESTREAM):$TAG
   #       EXIT_CODE="$?"
   #       if [ "$EXIT_CODE" != 0 ]
@@ -3087,7 +2939,7 @@ spec:
   #     done
   #   volumeMounts:
   #   - mountPath: /scratch
-  #     name: scratch  
+  #     name: scratch
   #   workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   volumes:
   - emptyDir: {}
@@ -3303,8 +3155,8 @@ metadata:
   name: github-add-pull-request
 spec:
   workspaces:
-  - name: github-secret
   - name: config
+  - name: github-secret
   params:
   - name: PULL_REQUEST_BODY
     description: The body to be used for the pull request
@@ -3331,7 +3183,7 @@ spec:
     script: |
       GITREPO=$(cat $(workspaces.config.path)/$(params.GITHUB_REPO_CONFIGMAPKEY))
       PULLREQUEST_API_ENDPOINT=$(echo -n "$GITREPO" | sed "s|github.com|api.github.com/repos|" | sed "s/\.git$//g")/pulls
-      curl -v -u :$(cat $(workspaces.github-secret.path)/token) $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'
+      curl -v -u :$(cat $(workspaces.github-secret.path)/password) $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'
 ---
 # Source: pipelines/templates/tasks/github-push.yaml
 apiVersion: tekton.dev/v1beta1
@@ -3342,7 +3194,6 @@ spec:
   workspaces:
   - name: gitrepos
     description: The git repo will be cloned onto the volume backing this workspace
-  - name: github-secret
   params:
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
@@ -3356,8 +3207,6 @@ spec:
   - name: push
     image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
     script: |
-      echo "https://$(cat $(workspaces.github-secret.path)/$(params.GITHUB_USERNAME_CONFIGMAPKEY)):$(cat $(workspaces.github-secret.path)/$(params.GITHUB_TOKEN_CONFIGMAPKEY))@github.com" > ~/.git-credentials
-      git config --global credential.helper store 'store --file ~/.git-credentials'
       git remote -v
       git branch
       git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git pull --ff-only --no-edit
@@ -3492,7 +3341,7 @@ spec:
   - name: OUTPUT_IMAGE
     type: string
   - name: TAG
-    default: latest 
+    default: latest
     type: string
 # only for java builds
   - name: MAVEN_ARGS_APPEND
@@ -3508,14 +3357,14 @@ spec:
     description: The base URL of a mirror used for retrieving artifacts
     type: string
   - name: CHAINED_BUILD_DOCKERFILE
-    default: "" 
+    default: ""
     description: If a chained build is to be executed, the second part of the DOCKERFILE
     type: string
   steps:
   - name: prepare-env
     image: quay.io/openshift-pipeline/s2i
     script: |
-      if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then 
+      if [[ "$(params.BUILDER_IMAGE)" == *"jdk"* ]] || [[ "$(params.BUILDER_IMAGE)" == *"java"* ]]; then
         echo "MAVEN_CLEAR_REPO=$(params.MAVEN_CLEAR_REPO)" > env-file
 
         [[ '$(params.MAVEN_ARGS_APPEND)' != "" ]] &&
@@ -3525,7 +3374,7 @@ spec:
           echo "MAVEN_MIRROR_URL=$(params.MAVEN_MIRROR_URL)" >> env-file
 
         #create build artifacts cache directory
-        if [[ ! -d $(workspaces.build-artifacts.path)/m2 ]]; then 
+        if [[ ! -d $(workspaces.build-artifacts.path)/m2 ]]; then
            mkdir $(workspaces.build-artifacts.path)/m2
            chmod a+rwx $(workspaces.build-artifacts.path)/m2
         fi
@@ -3558,7 +3407,7 @@ spec:
         source /env-params/s2icommand
       else
         s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --as-dockerfile /gen-source/Dockerfile.gen
-      fi 
+      fi
       if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
         echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
       fi
@@ -3574,7 +3423,7 @@ spec:
     script: |
       if [ -f /env-params/buildahcommand ]; then
         source /env-params/buildahcommand
-      else 
+      else
         buildah bud --tls-verify=$(params.TLSVERIFY) --storage-driver=vfs -f /gen-source/Dockerfile.gen -t `basename $(params.OUTPUT_IMAGE)` .
       fi
     resources: {}
@@ -3584,7 +3433,7 @@ spec:
     - mountPath: /var/lib/containers
       name: varlibcontainers
     - mountPath: /gen-source
-      name: gen-source    
+      name: gen-source
     - mountPath: /env-params
       name: envparams
     workingDir: /gen-source
@@ -3616,8 +3465,6 @@ spec:
   workspaces:
   - name: config
     description: configmap contents
-  - name: pushsecret
-    description: push secret for quay
   params:
   - name: TAG
     type: string
@@ -3629,7 +3476,7 @@ spec:
   - name: skopeo-copy
     image: quay.io/redhat-emea-ssa-team/skopeo-ubi:latest
     script: |
-      skopeo copy --authfile=$(workspaces.pushsecret.path)/.dockerconfigjson --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)
+      skopeo copy --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)
 ---
 # Source: pipelines/templates/tasks/tkn.yaml
 apiVersion: tekton.dev/v1beta1
@@ -3667,12 +3514,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
@@ -3710,12 +3551,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
@@ -3753,12 +3588,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:
@@ -3798,9 +3627,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
@@ -3853,9 +3679,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
@@ -3908,9 +3731,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
@@ -3966,9 +3786,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
@@ -4021,9 +3838,6 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
@@ -4076,21 +3890,15 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
-    - name: quay-secret
-      secret:
-        secretName: quay-build-secret
     - name: build-artifacts
       # persistentVolumeClaim:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
@@ -4100,7 +3908,7 @@ objects:
       #   claimName: iot-consumer
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
@@ -4130,15 +3938,12 @@ objects:
     - name: config
       configMap:
         name: environment
-    - name: github-secret
-      secret:
-        secretName: github
     - name: argocd-env-secret
       secret:
         secretName: argocd-env
-    - name: quay-secret
+    - name: github-secret
       secret:
-        secretName: quay-build-secret
+        secretName: git-repo-credentials
     - name: gitrepos
       volumeClaimTemplate:
         spec:

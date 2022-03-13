@@ -17,3 +17,6 @@ global:
     account: PLAINTEXT
     hostname: quay.io
     type: quay
+
+clusterGroup:
+  name: testgroup
