@@ -65,6 +65,9 @@ build-and-test-iot-anomaly-detection:
 build-and-test-iot-consumer:
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
 
+common-test:
+	make -C common -f common/Makefile test
+
 test:
 	make -f common/Makefile CHARTS="$(wildcard charts/datacenter/*)" PATTERN_OPTS="-f values-datacenter.yaml" test
 	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
