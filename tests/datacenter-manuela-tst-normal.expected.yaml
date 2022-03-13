@@ -10,7 +10,7 @@ metadata:
 data: 
   "config.json": |-
     {
-      "websocketHost": "http://messaging-manuela-tst-all.",
+      "websocketHost": "http://messaging-manuela-tst-all.region.example.com",
       "websocketPath": "/api/service-web/socket",
       "SERVER_TIMEOUT": "20000"
     }
@@ -21,7 +21,7 @@ kind: ConfigMap
 metadata:
   name: machine-sensor-1
 data:
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.region.example.com
   #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
@@ -285,7 +285,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: a5cd4d9268a0418cbfcb77cb9cdb8f38d8589f5fce79cbe80f01ca8e1d7f0677
+        checksum/config: 15987d399e4c018385099c79b66090441ed6fd8faab59c7829e60d5e6fb02738
       labels:
         application: machine-sensor-1
         deploymentConfig: machine-sensor-1
