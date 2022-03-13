@@ -1,5 +1,5 @@
 ---
-name: Unit test common
+name: Unit tests
 
 #
 # Documentation:
@@ -17,7 +17,7 @@ on: [push, pull_request]
 jobs:
   build:
     # Name the Job
-    name: Unit common/ Code Base
+    name: Unit Test Code Base
     # Set the agent to run on
     runs-on: ubuntu-latest
 
