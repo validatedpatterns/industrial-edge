@@ -1,5 +1,5 @@
 ---
-# Source: pattern-site/templates/gitops-namespace.yaml
+# Source: pattern-clustergroup/templates/gitops-namespace.yaml
 apiVersion: v1
 kind: Namespace
 metadata:
@@ -7,12 +7,12 @@ metadata:
     name: common-example
   # The name here needs to be consistent with
   # - acm/templates/policies/application-policies.yaml
-  # - site/templates/applications.yaml
+  # - clustergroup/templates/applications.yaml
   # - any references to secrets and route URLs in documentation
   name: common-example
 spec: {}
 ---
-# Source: pattern-site/templates/argocd-super-role.yaml
+# Source: pattern-clustergroup/templates/argocd-super-role.yaml
 # WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -31,7 +31,7 @@ subjects:
     name: openshift-gitops-argocd-server
     namespace: openshift-gitops
 ---
-# Source: pattern-site/templates/argocd-super-role.yaml
+# Source: pattern-clustergroup/templates/argocd-super-role.yaml
 # WARNING: ONLY USE THIS FOR MANAGING CLUSTERS NOT FOR REGULAR USERS
 apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
@@ -52,7 +52,7 @@ subjects:
     name: example-gitops-argocd-server
     namespace: common-example
 ---
-# Source: pattern-site/templates/argocd.yaml
+# Source: pattern-clustergroup/templates/argocd.yaml
 apiVersion: argoproj.io/v1alpha1
 kind: ArgoCD
 metadata:
@@ -61,6 +61,7 @@ metadata:
   # Changing the name affects the ClusterRoleBinding, the generated secret,
   # route URL, and argocd.argoproj.io/managed-by annotations
   name: example-gitops
+  namespace: common-example
   annotations:
     argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
@@ -79,6 +80,8 @@ spec:
     --set global.targetRevision=$ARGOCD_APP_SOURCE_TARGET_REVISION
     --set global.namespace=$ARGOCD_APP_NAMESPACE
     --set global.pattern=common
+    --set global.hubClusterDomain=
+    --set global.localClusterDomain=
     --set global.valuesDirectoryURL=https://github.com/pattern-clone/common/raw/main
     --post-renderer ./kustomize\"]
     \ \n"
@@ -100,6 +103,7 @@ spec:
         cpu: 500m
         memory: 2Gi
   dex:
+    openShiftOAuth: true
     resources:
       limits:
         cpu: 500m

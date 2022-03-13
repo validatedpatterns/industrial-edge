@@ -1,17 +1,19 @@
+---
+# Source: example/templates/environment.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: environment
 data:
-  IMAGE_PROVIDER: {{ .Values.global.imageregistry.hostname }}
-  IMAGE_ACCOUNT: {{ .Values.global.imageregistry.account }}
-  GIT_EMAIL: {{ .Values.global.git.email }}
-  GIT_DEV_REPO_URL: https://{{ .Values.global.git.hostname }}/{{ .Values.global.git.account }}/manuela-dev.git
-  GIT_DEV_REPO_REVISION: {{ .Values.global.git.dev_revision }}
-  GIT_OPS_REPO_TEST_URL: {{ .Values.global.repoURL }}
-  GIT_OPS_REPO_TEST_REVISION: {{ .Values.global.targetRevision }}
-  GIT_OPS_REPO_PROD_URL: {{ .Values.global.repoURL }}
-  GIT_OPS_REPO_PROD_REVISION: {{ .Values.global.targetRevision }}
+  IMAGE_PROVIDER: 
+  IMAGE_ACCOUNT: PLAINTEXT
+  GIT_EMAIL: someone@somewhere.com
+  GIT_DEV_REPO_URL: https://github.com/hybrid-cloud-patterns/manuela-dev.git
+  GIT_DEV_REPO_REVISION: main
+  GIT_OPS_REPO_TEST_URL: https://github.com/pattern-clone/mypattern
+  GIT_OPS_REPO_TEST_REVISION: 
+  GIT_OPS_REPO_PROD_URL: https://github.com/pattern-clone/mypattern
+  GIT_OPS_REPO_PROD_REVISION: 
   IOT_CONSUMER_IMAGE: iot-consumer
   IOT_CONSUMER_YAML_PATH: images.(name==messaging).newTag
   IOT_CONSUMER_TEST_KUSTOMIZATION_PATH: charts/datacenter/manuela-tst/kustomization.yaml
