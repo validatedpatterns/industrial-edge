@@ -23,25 +23,25 @@ gitops=0
 #   $2 is for the message
 #   \033[0K\r - Trailing escape sequence to leave output on the same line
 function log {
-    if [ -z "$2" ]; then
-        echo -e "\033[0K\r\033[1;36m$1\033[0m"
-    else
-        echo -e $1 "\033[0K\r\033[1;36m$2"
-    fi
+	if [ -z "$2" ]; then
+		echo -e "\033[0K\r\033[1;36m$1\033[0m"
+	else
+		echo -e $1 "\033[0K\r\033[1;36m$2"
+	fi
 }
 
 # Check for Namespaces and Secrets to be ready (it takes the cluster a few minutes to deploy them)
 spin='-\|/'
 i=0
 while [ 1 ] ; do
-        i=$(( (i+1) %4 ))
+	i=$(( (i+1) %4 ))
 	log -n "Checking for namespace $TARGET_NAMESPACE to exist: ${spin:$i:1}"
 	if [ oc get namespace $TARGET_NAMESPACE >/dev/null 2>/dev/null ]; then
 		ns=0
 		sleep 2
 		continue
 	else
-	        log "Checking for namespace $TARGET_NAMESPACE to exist: OK"
+		log "Checking for namespace $TARGET_NAMESPACE to exist: OK"
 		ns=1
 		break
 	fi
@@ -49,11 +49,11 @@ done
 
 i=0
 while [ 1 ] ; do
-        i=$(( (i+1) %4 ))
+	i=$(( (i+1) %4 ))
 	log -n "Checking for $passwd_resource to be populated in $src_ns: ${spin:$i:1}"
 	pw=`oc -n $src_ns extract $passwd_resource --to=- 2>/dev/null`
 	if [ "$?" = 0 ] && [ -n "$pw" ]; then
-	        log "Checking for $passwd_resource to be populated in $src_ns: OK"
+		log "Checking for $passwd_resource to be populated in $src_ns: OK"
 		gitops=1
 	else
 		gitops=0
