@@ -10,7 +10,7 @@ metadata:
 data: 
   "config.json": |-
     {
-      "websocketHost": "http://messaging-manuela-tst-all.apps.datacenter-XXXXX.BASEDOMAIN",
+      "websocketHost": "http://messaging-manuela-tst-all.",
       "websocketPath": "/api/service-web/socket",
       "SERVER_TIMEOUT": "20000"
     }
@@ -21,7 +21,7 @@ kind: ConfigMap
 metadata:
   name: machine-sensor-1
 data:
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.apps.datacenter-XXXXX.BASEDOMAIN"
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.
   #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
@@ -285,7 +285,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 5088312a71da289fe0e563ae0e8d6e260289b890f337ec1bde6be805346629ee
+        checksum/config: a5cd4d9268a0418cbfcb77cb9cdb8f38d8589f5fce79cbe80f01ca8e1d7f0677
       labels:
         application: machine-sensor-1
         deploymentConfig: machine-sensor-1
@@ -518,6 +518,49 @@ spec:
   lookupPolicy:
     local: false
   tags:
+  - name: 0.3.2
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: line-dashboard
+  namespace: manuela-tst-all
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: 0.3.1
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: machine-sensor
+  namespace: manuela-tst-all
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: 0.3.1
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+    importPolicy: {}
+    referencePolicy:
+      type: Local
 ---
 # Source: manuela-tst-all/templates/messaging/messaging-is.yaml
 apiVersion: image.openshift.io/v1
@@ -526,6 +569,13 @@ metadata:
   name: messaging
 spec:
   tags:
+  - name: 0.3.2
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
+    importPolicy: {}
+    referencePolicy:
+      type: Local
 ---
 # Source: manuela-tst-all/templates/messaging-kafka/mqtt2kafka-integration.yaml
 apiVersion: camel.apache.org/v1
@@ -618,7 +668,7 @@ spec:
     value: https://maven.repository.redhat.com/earlyaccess/all@id=redhat.ea
 ---
 # Source: manuela-tst-all/templates/messaging-kafka/kafka-cluster.yaml
-apiVersion: kafka.strimzi.io/v1beta1
+apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
   name: manuela-kafka-cluster
@@ -626,13 +676,23 @@ metadata:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
   kafka:
-    version: 2.6.0
+    version: 3.0.0
     replicas: 3
     listeners:
-      plain: {}
-      tls: {}
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+        configuration:
+          useServiceDnsDomain: true
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+        authentication:
+          type: tls
     config:
-      log.message.format.version: '2.6'
+      log.message.format.version: '3.0'
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
       transaction.state.log.replication.factor: 3
@@ -703,7 +763,6 @@ metadata:
     app: line-dashboard
   name: line-dashboard
 spec:
-  host: line-dashboard-manuela-tst-all.apps.datacenter-XXXXX.BASEDOMAIN
   port:
     targetPort: 8080-tcp
   to:
@@ -720,7 +779,6 @@ metadata:
     app: messaging
   name: messaging
 spec:
-  host: messaging-manuela-tst-all.apps.datacenter-XXXXX.BASEDOMAIN
   port:
     targetPort: 3000-tcp
   to:
@@ -774,4 +832,4 @@ spec:
   name: seldon-operator
   source: community-operators
   sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.v1.7.0
+  startingCSV: seldon-operator.v1.12.0
