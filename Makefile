@@ -18,9 +18,6 @@ default: show-secrets show
 	echo "Delegating $* target"
 	make -f common/Makefile $*
 
-load-secrets:
-	common/scripts/ansible-push-vault-secrets.sh
-
 pipeline-setup:
 ifeq ($(BOOTSTRAP),1)
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
@@ -35,17 +32,8 @@ ifeq ($(BOOTSTRAP),1)
 #	make sleep-seed
 endif
 
-vault-init:
-	make -f common/Makefile vault-init
-	echo "Please load your secrets into the vault now"
-
 upgrade: load-secrets
 	make -f common/Makefile upgrade
-
-argosecret:
-	make -f common/Makefile \
-		PATTERN=$(PATTERN) TARGET_NAMESPACE=$(ARGO_TARGET_NAMESPACE) \
-		SECRET_NAME=$(SECRET_NAME) COMPONENT=$(COMPONENT) argosecret
 
 sleep:
 	scripts/sleep-seed.sh
