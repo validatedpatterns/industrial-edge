@@ -136,6 +136,6 @@ spec:
       
   repos:
     - name: kf-manifests
-      uri: 'https://github.com/opendatahub-io/manifests/tarball/v1.3-openshift'
+      uri: https://github.com/opendatahub-io/manifests/tarball/v1.4.0-rc.2-openshift
     - name: manifests
-      uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.1.1'
+      uri: 'https://github.com/opendatahub-io/odh-manifests/tarball/v1.1.2'
