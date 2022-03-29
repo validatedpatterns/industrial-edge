@@ -20,3 +20,7 @@ global:
     username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
+
+  s3:
+    bucketname: S3BUCKETNAME
+    region: AWSREGION # us-west-1
