@@ -22,7 +22,6 @@
     wait: yes
     replace: yes
     force: yes
-    update_repo_cache: yes
     values_files:
       - "{{ secrets_file }}"
       - "{{ globals_file }}"
@@ -36,7 +35,6 @@
     wait: yes
     replace: yes
     force: yes
-    update_repo_cache: yes
     values_files:
       - "{{ secrets_file }}"
       - "{{ globals_file }}"
