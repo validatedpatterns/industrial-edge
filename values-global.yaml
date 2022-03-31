@@ -22,5 +22,12 @@ global:
     dev_revision: main
 
   s3:
-    bucketname: S3BUCKETNAME
-    region: AWSREGION # us-west-1
+    bucket:
+      name: S3BUCKETNAME
+      region: AWSREGION
+      message:
+        aggregation:
+          count: 100
+      custom:
+        endpoint:
+          enabled: false

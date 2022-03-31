@@ -3,16 +3,16 @@ global:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
 
-s3:
-  bucket:
-    name: BUCKETNAME
-    region: us-west-1
-    message:
-      aggregation:
-        count: 100
-    custom:
-      endpoint:
-        enabled: true
+  s3:
+    bucket:
+      name: BUCKETNAME
+      region: us-west-1
+      message:
+        aggregation:
+          count: 100
+      custom:
+        endpoint:
+          enabled: true
 
 kafka:
   broker:
