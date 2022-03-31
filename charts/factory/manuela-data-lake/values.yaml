@@ -19,6 +19,18 @@ global:
     clustername: edge-XXXXX
     domain: BASEDOMAIN
 
+  s3:
+    bucket:
+      name: manuela-data-lake
+      region: us-west-1
+      message:
+        aggregation:
+          count: 10
+      custom:
+        endpoint:
+          enabled: true
+
+
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true
@@ -30,17 +42,6 @@ machineSensor1:
 machineSensor2:
   port: 80
   sensorTemperature: true
-
-s3:
-  bucket:
-    name: manuela-data-lake
-    region: us-west-1
-    message:
-      aggregation:
-        count: 10
-    custom:
-      endpoint:
-        enabled: true
 
 kafka:
   broker:
