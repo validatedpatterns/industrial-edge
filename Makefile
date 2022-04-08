@@ -72,5 +72,11 @@ test:
 	make -f common/Makefile CHARTS="$(wildcard charts/datacenter/*)" PATTERN_OPTS="-f values-datacenter.yaml" test
 	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
 
+.PHONY: kubeconform
+KUBECONFORM_SKIP=-skip 'CustomResourceDefinition,Pipeline,Task'
+kubeconform:
+	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" CHARTS="$(wildcard charts/datacenter/*)" kubeconform
+	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" CHARTS="$(wildcard charts/factory/*)" kubeconform
+
 helmlint:
 	@for t in "$(wildcard charts/datacenter/*)" "$(wildcard charts/factory/*)"; do helm lint $$t; if [ $$? != 0 ]; then exit 1; fi; done
