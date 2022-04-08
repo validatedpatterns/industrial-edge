@@ -12,7 +12,7 @@ CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values
 HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set main.options.bootstrap=$(BOOTSTRAP) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 
 .PHONY: default
-default: show-secrets show
+default: show
 
 %:
 	echo "Delegating $* target"
