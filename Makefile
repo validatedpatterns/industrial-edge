@@ -37,9 +37,6 @@ ifeq ($(BOOTSTRAP),1)
 #	make sleep-seed
 endif
 
-upgrade: load-secrets
-	make -f common/Makefile upgrade
-
 sleep: ## waits for all seed resources to be presents
 	scripts/sleep-seed.sh
 
