@@ -1,4 +1,3 @@
-BOOTSTRAP=1
 NAME=$(shell basename `pwd`)
 ARGO_TARGET_NAMESPACE=manuela-ci
 PATTERN=industrial-edge
@@ -9,7 +8,7 @@ TARGET_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 HUBCLUSTER_APPS_DOMAIN=$(shell oc get ingresses.config/cluster -o jsonpath={.spec.domain})
 TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL:[[:space:]]*//' -e 's%^git@%%' -e 's%^https://%%' -e 's%:%/%' -e 's%^%https://%')
 CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
-HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set main.options.bootstrap=$(BOOTSTRAP) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
+HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 
 .PHONY: default
 default: show
@@ -24,18 +23,14 @@ help:
 	make -f common/Makefile $*
 
 pipeline-setup: ## calls the helm pipeline-setup
-ifeq ($(BOOTSTRAP),1)
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
-endif
 
 install: pipeline-setup deploy ## installs the pattern, sets up the pipelines, inits the vault and loads the secrets
-ifeq ($(BOOTSTRAP),1)
 	make vault-init
 	make load-secrets
 	make argosecret
 #	seed now optional!
 #	make sleep-seed
-endif
 
 sleep: ## waits for all seed resources to be presents
 	scripts/sleep-seed.sh
