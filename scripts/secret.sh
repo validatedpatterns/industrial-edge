@@ -14,7 +14,6 @@
 passwd_resource="secrets/${COMPONENT}-gitops-cluster"
 src_ns="${PATTERN}-${COMPONENT}"
 
-ns=0
 gitops=0
 
 # Function log
@@ -38,10 +37,8 @@ while [ 1 ] ; do
 	log -n "Checking for namespace $TARGET_NAMESPACE to exist: ${spin:$i:1}"
 	if [ oc get namespace $TARGET_NAMESPACE >/dev/null 2>/dev/null ]; then
 		log "Checking for namespace $TARGET_NAMESPACE to exist: OK"
-		ns=1
 		break
 	else
-		ns=0
 		sleep 2
 		continue
 	fi
