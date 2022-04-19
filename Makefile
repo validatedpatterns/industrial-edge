@@ -46,6 +46,15 @@ sleep-seed: sleep seed ## waits for seed resources and calls seed-run
 seed: sleep ## waits for all seed resources
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
 
+#  Makefiles that use this target must provide:
+#  	PATTERN: The name of the pattern that is using it.  This will be used programmatically for the source namespace
+#  	TARGET_NAMESPACE: target namespace to install the secret into
+#  	COMPONENT: The component of the target namespace.  In industrial edge, factory or datacenter - and for the secret
+#  		it needs to be datacenter because that's where the CI components run.
+#  	SECRET_NAME: The name of the secret to manage
+argosecret: ## creates the argo secret
+	PATTERN="$(PATTERN)" TARGET_NAMESPACE="$(ARGO_TARGET_NAMESPACE)" COMPONENT="$(COMPONENT)" SECRET_NAME="$(SECRET_NAME)" scripts/secret.sh
+
 build-and-test: ## run a build and test pipeline
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run.yaml
 
