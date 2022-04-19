@@ -37,13 +37,13 @@ while [ 1 ] ; do
 	i=$(( (i+1) %4 ))
 	log -n "Checking for namespace $TARGET_NAMESPACE to exist: ${spin:$i:1}"
 	if [ oc get namespace $TARGET_NAMESPACE >/dev/null 2>/dev/null ]; then
-		ns=0
-		sleep 2
-		continue
-	else
 		log "Checking for namespace $TARGET_NAMESPACE to exist: OK"
 		ns=1
 		break
+	else
+		ns=0
+		sleep 2
+		continue
 	fi
 done
 
