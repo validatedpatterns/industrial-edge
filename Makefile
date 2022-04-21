@@ -53,6 +53,9 @@ argosecret: ## creates the argo secret
 build-and-test: ## run a build and test pipeline
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run.yaml
 
+just-pr: ## run a build and test pipeline
+	oc create -f charts/datacenter/pipelines/extra/just-pr-run.yaml
+
 build-and-test-iot-anomaly-detection: ## run a build and test pipeline iot anomaly detection
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-anomaly-detection.yaml
 

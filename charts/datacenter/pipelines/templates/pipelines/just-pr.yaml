@@ -1,0 +1,257 @@
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: just-pr
+spec:
+  workspaces:
+  - name: gitrepos
+  - name: config
+  - name: argocd-env-secret
+  - name: build-artifacts
+  params:
+  - name: DEV_REVISION
+    type: string
+    default: {{ .Values.global.git.dev_revision }}
+  - name: OPS_REVISION
+    type: string
+    default: {{ .Values.global.targetRevision }}
+  tasks:
+  - name: git-clone-dev
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_DEV_REPO_URL
+    - name: revision
+      value: $(params.DEV_REVISION)
+    - name: subdirectory
+      value: dev
+    - name: deleteExisting
+      value: "true"
+
+  - name: git-clone-gitops
+    taskRef:
+      name: git-clone-with-tags
+    runAfter:
+    - git-clone-dev
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_OPS_REPO_TEST_URL
+    - name: revision
+      value: {{ .Values.global.targetRevision }}
+    - name: subdirectory
+      value: ops
+    - name: deleteExisting
+      value: "true"
+
+  - name: bump-build-version
+    taskRef:
+      name: bumpversion
+    runAfter:
+    - git-clone-gitops
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: component_name
+      value: iot_consumer
+    - name: version_file_path
+      value: components/iot-consumer/VERSION
+
+  - name: build-messaging-image
+    taskRef:
+      name: s2i
+    runAfter:
+    - bump-build-version
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: build-artifacts
+      workspace: build-artifacts
+    params:
+    - name: TLSVERIFY
+      value: "false"
+    - name: PATH_CONTEXT
+      value: components/iot-consumer
+    - name: BUILDER_IMAGE
+      value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
+    - name: TAG
+      value: $(tasks.bump-build-version.results.image-tag)
+    - name: OUTPUT_IMAGE
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+    - name: CHAINED_BUILD_DOCKERFILE
+      value: ""
+
+  - name: push-dev-tag
+    taskRef:
+      name: github-push
+    runAfter:
+    - build-messaging-image
+#    - bump-build-version
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: PUSH_FLAGS
+      value: --tags
+
+  - name: modify-ops-test
+    taskRef:
+      name: gitops-imagetag
+    runAfter:
+    - push-dev-tag
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: CONFIGMAP_PREFIX
+      value: IOT_CONSUMER
+    - name: ENVIRONMENT
+      value: TEST
+    - name: TAG
+      value: $(tasks.bump-build-version.results.image-tag)
+    - name: subdirectory
+      value: ops
+
+  - name: commit-ops-test
+    taskRef:
+      name: git-commit
+    runAfter:
+    - modify-ops-test
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: subdirectory
+      value: ops
+
+  - name: push-ops-test
+    taskRef:
+      name: github-push
+    runAfter:
+    - commit-ops-test
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    params:
+    - name: subdirectory
+      value: ops
+
+  - name: argocd-sync-application
+    taskRef:
+      name: argocd-sync-and-wait
+    runAfter:
+    - push-ops-test
+    workspaces:
+    - name: argocd-env-secret
+      workspace: argocd-env-secret
+    params:
+    - name: application-name
+      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
+      value: manuela-test
+    - name: flags
+      value: --insecure
+    - name: argocd-version
+      value: "v1.5.2"
+    - name: revision
+      value: $(params.OPS_REVISION)
+    - name: argocd-server
+      # datacenter-gitops-server.industrial-edge-datacenter.svc
+      value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
+  # - name: sensor-broker-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully sent messages to broker..."
+  # - name: consumer-broker-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully processed messages from broker..."
+  # - name: consumer-frontend-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - argocd-sync-application
+  #   params:
+  #     - name: MESSAGE
+  #       value: "succesfully executed Websocket APIs..."
+  # - name: e2e-test
+  #   taskRef:
+  #     name: mock
+  #     kind: Task
+  #   runAfter:
+  #     - sensor-broker-test
+  #     - consumer-broker-test
+  #     - consumer-frontend-test
+  #   params:
+  #     - name: MESSAGE
+  #       value: "e2e testsuite succesfully executed"
+  - name: test-all
+    taskRef:
+      name: tkn
+    runAfter:
+    - argocd-sync-application
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - test-all
+      - --showlog
+      - --nocolour
+
+  - name: trigger-staging
+    taskRef:
+      name: openshift-instantiate-template
+    runAfter:
+    - test-all
+    params:
+    - name: TEMPLATE
+      value: stage-production-pipelinerun
+    - name: PARAMS
+      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot-consumer
+
+  - name: cleanup
+    taskRef:
+      name: cleanup
+    runAfter:
+    - trigger-staging
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: subdirectory
+      value: dev
+    - name: COMPONENT_NAME
+      value: iot-consumer
+    # - name: OPENSHIFT_NAMESPACE
+    #   value: manuela-tst-all
+    # - name: OPENSHIFT_IMAGESTREAM
+    #   value: messaging
+

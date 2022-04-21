@@ -23,20 +23,12 @@ spec:
     type: string
     default: openshift-gitops-server.openshift-gitops.svc
   steps:
-    - name: login
+    - name: login-sync-wait
       image: argoproj/argocd:$(params.argocd-version)
       command: ["/bin/bash", "-c"]
       args:
         - if [ -z $ARGOCD_AUTH_TOKEN ]; then
             yes | argocd login $(params.argocd-server) --grpc-web $(params.flags) --username=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_USERNAME) --password=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_PASSWORD);
-          fi
-    - name: sync
-      image: argoproj/argocd:$(params.argocd-version)
-      command: ["/bin/bash", "-c"]
-      args:
-        - argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags)
-    - name: wait
-      image: argoproj/argocd:$(params.argocd-version)
-      command: ["/bin/bash", "-c"]
-      args:
-        - argocd app wait $(params.application-name) --health $(params.flags)
+          fi;
+        - argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags);
+        - argocd app wait $(params.application-name) --health $(params.flags);
