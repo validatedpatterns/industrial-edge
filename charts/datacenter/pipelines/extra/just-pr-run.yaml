@@ -1,0 +1,26 @@
+apiVersion: tekton.dev/v1beta1
+kind: PipelineRun
+metadata:
+  generateName: just-pr-run-
+  namespace: manuela-ci
+  labels:
+    argocd.argoproj.io/instance: pipelines-industrial-edge-datacenter
+    tekton.dev/pipeline: just-pr
+spec:
+  pipelineRef:
+    name: just-pr
+  serviceAccountName: pipeline
+  timeout: 1h0m0s
+  workspaces:
+    - name: gitrepos
+      persistentVolumeClaim:
+        claimName: gitrepos-rwo
+    - configMap:
+        name: environment
+      name: config
+    - name: argocd-env-secret
+      secret:
+        secretName: argocd-env
+    - name: build-artifacts
+      persistentVolumeClaim:
+        claimName: build-artifacts-rwo
