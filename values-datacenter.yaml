@@ -22,48 +22,57 @@ clusterGroup:
   - manuela-ml-workspace
 
   subscriptions:
-  - name: advanced-cluster-management
-    namespace: open-cluster-management
-    channel: release-2.4
-    csv: advanced-cluster-management.v2.4.1
+    acm:
+      name: advanced-cluster-management
+      namespace: open-cluster-management
+      channel: release-2.4
+      csv: advanced-cluster-management.v2.4.1
 
-  - name: seldon-operator
-    namespace: manuela-ml-workspace
-    source: community-operators
-    csv: seldon-operator.v1.12.0
+    seldon:
+      name: seldon-operator
+      namespace: manuela-ml-workspace
+      source: community-operators
+      csv: seldon-operator.v1.12.0
 
-  - name: opendatahub-operator
-    source: community-operators
-    csv: opendatahub-operator.v1.1.0
+    odh:
+      name: opendatahub-operator
+      source: community-operators
+      csv: opendatahub-operator.v1.1.0
 
-  - name: openshift-pipelines-operator-rh
-    csv: redhat-openshift-pipelines.v1.5.2
+    pipelines:
+      name: openshift-pipelines-operator-rh
+      csv: redhat-openshift-pipelines.v1.5.2
 
  # TODO: Allow namespace to be a list
-  - name: amq-streams
-    namespace: manuela-data-lake-central-kafka-cluster
-    channel: amq-streams-2.x
-    csv: amqstreams.v2.0.1-0
+    streams:
+      name: amq-streams
+      namespace: manuela-data-lake-central-kafka-cluster
+      channel: amq-streams-2.x
+      csv: amqstreams.v2.0.1-0
 
-  - name: amq-streams
-    namespace: manuela-tst-all
-    channel: amq-streams-2.x
-    csv: amqstreams.v2.0.1-0
+    streamstest:
+      name: amq-streams
+      namespace: manuela-tst-all
+      channel: amq-streams-2.x
+      csv: amqstreams.v2.0.1-0
 
-  - name: amq-broker-rhel8
-    namespace: manuela-tst-all
-    channel: 7.x
-    csv: amq-broker-operator.v7.8.4-opr-3
+    broker:
+      name: amq-broker-rhel8
+      namespace: manuela-tst-all
+      channel: 7.x
+      csv: amq-broker-operator.v7.8.4-opr-3
 
-  - name: red-hat-camel-k
-    namespace: manuela-data-lake-central-s3-store
-    channel: 1.6.x
-    csv: red-hat-camel-k-operator.v1.6.3
+    camelk:
+      name: red-hat-camel-k
+      namespace: manuela-data-lake-central-s3-store
+      channel: 1.6.x
+      csv: red-hat-camel-k-operator.v1.6.3
 
-  - name: red-hat-camel-k
-    namespace: manuela-tst-all
-    channel: 1.6.x
-    csv: red-hat-camel-k-operator.v1.6.3
+    camelktest:
+      name: red-hat-camel-k
+      namespace: manuela-tst-all
+      channel: 1.6.x
+      csv: red-hat-camel-k-operator.v1.6.3
 
   projects:
   - datacenter
@@ -72,112 +81,121 @@ clusterGroup:
   - vault
 
   applications:
-  - name: acm
-    namespace: open-cluster-management
-    project: datacenter
-    path: common/acm
-    ignoreDifferences:
-    - group: internal.open-cluster-management.io
-      kind: ManagedClusterInfo
-      jsonPointers:
-      - /spec/loggingCA
+    acm:
+      name: acm
+      namespace: open-cluster-management
+      project: datacenter
+      path: common/acm
+      ignoreDifferences:
+      - group: internal.open-cluster-management.io
+        kind: ManagedClusterInfo
+        jsonPointers:
+        - /spec/loggingCA
 
-  - name: odh
-    namespace: manuela-ml-workspace
-    project: datacenter
-    path: charts/datacenter/opendatahub
+    odh:
+      name: odh
+      namespace: manuela-ml-workspace
+      project: datacenter
+      path: charts/datacenter/opendatahub
 
-  - name: pipelines
-    namespace: manuela-ci
-    project: datacenter
-    path: charts/datacenter/pipelines
+    pipelines:
+      name: pipelines
+      namespace: manuela-ci
+      project: datacenter
+      path: charts/datacenter/pipelines
 
-  - name: central-kafka
-    namespace: manuela-data-lake-central-kafka-cluster
-    project: datalake
-    path: charts/datacenter/kafka
-    ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-      - /spec/replicas
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-      - /status
-    - group: image.openshift.io
-      kind: ImageStream
-      jsonPointers:
-      - /spec/tags
-    - group: apps.openshift.io
-      kind: DeploymentConfig
-      jsonPointers:
-      - /spec/template/spec/containers/0/image
+    kafka:
+      name: central-kafka
+      namespace: manuela-data-lake-central-kafka-cluster
+      project: datalake
+      path: charts/datacenter/kafka
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
+      - group: apps.openshift.io
+        kind: DeploymentConfig
+        jsonPointers:
+        - /spec/template/spec/containers/0/image
 
-  - name: central-s3
-    namespace: manuela-data-lake-central-s3-store
-    project: datalake
-    path: charts/datacenter/central-s3-store
-    ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-      - /spec/replicas
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-      - /status
-    - group: image.openshift.io
-      kind: ImageStream
-      jsonPointers:
-      - /spec/tags
-    - group: apps.openshift.io
-      kind: DeploymentConfig
-      jsonPointers:
-      - /spec/template/spec/containers/0/image
+    s3:
+      name: central-s3
+      namespace: manuela-data-lake-central-s3-store
+      project: datalake
+      path: charts/datacenter/central-s3-store
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
+      - group: apps.openshift.io
+        kind: DeploymentConfig
+        jsonPointers:
+        - /spec/template/spec/containers/0/image
 
-  - name: manuela-test
-    namespace: manuela-tst-all
-    project: datacenter
-    path: charts/datacenter/manuela-tst
-    plugin:
-      name: helm-with-kustomize
+    test:
+      name: manuela-test
+      namespace: manuela-tst-all
+      project: datacenter
+      path: charts/datacenter/manuela-tst
+      plugin:
+        name: helm-with-kustomize
 
-  - name: vault
-    namespace: vault
-    project: datacenter
-    chart: vault
-    repoURL: https://helm.releases.hashicorp.com
-    targetRevision: v0.19.0
-    overrides:
-    - name: global.openshift
-      value: "true"
-    - name: injector.enabled
-      value: "false"
-    - name: ui.enabled
-      value: "true"
-    - name: ui.serviceType
-      value: LoadBalancer
-    - name: server.route.enabled
-      value: "true"
-    - name: server.route.host
-      value: null
-    - name: server.route.tls.termination
-      value: edge
-    - name: server.image.repository
-      value: "registry.connect.redhat.com/hashicorp/vault"
-    - name: server.image.tag
-      value: "1.9.2-ubi"
+    vault:
+      name: vault
+      namespace: vault
+      project: datacenter
+      chart: vault
+      repoURL: https://helm.releases.hashicorp.com
+      targetRevision: v0.19.0
+      overrides:
+      - name: global.openshift
+        value: "true"
+      - name: injector.enabled
+        value: "false"
+      - name: ui.enabled
+        value: "true"
+      - name: ui.serviceType
+        value: LoadBalancer
+      - name: server.route.enabled
+        value: "true"
+      - name: server.route.host
+        value: null
+      - name: server.route.tls.termination
+        value: edge
+      - name: server.image.repository
+        value: "registry.connect.redhat.com/hashicorp/vault"
+      - name: server.image.tag
+        value: "1.9.2-ubi"
 
-  - name: golang-external-secrets
-    namespace: golang-external-secrets
-    project: golang-external-secrets
-    path: common/golang-external-secrets
+    secrets-operator:
+      name: golang-external-secrets
+      namespace: golang-external-secrets
+      project: golang-external-secrets
+      path: common/golang-external-secrets
 
-  - name: external-secrets
-    namespace: external-secrets
-    project: golang-external-secrets
-    path: charts/datacenter/external-secrets
+    secrets:
+      name: external-secrets
+      namespace: external-secrets
+      project: golang-external-secrets
+      path: charts/datacenter/external-secrets
 
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
@@ -211,19 +229,20 @@ clusterGroup:
 #    targetRevision: main
 
   managedClusterGroups:
-  - name: factory
-    # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
-    # targetRevision: main
-    helmOverrides:
-    # Values must be strings!
-    - name: clusterGroup.isHubCluster
-      value: "false"
-    clusterSelector:
-#      matchLabels:
-#        clusterGroup: factory
-      matchExpressions:
-      - key: vendor
-        operator: In
-        values:
-          - OpenShift
+    factory:
+      name: factory
+      # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
+      # targetRevision: main
+      helmOverrides:
+      # Values must be strings!
+      - name: clusterGroup.isHubCluster
+        value: "false"
+      clusterSelector:
+#        matchLabels:
+#          clusterGroup: factory
+        matchExpressions:
+        - key: vendor
+          operator: In
+          values:
+            - OpenShift
 
