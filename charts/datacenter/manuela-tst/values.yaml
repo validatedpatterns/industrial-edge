@@ -32,4 +32,5 @@ kafka:
     
 subscriptions:
   version:
+    installPlanApproval: Automatic
     seldon: v1.13.1
