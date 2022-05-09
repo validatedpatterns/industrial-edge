@@ -13,8 +13,7 @@ clusterGroup:
   - manuela-ml-workspace
   - manuela-tst-all
   - manuela-ci
-  - manuela-data-lake-central-s3-store
-  - manuela-data-lake-central-kafka-cluster
+  - production-data-lake
   - staging
   - vault
 
@@ -41,7 +40,7 @@ clusterGroup:
 
  # TODO: Allow namespace to be a list
   - name: amq-streams
-    namespace: manuela-data-lake-central-kafka-cluster
+    namespace: production-data-lake
     channel: amq-streams-2.x
     csv: amqstreams.v2.0.1-0
 
@@ -56,7 +55,7 @@ clusterGroup:
     csv: amq-broker-operator.v7.8.4-opr-3
 
   - name: red-hat-camel-k
-    namespace: manuela-data-lake-central-s3-store
+    namespace: production-data-lake
     channel: 1.6.x
     csv: red-hat-camel-k-operator.v1.6.3
 
@@ -67,7 +66,7 @@ clusterGroup:
 
   projects:
   - datacenter
-  - datalake
+  - production-datalake
   - golang-external-secrets
   - vault
 
@@ -92,32 +91,10 @@ clusterGroup:
     project: datacenter
     path: charts/datacenter/pipelines
 
-  - name: central-kafka
-    namespace: manuela-data-lake-central-kafka-cluster
-    project: datalake
-    path: charts/datacenter/kafka
-    ignoreDifferences:
-    - group: apps
-      kind: Deployment
-      jsonPointers:
-      - /spec/replicas
-    - group: route.openshift.io
-      kind: Route
-      jsonPointers:
-      - /status
-    - group: image.openshift.io
-      kind: ImageStream
-      jsonPointers:
-      - /spec/tags
-    - group: apps.openshift.io
-      kind: DeploymentConfig
-      jsonPointers:
-      - /spec/template/spec/containers/0/image
-
-  - name: central-s3
-    namespace: manuela-data-lake-central-s3-store
-    project: datalake
-    path: charts/datacenter/central-s3-store
+  - name: production-data-lake
+    namespace: production-data-lake
+    project: production-datalake
+    path: charts/datacenter/manuela-data-lake
     ignoreDifferences:
     - group: apps
       kind: Deployment
