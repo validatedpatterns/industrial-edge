@@ -2,7 +2,7 @@ apiVersion: v1
 kind: ConfigMap
 metadata:
   name: kafka-to-s3-config
-  namespace: development-s3-store
+  namespace: manuela-tst-all
 data:
   application.properties: |
     
