@@ -27,7 +27,9 @@ clusterGroup:
     csv: advanced-cluster-management.v2.4.1
 
   - name: seldon-operator
-    namespace: manuela-ml-workspace
+    namespaces: 
+      - manuela-ml-workspace
+      - manuela-tst-all
     source: community-operators
     csv: seldon-operator.v1.12.0
 
