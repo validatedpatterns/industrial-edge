@@ -13,8 +13,7 @@ clusterGroup:
   - manuela-ml-workspace
   - manuela-tst-all
   - manuela-ci
-  - manuela-data-lake-central-s3-store
-  - manuela-data-lake-central-kafka-cluster
+  - production-data-lake
   - staging
   - vault
 
@@ -44,31 +43,31 @@ clusterGroup:
       csv: redhat-openshift-pipelines.v1.5.2
 
  # TODO: Allow namespace to be a list
-    streams:
+    amqstreams-prod:
       name: amq-streams
-      namespace: manuela-data-lake-central-kafka-cluster
+      namespace: production-data-lake
       channel: amq-streams-2.x
       csv: amqstreams.v2.0.1-0
 
-    streamstest:
+    amqstreams-test:
       name: amq-streams
       namespace: manuela-tst-all
       channel: amq-streams-2.x
       csv: amqstreams.v2.0.1-0
 
-    broker:
+    amqbroker-test:
       name: amq-broker-rhel8
       namespace: manuela-tst-all
       channel: 7.x
       csv: amq-broker-operator.v7.8.4-opr-3
 
-    camelk:
+    camelk-prod:
       name: red-hat-camel-k
-      namespace: manuela-data-lake-central-s3-store
+      namespace: production-data-lake
       channel: 1.6.x
       csv: red-hat-camel-k-operator.v1.6.3
 
-    camelktest:
+    camelk-test:
       name: red-hat-camel-k
       namespace: manuela-tst-all
       channel: 1.6.x
@@ -76,7 +75,7 @@ clusterGroup:
 
   projects:
   - datacenter
-  - datalake
+  - production-datalake
   - golang-external-secrets
   - vault
 
@@ -104,34 +103,11 @@ clusterGroup:
       project: datacenter
       path: charts/datacenter/pipelines
 
-    kafka:
-      name: central-kafka
-      namespace: manuela-data-lake-central-kafka-cluster
-      project: datalake
-      path: charts/datacenter/kafka
-      ignoreDifferences:
-      - group: apps
-        kind: Deployment
-        jsonPointers:
-        - /spec/replicas
-      - group: route.openshift.io
-        kind: Route
-        jsonPointers:
-        - /status
-      - group: image.openshift.io
-        kind: ImageStream
-        jsonPointers:
-        - /spec/tags
-      - group: apps.openshift.io
-        kind: DeploymentConfig
-        jsonPointers:
-        - /spec/template/spec/containers/0/image
-
-    s3:
-      name: central-s3
-      namespace: manuela-data-lake-central-s3-store
-      project: datalake
-      path: charts/datacenter/central-s3-store
+    production-data-lake:
+      name: production-data-lake
+      namespace: production-data-lake
+      project: production-datalake
+      path: charts/datacenter/manuela-data-lake
       ignoreDifferences:
       - group: apps
         kind: Deployment
