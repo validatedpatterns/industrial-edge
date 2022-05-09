@@ -32,4 +32,4 @@ kafka:
     
 subscriptions:
   version:
-    seldon: v1.12.0
+    seldon: v1.13.1
