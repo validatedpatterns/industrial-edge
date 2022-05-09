@@ -3,7 +3,7 @@ kind: KafkaTopic
 metadata:
   name: iot-sensor-sw-vibration
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: dev-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
