@@ -13,7 +13,7 @@ clusterGroup:
   - manuela-ml-workspace
   - manuela-tst-all
   - manuela-ci
-  - production-data-lake
+  - manuela-data-lake
   - staging
   - vault
 
