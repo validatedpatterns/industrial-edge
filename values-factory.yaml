@@ -3,9 +3,6 @@ clusterGroup:
   isHubCluster: false
 
   namespaces:
-  - factory-lake
-  - factory-s3-store
-  - factory-mirror-maker
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
@@ -23,7 +20,6 @@ clusterGroup:
     namespace: manuela-stormshift-messaging
     source: community-operators
     csv: seldon-operator.v1.12.0
-
   - name: amq-streams
     namespace: manuela-stormshift-messaging
     channel: amq-streams-2.x
@@ -52,10 +48,6 @@ clusterGroup:
   - factory
 
   applications:
-  - name: datalake
-    project: factory
-    path: charts/factory/manuela-data-lake
-
   - name: stormshift
     project: factory
     path: charts/factory/manuela-stormshift
