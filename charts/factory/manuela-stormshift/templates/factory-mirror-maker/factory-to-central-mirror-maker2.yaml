@@ -10,10 +10,6 @@ spec:
   clusters:
     - alias: manuela-data-lake
       bootstrapServers: 'prod-kafka-cluster-kafka-2-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443'
-      tls:
-        trustedCertificates:
-        - certificate: tls.crt
-          secretName: kafka-tls-certificate
     - alias: manuela-factory-kafka
       bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
       config:
