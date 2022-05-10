@@ -34,7 +34,7 @@ spec:
 
             private void storeTemperatureInKafka() {
                 from("paho:{{ .Values.mqtt.broker.topic.temperature }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-temp")
-                    .log("Reading message form MQTT: ${body}")
+                    .log("Reading message from MQTT: ${body}")
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
@@ -42,7 +42,7 @@ spec:
 
             private void storeVibrationInKafka() {
                 from("paho:{{ .Values.mqtt.broker.topic.vibration }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-vibr")
-                    .log("Reading message form MQTT: ${body}")
+                    .log("Reading message from MQTT: ${body}")
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
