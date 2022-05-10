@@ -79,7 +79,7 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(AWS2S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-prod-vibration-${date:now}.txt"))
                     .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
                     .log("Uploaded Vibration dataset to S3");
             }
