@@ -13,7 +13,7 @@ clusterGroup:
   - manuela-ml-workspace
   - manuela-tst-all
   - manuela-ci
-  - production-data-lake
+  - manuela-data-lake
   - staging
   - vault
 
@@ -42,7 +42,7 @@ clusterGroup:
 
  # TODO: Allow namespace to be a list
   - name: amq-streams
-    namespace: production-data-lake
+    namespace: manuela-data-lake
     channel: amq-streams-2.x
     csv: amqstreams.v2.0.1-0
 
@@ -57,7 +57,7 @@ clusterGroup:
     csv: amq-broker-operator.v7.8.4-opr-3
 
   - name: red-hat-camel-k
-    namespace: production-data-lake
+    namespace: manuela-data-lake
     channel: 1.6.x
     csv: red-hat-camel-k-operator.v1.6.3
 
@@ -94,7 +94,7 @@ clusterGroup:
     path: charts/datacenter/pipelines
 
   - name: production-data-lake
-    namespace: production-data-lake
+    namespace: manuela-data-lake
     project: production-datalake
     path: charts/datacenter/manuela-data-lake
     ignoreDifferences:
