@@ -45,7 +45,7 @@ machineSensor2:
 
 kafka:
   broker:
-    uri: "kafka-cluster-kafka-bootstrap.factory-lake.svc:9092" 
+    uri: "prod-kafka-cluster-kafka-bootstrap.factory-lake.svc:9092" 
     topic:
       temperature: "manuela-factory.iot-sensor-sw-temperature"
       vibration: "manuela-factory.iot-sensor-sw-vibration"
