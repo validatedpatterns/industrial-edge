@@ -121,6 +121,9 @@ clusterGroup:
     path: charts/datacenter/manuela-tst
     plugin:
       name: helm-with-kustomize
+    overrides:
+      - name: global.localClusterName
+        value: '{{ {{ (lookup "cluster.open-cluster-management.io/v1alpha1" "ClusterClaim" "" "name").spec.value }} }}'
 
   - name: vault
     namespace: vault
