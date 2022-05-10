@@ -9,7 +9,7 @@ spec:
   connectCluster: manuela-data-lake
   clusters:
     - alias: manuela-data-lake
-      bootstrapServers: 'prod-kafka-cluster-kafka-2-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443'
+      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
     - alias: manuela-factory-kafka
       bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
       config:
