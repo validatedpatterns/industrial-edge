@@ -9,10 +9,10 @@ spec:
   connectCluster: manuela-data-lake
   clusters:
     - alias: manuela-data-lake
-      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
+      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
+      bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092'
     - alias: manuela-factory-kafka
-      #bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
-      bootstrapServers: 'bootstrap-factory-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
+      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
       config:
         config.storage.replication.factor: 1
         offset.storage.replication.factor: 1
