@@ -4,7 +4,7 @@ metadata:
   name: iot-sensor-sw-temperature
   namespace: manuela-stormshift-messaging
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: factory-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
