@@ -35,9 +35,6 @@ spec:
 
             private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
 
-            @PropertyInject("localClusterName")
-            private String localClusterName;
-
             @PropertyInject("s3.custom.endpoint.enabled")
             private String s3_custom_endpoint_enabled;
 
@@ -82,7 +79,7 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-vibration-{{ localClusterName }}-${date:now}.txt"))
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-${date:now}.txt"))
                     .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
                     .log("Uploaded Vibration dataset to S3");
             }

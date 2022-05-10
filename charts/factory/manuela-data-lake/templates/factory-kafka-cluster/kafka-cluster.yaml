@@ -1,8 +1,8 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: kafka-cluster
-  namespace: factory-lake
+  name: factory-kafka-cluster
+  namespace: manuela-stormshift-messaging
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

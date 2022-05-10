@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: kafka-cluster
+  name: prod-kafka-cluster
   namespace: manuela-data-lake
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
