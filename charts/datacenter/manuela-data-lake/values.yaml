@@ -16,7 +16,7 @@ global:
 
 kafka:
   broker:
-    uri: "manuela-data-lake-kafka-bootstrap.manuela-data-lake.svc:9092"
+    uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:
       temperature: "iot-sensor-sw-temperature"
       vibration: "iot-sensor-sw-vibration"
