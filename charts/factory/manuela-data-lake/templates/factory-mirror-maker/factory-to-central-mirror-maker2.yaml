@@ -6,23 +6,23 @@ metadata:
 spec:
   version: 3.1.0
   replicas: 1
-  connectCluster: manuela-central
+  connectCluster: manuela-data-lake
   clusters:
-    - alias: manuela-central
-      bootstrapServers: 'bootstrap-manuela-data-lake-central-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
+    - alias: manuela-data-lake
+      bootstrapServers: 'prod-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
       tls:
         trustedCertificates:
         - certificate: tls.crt
           secretName: kafka-tls-certificate
-    - alias: manuela-factory
-      bootstrapServers: 'manuela-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
+    - alias: manuela-factory-kafka
+      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
       config:
         config.storage.replication.factor: 1
         offset.storage.replication.factor: 1
         status.storage.replication.factor: 1  
   mirrors:
-    - sourceCluster: manuela-factory
-      targetCluster: manuela-central
+    - sourceCluster: manuela-factory-kafka
+      targetCluster: manuela-data-lake
       sourceConnector:
         config:
           replication.factor: 1
