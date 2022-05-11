@@ -65,8 +65,9 @@ spec:
             	String s3params = key
                 + secret
                 + region;
+                String temp = cluster_name;
                 String delims="[ . ]+";
-                String [] tokens = cluster_name.split(delims);
+                String [] tokens = temp.split(delims);
                 for ( int i = 0; i < tokens.length; i++)
                   LOGGER.info("Tokens: " + tokens[i] ); 
 
