@@ -65,9 +65,7 @@ spec:
             	String s3params = key
                 + secret
                 + region;
-                String [] tokens = cluster_name.split(".");
-                String cluster_domain = tokens;
-                String filename = "manuela-dev-vibration-" + cluster_domain;
+                String filename = "manuela-dev-vibration-" + cluster_name;
                 
 
                 from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
