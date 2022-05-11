@@ -68,7 +68,7 @@ spec:
                 String delims="[ . ]+";
                 String [] tokens = cluster_name.split(delims);
                 for ( int i = 0; i < tokens.length; i++)
-                  LOGGER("Tokens: " + tokens[i] ); 
+                  LOGGER.info("Tokens: " + tokens[i] ); 
 
                 String filename = "manuela-dev-vibration-" + cluster_name;
 
