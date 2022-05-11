@@ -29,23 +29,37 @@ spec:
             public void configure() throws Exception {
                 storeTemperatureInKafka();
                 storeVibrationInKafka();
-                readTemperatureFromKafka();
-                readVibrationFromKafka();
+                //readTemperatureFromKafka();
+                //readVibrationFromKafka();
             }
 
             private void storeTemperatureInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "{{ .Values.global.localClusterDomain }}";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
                 from("paho:{{ .Values.mqtt.broker.topic.temperature }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-temp")
                     .log("Storing temperature message from [ {{ .Values.global.localClusterDomain }} ] MQTT: ${body}")
-                    .setHeader(KafkaConstants.KEY, constant("{{ .Values.global.localClusterDomain }}"))
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
                     //.setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void storeVibrationInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "{{ .Values.global.localClusterDomain }}";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
                 from("paho:{{ .Values.mqtt.broker.topic.vibration }}?brokerUrl={{ .Values.mqtt.broker.uri }}&clientId={{ .Values.mqtt.broker.clientId }}-vibr")
                     .log("Storing vibration message from [ {{ .Values.global.localClusterDomain }} ] MQTT: ${body}")
-                    .setHeader(KafkaConstants.KEY, constant("{{ .Values.global.localClusterDomain }}"))
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
                     .to("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
