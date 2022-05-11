@@ -65,7 +65,7 @@ spec:
             	String s3params = key
                 + secret
                 + region;
-                String [] tokens = cluster_name.split('.');
+                String [] tokens = cluster_name.split(".");
                 String cluster_domain = tokens[1];
                 String filename = "manuela-dev-vibration-" + cluster_domain;
                 
