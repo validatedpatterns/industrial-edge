@@ -35,7 +35,7 @@ spec:
 
             private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
 
-            @PropertyInject("local.cluster.domain")
+            @PropertyInject("local.cluster.name")
             private String cluster_name;
 
             @PropertyInject("s3.custom.endpoint.enabled")
