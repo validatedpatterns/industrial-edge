@@ -29,8 +29,8 @@ spec:
             public void configure() throws Exception {
                 storeTemperatureInKafka();
                 storeVibrationInKafka();
-                readTemperatureFromKafka();
-                readVibrationFromKafka();
+                //readTemperatureFromKafka();
+                //readVibrationFromKafka();
             }
 
             private void storeTemperatureInKafka() {
