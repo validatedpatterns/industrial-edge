@@ -65,14 +65,12 @@ spec:
             	String s3params = key
                 + secret
                 + region;
+                String filename;
                 String temp = cluster_name;
                 String delims="[ . ]+";
                 String [] tokens = temp.split(delims);
-                LOGGER.info("TEMP: " + temp );
-                for ( int i = 0; i < tokens.length; i++)
-                  LOGGER.info("Tokens: " + tokens[i] ); 
-
-                String filename = "manuela-dev-vibration-" + cluster_name;
+                if ( tokens.length > 0 )
+                  filename = "manuela-dev-vibration-" + tokens[1];
 
                 from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
