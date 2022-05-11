@@ -10,7 +10,7 @@ data:
     kafka.broker.topic.temperature={{ .Values.kafka.broker.topic.temperature }}
     kafka.broker.topic.vibration={{ .Values.kafka.broker.topic.vibration }}
 
-    local.cluster.name={{ .Values.global.hubClusterName }}
+    local.cluster.name={{ .Values.global.localClusterDomain }}
     s3.region={{ .Values.global.s3.bucket.region }}
     s3.bucket.name={{ .Values.global.s3.bucket.name }}
     s3.message.aggregation.count={{ .Values.global.s3.bucket.message.aggregation.count }}
