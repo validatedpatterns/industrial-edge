@@ -1,0 +1,15 @@
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker
+metadata:
+  name: factory-to-central
+  namespace: manuela-stormshift-messaging
+spec:
+  consumer:
+    bootstrapServers: >-
+      factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092
+    groupId: my-source-group-id
+  include: .*
+  producer:
+    bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092'
+  replicas: 1
+  version: 3.1.0
