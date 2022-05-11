@@ -65,6 +65,9 @@ spec:
             	String s3params = key
                 + secret
                 + region;
+
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
                 String temp = cluster_name;
                 String delims="[ . ]+";
                 String [] tokens = temp.split(delims);
@@ -97,6 +100,13 @@ spec:
             	String s3params = key
                    + secret
                    + region;
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = cluster_name;
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String filename = "manuela-dev-temperature-" + tokens[1];
+
                 from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
@@ -113,7 +123,7 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-temperature-${date:now}.txt"))
+                    .setHeader(AWS2S3Constants.KEY, simple(filename + "-${date:now}.txt"))
                     .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
                     .log("Uploaded Temperature dataset to S3");
             }
