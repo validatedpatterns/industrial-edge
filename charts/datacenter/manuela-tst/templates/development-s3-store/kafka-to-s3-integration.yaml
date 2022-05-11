@@ -68,6 +68,7 @@ spec:
                 String temp = cluster_name;
                 String delims="[ . ]+";
                 String [] tokens = temp.split(delims);
+                LOGGER.info("TEMP: " + temp );
                 for ( int i = 0; i < tokens.length; i++)
                   LOGGER.info("Tokens: " + tokens[i] ); 
 
