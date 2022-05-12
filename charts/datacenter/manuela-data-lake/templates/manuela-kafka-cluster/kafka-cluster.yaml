@@ -23,7 +23,7 @@ spec:
         tls: true
         configuration:
           bootstrap: 
-            host: bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.localClusterDomain }}
+            host: bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
