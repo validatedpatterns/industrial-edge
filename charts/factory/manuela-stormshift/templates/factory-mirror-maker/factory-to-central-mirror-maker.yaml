@@ -10,6 +10,7 @@ spec:
     groupId: my-source-group-id
   include: .*
   producer:
-    bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092'
+    #bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092'
+    bootstrapServers: 'https://bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}'
   replicas: 1
   version: 3.1.0
