@@ -21,9 +21,6 @@ spec:
         port: 9094
         type: route
         tls: true
-        configuration:
-          bootstrap: 
-            host: bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
