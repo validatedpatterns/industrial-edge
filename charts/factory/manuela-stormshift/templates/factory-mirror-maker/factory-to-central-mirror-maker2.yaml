@@ -6,7 +6,7 @@ metadata:
 spec:
   version: 3.1.0
   replicas: 1
-  connectCluster: factory-kafka-cluster
+  connectCluster: production-kafka-cluster
   clusters:
     - alias: production-kafka-cluster
       bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
