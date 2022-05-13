@@ -11,8 +11,7 @@ spec:
   include: .*
   producer:
     #bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092'
-    #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:9094'
-    bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
+    bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:9094'
 
   replicas: 1
   version: 3.1.0
