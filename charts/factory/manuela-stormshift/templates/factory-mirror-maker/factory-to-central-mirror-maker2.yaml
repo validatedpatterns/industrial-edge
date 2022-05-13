@@ -9,8 +9,8 @@ spec:
   connectCluster: production-kafka-cluster
   clusters:
     - alias: production-kafka-cluster
-      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
-      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
+      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
+      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
       #
       # TODO: This is a secret that we will need to create in the manuela-stormshift-messaging namespace
       #
