@@ -27,7 +27,7 @@ global:
       region: AWSREGION
       message:
         aggregation:
-          count: 100
+          count: 1000
       custom:
         endpoint:
           enabled: false
