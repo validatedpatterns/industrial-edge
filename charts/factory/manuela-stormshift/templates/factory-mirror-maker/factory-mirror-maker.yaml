@@ -17,7 +17,7 @@ spec:
     timeoutSeconds: 2
   producer:
     bootstrapServers: >-
-      bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443
+      prod-kafka-cluster-kafka-bootstrap-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443
     tls:
       trustedCertificates:
         - certificate: ca.crt
