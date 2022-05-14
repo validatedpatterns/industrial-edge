@@ -1,0 +1,32 @@
+﻿apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker
+metadata:
+  name: dev-mirror-maker
+  namespace: manuela-tst-all
+spec:
+  consumer:
+    bootstrapServers: >-
+      dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
+    groupId: my-source-group-id
+  include: .*
+  livenessProbe:
+    failureThreshold: 2
+    initialDelaySeconds: 1
+    periodSeconds: 1
+    successThreshold: 1
+    timeoutSeconds: 2
+  producer:
+    bootstrapServers: >-
+      dev-kafka-cluster-kafka-bootstrap-manuela-tst-all.{{ .Values.global.hubClusterDomain }}:443
+    tls:
+      trustedCertificates:
+        - certificate: ca.crt
+          secretName: dev-kafka-cluster-cluster-ca-cert
+  readinessProbe:
+    failureThreshold: 2
+    initialDelaySeconds: 0
+    periodSeconds: 1
+    successThreshold: 2
+    timeoutSeconds: 2
+  replicas: 1
+  version: 3.1.0
