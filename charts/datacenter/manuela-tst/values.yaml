@@ -18,7 +18,7 @@ machineSensor2:
 mqtt:
   broker:
     uri: "tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616"
-    clientId: "MQTT2KafkaRoute"
+    clientId: "MQTT2KafkaRouteDev"
     topic:
       temperature: "iot-sensor/sw/temperature"
       vibration: "iot-sensor/sw/vibration"
