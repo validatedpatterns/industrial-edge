@@ -27,7 +27,7 @@ global:
       region: us-west-1
       message:
         aggregation:
-          count: 1000
+          count: 50
       custom:
         endpoint:
           enabled: false
