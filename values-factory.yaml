@@ -20,13 +20,9 @@ clusterGroup:
     namespace: manuela-stormshift-messaging
     source: community-operators
     csv: seldon-operator.v1.12.0
-  - name: amq-streams
-    namespace: manuela-stormshift-messaging
-    channel: amq-streams-2.x
-    csv: amqstreams.v2.0.1-0
 
   - name: amq-streams
-    namespace: factory-lake
+    namespace: manuela-stormshift-messaging
     channel: amq-streams-2.x
     csv: amqstreams.v2.0.1-0
 
@@ -39,10 +35,6 @@ clusterGroup:
     namespace: manuela-stormshift-messaging
     channel: 1.6.x
     csv: red-hat-camel-k-operator.v1.6.3
-
-  - name: red-hat-camel-k
-    namespace: factory-s3-store
-    channel: 1.6.x
 
   projects:
   - factory
