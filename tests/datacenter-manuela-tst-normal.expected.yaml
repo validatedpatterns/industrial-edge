@@ -1,4 +1,58 @@
 ---
+# Source: manuela-tst-all/templates/development-s3-store/secret-dev-cluster.crt
+apiVersion: v1
+data:
+  ca.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZMVENDQXhXZ0F3SUJBZ0lVYjhKUVJIUHl6S3pLd1hnYnBYSVp4SDV6ekxvd0RRWUpLb1pJaHZjTkFRRU4KQlFBd0xURVRNQkVHQTFVRUNnd0thVzh1YzNSeWFXMTZhVEVXTUJRR0ExVUVBd3dOWTJ4MWMzUmxjaTFqWVNCMgpNREFlRncweU1qQTFNVFl4TXpRd01EZGFGdzB5TXpBMU1UWXhNelF3TURkYU1DMHhFekFSQmdOVkJBb01DbWx2CkxuTjBjbWx0ZW1reEZqQVVCZ05WQkFNTURXTnNkWE4wWlhJdFkyRWdkakF3Z2dJaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUN3VVZVODBVSmFFNVUxaFJXclUyRkcrV2daTG5BTnRITzMrZHJaaTcydQpRNHVaRzFsTmRjVlBHaVFCemUvZ3h6dUNDVmNESjlQRjA1QnpJamJQLzBibzROZnhFejRnVkZkWHpBNXdZU0ZqCnFyNjNVcFRKZmxVdTZuQzRZQURmeGw2RkZkS0xseGovS3ZyYUZRUGMyTHEwaDJ0YlhaWWZuMFBtamo5bTc1WGUKMGpSQTdJbXJRNU9SaVFjY0pXbjZKYTdoKytOaW9ReE5mWnM1UXFkWStEY0p1Rm5qNjhUbWtEdDc4Z0dXZkJ4dAovMldKTjZ2OFUrNytRazlrYVJBaFNkWGNBMTlKeHc5NVU1N0RsOS9vdVlpUXRLRmRlc0VJVjN6YWtzWXpkamh6CkJxQmNKd1pJam1WMkpYVmV6dkljalcrbHVjM1g5enFVSnI4VjVWNFN5R1p4N3ZpbkptcGxIUWp2QUxyMlN3K3oKdUdPa2tiWkkxZnoyTXNaQmFBMnIyV3hBYjAzZmx3OUIxZ212eEp1OXpTZE8yNFJwU0M0TXpDSy9uclVybGt4QgpPRmE4K3lsOUZFTmtWMllodStRS1JwQmRsTTBBZnNsbk1xeEdpZUpPa1dzRGVDMVJldERIVEtHYlp1NStqM2RZClZTbHFqTTNrVm5xOEUvU2xqQVZJcjYzV3NPNjJUMGpqa3VHeHN5eEN4Z3F0WDFXK2NWbkhoNVkwcytlaWFnTE8KcmhXUWtnNC9HckhmbkdGT1QvbVhZZWNtcDNXRk4remJ3RXRLTmVoQ200Q2dZZnRwSnBOQzZhOWt0UEs3ejZ3MAp0c0xjTHFKdERIUi90MnBXcDJnN25DblRxZGlCMHhXK29vaFEvVmMybWo0RCtTZERZOHVkYjQyKzJBLy9KQWRZCjB3SURBUUFCbzBVd1F6QWRCZ05WSFE0RUZnUVVKZUZjdUpKRzF0SkJHejVsVVM1Y0pnMFdWRlV3RWdZRFZSMFQKQVFIL0JBZ3dCZ0VCL3dJQkFEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0RRWUpLb1pJaHZjTkFRRU5CUUFEZ2dJQgpBQnJPbjZoYzQrR3hEdmlKTUFYMENOUlMxQnhHRTRBeHpHdGxGTmJ4WXZRcDJsejZEdnU1QkswRUNaTXVVdHJ5CmdxWGt0ZUxnQ2N4TTlaQ3NwVDhHamd6NDJWTlcyYnNKM3Z3Mktja2VJaFVDVjl0YnZRMHY5VmVsSmUzWEN5S20KQUIwVEl1L0R5Z1QyRHRFUDVIK1RiZkZObzgwamxLMmtZSTJ2WE54blIxbWQ0T1d3Z0tzUDhDMGZlL2N6c3FjWgp5TDJYSGQyc3hHeERDT0JKVko5K3Zwd2tPdU11RjNxNzRJMGdQSnc5QnhGeVUrQzRrR2lxREpWRC9IOXZ5eDZ0Cmg1ZGV6bmJLM2JXbDE2KzROaGxSOHIxUzBuK0dFejRBL1hSUmprbVYySk9HbTV5QVRzN21FU25tQStYbHdtTncKdStyNlk3dlFEQ0tvZDhtZlYxMWR2KzVLYXkvTXNFTy9ZT1ZadEljcTVmMnk3QVRGT2wxZXBUeE82clphYnFNSgpUem05ajMzTFNDMFFQaU5XQm5MTjBTNWFJZkxrdGwxdVRmb2Y3cXZkSjNVdUhRYTRsR3ZSVDNOSlhVRkUyb3BpClZXWWloVVNsQzd1ZmFkcFhoRTBpc2VCWktkeVJkdzdkbEhCMGcra2dOSTFBNVppdlkyYlZqSHY4MG5tNnRDVEIKKzF5MW1HQUh3bnl5ejA2V1h1QkwydXdqM2RDanplRnNtQnNVaXJwUmNkNWM2WWhzeWZSSFlYcldCY1RYRm9VLwpldFVvZWdibDNJRkRNbllwTUxjUFl0bGxvTVMwMVNKeFhKVHZMMGJBUGMvVHQrbUdUQllyMjJnWkdVWDdnTG5tCnhQOXJML3pqaTlFVDN1OThLT015d2laRHltOG0wYmp3dGg4dTc4cXJtMC9yCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  ca.p12: MIIGkwIBAzCCBkwGCSqGSIb3DQEHAaCCBj0EggY5MIIGNTCCBjEGCSqGSIb3DQEHBqCCBiIwggYeAgEAMIIGFwYJKoZIhvcNAQcBMGYGCSqGSIb3DQEFDTBZMDgGCSqGSIb3DQEFDDArBBT/Yrxsb5CF9PHftdLoBplyg5i/agICJxACASAwDAYIKoZIhvcNAgkFADAdBglghkgBZQMEASoEEPqwYtKWCA3OrpJbaEtSLDWAggWgwquJgvuEp93YsBDJswC98sgYy5Y+wTpdr85dfp0CnJTkaSUg2J9p2B2toaJ+CAuxnnmbAb4UKcTiXwB942ka2QTHSRGnW+OShb+21/j4iuyfLwavMFDUVMxzXtG9/Vb7UeHO8F7ZEdC5H1Zkv/CReTrpAfEOvESMS1Ogl09ZH8Mi8VgxS4jRajTQColVnG8vZU+2W2u3LZbSqDccNML+Enga66k94APp4f3bKJMmjzTJgejRC0XHASqbOiBBjVRR8gRebohX9cXf/Ty/0LTyiN+pZTNv5XxR6hc8fPHxW/YVTrzU8GLAoxUXxo5jKipwRC9EH3d6JuD+ASJx5Kf0RF72TDmxn8utoIzHv+Dc2jTmLHxgd7W4hs5+LaHbIR2nRXyoRK42jXMA9yDyfFf722j3d3wUscdi8iBa6RqvZfBLCf/74E2KCXCgQ3Ywi0cyGVZXwUJ7c23BatQ9a3fTpCYhSWjb+kaAPqqhdLkBmy17OZoMBb7EhY2KC5EYDRLth5/lWbPegL76Ry0BZQWfiYGy2LtD0m6lZp/qNME1phligfWRov9unaVSRNifjX/C/mlWl2JK6ZH5lfuZNywG+gRTEPvbp2h0F41TXNfkXQjD5iGG++qdIiinxEzCpXMMnWYPwILWZJ3i13XZODJz7dEPmU0wRt0mWjF7PnJwtaEuVM+HFVRcUBr/j05dgK9WbYb9503ivJQb8qF+87+oWDpjQyCdGKvFc3zSVXYMmVDF7E8qpHjVFWw/Ow3hRsNW/+yWu9Y1xc3zWVBOcBEpUneoCvkLMyyop40iYtlxxUp8e857xOTG0VYPAtvDA6G8UGG4R85mq35YGzxUDpNfCRedIkN1OBHerVnh1ko0m4Dat8WFNInyIB7E2HI6vdS1tkjQuFWkRYGucffdLg/5ccfR6Mlufzhx1KPl+bppfQz6U7OAovPYeKw2v1AvMg9kIS0WsHZ/esQm8noX+QXilQshLS6XiLOXe+EA8ZQU+QcXGL1YVO9dPxjb3p8w++Xd/4YQozXOfizSVRHTdZAvvj1HekOScT4rXZZGGQhhuYVLJBjkKyEm9j/t0ta7Pq9zALlYhPzh8ArRD/Q955mFhmE/czGf27cbNxuejzynWYSzD3wdaN+4qH8wdNjrPcyxTxfgeJgMKWaDW9kyP4+exCOKl5i/lUrmeCQhiGzgeo8OCBTZzi1FPh7nejfZoMDG37qcWxzje2MggBwLX5BMxKpKg8Q/vOKy1hpHzn76YrwLO1Eic1ydWdPq2IMUogkfaEPCKKYzXny1PvX8g9dX5l6PzMrSs6479gT7mKtpDX8FD8RuunyS5/jr5fa+NnOIYvDJkr0L6upNH1P2UfIfB8c/n6J1i12KglJrB97hEGZX5ltbBFNtD0DSNpzHqE1ZSkNw2a/4k4h85FK1tLUt8C3PMQf1bKR8Q7ahEtuYqzD8Sivf6NDAfWkXBqZyxldbabgWXmjVSYVvv5I+QYGYnTFY6VdA00VFtMWg9e32FsMBrFlA0DCTlE8GFa/iF/2T4pybSSaUDFY17xJq9w4BFNsILKc7WgYsCx04kQHztAXKttYIjGtKAaHrYFJnNa42W9m9VDraO2skhfT2BI17/VTk6xbg5DE9GkYkBohe84o170KGqHt278TkQLJmh39PqDpler+0cSzoXuGSo2jEd0r3MIriwRvM7Lmar0MpgkzIvNiQBsdh251l8atApAhtwA0z7JXFuVoxhMU7xRdWnxOMx99D/AbKHW7lD4x678+J68mI7rLcLIIFNMabjJEDgfIuptFtbUuDrEApPqc9nicBWErjwVd0yk9MxFB52dDH4LX9iwdIV78rLPFFciqkq7if5kDHrRtTQaGIUbAsdVQkEIa5G5k+x8/GdsPER0bqorg9Rnq7UCX3FYen+g7JMD4wITAJBgUrDgMCGgUABBSIdawLZJ80ydy9PkRbG5P1kFudDgQUM5l9bcox5c9sf8ZnlTqYMsFWGP8CAwGGoA==
+  ca.password: aDd3aXdTOEdoaEpr
+kind: Secret
+metadata:
+  annotations:
+    strimzi.io/ca-cert-generation: "0"
+  creationTimestamp: "2022-05-16T13:40:08Z"
+  labels:
+    app.kubernetes.io/instance: dev-kafka-cluster
+    app.kubernetes.io/managed-by: strimzi-cluster-operator
+    app.kubernetes.io/name: strimzi
+    app.kubernetes.io/part-of: strimzi-dev-kafka-cluster
+    argocd.argoproj.io/instance: manuela-test
+    strimzi.io/cluster: dev-kafka-cluster
+    strimzi.io/kind: Kafka
+    strimzi.io/name: strimzi
+  name: dev-kafka-cluster-cluster-ca-cert
+  namespace: manuela-tst-all
+  ownerReferences:
+  - apiVersion: kafka.strimzi.io/v1beta2
+    blockOwnerDeletion: false
+    controller: false
+    kind: Kafka
+    name: dev-kafka-cluster
+    uid: b17326fd-d60e-47f2-b967-f514c18c9f2a
+  resourceVersion: "131711"
+  uid: 47b22178-61f7-4393-94d1-0a92de6c7191
+type: Opaque
+---
+# Source: manuela-tst-all/templates/development-s3-store/kafka-to-s3-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-to-s3-config
+  namespace: manuela-tst-all
+data:
+  application.properties: |
+    
+    kafka.broker.uri=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
+    kafka.broker.topic.temperature=iot-sensor-sw-temperature
+    kafka.broker.topic.vibration=iot-sensor-sw-vibration
+
+    local.cluster.name=region.example.com
+    s3.region=AWSREGION
+    s3.bucket.name=S3BUCKETNAME
+    s3.message.aggregation.count=50
+    s3.custom.endpoint.enabled=false
+    # Convert this directory into a helm chart and use templating to set this
+    s3.custom.endpoint.url=s3-openshift-storage.region.example.com
+---
 # Source: manuela-tst-all/templates/line-dashboard/line-dashboard-configmap.config.yaml
 apiVersion: v1
 kind: ConfigMap
@@ -109,7 +163,7 @@ data:
   SENSOR_LIGHT_MINRANGE: "0"
   SENSOR_LIGHT_START: "0"
 
-  SENSOR_TEMPERATURE_ENABLED: "false"
+  SENSOR_TEMPERATURE_ENABLED: "true"
   SENSOR_TEMPERATURE_FREQUENCY: "5"
   SENSOR_TEMPERATURE_MAXITERATION: "1"
   SENSOR_TEMPERATURE_MAXRANGE: "55"
@@ -351,7 +405,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 989bea097c033d0f4670c87af059f31ae5bb8eb08c5262950b5de4cb0a471e16 
+        checksum/config: 98e3f28f7647a953d867bf0f3a0e7ece252aa525a43b8079c029df2ff3982eda 
       labels:
         application: machine-sensor-2
         deploymentConfig: machine-sensor-2
@@ -577,11 +631,132 @@ spec:
     referencePolicy:
       type: Local
 ---
+# Source: manuela-tst-all/templates/development-s3-store/kafka-to-s3-integration.yaml
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: kafka-to-s3-integration
+  namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+    - type: configmap
+      value: kafka-to-s3-config
+    - type: secret
+      value: s3-secret  
+  profile: OpenShift
+  sources:
+    - content: |
+       // dependency=camel:camel-endpointdsl
+        package com.redhat.manuela.routes;
+        import java.io.ByteArrayInputStream;
+        import java.util.Iterator;
+        import java.util.List;
+
+        import org.apache.camel.Exchange;
+        import org.apache.camel.Processor;
+        import org.apache.camel.PropertyInject;
+        import org.apache.camel.builder.RouteBuilder;
+        import org.apache.camel.component.aws2.s3.AWS2S3Constants;
+        import org.apache.camel.builder.endpoint.dsl.AWS2S3EndpointBuilderFactory;
+        import org.apache.camel.model.OnCompletionDefinition;
+        import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+
+        public class Kafka2S3Route extends RouteBuilder {
+
+            private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
+
+            @PropertyInject("s3.custom.endpoint.enabled")
+            private String s3_custom_endpoint_enabled;
+
+            @PropertyInject("s3.custom.endpoint.url")
+            private String s3_custom_endpoint_url;
+
+            @PropertyInject("s3.accessKey")
+            private String s3_accessKey;
+            @PropertyInject("s3.secretKey")
+            private String s3_secretKey;
+            @PropertyInject("s3.message.aggregation.count")
+            private String s3_message_aggregation_count;
+
+            @PropertyInject("s3.region")
+            private String s3_region;
+            @Override
+            public void configure() throws Exception {
+                storeTemperatureInS3();
+                storeVibrationInS3();
+            }
+            private void storeVibrationInS3() {
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                + secret
+                + region;
+
+                from("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .convertBodyTo(String.class)
+                    .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
+                    .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                List<Exchange> data = exchange.getIn().getBody(List.class);
+                                StringBuffer sb = new StringBuffer();
+                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+                                    String ex = (String) iterator.next();
+                                    sb.append(ex+"\\n");
+                                }
+                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
+                            }
+                        })
+                    // .to(\"file:/var/tmp/\");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
+            }
+            private void storeTemperatureInS3() {
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                   + secret
+                   + region;
+                from("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .convertBodyTo(String.class)
+                    .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
+                    .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                List<Exchange> data = exchange.getIn().getBody(List.class);
+                                StringBuffer sb = new StringBuffer();
+                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+                                    String ex = (String) iterator.next();
+                                    sb.append(ex+"\n");
+                                }
+                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
+                            }
+                        })
+                    // .to(\"file:/var/tmp/\");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
+            }
+            @Override
+            public OnCompletionDefinition onCompletion() {
+                return super.onCompletion();
+            }
+        }
+      name: Kafka2S3Route.java
+---
 # Source: manuela-tst-all/templates/messaging-kafka/mqtt2kafka-integration.yaml
 apiVersion: camel.apache.org/v1
 kind: Integration
 metadata:
   name: mqtt2kafka-integration
+  namespace: manuela-tst-all
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
@@ -608,28 +783,44 @@ spec:
             public void configure() throws Exception {
                 storeTemperatureInKafka();
                 storeVibrationInKafka();
-                // readTemperatureFromKafka();
-                // readVibrationFromKafka();
+                //readTemperatureFromKafka();
+                //readVibrationFromKafka();
             }
 
             private void storeTemperatureInKafka() {
-                from("paho:iot-sensor/sw/temperature?brokerUrl=tcp://broker-amq-mqtt-all-0-svc:61616&clientId=MQTT2KafkaRoute-temp")
-                    .log("Reading message form MQTT: ${body}")
-                    // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
-                    .to("kafka:iot-sensor-sw-temperature?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "region.example.com";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
+                from("paho:iot-sensor/sw/temperature?brokerUrl=tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616&clientId=MQTT2KafkaRouteDev-temp")
+                    .log("Storing temperature message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
+                    //.setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void storeVibrationInKafka() {
-                from("paho:iot-sensor/sw/vibration?brokerUrl=tcp://broker-amq-mqtt-all-0-svc:61616&clientId=MQTT2KafkaRoute-vibr")
-                    .log("Reading message form MQTT: ${body}")
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "region.example.com";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
+                from("paho:iot-sensor/sw/vibration?brokerUrl=tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616&clientId=MQTT2KafkaRouteDev-vibr")
+                    .log("Storing vibration message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
-                    .to("kafka:iot-sensor-sw-vibration?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                    .to("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void readTemperatureFromKafka() {
-                from("kafka:iot-sensor-sw-temperature?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                from("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
                     .log("Reading message from Kafka: ${body}")
                     .log("    on the topic ${headers[kafka.TOPIC]}")
                     .log("    on the partition ${headers[kafka.PARTITION]}")
@@ -638,7 +829,7 @@ spec:
             }
 
             private void readVibrationFromKafka() {
-                from("kafka:iot-sensor-sw-vibration?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                from("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
                     .log("Reading message from Kafka: ${body}")
                     .log("    on the topic ${headers[kafka.TOPIC]}")
                     .log("    on the partition ${headers[kafka.PARTITION]}")
@@ -671,28 +862,27 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: manuela-kafka-cluster
+  name: dev-kafka-cluster
+  namespace: manuela-tst-all
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   kafka:
-    version: 3.0.0
     replicas: 3
     listeners:
       - name: plain
         port: 9092
         type: internal
         tls: false
-        configuration:
-          useServiceDnsDomain: true
       - name: tls
         port: 9093
         type: internal
         tls: true
-        authentication:
-          type: tls
+      - name: external
+        port: 9094
+        type: route
+        tls: true
     config:
-      log.message.format.version: '3.0'
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
       transaction.state.log.replication.factor: 3
@@ -712,7 +902,7 @@ kind: KafkaTopic
 metadata:
   name: iot-sensor-sw-temperature
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: dev-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
@@ -728,7 +918,7 @@ kind: KafkaTopic
 metadata:
   name: iot-sensor-sw-vibration
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: dev-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
@@ -819,17 +1009,3 @@ spec:
       type: MODEL
     name: predictor
     replicas: 1
----
-# Source: manuela-tst-all/templates/anomaly-detection/seldon-subscription.yaml
-apiVersion: operators.coreos.com/v1alpha1
-kind: Subscription
-metadata:
-  name: seldon-operator
-  namespace: manuela-tst-all
-spec:
-  channel: stable
-  installPlanApproval: 
-  name: seldon-operator
-  source: community-operators
-  sourceNamespace: openshift-marketplace
-  startingCSV: seldon-operator.v1.12.0
