@@ -5,14 +5,14 @@ global:
 
   s3:
     bucket:
-      name: BUCKETNAME
-      region: us-west-1
+      name: S3BUCKETNAME
+      region: AWSREGION
       message:
         aggregation:
-          count: 100
+          count: 50
       custom:
         endpoint:
-          enabled: true
+          enabled: false
 
 kafka:
   broker:
