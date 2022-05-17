@@ -12,10 +12,10 @@ data:
     kafka.broker.topic.temperature=manuela-factory.iot-sensor-sw-temperature
     kafka.broker.topic.vibration=manuela-factory.iot-sensor-sw-vibration
 
-    s3.region=us-west-1
+    s3.region=AWSREGION
     s3.bucket.name=BUCKETNAME
-    s3.message.aggregation.count=100
-    s3.custom.endpoint.enabled=true
+    s3.message.aggregation.count=50
+    s3.custom.endpoint.enabled=false
     # Convert this directory into a helm chart and use templating to set this
     s3.custom.endpoint.url=s3-openshift-storage.
 ---

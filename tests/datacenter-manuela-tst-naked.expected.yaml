@@ -1,0 +1,1011 @@
+---
+# Source: manuela-tst-all/templates/development-s3-store/secret-dev-cluster.crt
+apiVersion: v1
+data:
+  ca.crt: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZMVENDQXhXZ0F3SUJBZ0lVYjhKUVJIUHl6S3pLd1hnYnBYSVp4SDV6ekxvd0RRWUpLb1pJaHZjTkFRRU4KQlFBd0xURVRNQkVHQTFVRUNnd0thVzh1YzNSeWFXMTZhVEVXTUJRR0ExVUVBd3dOWTJ4MWMzUmxjaTFqWVNCMgpNREFlRncweU1qQTFNVFl4TXpRd01EZGFGdzB5TXpBMU1UWXhNelF3TURkYU1DMHhFekFSQmdOVkJBb01DbWx2CkxuTjBjbWx0ZW1reEZqQVVCZ05WQkFNTURXTnNkWE4wWlhJdFkyRWdkakF3Z2dJaU1BMEdDU3FHU0liM0RRRUIKQVFVQUE0SUNEd0F3Z2dJS0FvSUNBUUN3VVZVODBVSmFFNVUxaFJXclUyRkcrV2daTG5BTnRITzMrZHJaaTcydQpRNHVaRzFsTmRjVlBHaVFCemUvZ3h6dUNDVmNESjlQRjA1QnpJamJQLzBibzROZnhFejRnVkZkWHpBNXdZU0ZqCnFyNjNVcFRKZmxVdTZuQzRZQURmeGw2RkZkS0xseGovS3ZyYUZRUGMyTHEwaDJ0YlhaWWZuMFBtamo5bTc1WGUKMGpSQTdJbXJRNU9SaVFjY0pXbjZKYTdoKytOaW9ReE5mWnM1UXFkWStEY0p1Rm5qNjhUbWtEdDc4Z0dXZkJ4dAovMldKTjZ2OFUrNytRazlrYVJBaFNkWGNBMTlKeHc5NVU1N0RsOS9vdVlpUXRLRmRlc0VJVjN6YWtzWXpkamh6CkJxQmNKd1pJam1WMkpYVmV6dkljalcrbHVjM1g5enFVSnI4VjVWNFN5R1p4N3ZpbkptcGxIUWp2QUxyMlN3K3oKdUdPa2tiWkkxZnoyTXNaQmFBMnIyV3hBYjAzZmx3OUIxZ212eEp1OXpTZE8yNFJwU0M0TXpDSy9uclVybGt4QgpPRmE4K3lsOUZFTmtWMllodStRS1JwQmRsTTBBZnNsbk1xeEdpZUpPa1dzRGVDMVJldERIVEtHYlp1NStqM2RZClZTbHFqTTNrVm5xOEUvU2xqQVZJcjYzV3NPNjJUMGpqa3VHeHN5eEN4Z3F0WDFXK2NWbkhoNVkwcytlaWFnTE8KcmhXUWtnNC9HckhmbkdGT1QvbVhZZWNtcDNXRk4remJ3RXRLTmVoQ200Q2dZZnRwSnBOQzZhOWt0UEs3ejZ3MAp0c0xjTHFKdERIUi90MnBXcDJnN25DblRxZGlCMHhXK29vaFEvVmMybWo0RCtTZERZOHVkYjQyKzJBLy9KQWRZCjB3SURBUUFCbzBVd1F6QWRCZ05WSFE0RUZnUVVKZUZjdUpKRzF0SkJHejVsVVM1Y0pnMFdWRlV3RWdZRFZSMFQKQVFIL0JBZ3dCZ0VCL3dJQkFEQU9CZ05WSFE4QkFmOEVCQU1DQVFZd0RRWUpLb1pJaHZjTkFRRU5CUUFEZ2dJQgpBQnJPbjZoYzQrR3hEdmlKTUFYMENOUlMxQnhHRTRBeHpHdGxGTmJ4WXZRcDJsejZEdnU1QkswRUNaTXVVdHJ5CmdxWGt0ZUxnQ2N4TTlaQ3NwVDhHamd6NDJWTlcyYnNKM3Z3Mktja2VJaFVDVjl0YnZRMHY5VmVsSmUzWEN5S20KQUIwVEl1L0R5Z1QyRHRFUDVIK1RiZkZObzgwamxLMmtZSTJ2WE54blIxbWQ0T1d3Z0tzUDhDMGZlL2N6c3FjWgp5TDJYSGQyc3hHeERDT0JKVko5K3Zwd2tPdU11RjNxNzRJMGdQSnc5QnhGeVUrQzRrR2lxREpWRC9IOXZ5eDZ0Cmg1ZGV6bmJLM2JXbDE2KzROaGxSOHIxUzBuK0dFejRBL1hSUmprbVYySk9HbTV5QVRzN21FU25tQStYbHdtTncKdStyNlk3dlFEQ0tvZDhtZlYxMWR2KzVLYXkvTXNFTy9ZT1ZadEljcTVmMnk3QVRGT2wxZXBUeE82clphYnFNSgpUem05ajMzTFNDMFFQaU5XQm5MTjBTNWFJZkxrdGwxdVRmb2Y3cXZkSjNVdUhRYTRsR3ZSVDNOSlhVRkUyb3BpClZXWWloVVNsQzd1ZmFkcFhoRTBpc2VCWktkeVJkdzdkbEhCMGcra2dOSTFBNVppdlkyYlZqSHY4MG5tNnRDVEIKKzF5MW1HQUh3bnl5ejA2V1h1QkwydXdqM2RDanplRnNtQnNVaXJwUmNkNWM2WWhzeWZSSFlYcldCY1RYRm9VLwpldFVvZWdibDNJRkRNbllwTUxjUFl0bGxvTVMwMVNKeFhKVHZMMGJBUGMvVHQrbUdUQllyMjJnWkdVWDdnTG5tCnhQOXJML3pqaTlFVDN1OThLT015d2laRHltOG0wYmp3dGg4dTc4cXJtMC9yCi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+  ca.p12: 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
+  ca.password: aDd3aXdTOEdoaEpr
+kind: Secret
+metadata:
+  annotations:
+    strimzi.io/ca-cert-generation: "0"
+  creationTimestamp: "2022-05-16T13:40:08Z"
+  labels:
+    app.kubernetes.io/instance: dev-kafka-cluster
+    app.kubernetes.io/managed-by: strimzi-cluster-operator
+    app.kubernetes.io/name: strimzi
+    app.kubernetes.io/part-of: strimzi-dev-kafka-cluster
+    argocd.argoproj.io/instance: manuela-test
+    strimzi.io/cluster: dev-kafka-cluster
+    strimzi.io/kind: Kafka
+    strimzi.io/name: strimzi
+  name: dev-kafka-cluster-cluster-ca-cert
+  namespace: manuela-tst-all
+  ownerReferences:
+  - apiVersion: kafka.strimzi.io/v1beta2
+    blockOwnerDeletion: false
+    controller: false
+    kind: Kafka
+    name: dev-kafka-cluster
+    uid: b17326fd-d60e-47f2-b967-f514c18c9f2a
+  resourceVersion: "131711"
+  uid: 47b22178-61f7-4393-94d1-0a92de6c7191
+type: Opaque
+---
+# Source: manuela-tst-all/templates/development-s3-store/kafka-to-s3-cm.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: kafka-to-s3-config
+  namespace: manuela-tst-all
+data:
+  application.properties: |
+    
+    kafka.broker.uri=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
+    kafka.broker.topic.temperature=iot-sensor-sw-temperature
+    kafka.broker.topic.vibration=iot-sensor-sw-vibration
+
+    local.cluster.name=
+    s3.region=AWSREGION
+    s3.bucket.name=BUCKETNAME
+    s3.message.aggregation.count=50
+    s3.custom.endpoint.enabled=false
+    # Convert this directory into a helm chart and use templating to set this
+    s3.custom.endpoint.url=s3-openshift-storage.
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-configmap.config.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: line-dashboard-configmap
+  namespace: manuela-tst-all
+  labels:
+    app.kubernetes.io/instance: manuela-tst-all
+data: 
+  "config.json": |-
+    {
+      "websocketHost": "http://messaging-manuela-tst-all.",
+      "websocketPath": "/api/service-web/socket",
+      "SERVER_TIMEOUT": "20000"
+    }
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-1-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: machine-sensor-1
+data:
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.
+  #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
+    #MQTT_PORT: "80"
+    #MQTT_PORT: "61616"
+
+
+  APP_NAME: "iot-sensor"
+  DEVICE_ID: "pump-1"
+  DEVICE_METRICS: "temperature,vibration,gps,light"
+  MACHINE_ID: "floor-1-line-1-extruder-1"
+
+  MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
+  MQTT_PASSWORD: "iotuser"
+  MQTT_PORT: "61616"
+  MQTT_TLSSNI: "false"
+  MQTT_USER: "iotuser"
+
+  SENSOR_GPS_ENABLED: "false"
+  SENSOR_GPS_FINAL_LATITUDE: "40.689879"
+  SENSOR_GPS_FINAL_LONGITUDE: "-73.992895"
+  SENSOR_GPS_FREQUENCY: "5"
+  SENSOR_GPS_INITIAL_LATITUDE: "42.579258"
+  SENSOR_GPS_INITIAL_LONGITUDE: "-71.437841"
+  SENSOR_GPS_ITERATION_LATITUDE: "-0.009"
+  SENSOR_GPS_ITERATION_LONGITUDE: "-0.012"
+
+  SENSOR_LIGHT_ENABLED: "false"
+  SENSOR_LIGHT_FREQUENCY: "5"
+  SENSOR_LIGHT_MAXITERATION: "3"
+  SENSOR_LIGHT_MAXRANGE: "25000"
+  SENSOR_LIGHT_MINITERATION: "0"
+  SENSOR_LIGHT_MINRANGE: "0"
+  SENSOR_LIGHT_START: "0"
+
+  SENSOR_TEMPERATURE_ENABLED: "false"
+  SENSOR_TEMPERATURE_FREQUENCY: "5"
+  SENSOR_TEMPERATURE_MAXITERATION: "1"
+  SENSOR_TEMPERATURE_MAXRANGE: "55"
+  SENSOR_TEMPERATURE_MINITERATION: "0"
+  SENSOR_TEMPERATURE_MINRANGE: "45"
+  SENSOR_TEMPERATURE_STARTMAX: "50"
+  SENSOR_TEMPERATURE_STARTMIN: "50"
+  
+  SENSOR_VIBRATION_ENABLED: "true"
+  SENSOR_VIBRATION_FREQUENC: "5"
+  SENSOR_VIBRATION_MAXITERATION: "1"
+  SENSOR_VIBRATION_MAXRANGE: "18"
+  SENSOR_VIBRATION_MINITERATION: "0"
+  SENSOR_VIBRATION_MINRANGE: "10"
+  SENSOR_VIBRATION_START: "15"
+  SENSOR_VIBRATION_PEAKINTETVAL: "20"
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-2-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: machine-sensor-2
+data:
+  APP_NAME: "iot-sensor"
+  DEVICE_ID: "pump-2"
+  DEVICE_METRICS: "temperature,vibration,gps,light"
+  MACHINE_ID: "floor-1-line-1-extruder-1"
+  
+  MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
+  MQTT_PASSWORD: "iotuser"
+  MQTT_PORT: "61616"
+  MQTT_TLSSNI: "false"
+  MQTT_USER: "iotuser"
+
+  SENSOR_GPS_ENABLED: "true"
+  SENSOR_GPS_FINAL_LATITUDE: "40.689879"
+  SENSOR_GPS_FINAL_LONGITUDE: "-73.992895"
+  SENSOR_GPS_FREQUENCY: "5"
+  SENSOR_GPS_INITIAL_LATITUDE: "42.579258"
+  SENSOR_GPS_INITIAL_LONGITUDE: "-71.437841"
+  SENSOR_GPS_ITERATION_LATITUDE: "-0.009"
+  SENSOR_GPS_ITERATION_LONGITUDE: "-0.012"
+
+  SENSOR_LIGHT_ENABLED: "true"
+  SENSOR_LIGHT_FREQUENCY: "5"
+  SENSOR_LIGHT_MAXITERATION: "3"
+  SENSOR_LIGHT_MAXRANGE: "25000"
+  SENSOR_LIGHT_MINITERATION: "0"
+  SENSOR_LIGHT_MINRANGE: "0"
+  SENSOR_LIGHT_START: "0"
+
+  SENSOR_TEMPERATURE_ENABLED: "true"
+  SENSOR_TEMPERATURE_FREQUENCY: "5"
+  SENSOR_TEMPERATURE_MAXITERATION: "1"
+  SENSOR_TEMPERATURE_MAXRANGE: "55"
+  SENSOR_TEMPERATURE_MINITERATION: "0"
+  SENSOR_TEMPERATURE_MINRANGE: "45"
+  SENSOR_TEMPERATURE_STARTMAX: "50"
+  SENSOR_TEMPERATURE_STARTMIN: "50"
+
+  SENSOR_VIBRATION_ENABLED: "true"
+  SENSOR_VIBRATION_FREQUENC: "5"
+  SENSOR_VIBRATION_MAXITERATION: "1"
+  SENSOR_VIBRATION_MAXRANGE: "17"
+  SENSOR_VIBRATION_MINITERATION: "0"
+  SENSOR_VIBRATION_MINRANGE: "10"
+  SENSOR_VIBRATION_START: "12"
+  SENSOR_VIBRATION_PEAKINTETVAL: "200"
+---
+# Source: manuela-tst-all/templates/messaging-kafka/mqtt2kafka-config.yaml
+kind: ConfigMap
+apiVersion: v1
+metadata:
+  name: mqtt2kafka-config
+  namespace: manuela-tst-all
+# DO NOT DELETE. NEEDED BY THE mqtt2kafka-integration SERVICE
+---
+# Source: manuela-tst-all/templates/messaging/messaging-configmap.yaml
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: messaging-configmap
+data:
+  VIBRATION_ALERT_ENABLED: "true"
+  VIBRATION_ANOMALY_ENABLED: "true"
+  NODE_TLS_REJECT_UNAUTHORIZED: "0"
+  MQTT_BROKER: "ws://broker-amq-mqtt-all-0-svc:61616"
+  MQTT_PASSWORD: "iotuser"
+  MQTT_USER: "iotuser"
+  PORT: "3000"
+  SOCKET_PATH: "/api/service-web/socket"
+  TEMPERATURE_THRESHOLD: "70.0"
+  TEMPERATURE_ALERT_ENABLED: "true"
+  VIBRATION_ALERT_ENABLED: "true"
+  TOPIC_GPS: "iot-sensor/sw/gps"
+  TOPIC_TEMPERATURE: "iot-sensor/sw/temperature"
+  TOPIC_VIBRATION: "iot-sensor/sw/vibration"
+  TOPIC_LIGHT: "iot-sensor/sw/light"
+  VIBRATION_ANOMALY_ENABLED: "true"
+  ANOMALY_DETECTION_URL: "http://anomaly-detection-predictor:8000"
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: line-dashboard
+  name: line-dashboard
+spec:
+  ports:
+  - name: 8080-tcp
+    port: 8080
+    protocol: TCP
+    targetPort: 8080
+  selector:
+    app: line-dashboard
+    deploymentconfig: line-dashboard
+  sessionAffinity: None
+  type: ClusterIP
+---
+# Source: manuela-tst-all/templates/messaging/messaging-svc.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: messaging
+  name: messaging
+spec:
+  ports:
+  - name: 3000-tcp
+    port: 3000
+    protocol: TCP
+    targetPort: 3000
+  selector:
+    app: messaging
+    deploymentconfig: messaging
+  sessionAffinity: None
+  type: ClusterIP
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: line-dashboard
+    template: openjdk18-web-basic-s2i
+    app.kubernetes.io/part-of: ManuELA
+  name: line-dashboard
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deploymentconfig: line-dashboard
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app: line-dashboard
+        deploymentconfig: line-dashboard
+      name: line-dashboard
+    spec:
+      containers:
+      - name: line-dashboard
+        image: line-dashboard:0.3.1-81
+        #imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+          name: http
+          protocol: TCP
+        volumeMounts:
+        # the following mountpath is used for images which are based on the HTTPD base images, i.e. built using the CI/CD pipelines
+        - mountPath: /var/www/html/conf/
+          name: line-dashboard-configmap-vol
+        # the following mountpath is used for images based directly on the NodeJS builder image, i.e. when deploying images built in the iotdemo namespace during quickstart
+        - mountPath: /opt/app-root/output/conf
+          name: line-dashboard-configmap-vol
+          #subPath: config.json
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        livenessProbe: 
+          httpGet:   
+            path: /home
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15  
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /home
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+      volumes:
+      - name: line-dashboard-configmap-vol
+        configMap:
+          defaultMode: 438
+          name: line-dashboard-configmap
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-1-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: machine-sensor-1
+    template: openjdk18-web-basic-s2i
+    app.kubernetes.io/part-of: ManuELA
+  name: machine-sensor-1
+  namespace: manuela-tst-all
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deploymentConfig: machine-sensor-1
+  template:
+    metadata:
+      creationTimestamp: null
+      annotations:
+        checksum/config: a5cd4d9268a0418cbfcb77cb9cdb8f38d8589f5fce79cbe80f01ca8e1d7f0677
+      labels:
+        application: machine-sensor-1
+        deploymentConfig: machine-sensor-1
+      name: machine-sensor-1
+    spec:
+      containers:
+      - name: machine-sensor
+        image: machine-sensor:latest
+        #imagePullPolicy: Always
+        ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+        envFrom:
+          - configMapRef: 
+              name: machine-sensor-1
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        livenessProbe: 
+          httpGet:   
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15  
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-2-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: machine-sensor-2
+    template: openjdk18-web-basic-s2i
+    app.kubernetes.io/part-of: ManuELA
+  name: machine-sensor-2
+  namespace: manuela-tst-all
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      deploymentConfig: machine-sensor-2
+  template:
+    metadata:
+      creationTimestamp: null
+      annotations:
+        checksum/config: 98e3f28f7647a953d867bf0f3a0e7ece252aa525a43b8079c029df2ff3982eda 
+      labels:
+        application: machine-sensor-2
+        deploymentConfig: machine-sensor-2
+      name: machine-sensor-2
+    spec:
+      containers:
+      - name: machine-sensor
+        image: machine-sensor:latest
+        #imagePullPolicy: Always
+        ports:
+          - containerPort: 8778
+            name: jolokia
+            protocol: TCP
+          - containerPort: 8080
+            name: http
+            protocol: TCP
+          - containerPort: 8443
+            name: https
+            protocol: TCP
+        envFrom:
+          - configMapRef: 
+              name: machine-sensor-2
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        livenessProbe: 
+          httpGet:   
+            path: /actuator/health
+            port: 8080
+          initialDelaySeconds: 15  
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /actuator/health
+            port: 8080
+            scheme: HTTP
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+---
+# Source: manuela-tst-all/templates/messaging/messaging-deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    application: messaging
+  name: messaging
+spec:
+  replicas: 1
+  revisionHistoryLimit: 10
+  selector:
+    matchLabels:
+      app: messaging
+  strategy:
+    type: RollingUpdate
+  template:
+    metadata:
+      labels:
+        app: messaging
+        deploymentconfig: messaging
+    spec:
+      containers:
+      - image: messaging
+        #imagePullPolicy: Always
+        name: messaging
+        ports:
+        - containerPort: 3000
+          protocol: TCP
+        envFrom:
+        - configMapRef:
+            name: messaging-configmap
+        resources: {}
+        terminationMessagePath: /dev/termination-log
+        terminationMessagePolicy: File
+        livenessProbe: 
+          httpGet:   
+            path: /health
+            port: 3000
+          initialDelaySeconds: 15  
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3
+        readinessProbe:
+          httpGet:
+            path: /health
+            port: 3000
+            scheme: HTTP
+          initialDelaySeconds: 15
+          timeoutSeconds: 1
+          periodSeconds: 10
+          successThreshold: 1
+          failureThreshold: 3  
+      dnsPolicy: ClusterFirst
+      restartPolicy: Always
+      schedulerName: default-scheduler
+      securityContext: {}
+      terminationGracePeriodSeconds: 30
+---
+# Source: manuela-tst-all/templates/messaging/amq-broker.yaml
+apiVersion: broker.amq.io/v2alpha4
+kind: ActiveMQArtemis
+metadata:
+  name: broker-amq-mqtt
+  namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  deploymentPlan:
+    size: 1
+    image: registry.redhat.io/amq7/amq-broker:7.6
+    # requireLogin: false
+    # persistenceEnabled: false
+    journalType: nio
+    messageMigration: false
+  console:
+    expose: true
+  acceptors:
+    - name: all
+      port: 61616
+      expose: true
+    # - name: amqp
+    #   protocols: amqp
+    #   port: 5672
+    #   sslEnabled: true
+    #   enabledCipherSuites: SSL_RSA_WITH_RC4_128_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA
+    #   enabledProtocols: TLSv1,TLSv1.1,TLSv1.2
+    #   needClientAuth: true
+    #   wantClientAuth: true
+    #   verifyHost: true
+    #   sslProvider: JDK
+    #   sniHost: localhost
+    #   expose: true
+    #   anycastPrefix: jms.topic.
+    #   multicastPrefix: /queue/
+    # - name: mqtt
+    #   protocols: mqtt
+    #   port: 1883
+    #   # sslEnabled: true
+    #   enabledCipherSuites: SSL_RSA_WITH_RC4_128_SHA,SSL_DH_anon_WITH_3DES_EDE_CBC_SHA
+    #   enabledProtocols: TLSv1,TLSv1.1,TLSv1.2
+    #   needClientAuth: true
+    #   wantClientAuth: true
+    #   verifyHost: true
+    #   sslProvider: JDK
+    #   sniHost: broker-amq-mqtt
+    #   expose: true
+    #   anycastPrefix: jms.topic.
+    #   multicastPrefix: /queue/
+---
+# Source: manuela-tst-all/templates/anomaly-detection/anomaly-detection-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  labels:
+    application: anomaly-detection
+  name: anomaly-detection
+spec:
+  lookupPolicy:
+    local: false
+  tags:
+  - name: 0.3.2
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: line-dashboard
+  namespace: manuela-tst-all
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: 0.3.1
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/machine-sensor/machine-sensor-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: machine-sensor
+  namespace: manuela-tst-all
+spec:
+  lookupPolicy:
+    local: true
+  tags:
+  - name: 0.3.1
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/messaging/messaging-is.yaml
+apiVersion: image.openshift.io/v1
+kind: ImageStream
+metadata:
+  name: messaging
+spec:
+  tags:
+  - name: 0.3.2
+    from:
+      kind: DockerImage
+      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+---
+# Source: manuela-tst-all/templates/development-s3-store/kafka-to-s3-integration.yaml
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: kafka-to-s3-integration
+  namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+    - type: configmap
+      value: kafka-to-s3-config
+    - type: secret
+      value: s3-secret  
+  profile: OpenShift
+  sources:
+    - content: |
+       // dependency=camel:camel-endpointdsl
+        package com.redhat.manuela.routes;
+        import java.io.ByteArrayInputStream;
+        import java.util.Iterator;
+        import java.util.List;
+
+        import org.apache.camel.Exchange;
+        import org.apache.camel.Processor;
+        import org.apache.camel.PropertyInject;
+        import org.apache.camel.builder.RouteBuilder;
+        import org.apache.camel.component.aws2.s3.AWS2S3Constants;
+        import org.apache.camel.builder.endpoint.dsl.AWS2S3EndpointBuilderFactory;
+        import org.apache.camel.model.OnCompletionDefinition;
+        import org.apache.camel.processor.aggregate.GroupedBodyAggregationStrategy;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+
+        public class Kafka2S3Route extends RouteBuilder {
+
+            private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
+
+            @PropertyInject("s3.custom.endpoint.enabled")
+            private String s3_custom_endpoint_enabled;
+
+            @PropertyInject("s3.custom.endpoint.url")
+            private String s3_custom_endpoint_url;
+
+            @PropertyInject("s3.accessKey")
+            private String s3_accessKey;
+            @PropertyInject("s3.secretKey")
+            private String s3_secretKey;
+            @PropertyInject("s3.message.aggregation.count")
+            private String s3_message_aggregation_count;
+
+            @PropertyInject("s3.region")
+            private String s3_region;
+            @Override
+            public void configure() throws Exception {
+                storeTemperatureInS3();
+                storeVibrationInS3();
+            }
+            private void storeVibrationInS3() {
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                + secret
+                + region;
+
+                from("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .convertBodyTo(String.class)
+                    .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
+                    .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                List<Exchange> data = exchange.getIn().getBody(List.class);
+                                StringBuffer sb = new StringBuffer();
+                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+                                    String ex = (String) iterator.next();
+                                    sb.append(ex+"\\n");
+                                }
+                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
+                            }
+                        })
+                    // .to(\"file:/var/tmp/\");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
+                    .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
+            }
+            private void storeTemperatureInS3() {
+                String key = "accessKey=" + s3_accessKey;
+                String secret="&secretKey=" + s3_secretKey;
+                String region = "&region=" + s3_region;
+            	String s3params = key
+                   + secret
+                   + region;
+                from("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .convertBodyTo(String.class)
+                    .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
+                    .process(new Processor() {
+                            @Override
+                            public void process(Exchange exchange) throws Exception {
+                                List<Exchange> data = exchange.getIn().getBody(List.class);
+                                StringBuffer sb = new StringBuffer();
+                                for (Iterator iterator = data.iterator(); iterator.hasNext();) {
+                                    String ex = (String) iterator.next();
+                                    sb.append(ex+"\n");
+                                }
+                                exchange.getIn().setBody(new ByteArrayInputStream(sb.toString().getBytes()));
+                            }
+                        })
+                    // .to(\"file:/var/tmp/\");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
+                    .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
+            }
+            @Override
+            public OnCompletionDefinition onCompletion() {
+                return super.onCompletion();
+            }
+        }
+      name: Kafka2S3Route.java
+---
+# Source: manuela-tst-all/templates/messaging-kafka/mqtt2kafka-integration.yaml
+apiVersion: camel.apache.org/v1
+kind: Integration
+metadata:
+  name: mqtt2kafka-integration
+  namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+    - type: configmap
+      value: mqtt2kafka-config
+  profile: OpenShift
+  sources:
+    - content: |
+        package com.redhat.manuela.routes;
+
+        import org.apache.camel.builder.RouteBuilder;
+        import org.apache.camel.component.kafka.KafkaConstants;
+        import org.apache.camel.model.OnCompletionDefinition;
+        import org.slf4j.Logger;
+        import org.slf4j.LoggerFactory;
+
+
+        public class MQTT2KafkaRoute extends RouteBuilder {
+            
+            private static final Logger LOGGER = LoggerFactory.getLogger(MQTT2KafkaRoute.class);
+            
+            @Override
+            public void configure() throws Exception {
+                storeTemperatureInKafka();
+                storeVibrationInKafka();
+                //readTemperatureFromKafka();
+                //readVibrationFromKafka();
+            }
+
+            private void storeTemperatureInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
+                from("paho:iot-sensor/sw/temperature?brokerUrl=tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616&clientId=MQTT2KafkaRouteDev-temp")
+                    .log("Storing temperature message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
+                    //.setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+            }
+
+            private void storeVibrationInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
+                from("paho:iot-sensor/sw/vibration?brokerUrl=tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616&clientId=MQTT2KafkaRouteDev-vibr")
+                    .log("Storing vibration message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
+                    // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
+            }
+
+            private void readTemperatureFromKafka() {
+                from("kafka:iot-sensor-sw-temperature?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .log("Reading message from Kafka: ${body}")
+                    .log("    on the topic ${headers[kafka.TOPIC]}")
+                    .log("    on the partition ${headers[kafka.PARTITION]}")
+                    .log("    with the offset ${headers[kafka.OFFSET]}")
+                    .log("    with the key ${headers[kafka.KEY]}");
+            }
+
+            private void readVibrationFromKafka() {
+                from("kafka:iot-sensor-sw-vibration?brokers=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                    .log("Reading message from Kafka: ${body}")
+                    .log("    on the topic ${headers[kafka.TOPIC]}")
+                    .log("    on the partition ${headers[kafka.PARTITION]}")
+                    .log("    with the offset ${headers[kafka.OFFSET]}")
+                    .log("    with the key ${headers[kafka.KEY]}");
+            }
+
+            @Override
+            public OnCompletionDefinition onCompletion() {
+                return super.onCompletion();
+            }
+        }
+      name: MQTT2KafkaRoute.java
+---
+# Source: manuela-tst-all/templates/messaging-kafka/camel-k-integration-platform.yaml
+apiVersion: camel.apache.org/v1
+kind: IntegrationPlatform
+metadata:
+  name: camel-k
+  labels:
+    app: "camel-k"
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  configuration:
+  - type: repository
+    value: https://maven.repository.redhat.com/earlyaccess/all@id=redhat.ea
+---
+# Source: manuela-tst-all/templates/messaging-kafka/kafka-cluster.yaml
+apiVersion: kafka.strimzi.io/v1beta2
+kind: Kafka
+metadata:
+  name: dev-kafka-cluster
+  namespace: manuela-tst-all
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  kafka:
+    replicas: 3
+    listeners:
+      - name: plain
+        port: 9092
+        type: internal
+        tls: false
+      - name: tls
+        port: 9093
+        type: internal
+        tls: true
+      - name: external
+        port: 9094
+        type: route
+        tls: true
+    config:
+      offsets.topic.replication.factor: 3
+      transaction.state.log.min.isr: 2
+      transaction.state.log.replication.factor: 3
+    storage:
+      type: ephemeral
+  zookeeper:
+    replicas: 3
+    storage:
+      type: ephemeral  
+  entityOperator:
+    topicOperator: {}
+    userOperator: {}
+---
+# Source: manuela-tst-all/templates/messaging-kafka/kafka-topic-temperature.yaml
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: iot-sensor-sw-temperature
+  labels:
+    strimzi.io/cluster: dev-kafka-cluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
+---
+# Source: manuela-tst-all/templates/messaging-kafka/kafka-topic-vibration.yaml
+apiVersion: kafka.strimzi.io/v1beta1
+kind: KafkaTopic
+metadata:
+  name: iot-sensor-sw-vibration
+  labels:
+    strimzi.io/cluster: dev-kafka-cluster
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+spec:
+  partitions: 1
+  replicas: 1
+  config:
+    retention.ms: 7200000
+    segment.bytes: 1073741824
+---
+# Source: manuela-tst-all/templates/anomaly-detection/iot-anomaly-detection-route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+spec:
+  port:
+    targetPort: http
+  to:
+    kind: Service
+    name: anomaly-detection-predictor-anomaly-detection
+  tls:
+    insecureEdgeTerminationPolicy: Allow
+    termination: edge
+---
+# Source: manuela-tst-all/templates/line-dashboard/line-dashboard-route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: line-dashboard
+  name: line-dashboard
+spec:
+  port:
+    targetPort: 8080-tcp
+  to:
+    kind: Service
+    name: line-dashboard
+    weight: 100
+  wildcardPolicy: None
+---
+# Source: manuela-tst-all/templates/messaging/messaging-route.yaml
+apiVersion: route.openshift.io/v1
+kind: Route
+metadata:
+  labels:
+    app: messaging
+  name: messaging
+spec:
+  port:
+    targetPort: 3000-tcp
+  to:
+    kind: Service
+    name: messaging
+    weight: 100
+  wildcardPolicy: None
+---
+# Source: manuela-tst-all/templates/anomaly-detection/iot-anomaly-detection-seldon.yaml
+apiVersion: machinelearning.seldon.io/v1
+kind: SeldonDeployment
+metadata:
+  name: anomaly-detection
+  labels:
+    component: serving
+  annotations:
+    alpha.image.policy.openshift.io/resolve-names: "*"
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  annotations:
+    deployment_version: "1"
+  name: anomaly-detection
+  predictors:
+  - annotations:
+        predictor_version: "0.1"
+    componentSpecs:
+    - spec:
+        containers:
+          - name: anomaly-detection
+            image: anomaly-detection:0.3.2-42
+            env:
+            - name: MODEL_FIILE
+              value: "model.joblib"
+    graph:
+      endpoint:
+        type: REST
+      name: anomaly-detection
+      type: MODEL
+    name: predictor
+    replicas: 1
