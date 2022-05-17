@@ -23,7 +23,7 @@ global:
 
   s3:
     bucket:
-      name: S3BUCKETNAME
+      name: BUCKETNAME
       region: AWSREGION
       message:
         aggregation:

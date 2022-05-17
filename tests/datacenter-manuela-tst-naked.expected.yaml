@@ -47,7 +47,7 @@ data:
 
     local.cluster.name=
     s3.region=AWSREGION
-    s3.bucket.name=S3BUCKETNAME
+    s3.bucket.name=BUCKETNAME
     s3.message.aggregation.count=50
     s3.custom.endpoint.enabled=false
     # Convert this directory into a helm chart and use templating to set this
@@ -714,7 +714,7 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
                     .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
@@ -741,7 +741,7 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
                     .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
             }
             @Override
