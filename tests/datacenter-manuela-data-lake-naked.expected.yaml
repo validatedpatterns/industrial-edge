@@ -12,10 +12,10 @@ data:
     kafka.broker.topic.temperature=manuela-factory.iot-sensor-sw-temperature
     kafka.broker.topic.vibration=manuela-factory.iot-sensor-sw-vibration
 
-    s3.region=AWSREGION
-    s3.bucket.name=S3BUCKETNAME
-    s3.message.aggregation.count=50
-    s3.custom.endpoint.enabled=false
+    s3.region=us-west-1
+    s3.bucket.name=BUCKETNAME
+    s3.message.aggregation.count=100
+    s3.custom.endpoint.enabled=true
     # Convert this directory into a helm chart and use templating to set this
     s3.custom.endpoint.url=s3-openshift-storage.
 ---
@@ -102,7 +102,7 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-prod-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
                     .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
@@ -129,7 +129,7 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-prod-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
+                    .to("aws2-s3://BUCKETNAME?" + s3params)
                     .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
             }
             @Override
