@@ -111,7 +111,7 @@ clusterGroup:
 
     production-data-lake:
       name: production-data-lake
-      namespace: production-data-lake
+      namespace: manuela-data-lake
       project: production-datalake
       path: charts/datacenter/manuela-data-lake
       ignoreDifferences:
