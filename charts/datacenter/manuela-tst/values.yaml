@@ -2,6 +2,16 @@ global:
   datacenter:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
+  s3:
+    bucket:
+      name: BUCKETNAME
+      region: AWSREGION
+      message:
+        aggregation:
+          count: 50
+      custom:
+        endpoint:
+          enabled: false
 
 messaging:
   vibrationAlert: true
