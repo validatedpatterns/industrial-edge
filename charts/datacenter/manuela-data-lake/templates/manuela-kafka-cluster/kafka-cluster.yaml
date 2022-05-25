@@ -1,8 +1,8 @@
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: kafka-cluster
-  namespace: factory-lake
+  name: prod-kafka-cluster
+  namespace: manuela-data-lake
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
@@ -21,9 +21,6 @@ spec:
         port: 9094
         type: route
         tls: true
-        configuration:
-          bootstrap:
-            host: bootstrap-factory-lake-central-kafka-cluster.{{ .Values.global.localClusterDomain }}
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
@@ -33,7 +30,7 @@ spec:
   zookeeper:
     replicas: 3
     storage:
-      type: ephemeral
+      type: ephemeral  
   entityOperator:
     topicOperator: {}
     userOperator: {}

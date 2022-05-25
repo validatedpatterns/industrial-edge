@@ -23,11 +23,11 @@ global:
 
   s3:
     bucket:
-      name: S3BUCKETNAME
+      name: BUCKETNAME
       region: AWSREGION
       message:
         aggregation:
-          count: 100
+          count: 50
       custom:
         endpoint:
           enabled: false

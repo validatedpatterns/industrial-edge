@@ -1,30 +1,8 @@
----
-# Source: central-s3-store/templates/kafka-to-s3-cm.yaml
-apiVersion: v1
-kind: ConfigMap
-metadata:
-  name: kafka-to-s3-config
-  namespace: manuela-data-lake-central-s3-store
-data:
-  application.properties: |
-    
-    kafka.broker.uri=manuela-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
-    kafka.broker.topic.temperature=iot-sensor-sw-temperature
-    kafka.broker.topic.vibration=iot-sensor-sw-vibration
-
-    s3.region=AWSREGION
-    s3.bucket.name=S3BUCKETNAME
-    s3.message.aggregation.count=100
-    s3.custom.endpoint.enabled=false
-    # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.region.example.com
----
-# Source: central-s3-store/templates/kafka-to-s3-integration.yaml
 apiVersion: camel.apache.org/v1
 kind: Integration
 metadata:
   name: kafka-to-s3-integration
-  namespace: manuela-data-lake-central-s3-store
+  namespace: manuela-data-lake
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
@@ -77,15 +55,16 @@ spec:
                 storeTemperatureInS3();
                 storeVibrationInS3();
             }
+
             private void storeVibrationInS3() {
-                String key = "accessKey=" + s3_accessKey;
-                String secret="&secretKey=" + s3_secretKey;
+                String key = "accessKey=RAW(" + s3_accessKey + ")";
+                String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-            	String s3params = key
+                String s3params = key
                 + secret
                 + region;
 
-                from("kafka:iot-sensor-sw-vibration?brokers=manuela-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
@@ -101,18 +80,18 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(AWS2S3Constants.KEY, simple("manuela-vibration-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
-                    .log("Uploaded Vibration dataset to S3");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-prod-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
+                    .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
-                String key = "accessKey=" + s3_accessKey;
-                String secret="&secretKey=" + s3_secretKey;
+                String key = "accessKey=RAW(" + s3_accessKey + ")";
+                String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-            	String s3params = key
+                String s3params = key
                    + secret
                    + region;
-                from("kafka:iot-sensor-sw-temperature?brokers=manuela-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092")
+                from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
@@ -128,9 +107,9 @@ spec:
                             }
                         })
                     // .to(\"file:/var/tmp/\");
-                    .setHeader(AWS2S3Constants.KEY, simple("manuela-temperature-${date:now}.txt"))
-                    .to("aws2-s3://S3BUCKETNAME?" + s3params)
-                    .log("Uploaded Temperature dataset to S3");
+                    .setHeader(AWS2S3Constants.KEY, simple("manuela-prod-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
+                    .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
+                    .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
             }
             @Override
             public OnCompletionDefinition onCompletion() {
@@ -138,17 +117,3 @@ spec:
             }
         }
       name: Kafka2S3Route.java
----
-# Source: central-s3-store/templates/camel-k-integration-platform.yaml
-apiVersion: camel.apache.org/v1
-kind: IntegrationPlatform
-metadata:
-  name: camel-k
-  labels:
-    app: "camel-k"
-  annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
-spec:
-  configuration:
-  - type: repository
-    value: https://maven.repository.redhat.com/ga/all@id=redhat.ea

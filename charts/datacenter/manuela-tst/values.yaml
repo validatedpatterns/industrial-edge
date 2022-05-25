@@ -2,6 +2,16 @@ global:
   datacenter:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
+  s3:
+    bucket:
+      name: BUCKETNAME
+      region: AWSREGION
+      message:
+        aggregation:
+          count: 50
+      custom:
+        endpoint:
+          enabled: false
 
 messaging:
   vibrationAlert: true
@@ -17,19 +27,20 @@ machineSensor2:
 
 mqtt:
   broker:
-    uri: "tcp://broker-amq-mqtt-all-0-svc:61616"
-    clientId: "MQTT2KafkaRoute"
+    uri: "tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616"
+    clientId: "MQTT2KafkaRouteDev"
     topic:
       temperature: "iot-sensor/sw/temperature"
       vibration: "iot-sensor/sw/vibration"
 
 kafka:
   broker:
-    uri: "manuela-kafka-cluster-kafka-bootstrap:9092"
+    uri: "dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
     topic:
       temperature: "iot-sensor-sw-temperature"
       vibration: "iot-sensor-sw-vibration"
     
 subscriptions:
   version:
-    seldon: v1.12.0
+    installPlanApproval: Automatic
+    seldon: v1.13.1

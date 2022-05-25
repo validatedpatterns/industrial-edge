@@ -455,6 +455,50 @@ spec:
       securityContext: {}
       terminationGracePeriodSeconds: 30
 ---
+# Source: manuela-stormshift/templates/factory-mirror-maker/factory-to-central-mirror-maker2.yaml
+#apiVersion: kafka.strimzi.io/v1beta2
+#kind: KafkaMirrorMaker2
+#metadata:
+#  name: factory-to-central-mm2
+#  namespace: manuela-stormshift-messaging
+#spec:
+#  version: 3.1.0
+#  replicas: 1
+#  connectCluster: production-kafka-cluster
+#  clusters:
+#    - alias: production-kafka-cluster
+#      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.hub.example.com:443'
+#      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
+#      #
+#      # TODO: This is a secret that we will need to create in the manuela-stormshift-messaging namespace
+#      #
+#      tls:
+#        trustedCertificates:
+#        - certificate: ca.crt
+#          secretName: prod-kafka-cluster-cluster-ca-cert 
+#    - alias: factory-kafka-cluster
+#      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
+#      config:
+#        config.storage.replication.factor: 1
+#        offset.storage.replication.factor: 1
+#        status.storage.replication.factor: 1  
+#  mirrors:
+#    - sourceCluster: factory-kafka-cluster
+#      targetCluster: production-kafka-cluster
+#      sourceConnector:
+#        config:
+#          replication.factor: 1
+#          offset-syncs.topic.replication.factor: 1
+#          sync.topic.acls.enabled: 'false'
+#      heartbeatConnector:
+#        config:
+#          heartbeats.topic.replication.factor: 1
+#      checkpointConnector:
+#        config:
+#          checkpoints.topic.replication.factor: 1
+#      topicsPattern: .*
+#      groupsPattern: .*
+---
 # Source: manuela-stormshift/templates/messaging/amq-broker.yaml
 apiVersion: broker.amq.io/v2alpha4
 kind: ActiveMQArtemis
@@ -612,28 +656,44 @@ spec:
             public void configure() throws Exception {
                 storeTemperatureInKafka();
                 storeVibrationInKafka();
-                // readTemperatureFromKafka();
-                // readVibrationFromKafka();
+                //readTemperatureFromKafka();
+                //readVibrationFromKafka();
             }
 
             private void storeTemperatureInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "region.example.com";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
                 from("paho:iot-sensor/sw/temperature?brokerUrl=tcp://broker-amq-mqtt-all-0-svc:61616&clientId=MQTT2KafkaRoute-temp")
-                    .log("Reading message form MQTT: ${body}")
-                    // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
-                    .to("kafka:iot-sensor-sw-temperature?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                    .log("Storing temperature message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
+                    //.setHeader(KafkaConstants.KEY, constant("sensor-temp"))
+                    .to("kafka:manuela-factory.iot-sensor-sw-temperature?brokers=factory-kafka-cluster-kafka-bootstrap:9092")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void storeVibrationInKafka() {
+                // This block is to extract the cluster name from our VP
+                // localClusterDomain setting. Please see the config map.
+                String temp = "region.example.com";
+                String delims="[ . ]+";
+                String [] tokens = temp.split(delims);
+                String cluster_name = tokens[1];
+
                 from("paho:iot-sensor/sw/vibration?brokerUrl=tcp://broker-amq-mqtt-all-0-svc:61616&clientId=MQTT2KafkaRoute-vibr")
-                    .log("Reading message form MQTT: ${body}")
+                    .log("Storing vibration message from [" + cluster_name + "] MQTT: ${body}")
+                    .setHeader(KafkaConstants.KEY, constant(cluster_name))
                     // .setHeader(KafkaConstants.KEY, constant("sensor-temp"))
-                    .to("kafka:iot-sensor-sw-vibration?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                    .to("kafka:manuela-factory.iot-sensor-sw-vibration?brokers=factory-kafka-cluster-kafka-bootstrap:9092")
                     ;//.log("sent message: ${headers[org.apache.kafka.clients.producer.RecordMetadata]}");
             }
 
             private void readTemperatureFromKafka() {
-                from("kafka:iot-sensor-sw-temperature?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                from("kafka:manuela-factory.iot-sensor-sw-temperature?brokers=factory-kafka-cluster-kafka-bootstrap:9092")
                     .log("Reading message from Kafka: ${body}")
                     .log("    on the topic ${headers[kafka.TOPIC]}")
                     .log("    on the partition ${headers[kafka.PARTITION]}")
@@ -642,7 +702,7 @@ spec:
             }
 
             private void readVibrationFromKafka() {
-                from("kafka:iot-sensor-sw-vibration?brokers=manuela-kafka-cluster-kafka-bootstrap:9092")
+                from("kafka:manuela-factory.iot-sensor-sw-vibration?brokers=factory-kafka-cluster-kafka-bootstrap:9092")
                     .log("Reading message from Kafka: ${body}")
                     .log("    on the topic ${headers[kafka.TOPIC]}")
                     .log("    on the partition ${headers[kafka.PARTITION]}")
@@ -676,10 +736,10 @@ spec:
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
-  name: manuela-kafka-cluster
+  name: factory-kafka-cluster
   namespace: manuela-stormshift-messaging
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   kafka:
     replicas: 3
@@ -692,6 +752,13 @@ spec:
         port: 9093
         type: internal
         tls: true
+      - name: external
+        port: 9094
+        type: route
+        tls: true
+        configuration:
+          bootstrap:
+            host: bootstrap-factory-kafka-cluster.region.example.com
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2
@@ -701,10 +768,44 @@ spec:
   zookeeper:
     replicas: 3
     storage:
-      type: ephemeral  
+      type: ephemeral
   entityOperator:
     topicOperator: {}
     userOperator: {}
+---
+# Source: manuela-stormshift/templates/factory-mirror-maker/factory-mirror-maker.yaml
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker
+metadata:
+  name: factory-to-central-mm
+  namespace: manuela-stormshift-messaging
+spec:
+  consumer:
+    bootstrapServers: >-
+      factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092
+    groupId: my-source-group-id
+  include: .*
+  livenessProbe:
+    failureThreshold: 2
+    initialDelaySeconds: 1
+    periodSeconds: 1
+    successThreshold: 1
+    timeoutSeconds: 2
+  producer:
+    bootstrapServers: >-
+      prod-kafka-cluster-kafka-bootstrap-manuela-data-lake.hub.example.com:443
+    tls:
+      trustedCertificates:
+        - certificate: ca.crt
+          secretName: prod-kafka-cluster-cluster-ca-cert
+  readinessProbe:
+    failureThreshold: 2
+    initialDelaySeconds: 0
+    periodSeconds: 1
+    successThreshold: 2
+    timeoutSeconds: 2
+  replicas: 1
+  version: 3.1.0
 ---
 # Source: manuela-stormshift/templates/messaging-kafka/kafka-topic-temperature.yaml
 apiVersion: kafka.strimzi.io/v1beta1
@@ -713,7 +814,7 @@ metadata:
   name: iot-sensor-sw-temperature
   namespace: manuela-stormshift-messaging
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: factory-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
@@ -730,7 +831,7 @@ metadata:
   name: iot-sensor-sw-vibration
   namespace: manuela-stormshift-messaging
   labels:
-    strimzi.io/cluster: manuela-kafka-cluster
+    strimzi.io/cluster: factory-kafka-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
 spec:
