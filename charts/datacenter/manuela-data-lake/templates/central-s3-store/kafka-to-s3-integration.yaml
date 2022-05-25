@@ -55,11 +55,12 @@ spec:
                 storeTemperatureInS3();
                 storeVibrationInS3();
             }
+
             private void storeVibrationInS3() {
-                String key = "accessKey=" + s3_accessKey;
-                String secret="&secretKey=" + s3_secretKey;
+                String key = "accessKey=RAW(" + s3_accessKey + ")";
+                String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-            	String s3params = key
+                String s3params = key
                 + secret
                 + region;
 
@@ -84,10 +85,10 @@ spec:
                     .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
-                String key = "accessKey=" + s3_accessKey;
-                String secret="&secretKey=" + s3_secretKey;
+                String key = "accessKey=RAW(" + s3_accessKey + ")";
+                String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-            	String s3params = key
+                String s3params = key
                    + secret
                    + region;
                 from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
