@@ -219,8 +219,8 @@ clusterGroup:
     - name: clusterGroup.isHubCluster
       value: "false"
     clusterSelector:
-#      matchLabels:
-#        clusterGroup: factory
+      matchLabels:
+        clusterGroup: factory
       matchExpressions:
       - key: vendor
         operator: In
