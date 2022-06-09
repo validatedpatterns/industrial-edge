@@ -10,21 +10,21 @@ global:
     installPlanApproval: Automatic
 
   imageregistry:
-    account: revoman
+    account: PLAINTEXT
     hostname: quay.io
     type: quay
 
   git:
     hostname: github.com
-    account: therevoman
-    username: therevoman
-    email: nrevo@redhat.com
-    dev_revision: edge-demo
+    account: PLAINTEXT
+    username: PLAINTEXT
+    email: SOMEWHERE@EXAMPLE.COM
+    dev_revision: main
 
   s3:
     bucket:
-      name: nrevo-edge-demo
-      region: us-east-2
+      name: BUCKETNAME
+      region: AWSREGION
       message:
         aggregation:
           count: 50
