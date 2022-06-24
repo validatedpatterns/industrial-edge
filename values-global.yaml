@@ -24,7 +24,7 @@ global:
   s3:
     bucket:
       name: nrevo-edge-demo
-      region: us-east-2
+      region: us-east-1
       message:
         aggregation:
           count: 50
