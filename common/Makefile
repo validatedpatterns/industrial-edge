@@ -12,6 +12,7 @@ HUBCLUSTER_APPS_DOMAIN=$(shell oc get ingresses.config/cluster -o jsonpath={.spe
 HELM_OPTS=-f values-global.yaml -f $(SECRETS) --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
 TEST_OPTS= -f common/examples/values-secret.yaml -f values-global.yaml --set global.repoURL="https://github.com/pattern-clone/mypattern" --set main.git.repoURL="https://github.com/pattern-clone/mypattern" --set main.git.revision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/mypattern/raw/main" --set global.pattern="mypattern" --set global.namespace="pattern-namespace" --set global.hubClusterDomain=hub.example.com --set global.localClusterDomain=region.example.com
 PATTERN_OPTS=-f common/examples/values-example.yaml
+COMPONENT ?= hub
 
 
 .PHONY: help
@@ -20,8 +21,12 @@ help: ## This help message
 
 #  Makefiles in the individual patterns should call these targets explicitly
 #  e.g. from industrial-edge: make -f common/Makefile show
-show: ## show the starting template without installing it
-	helm template common/install/ --name-template $(NAME) $(HELM_OPTS)
+show: seed ## show the starting seed without installing it
+	@echo ---
+	cat common/seed/subscription.yaml
+	@echo ---
+	cat seed.yaml
+	@echo ---
 
 CHARTS=$(shell find . -type f -iname 'Chart.yaml' -exec dirname "{}"  \; | sed -e 's/.\///')
 test: ## run helm tests
@@ -42,14 +47,27 @@ kubeconform: ## run helm kubeconform
 validate-origin: ## verify the git origin is available
 	git ls-remote $(TARGET_REPO)
 
-deploy: validate-origin ## deploys the pattern
-	helm install $(NAME) common/install/ $(HELM_OPTS)
+seed: seed.yaml
 
-upgrade: validate-origin ## runs helm upgrade
-	helm upgrade $(NAME) common/install/ $(HELM_OPTS)
+seed.yaml: common/seed/pattern.yaml common/Makefile
+	cp common/seed/pattern.yaml $@
+	@sed -i s'#name:.*#name: $(NAME)#' $@
+	@sed -i s'#clusterGroupName.*#clusterGroupName: $(COMPONENT)#' $@
+	@sed -i s'#targetRepo.*#targetRepo: $(TARGET_REPO)#' $@
+	@sed -i s'#targetRevision.*#targetRevision: $(TARGET_BRANCH)#' $@
+
+deploy: validate-origin seed ## deploys the pattern
+	kubectl create -f common/seed/subscription.yaml
+	@sleep 120
+	kubectl create -f seed.yaml
+
+upgrade: validate-origin seed ## updates the pattern definition
+	kubectl apply -f common/seed/subscription.yaml
+	kubectl apply -f seed.yaml
 
 uninstall: ## runs helm uninstall
-	helm uninstall $(NAME)
+	kubectl delete -f common/seed/subscription.yaml
+	kubectl delete -f seed.yaml
 
 vault-init: ## inits, unseals and configured the vault
 	common/scripts/vault-utils.sh vault_init common/pattern-vault.init

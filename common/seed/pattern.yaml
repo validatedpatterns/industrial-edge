@@ -1,0 +1,10 @@
+apiVersion: gitops.hybrid-cloud-patterns.io/v1alpha1
+kind: Pattern
+metadata:
+  name: industrial-edge
+  namespace: openshift-operators
+spec:
+  clusterGroupName: datacenter
+  gitSpec:
+    targetRepo: https://github.com/hybrid-cloud-patterns/industrial-edge.git
+    targetRevision: main

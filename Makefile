@@ -19,8 +19,8 @@ help:
 	@printf "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) common/Makefile | sort | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)\n"
 
 %:
-	echo "Delegating $* target"
-	make -f common/Makefile $*
+	@echo "Delegating \'$*\' target"
+	make -f common/Makefile COMPONENT=$(COMPONENT) $*
 
 pipeline-setup: ## calls the helm pipeline-setup
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
