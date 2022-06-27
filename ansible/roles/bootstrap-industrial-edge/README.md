@@ -4,11 +4,10 @@ This role contains all the imperative tasks that are needed to deploy
 the Industrial Edge validated pattern onto an OpenShift cluster.
 
 ## Requirements
-------------
 
 * Pre-deployed Openshift or Kubernetes Cluster
 * Must be Cluster Admin to successfully execute this role.
-* There are a few tools that you will need to run this role which are listed below.  
+* There are a few tools that you will need to run this role which are listed below.
 
 | Tool | Description | Download link |
 | ----------- | ----------- | ----------- |
@@ -17,31 +16,33 @@ the Industrial Edge validated pattern onto an OpenShift cluster.
 | Python 3 | Python2 is deprecated from 1st January 2020. Please switch to Python3. | RHEL: <br> **yum -y install rh-python36** |
 
 ## Bootstrap Role tasks that will be executed
+
 The bootstrap-industrial-edge role will execute on your localhost.  The high level tasks that are executed are listed below.
 
 ```sh
 playbook: ansible/site.yaml
 
-  play #1 (localhost): Industrial Edge bootstrap	TAGS: []
+  play #1 (localhost): Industrial Edge bootstrap  TAGS: []
     tasks:
-      bootstrap-industrial-edge : {{ role_name }}: Getting pattern information	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: debug	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: Deploying Helm Charts	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: Initialize Vault	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: Load Secrets to Vault	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: Retrieve ArgoCD Secrets	TAGS: []
-      bootstrap-industrial-edge : {{ role_name }}: Verify Tekton pipelines and tasks	TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Getting pattern information  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: debug  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Deploying Helm Charts  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Initialize Vault  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Load Secrets to Vault  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Retrieve ArgoCD Secrets  TAGS: []
+      bootstrap-industrial-edge : {{ role_name }}: Verify Tekton pipelines and tasks  TAGS: []
 ```
 
 ### Task: Getting pattern information
 
 This task gathers the validated pattern information.  This information will be used by the validated pattern framework and passed to ArgoCD to support the validated pattern deployment.  The task sets up the following facts for other tasks to use:
-    * secrets_file                                                         
-    * globals_file                                                              
-    * bootstrap
-    * target_branch
-    * target_repo
-    * hubcluster_apps_domain
+
+* secrets_file
+* globals_file
+* bootstrap
+* target_branch
+* target_repo
+* hubcluster_apps_domain
 
 ### Task: Deploying Helm Charts
 
@@ -50,8 +51,7 @@ Our validated pattern framework makes use of Helm Charts to deploy supporting co
 | Chart | Description | Location |
 | ----- | ----- | ----- |
 | industrial-edge-secrets | A Helm chart to build and deploy secrets for industrial-edge pipelines | industrial-edge/charts/secrets/pipeline-setup |
-| industrial-edge | A Helm chart to build and deploy the validated pattern | industrial-edge/common/install | 
-
+| industrial-edge | A Helm chart to build and deploy the validated pattern | industrial-edge/common/install |
 
 ### Task: Initialize Vault
 
@@ -61,7 +61,7 @@ This task initializes the Vault environment.
 
 ### Task: Load Secrets to Vault
 
-The Industrial Edge validated pattern applications, and pipelines, make use of secrets that are stored in the Vault environment.  This task is an imperative task that loads the secrets defined in the values-secret.yaml file which are specific to the Industrial Edge application workloads. 
+The Industrial Edge validated pattern applications, and pipelines, make use of secrets that are stored in the Vault environment.  This task is an imperative task that loads the secrets defined in the values-secret.yaml file which are specific to the Industrial Edge application workloads.
 
 ### Task: Retrieve ArgoCD Secrets
 
@@ -71,9 +71,7 @@ This tasks retrieves the ArgoCD secrets that are created during the deployment o
 
 This task verifies that the indsutrial-edge-secrets Helm chart created the appropriate tasks to support the Industrial Edge pipelines.
 
-
 ## Role Variables
-------------
 
 Most of the variables will be dynamically set for you in this role. Variables that we will be looking for are:
 
@@ -88,26 +86,23 @@ Most of the variables will be dynamically set for you in this role. Variables th
 | values_global: | Location of the values-global.yaml file | "{{ pattern_repo_dir }}/values-secret.yaml" |
 | kubeconfig: | Environment variable for KUBECONFIG | "{{ lookup('env', 'KUBECONFIG') }}"|
 | vault_init_file: | Init Vault file which will contain Vault tokens etc | "{{ pattern_repo_dir }}/common/pattern-vault.init"|
-| vault_ns: | Namespace for Vault | "vault"|                                     
-| vault_pod: | Name of the initial Vault pod | "vault-0"|           
+| vault_ns: | Namespace for Vault | "vault"|
+| vault_pod: | Name of the initial Vault pod | "vault-0"|
 | vault_path: | Path to the Vault secrets for the Hub | "secret/hub"|
 | debug: | Whether or not to display debug info | False |
 
-> NOTE: The role is designed to use the current *git* branch that you are working on. It is also designed to derive the variables values using your environment. 
-
+> NOTE: The role is designed to use the current *git* branch that you are working on. It is also designed to derive the variables values using your environment.
 
 ## Dependencies
-------------
 
 None
 
 ## Site.yaml Playbook
-------------
 
 The initial playbook can be found under ansible/site.yaml and will execute the bootstrap role.
 
 ```yaml
-- name: Industrial Edge bootstrap 
+- name: Industrial Edge bootstrap
   hosts: localhost
   connection: local
   roles:
@@ -119,7 +114,7 @@ To start the execution of the role execute the following:
 ```sh
 $ pwd
 /home/claudiol/work/blueprints-space/industrial-edge
-$ ansible-playbook ansible/site.yaml 
+$ [ansible playbook](ansible-playbook) ansible/site.yaml
 ```
 
 License
@@ -129,6 +124,7 @@ BSD
 
 Author Information
 ------------------
+
 Lester Claudio (claudiol@redhat.com) <br>
 Jonathan Rickard (jrickard@redhat.com)<br>
 Michele Baldessari (mbaldess@redhat.com)<br>
