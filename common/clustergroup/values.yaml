@@ -1,6 +1,7 @@
 global:
   pattern: common
-  valuesDirectoryURL: https://github.com/pattern-clone/common/raw/main
+  deletePattern: 0
+  valuesDirectoryURL: 
   options:
     useCSV: True
     syncPolicy: Automatic
