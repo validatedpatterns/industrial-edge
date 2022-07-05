@@ -70,7 +70,7 @@ test:
 	make -f common/Makefile CHARTS="$(wildcard charts/factory/*)" PATTERN_OPTS="-f values-factory.yaml" test
 
 .PHONY: kubeconform
-KUBECONFORM_SKIP=-skip 'CustomResourceDefinition,Pipeline,Task'
+KUBECONFORM_SKIP=-skip 'CustomResourceDefinition,Pipeline,Task,KfDef,Integration,IntegrationPlatform,Kafka,ActiveMQArtemis,KafkaTopic,SeldonDeployment,KafkaMirrorMaker'
 kubeconform:
 	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" CHARTS="$(wildcard charts/datacenter/*)" kubeconform
 	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" CHARTS="$(wildcard charts/factory/*)" kubeconform
