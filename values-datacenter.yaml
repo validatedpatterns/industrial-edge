@@ -146,7 +146,7 @@ clusterGroup:
       project: datacenter
       chart: vault
       repoURL: https://helm.releases.hashicorp.com
-      targetRevision: v0.20.0
+      targetRevision: v0.20.1
       overrides:
       - name: global.openshift
         value: "true"
