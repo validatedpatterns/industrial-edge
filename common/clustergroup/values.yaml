@@ -1,6 +1,5 @@
 global:
   pattern: common
-  valuesDirectoryURL: https://github.com/pattern-clone/common/raw/main
   options:
     useCSV: True
     syncPolicy: Automatic
@@ -10,6 +9,9 @@ global:
 clusterGroup:
   name: example
   isHubCluster: true
+  # Note: setting this to true stores the vault unseal keys inside a cluster secret and
+  # is fundamentally insecure
+  insecureUnsealVaultInsideCluster: false
 
   imperative:
     jobs: []
@@ -25,6 +27,10 @@ clusterGroup:
     activeDeadlineSeconds: 3600
     # By default we run this every 10minutes
     schedule: "*/10 * * * *"
+    # Schedule used to trigger the vault unsealing (if explicitely enabled)
+    # Set to run every 9 minutes in order for load-secrets to succeed within
+    # a reasonable amount of time (it waits up to 15 mins)
+    insecureUnsealVaultInsideClusterSchedule: "*/9 * * * *"
     # Increase ansible verbosity with '-v' or '-vv..'
     verbosity: ""
     serviceAccountCreate: true
@@ -39,7 +45,6 @@ clusterGroup:
 #  - name: factory
 #    # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
 #    # Location of values-global.yaml, values-{name}.yaml, values-{app}.yaml
-#    # valuesDirectoryURL: https://github.com/dagger-refuse-cool/edge-gitops/raw/main/
 #    targetRevision: main
 #    path: applications/factory
 #    helmOverrides:
@@ -64,7 +69,7 @@ clusterGroup:
 #
 #  projects:
 #  - datacenter
-# 
+#
 #  applications:
 #  - name: acm
 #    namespace: default
