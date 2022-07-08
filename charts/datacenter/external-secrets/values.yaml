@@ -19,3 +19,7 @@ imageregistrysecret:
 
 s3secret:
   key: secret/data/hub/aws
+  namespaces:
+    - external-secrets
+    - manuela-data-lake
+    - manuela-tst-all
