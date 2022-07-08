@@ -11,14 +11,14 @@ metadata:
 apiVersion: argoproj.io/v1alpha1
 kind: Application
 metadata:
-  name: install-default
+  name: legacy-install-default
   namespace: openshift-gitops
   finalizers:
   - resources-finalizer.argocd.argoproj.io/foreground
 spec:
   destination:
     name: in-cluster
-    namespace: install-default
+    namespace: legacy-install-default
   project: default
   source:
     repoURL: https://github.com/pattern-clone/mypattern
@@ -27,8 +27,8 @@ spec:
     helm:
       ignoreMissingValueFiles: true
       valueFiles:
-      - "/values-global.yaml"
-      - "/values-default.yaml"
+      - "https://github.com/pattern-clone/mypattern/raw/main/values-global.yaml"
+      - "https://github.com/pattern-clone/mypattern/raw/main/values-default.yaml"
       # Track the progress of https://github.com/argoproj/argo-cd/pull/6280
       parameters:
         - name: global.repoURL
@@ -37,8 +37,10 @@ spec:
           value: $ARGOCD_APP_SOURCE_TARGET_REVISION
         - name: global.namespace
           value: $ARGOCD_APP_NAMESPACE
+        - name: global.valuesDirectoryURL
+          value: https://github.com/pattern-clone/mypattern/raw/main
         - name: global.pattern
-          value: install
+          value: legacy-install
         - name: global.hubClusterDomain
           value: 
   syncPolicy:
@@ -61,4 +63,4 @@ spec:
   config:
     env:
       - name: ARGOCD_CLUSTER_CONFIG_NAMESPACES
-        value: install-default,openshift-gitops
+        value: legacy-install-default,openshift-gitops
