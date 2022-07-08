@@ -25,7 +25,7 @@ help:
 pipeline-setup: ## calls the helm pipeline-setup
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
 
-install: pipeline-setup deploy ## installs the pattern, sets up the pipelines, inits the vault and loads the secrets
+install: validate-origin pipeline-setup deploy ## installs the pattern, sets up the pipelines, inits the vault and loads the secrets
 	make vault-init
 	make load-secrets
 	make argosecret
