@@ -217,12 +217,6 @@ spec:
   clusterConditions:
     - status: 'True'
       type: ManagedClusterConditionAvailable
-  clusterSelector:
-    matchExpressions:
-      - key: local-cluster
-        operator: NotIn
-        values:
-          - 'true'
 ---
 # Source: central-s3-store/templates/factory-data-lake-secret-policy.yaml
 apiVersion: policy.open-cluster-management.io/v1
