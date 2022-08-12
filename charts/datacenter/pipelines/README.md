@@ -1,11 +1,11 @@
 # Tekton Pipelines (reworked) <!-- omit in toc -->
 
-- [Design Considerations](#Design-Considerations)
-- [Pipelines](#Pipelines)
-- [How to start a pipeline](#How-to-start-a-pipeline)
-- [Versioning and Tagging](#Versioning-and-Tagging)
-- [Storing build artifacts across builds](#Storing-build-artifacts-across-builds)
-- [Open issues](#Open-issues)
+- [Design Considerations](#design-considerations)
+- [Pipelines](#pipelines)
+- [How to start a pipeline](#how-to-start-a-pipeline)
+- [Versioning and Tagging](#versioning-and-tagging)
+- [Storing build artifacts across builds](#storing-build-artifacts-across-builds)
+- [Open issues](#open-issues)
 
 ## Technical Debt
 
