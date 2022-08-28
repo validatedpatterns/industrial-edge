@@ -12,7 +12,7 @@ spec:
     type: string
     default: "dev"
   - name: PUSH_FLAGS
-    description: additional flags for git push 
+    description: additional flags for git push
     type: string
     default: ""
   steps:

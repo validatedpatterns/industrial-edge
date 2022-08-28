@@ -88,7 +88,7 @@ spec:
   - name: copy-image-to-remote-registry-iot-frontend
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-frontend
     workspaces:
     - name: config
@@ -162,7 +162,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory

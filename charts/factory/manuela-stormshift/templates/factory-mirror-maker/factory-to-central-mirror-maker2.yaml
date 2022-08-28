@@ -17,13 +17,13 @@
 #      tls:
 #        trustedCertificates:
 #        - certificate: ca.crt
-#          secretName: prod-kafka-cluster-cluster-ca-cert 
+#          secretName: prod-kafka-cluster-cluster-ca-cert
 #    - alias: factory-kafka-cluster
 #      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
 #      config:
 #        config.storage.replication.factor: 1
 #        offset.storage.replication.factor: 1
-#        status.storage.replication.factor: 1  
+#        status.storage.replication.factor: 1
 #  mirrors:
 #    - sourceCluster: factory-kafka-cluster
 #      targetCluster: production-kafka-cluster

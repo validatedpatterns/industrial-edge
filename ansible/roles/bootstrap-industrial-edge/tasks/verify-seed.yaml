@@ -1,10 +1,10 @@
 ---
 # tasks file for verify-seed
-#oc get -n manuela-ci pipeline seed 1>/dev/null 2>/dev/null 
+#oc get -n manuela-ci pipeline seed 1>/dev/null 2>/dev/null
 - name: " [verify-seed] Verifying that Tekton Pipeline seed exist"
   kubernetes.core.k8s:
     state: present
-    api_version: tekton.dev/v1beta1 
+    api_version: tekton.dev/v1beta1
     kind: Pipeline
     name: seed
     namespace: manuela-ci
@@ -12,11 +12,11 @@
   register: response
   failed_when: response.failed == 'true'
 
-#oc get -n manuela-ci task tkn 1>/dev/null 2>/dev/null  
+#oc get -n manuela-ci task tkn 1>/dev/null 2>/dev/null
 - name: " [verify-seed] Verifying that Tekton Task tkn exist"
   kubernetes.core.k8s:
     state: present
-    api_version: tekton.dev/v1beta1 
+    api_version: tekton.dev/v1beta1
     kind: Task
     name: tkn
     namespace: manuela-ci
@@ -36,7 +36,7 @@
   register: response
   failed_when: response.failed == 'true'
 
-#oc get -n manuela-ci secret image-registry-credentials 1>/dev/null 2>/dev/null 
+#oc get -n manuela-ci secret image-registry-credentials 1>/dev/null 2>/dev/null
 - name:  " [verify-seed] Verifying that the image-registry-credentials exist"
   kubernetes.core.k8s:
     state: present
@@ -47,7 +47,7 @@
     wait: yes
   register: response
   failed_when: response.failed == 'true'
-  
+
 - name:  " [verify-seed] Verify complete"
   debug:
     msg: "ok"

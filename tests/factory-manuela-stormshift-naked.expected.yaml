@@ -58,7 +58,7 @@ data:
   SENSOR_TEMPERATURE_MINRANGE: "45"
   SENSOR_TEMPERATURE_STARTMAX: "50"
   SENSOR_TEMPERATURE_STARTMIN: "50"
-  
+
   SENSOR_VIBRATION_ENABLED: "true"
   SENSOR_VIBRATION_FREQUENC: "5"
   SENSOR_VIBRATION_MAXITERATION: "1"
@@ -82,11 +82,11 @@ data:
     DEVICE_ID: "pump-2"
     DEVICE_METRICS: "temperature,vibration,gps,light"
     MACHINE_ID: "floor-1-line-1-extruder-1"
-    
+
     MQTT_PASSWORD: "iotuser"
     MQTT_TLSSNI: "false"
     MQTT_USER: "iotuser"
-    
+
     SENSOR_GPS_ENABLED: "false"
     SENSOR_GPS_FINAL_LATITUDE: "40.689879"
     SENSOR_GPS_FINAL_LONGITUDE: "-73.992895"
@@ -95,7 +95,7 @@ data:
     SENSOR_GPS_INITIAL_LONGITUDE: "-71.437841"
     SENSOR_GPS_ITERATION_LATITUDE: "-0.009"
     SENSOR_GPS_ITERATION_LONGITUDE: "-0.012"
-    
+
     SENSOR_LIGHT_ENABLED: "false"
     SENSOR_LIGHT_FREQUENCY: "5"
     SENSOR_LIGHT_MAXITERATION: "3"
@@ -103,7 +103,7 @@ data:
     SENSOR_LIGHT_MINITERATION: "0"
     SENSOR_LIGHT_MINRANGE: "0"
     SENSOR_LIGHT_START: "0"
-    
+
     SENSOR_TEMPERATURE_ENABLED: "true"
     SENSOR_TEMPERATURE_FREQUENCY: "5"
     SENSOR_TEMPERATURE_MAXITERATION: "1"
@@ -112,7 +112,7 @@ data:
     SENSOR_TEMPERATURE_MINRANGE: "45"
     SENSOR_TEMPERATURE_STARTMAX: "50"
     SENSOR_TEMPERATURE_STARTMIN: "50"
-    
+
     SENSOR_VIBRATION_ENABLED: "true"
     SENSOR_VIBRATION_FREQUENC: "5"
     SENSOR_VIBRATION_MAXITERATION: "1"
@@ -237,12 +237,12 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /home
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -283,7 +283,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 18aeccba6135171199cceac03a531169f4f1f8516541e1f3df3691a42fe97f01
+        checksum/config: 895c15dfcefd9bd3aee00706aa1dbc6fc8a2a583b58e7b3f5fdf946be8be0325
       labels:
         application: machine-sensor-1
         deploymentConfig: machine-sensor-1
@@ -304,16 +304,16 @@ spec:
             name: https
             protocol: TCP
         envFrom:
-          - configMapRef: 
+          - configMapRef:
               name: machine-sensor-1
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -347,9 +347,9 @@ spec:
       deploymentConfig: machine-sensor-2
   template:
     metadata:
-      creationTimestamp: null 
+      creationTimestamp: null
       annotations:
-        checksum/config: f5798fc56c1df02b01201055ed0c4123d21db66a54330af88d4e70bb371b63ff
+        checksum/config: a3fd9aef7d47c1dca2de86abeb1a708238d76607db9577dc8b22996bc207e36e
       labels:
         application: machine-sensor-2
         deploymentConfig: machine-sensor-2
@@ -370,16 +370,16 @@ spec:
             name: https
             protocol: TCP
         envFrom:
-          - configMapRef: 
+          - configMapRef:
               name: machine-sensor-2
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -430,11 +430,11 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /health
             port: 3000
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -448,7 +448,7 @@ spec:
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
-          failureThreshold: 3  
+          failureThreshold: 3
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -475,13 +475,13 @@ spec:
 #      tls:
 #        trustedCertificates:
 #        - certificate: ca.crt
-#          secretName: prod-kafka-cluster-cluster-ca-cert 
+#          secretName: prod-kafka-cluster-cluster-ca-cert
 #    - alias: factory-kafka-cluster
 #      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
 #      config:
 #        config.storage.replication.factor: 1
 #        offset.storage.replication.factor: 1
-#        status.storage.replication.factor: 1  
+#        status.storage.replication.factor: 1
 #  mirrors:
 #    - sourceCluster: factory-kafka-cluster
 #      targetCluster: production-kafka-cluster
@@ -631,7 +631,7 @@ metadata:
   name: mqtt2kafka-integration
   namespace: manuela-stormshift-messaging
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
     - type: configmap
@@ -649,9 +649,9 @@ spec:
 
 
         public class MQTT2KafkaRoute extends RouteBuilder {
-            
+
             private static final Logger LOGGER = LoggerFactory.getLogger(MQTT2KafkaRoute.class);
-            
+
             @Override
             public void configure() throws Exception {
                 storeTemperatureInKafka();
@@ -726,7 +726,7 @@ metadata:
   labels:
     app: "camel-k"
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
   - type: repository
@@ -816,7 +816,7 @@ metadata:
   labels:
     strimzi.io/cluster: factory-kafka-cluster
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   partitions: 1
   replicas: 1
@@ -833,7 +833,7 @@ metadata:
   labels:
     strimzi.io/cluster: factory-kafka-cluster
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   partitions: 1
   replicas: 1

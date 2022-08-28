@@ -13,7 +13,7 @@
     globals_file: "{{ pattern_repo_dir }}/values-global.yaml"
     bootstrap: 1
     target_branch: "{{ lookup('pipe', 'git rev-parse  --abbrev-ref HEAD') }}"
-  
+
 #TARGET_REPO=$(shell git remote show origin | grep Push | sed -e 's/.*URL:[[:space:]]*//' -e 's%^git@%%' -e 's%^https://%%' -e 's%:%/%' -e 's%^%https://%')
 - name: "[git_info] Setting TARGET_REPO fact"
   set_fact:
@@ -31,14 +31,14 @@
   debug:
     var: response['result']['spec']['domain']
   when: debug | bool
-  
+
 - name: "[pattern-info] Setting Cluster Domain Fact"
   set_fact:
     hubcluster_apps_domain: "{{ response['result']['spec']['domain'] }}"
 
 - name: "[pattern-info] Setting Helm options"
   set_fact:
-    helm_opts: "-f values-global.yaml -f {{ secrets_file }} --set main.git.repoURL={{ target_repo }} --set main.git.revision={{ target_branch }} --set main.options.bootstrap={{ bootstrap }} --set global.hubClusterDomain={{ hubcluster_apps_domain }}" 
+    helm_opts: "-f values-global.yaml -f {{ secrets_file }} --set main.git.repoURL={{ target_repo }} --set main.git.revision={{ target_branch }} --set main.options.bootstrap={{ bootstrap }} --set global.hubClusterDomain={{ hubcluster_apps_domain }}"
 
 - name: "[pattern-info] Output of target_repo"
   debug:

@@ -665,7 +665,7 @@ spec:
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
-  
+
   - name: git-clone-dev
     runAfter:
       - build-iot-software-sensor
@@ -1065,7 +1065,7 @@ spec:
   - name: copy-image-to-remote-registry-iot-anomaly
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-anomaly
     workspaces:
     - name: config
@@ -2330,7 +2330,7 @@ spec:
   - name: copy-image-to-remote-registry-iot-frontend
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-frontend
     workspaces:
     - name: config
@@ -2404,7 +2404,7 @@ spec:
     workspaces:
     - name: gitrepos
       workspace: gitrepos
-    - name: config 
+    - name: config
       workspace: config
     params:
     - name: subdirectory
@@ -3325,7 +3325,7 @@ spec:
         -submodules="$(params.submodules)" \
         -depth="$(params.depth)"
       cd "$CHECKOUT_DIR"
-      
+
       git fetch --tags
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
@@ -3342,7 +3342,7 @@ spec:
       then
         exit $EXIT_CODE
       fi
-      
+
       RESULT_SHA="$(git rev-parse HEAD | tr -d '\n')"
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]
@@ -3450,7 +3450,7 @@ spec:
     type: string
     default: "dev"
   - name: PUSH_FLAGS
-    description: additional flags for git push 
+    description: additional flags for git push
     type: string
     default: ""
   steps:
@@ -3804,7 +3804,7 @@ objects:
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
@@ -3841,7 +3841,7 @@ objects:
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
@@ -3857,7 +3857,7 @@ objects:
       value: IMAGE_ACCOUNT
     - name: OUTPUT_IMAGE_NAME
       value: pushprox
-    - name: DEV_REVISION 
+    - name: DEV_REVISION
       value: pushprox
 ---
 # Source: pipelines/templates/templates/build-iot-anomaly-detection.yaml
@@ -3885,7 +3885,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -3895,7 +3895,7 @@ objects:
       #   claimName: iot-anomaly-detection
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -3937,7 +3937,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -3947,7 +3947,7 @@ objects:
       #   claimName: iot-consumer
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -3989,7 +3989,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -3999,7 +3999,7 @@ objects:
       #   claimName: iot-frontend
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -4044,7 +4044,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -4054,7 +4054,7 @@ objects:
       #   claimName: iot-software-sensor
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -4096,7 +4096,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -4106,7 +4106,7 @@ objects:
       #   claimName: iot-software-sensor
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:

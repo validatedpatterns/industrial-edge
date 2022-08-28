@@ -121,7 +121,7 @@ spec:
       - name=build-artifacts,claimName=build-artifacts-rwo
       - --showlog
       - --nocolour
-  
+
   - name: git-clone-dev
     runAfter:
       - build-iot-software-sensor

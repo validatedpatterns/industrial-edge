@@ -4,13 +4,13 @@ metadata:
   name: kafka-to-s3-integration
   namespace: manuela-tst-all
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
     - type: configmap
       value: kafka-to-s3-config
     - type: secret
-      value: s3-secret  
+      value: s3-secret
   profile: OpenShift
   sources:
     - content: |

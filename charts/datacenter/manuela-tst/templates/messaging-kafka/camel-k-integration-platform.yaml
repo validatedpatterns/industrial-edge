@@ -5,7 +5,7 @@ metadata:
   labels:
     app: "camel-k"
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
   - type: repository

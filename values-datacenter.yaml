@@ -26,7 +26,7 @@ clusterGroup:
       namespace: open-cluster-management
       channel: release-2.4
       csv: advanced-cluster-management.v2.4.1
-    
+
     seldon:
       name: seldon-operator
       namespace: manuela-ml-workspace

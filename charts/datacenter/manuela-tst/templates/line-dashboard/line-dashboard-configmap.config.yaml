@@ -5,7 +5,7 @@ metadata:
   namespace: manuela-tst-all
   labels:
     app.kubernetes.io/instance: manuela-tst-all
-data: 
+data:
   "config.json": |-
     {
       "websocketHost": "http://messaging-manuela-tst-all.{{ .Values.global.localClusterDomain }}",
