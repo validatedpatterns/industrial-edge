@@ -30,7 +30,7 @@ spec:
   zookeeper:
     replicas: 3
     storage:
-      type: ephemeral  
+      type: ephemeral
   entityOperator:
     topicOperator: {}
     userOperator: {}

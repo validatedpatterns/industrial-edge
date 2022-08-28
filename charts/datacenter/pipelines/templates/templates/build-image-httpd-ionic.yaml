@@ -17,7 +17,7 @@ objects:
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:

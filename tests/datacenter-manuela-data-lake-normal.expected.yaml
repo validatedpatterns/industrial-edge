@@ -7,7 +7,7 @@ metadata:
   namespace: manuela-data-lake
 data:
   application.properties: |
-    
+
     kafka.broker.uri=prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092
     kafka.broker.topic.temperature=manuela-factory.iot-sensor-sw-temperature
     kafka.broker.topic.vibration=manuela-factory.iot-sensor-sw-vibration
@@ -26,13 +26,13 @@ metadata:
   name: kafka-to-s3-integration
   namespace: manuela-data-lake
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
     - type: configmap
       value: kafka-to-s3-config
     - type: secret
-      value: s3-secret  
+      value: s3-secret
   profile: OpenShift
   sources:
     - content: |
@@ -148,7 +148,7 @@ metadata:
   labels:
     app: "camel-k"
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
   - type: repository
@@ -187,7 +187,7 @@ spec:
   zookeeper:
     replicas: 3
     storage:
-      type: ephemeral  
+      type: ephemeral
   entityOperator:
     topicOperator: {}
     userOperator: {}

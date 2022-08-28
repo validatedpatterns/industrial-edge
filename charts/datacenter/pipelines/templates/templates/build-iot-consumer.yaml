@@ -22,7 +22,7 @@ objects:
       #   claimName: build-artifacts
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:
@@ -32,7 +32,7 @@ objects:
       #   claimName: iot-consumer
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteOnce
           resources:
             requests:

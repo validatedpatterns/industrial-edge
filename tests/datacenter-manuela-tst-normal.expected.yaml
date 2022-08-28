@@ -7,7 +7,7 @@ metadata:
   namespace: manuela-tst-all
 data:
   application.properties: |
-    
+
     kafka.broker.uri=dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092
     kafka.broker.topic.temperature=iot-sensor-sw-temperature
     kafka.broker.topic.vibration=iot-sensor-sw-vibration
@@ -28,7 +28,7 @@ metadata:
   namespace: manuela-tst-all
   labels:
     app.kubernetes.io/instance: manuela-tst-all
-data: 
+data:
   "config.json": |-
     {
       "websocketHost": "http://messaging-manuela-tst-all.region.example.com",
@@ -86,7 +86,7 @@ data:
   SENSOR_TEMPERATURE_MINRANGE: "45"
   SENSOR_TEMPERATURE_STARTMAX: "50"
   SENSOR_TEMPERATURE_STARTMIN: "50"
-  
+
   SENSOR_VIBRATION_ENABLED: "true"
   SENSOR_VIBRATION_FREQUENC: "5"
   SENSOR_VIBRATION_MAXITERATION: "1"
@@ -106,7 +106,7 @@ data:
   DEVICE_ID: "pump-2"
   DEVICE_METRICS: "temperature,vibration,gps,light"
   MACHINE_ID: "floor-1-line-1-extruder-1"
-  
+
   MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
   MQTT_PASSWORD: "iotuser"
   MQTT_PORT: "61616"
@@ -260,12 +260,12 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /home
             port: 8080
             scheme: HTTP
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -306,7 +306,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 15987d399e4c018385099c79b66090441ed6fd8faab59c7829e60d5e6fb02738
+        checksum/config: 6abcfb11b08479fd435f0021e605f884ecf9f84f40596074dd65256b7deaa1c7
       labels:
         application: machine-sensor-1
         deploymentConfig: machine-sensor-1
@@ -327,16 +327,16 @@ spec:
             name: https
             protocol: TCP
         envFrom:
-          - configMapRef: 
+          - configMapRef:
               name: machine-sensor-1
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -372,7 +372,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 98e3f28f7647a953d867bf0f3a0e7ece252aa525a43b8079c029df2ff3982eda 
+        checksum/config: 24255e5e8b8b64eb5287649203406969f812d66ef6edebfa118af87b748e5d72
       labels:
         application: machine-sensor-2
         deploymentConfig: machine-sensor-2
@@ -393,16 +393,16 @@ spec:
             name: https
             protocol: TCP
         envFrom:
-          - configMapRef: 
+          - configMapRef:
               name: machine-sensor-2
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /actuator/health
             port: 8080
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -452,11 +452,11 @@ spec:
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
-        livenessProbe: 
-          httpGet:   
+        livenessProbe:
+          httpGet:
             path: /health
             port: 3000
-          initialDelaySeconds: 15  
+          initialDelaySeconds: 15
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
@@ -470,7 +470,7 @@ spec:
           timeoutSeconds: 1
           periodSeconds: 10
           successThreshold: 1
-          failureThreshold: 3  
+          failureThreshold: 3
       dnsPolicy: ClusterFirst
       restartPolicy: Always
       schedulerName: default-scheduler
@@ -605,13 +605,13 @@ metadata:
   name: kafka-to-s3-integration
   namespace: manuela-tst-all
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
     - type: configmap
       value: kafka-to-s3-config
     - type: secret
-      value: s3-secret  
+      value: s3-secret
   profile: OpenShift
   sources:
     - content: |
@@ -725,7 +725,7 @@ metadata:
   name: mqtt2kafka-integration
   namespace: manuela-tst-all
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
     - type: configmap
@@ -743,9 +743,9 @@ spec:
 
 
         public class MQTT2KafkaRoute extends RouteBuilder {
-            
+
             private static final Logger LOGGER = LoggerFactory.getLogger(MQTT2KafkaRoute.class);
-            
+
             @Override
             public void configure() throws Exception {
                 storeTemperatureInKafka();
@@ -819,7 +819,7 @@ metadata:
   labels:
     app: "camel-k"
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   configuration:
   - type: repository
@@ -858,7 +858,7 @@ spec:
   zookeeper:
     replicas: 3
     storage:
-      type: ephemeral  
+      type: ephemeral
   entityOperator:
     topicOperator: {}
     userOperator: {}
@@ -871,7 +871,7 @@ metadata:
   labels:
     strimzi.io/cluster: dev-kafka-cluster
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   partitions: 1
   replicas: 1
@@ -887,7 +887,7 @@ metadata:
   labels:
     strimzi.io/cluster: dev-kafka-cluster
   annotations:
-    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true 
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
   partitions: 1
   replicas: 1

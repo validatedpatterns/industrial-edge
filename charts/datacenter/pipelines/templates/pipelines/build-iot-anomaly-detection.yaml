@@ -86,7 +86,7 @@ spec:
   - name: copy-image-to-remote-registry-iot-anomaly
     taskRef:
       name: skopeo-copy
-    runAfter: 
+    runAfter:
     - s2i-build-iot-anomaly
     workspaces:
     - name: config

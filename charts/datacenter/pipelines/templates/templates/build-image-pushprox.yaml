@@ -17,7 +17,7 @@ objects:
     - name: gitrepos
       volumeClaimTemplate:
         spec:
-          accessModes: 
+          accessModes:
           - ReadWriteMany
           resources:
             requests:
@@ -33,5 +33,5 @@ objects:
       value: IMAGE_ACCOUNT
     - name: OUTPUT_IMAGE_NAME
       value: pushprox
-    - name: DEV_REVISION 
+    - name: DEV_REVISION
       value: pushprox

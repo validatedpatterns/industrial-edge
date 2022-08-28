@@ -26,7 +26,7 @@
       - "{{ secrets_file }}"
       - "{{ globals_file }}"
       - "/tmp/helmopts.yaml"
-  
+
 - name: " [install-charts] Installing Validated Pattern Framework helm chart"
   kubernetes.core.helm:
     name: industrial-edge
@@ -39,7 +39,7 @@
       - "{{ secrets_file }}"
       - "{{ globals_file }}"
       - "/tmp/helmopts.yaml"
-  
+
 - name:  " [install-charts] Verify complete"
   debug:
     msg: "ok"
