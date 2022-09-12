@@ -2,10 +2,6 @@ clusterGroup:
   name: datacenter
   isHubCluster: true
 
-  proposedOptions:
-    manageGitops: True
-    isHubCluster: True
-
   namespaces:
   - golang-external-secrets
   - external-secrets
