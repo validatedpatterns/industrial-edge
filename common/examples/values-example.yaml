@@ -17,7 +17,7 @@ clusterGroup:
       namespace: open-cluster-management
       channel: release-2.4
       csv: advanced-cluster-management.v2.4.1
-      
+
     odh:
       name: opendatahub-operator
       source: community-operators
@@ -30,7 +30,7 @@ clusterGroup:
 
   projects:
   - datacenter
- 
+
   applications:
     acm:
       name: acm
@@ -47,6 +47,11 @@ clusterGroup:
       namespace: application-ci
       project: datacenter
       path: charts/datacenter/pipelines
+    external:
+      name: external-app
+      namespace: demo
+      project: datacenter
+      clusterName: example
 
   managedClusterGroups:
   - name: edge
@@ -67,3 +72,7 @@ clusterGroup:
         values:
           - OpenShift
 
+  # Create an ExternalSecret with a label that ArgoCD
+  # will detect and register as a new Cluster
+  externalClusters:
+    - example # Will read the key: cluster_example
