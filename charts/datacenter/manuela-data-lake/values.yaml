@@ -14,6 +14,30 @@ global:
         endpoint:
           enabled: false
 
+clusterGroup:
+  name: datacenter
+  isHubCluster: true
+  # Note: setting this to true stores the vault unseal keys inside a cluster secret and
+  # is fundamentally insecure
+  insecureUnsealVaultInsideCluster: true
+  managedClusterGroups:
+    factory:
+      name: factory
+      # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
+      # targetRevision: main
+      helmOverrides:
+      # Values must be strings!
+      - name: clusterGroup.isHubCluster
+        value: "false"
+      clusterSelector:
+#        matchLabels:
+#          clusterGroup: factory
+        matchExpressions:
+        - key: vendor
+          operator: In
+          values:
+            - OpenShift
+
 kafka:
   broker:
     uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
