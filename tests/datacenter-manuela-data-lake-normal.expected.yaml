@@ -1,5 +1,5 @@
 ---
-# Source: central-s3-store/templates/central-s3-store/kafka-to-s3-cm.yaml
+# Source: manuela-data-lake/templates/central-s3-store/kafka-to-s3-cm.yaml
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -19,7 +19,7 @@ data:
     # Convert this directory into a helm chart and use templating to set this
     s3.custom.endpoint.url=s3-openshift-storage.region.example.com
 ---
-# Source: central-s3-store/templates/central-s3-store/kafka-to-s3-integration.yaml
+# Source: manuela-data-lake/templates/central-s3-store/kafka-to-s3-integration.yaml
 apiVersion: camel.apache.org/v1
 kind: Integration
 metadata:
@@ -140,7 +140,7 @@ spec:
         }
       name: Kafka2S3Route.java
 ---
-# Source: central-s3-store/templates/central-s3-store/camel-k-integration-platform.yaml
+# Source: manuela-data-lake/templates/central-s3-store/camel-k-integration-platform.yaml
 apiVersion: camel.apache.org/v1
 kind: IntegrationPlatform
 metadata:
@@ -154,7 +154,7 @@ spec:
   - type: repository
     value: https://maven.repository.redhat.com/ga/all@id=redhat.ea
 ---
-# Source: central-s3-store/templates/manuela-kafka-cluster/kafka-cluster.yaml
+# Source: manuela-data-lake/templates/manuela-kafka-cluster/kafka-cluster.yaml
 apiVersion: kafka.strimzi.io/v1beta2
 kind: Kafka
 metadata:
@@ -192,7 +192,7 @@ spec:
     topicOperator: {}
     userOperator: {}
 ---
-# Source: central-s3-store/templates/factory-data-lake-secret-policy.yaml
+# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
 apiVersion: policy.open-cluster-management.io/v1
 kind: PlacementBinding
 metadata:
@@ -206,19 +206,26 @@ subjects:
     kind: Policy
     apiGroup: policy.open-cluster-management.io
 ---
-# Source: central-s3-store/templates/factory-data-lake-secret-policy.yaml
+# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
 # We need to run this on any managed cluster but not on the HUB
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: factory-secret-data-lake-placement
 spec:
-  # This will go to all clusters
-  clusterConditions:
-    - status: 'True'
-      type: ManagedClusterConditionAvailable
+  clusterSelector: {
+  "matchExpressions": [
+    {
+      "key": "vendor",
+      "operator": "In",
+      "values": [
+        "OpenShift"
+      ]
+    }
+  ]
+}
 ---
-# Source: central-s3-store/templates/factory-data-lake-secret-policy.yaml
+# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:

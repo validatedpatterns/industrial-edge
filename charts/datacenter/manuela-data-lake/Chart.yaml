@@ -1,6 +1,6 @@
 apiVersion: v2
-description: A Helm chart to configure central-s3-store
+description: A Helm chart to configure manuela-data-lake
 keywords:
 - patterns
-name: central-s3-store
+name: manuela-data-lake
 version: 0.0.1
