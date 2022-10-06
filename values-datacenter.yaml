@@ -20,60 +20,64 @@ clusterGroup:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
-      channel: release-2.4
-      csv: advanced-cluster-management.v2.4.1
+      channel: release-2.5
+      csv: advanced-cluster-management.v2.5.2
 
     seldon:
       name: seldon-operator
       namespace: manuela-ml-workspace
+      channel: stable
       source: community-operators
-      csv: seldon-operator.v1.12.0
+      csv: seldon-operator.v1.14.1
 
     seldon-dev:
       name: seldon-operator
       namespace: manuela-tst-all
+      channel: stable
       source: community-operators
-      csv: seldon-operator.v1.12.0
+      csv: seldon-operator.v1.14.1
 
     odh:
       name: opendatahub-operator
       source: community-operators
-      csv: opendatahub-operator.v1.1.0
+      channel: stable
+      csv: opendatahub-operator.v1.3.0
 
     pipelines:
       name: openshift-pipelines-operator-rh
-      csv: redhat-openshift-pipelines.v1.5.2
+      channel: stable
+      csv: openshift-pipelines-operator-rh.v1.6.4
 
  # TODO: Allow namespace to be a list
     amqstreams-prod:
       name: amq-streams
       namespace: manuela-data-lake
-      channel: amq-streams-2.x
-      csv: amqstreams.v2.0.1-0
+      channel: stable
+      csv: amqstreams.v2.2.0-0
 
     amqstreams-dev:
       name: amq-streams
       namespace: manuela-tst-all
-      channel: amq-streams-2.x
-      csv: amqstreams.v2.0.1-0
+      channel: stable
+      csv: amqstreams.v2.2.0-0
 
     amqbroker-dev:
       name: amq-broker-rhel8
       namespace: manuela-tst-all
       channel: 7.x
-      csv: amq-broker-operator.v7.8.4-opr-3
+      csv: amq-broker-operator.v7.9.4-opr-5
 
     camelk-prod:
       name: red-hat-camel-k
       namespace: manuela-data-lake
-      channel: 1.6.x
-      csv: red-hat-camel-k-operator.v1.6.3
+      channel: stable
+      csv: red-hat-camel-k-operator.v1.6.10
 
     camelk-dev:
       name: red-hat-camel-k
       namespace: manuela-tst-all
-      channel: 1.6.x
-      csv: red-hat-camel-k-operator.v1.6.3
+      channel: stable
+      csv: red-hat-camel-k-operator.v1.6.10
 
   projects:
   - datacenter
@@ -216,8 +220,8 @@ clusterGroup:
       - name: clusterGroup.isHubCluster
         value: "false"
       clusterSelector:
-#        matchLabels:
-#          clusterGroup: factory
+        matchLabels:
+          clusterGroup: factory
         matchExpressions:
         - key: vendor
           operator: In
