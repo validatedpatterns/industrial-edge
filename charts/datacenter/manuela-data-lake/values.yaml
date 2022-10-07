@@ -21,3 +21,22 @@ kafka:
       temperature: "manuela-factory.iot-sensor-sw-temperature"
       vibration: "manuela-factory.iot-sensor-sw-vibration"
 
+clusterGroup:
+  managedClusterGroups:
+    factory:
+      name: factory
+      # repoURL: https://github.com/dagger-refuse-cool/manuela-factory.git
+      # targetRevision: main
+      helmOverrides:
+      # Values must be strings!
+      - name: clusterGroup.isHubCluster
+        value: "false"
+      clusterSelector:
+        matchLabels:
+          clusterGroup: factory
+        matchExpressions:
+        - key: vendor
+          operator: In
+          values:
+            - OpenShift
+
