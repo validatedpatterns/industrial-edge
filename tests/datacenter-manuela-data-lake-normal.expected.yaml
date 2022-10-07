@@ -213,6 +213,9 @@ kind: PlacementRule
 metadata:
   name: factory-secret-data-lake-placement
 spec:
+  clusterConditions:
+    - status: 'True'
+      type: ManagedClusterConditionAvailable
   clusterSelector: {
   "matchExpressions": [
     {
@@ -229,7 +232,7 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: factory-secret-data-lake-policy
+  name: manuela-data-lake.factory-secret-data-lake-policy
 spec:
   remediationAction: enforce
   disabled: false
@@ -243,7 +246,7 @@ spec:
             apps.open-cluster-management.io/deployables: "secret"
         spec:
           remediationAction: enforce
-          severity: med
+          severity: medium
           namespaceSelector:
             include:
               - default
