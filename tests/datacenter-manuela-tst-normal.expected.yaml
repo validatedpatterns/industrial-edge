@@ -12,13 +12,13 @@ data:
     kafka.broker.topic.temperature=iot-sensor-sw-temperature
     kafka.broker.topic.vibration=iot-sensor-sw-vibration
 
-    local.cluster.name=apps.region.example.com
+    local.cluster.name=region.example.com
     s3.region=AWSREGION
     s3.bucket.name=BUCKETNAME
     s3.message.aggregation.count=50
     s3.custom.endpoint.enabled=false
     # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.apps.region.example.com
+    s3.custom.endpoint.url=s3-openshift-storage.region.example.com
 ---
 # Source: manuela-tst-all/templates/line-dashboard/line-dashboard-configmap.config.yaml
 apiVersion: v1
@@ -31,7 +31,7 @@ metadata:
 data:
   "config.json": |-
     {
-      "websocketHost": "http://messaging-manuela-tst-all.apps.region.example.com",
+      "websocketHost": "http://messaging-manuela-tst-all.region.example.com",
       "websocketPath": "/api/service-web/socket",
       "SERVER_TIMEOUT": "20000"
     }
@@ -42,7 +42,7 @@ kind: ConfigMap
 metadata:
   name: machine-sensor-1
 data:
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.apps.region.example.com
+  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.region.example.com
   #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
   #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
@@ -306,7 +306,7 @@ spec:
     metadata:
       creationTimestamp: null
       annotations:
-        checksum/config: 9053bd7786d98f90d46f9d1ddaeaec71b049261c9fed8f4052312a41166d709e
+        checksum/config: 6abcfb11b08479fd435f0021e605f884ecf9f84f40596074dd65256b7deaa1c7
       labels:
         application: machine-sensor-1
         deploymentConfig: machine-sensor-1
@@ -757,7 +757,7 @@ spec:
             private void storeTemperatureInKafka() {
                 // This block is to extract the cluster name from our VP
                 // localClusterDomain setting. Please see the config map.
-                String temp = "apps.region.example.com";
+                String temp = "region.example.com";
                 String delims="[ . ]+";
                 String [] tokens = temp.split(delims);
                 String cluster_name = tokens[1];
@@ -773,7 +773,7 @@ spec:
             private void storeVibrationInKafka() {
                 // This block is to extract the cluster name from our VP
                 // localClusterDomain setting. Please see the config map.
-                String temp = "apps.region.example.com";
+                String temp = "region.example.com";
                 String delims="[ . ]+";
                 String [] tokens = temp.split(delims);
                 String cluster_name = tokens[1];
