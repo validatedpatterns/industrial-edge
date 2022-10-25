@@ -9,3 +9,15 @@
  ---
  # Source: manuela-data-lake/templates/central-s3-store/kafka-to-s3-integration.yaml
  apiVersion: camel.apache.org/v1
+@@ -222,7 +222,10 @@
+         "OpenShift"
+       ]
+     }
+-  ]
++  ],
++  "matchLabels": {
++    "clusterGroup": "factory"
++  }
+ }
+ ---
+ # Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
