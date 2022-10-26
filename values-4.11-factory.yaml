@@ -2,7 +2,7 @@ clusterGroup:
   subscriptions:
   - name: opendatahub-operator
     source: community-operators
-    csv: opendatahub-operator.v1.3.0
+    #csv: opendatahub-operator.v1.3.0
 
   - name: seldon-operator
     namespace: manuela-stormshift-messaging
@@ -17,10 +17,10 @@ clusterGroup:
   - name: amq-broker-rhel8
     namespace: manuela-stormshift-messaging
     channel: 7.x
-    #csv: amq-broker-operator.v7.9.4-opr-5
+    csv: amq-broker-operator.v7.9.4-opr-5
 
   - name: red-hat-camel-k
     namespace: manuela-stormshift-messaging
     channel: stable
-    #csv: red-hat-camel-k-operator.v1.6.10
+    csv: red-hat-camel-k-operator.v1.6.10
 
