@@ -3,65 +3,20 @@
 #
 clusterGroup:
   subscriptions:
-    acm:
-      name: advanced-cluster-management
-      namespace: open-cluster-management
-      channel: release-2.6
-      #csv: advanced-cluster-management.v2.5.2
-
-    seldon:
-      name: seldon-operator
-      namespace: manuela-ml-workspace
-      channel: stable
-      source: community-operators
-      csv: seldon-operator.v1.14.1
-
     seldon-dev:
       name: seldon-operator
       namespace: manuela-tst-all
       channel: stable
       source: community-operators
-      csv: seldon-operator.v1.14.1
-
-    odh:
-      name: opendatahub-operator
-      source: community-operators
-      channel: stable
-      csv: opendatahub-operator.v1.3.0
-
-    pipelines:
-      name: openshift-pipelines-operator-rh
-      channel: stable
-      csv: openshift-pipelines-operator-rh.v1.6.4
 
  # TODO: Allow namespace to be a list
-    amqstreams-prod:
-      name: amq-streams
-      namespace: manuela-data-lake
-      channel: stable
-      csv: amqstreams.v2.2.0-0
-
     amqstreams-dev:
       name: amq-streams
       namespace: manuela-tst-all
       channel: stable
-      csv: amqstreams.v2.2.0-0
-
-    amqbroker-dev:
-      name: amq-broker-rhel8
-      namespace: manuela-tst-all
-      channel: 7.x
-      csv: amq-broker-operator.v7.9.4-opr-5
-
-    camelk-prod:
-      name: red-hat-camel-k
-      namespace: manuela-data-lake
-      channel: stable
-      csv: red-hat-camel-k-operator.v1.6.10
 
     camelk-dev:
       name: red-hat-camel-k
       namespace: manuela-tst-all
       channel: stable
-      csv: red-hat-camel-k-operator.v1.6.10
 

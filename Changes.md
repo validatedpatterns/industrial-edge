@@ -18,10 +18,3 @@
   Subscription channels and CSVs change from time to time especially in different OpenShift versions. The
   values-<ocpversion>-<clusterGroup>.yaml files assist us to be able to deploy the supported subscriptions
   to the OpenShift version we are deploying the Validated Pattern.
-* Additions:
-  * Added values-4.10-datacenter.yaml
-  * Added values-4.11-datacenter.yaml
-  * Updated values-datacenter.yaml
-* Additional Updates:
-  * Added .gitleaks.toml for CI
-  * Added proper CI tests
