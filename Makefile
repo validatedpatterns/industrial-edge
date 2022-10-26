@@ -81,6 +81,3 @@ test:
 KUBECONFORM_SKIP=-skip 'CustomResourceDefinition,Pipeline,Task,KfDef,Integration,IntegrationPlatform,Kafka,ActiveMQArtemis,KafkaTopic,SeldonDeployment,KafkaMirrorMaker'
 kubeconform:
 	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" kubeconform
-
-super-linter: ## Runs super linter locally
-	make -f common/Makefile DISABLE_LINTERS="-e VALIDATE_DOCKERFILE_HADOLINT=false -e VALIDATE_TEKTON=false" super-linter
