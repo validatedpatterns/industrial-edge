@@ -8,7 +8,7 @@ clusterGroup:
       namespace: open-cluster-management
       channel: release-2.6
       #csv: advanced-cluster-management.v2.6.1
-      
+
     seldon:
       name: seldon-operator
       namespace: manuela-ml-workspace
@@ -19,7 +19,7 @@ clusterGroup:
       name: seldon-operator
       namespace: manuela-tst-all
       source: community-operators
-      #csv: seldon-operator.v1.14.1      
+      #csv: seldon-operator.v1.14.1
 
     odh:
       name: opendatahub-operator
@@ -50,7 +50,7 @@ clusterGroup:
       namespace: manuela-tst-all
       channel: 7.x
       csv: amq-broker-operator.v7.9.4-opr-5
-      
+
     camelk-prod:
       name: red-hat-camel-k
       namespace: manuela-data-lake
@@ -62,5 +62,5 @@ clusterGroup:
       namespace: manuela-tst-all
       source: redhat-operators
       channel: 1.6.x
-      #csv: red-hat-camel-k-operator.v1.8.0      
+      #csv: red-hat-camel-k-operator.v1.8.0
 
