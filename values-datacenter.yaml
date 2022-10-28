@@ -30,19 +30,25 @@ clusterGroup:
       namespace: manuela-tst-all
       channel: 7.x
 
-    amqstreams-prod:
+    amqstreams-prod-dev:
       name: amq-streams
-      namespace: manuela-data-lake
+      namespaces: 
+      - manuela-data-lake
+      - manuela-tst-all
       channel: stable
 
-    camelk-prod:
+    camelk-prod-dev:
       name: red-hat-camel-k
-      namespace: manuela-data-lake
+      namespaces: 
+      - manuela-data-lake
+      - manuela-tst-all
       channel: stable
 
-    seldon-prod:
+    seldon-prod-dev:
       name: seldon-operator
-      namespace: manuela-ml-workspace
+      namespaces: 
+      - manuela-ml-workspace
+      - manuela-tst-all
       channel: stable
       source: community-operators
 
@@ -55,23 +61,6 @@ clusterGroup:
       name: opendatahub-operator
       channel: stable
       source: community-operators
-
-    seldon-dev:
-      name: seldon-operator
-      namespace: manuela-tst-all
-      channel: stable
-      source: community-operators
-
- # TODO: Allow namespace to be a list
-    amqstreams-dev:
-      name: amq-streams
-      namespace: manuela-tst-all
-      channel: stable
-
-    camelk-dev:
-      name: red-hat-camel-k
-      namespace: manuela-tst-all
-      channel: stable
 
   projects:
   - datacenter
