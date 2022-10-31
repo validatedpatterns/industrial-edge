@@ -54,7 +54,7 @@ clusterGroup:
 
     pipelines:
       name: openshift-pipelines-operator-rh
-      channel: stable
+      channel: latest
       source: redhat-operators
       
     odh:
