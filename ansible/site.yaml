@@ -1,6 +1,16 @@
-- name: Industrial Edge bootstrap
+# This is only needed for RHPDS
+- name: Industrial Edge RHPDS bootstrap
   hosts: localhost
   connection: local
-  roles:
-    - bootstrap-industrial-edge
+  tasks:
+  # We cannot use .package or .dnf modules because python3 that is used comes
+  # from a virtualenv
+  - name: Launch the installation
+    ansible.builtin.command: make install
+    args:
+      chdir: "{{ lookup('env', 'PWD') }}"
+    register: output
 
+  - name: Print output of installation
+    ansible.builtin.debug:
+      msg: "{{ output }}"
