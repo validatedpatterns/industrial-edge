@@ -528,6 +528,8 @@ spec:
           value: region.example.com
         - name: global.clusterVersion
           value: ""
+        - name: global.clusterPlatform
+          value: ""
         - name: global.hubClusterDomain
           value: apps.hub.example.com
         - name: global.localClusterDomain
@@ -580,6 +582,8 @@ spec:
         - name: global.clusterDomain
           value: region.example.com
         - name: global.clusterVersion
+          value: ""
+        - name: global.clusterPlatform
           value: ""
         - name: global.hubClusterDomain
           value: apps.hub.example.com
@@ -1008,6 +1012,5 @@ spec:
   name: openshift-pipelines-operator-rh
   source: redhat-operators
   sourceNamespace: openshift-marketplace
-  channel: stable
   installPlanApproval: Automatic
   startingCSV: redhat-openshift-pipelines.v1.5.2
