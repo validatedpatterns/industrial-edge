@@ -207,128 +207,25 @@ subjects:
     apiGroup: policy.open-cluster-management.io
 ---
 # Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
-apiVersion: policy.open-cluster-management.io/v1
-kind: PlacementBinding
-metadata:
-  name: factory-secret-data-lake-placement-binding
-placementRef:
-  name: factory-secret-data-lake-placement
-  kind: PlacementRule
-  apiGroup: apps.open-cluster-management.io
-subjects:
-  - name: factory-secret-data-lake-policy
-    kind: Policy
-    apiGroup: policy.open-cluster-management.io
----
-# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
-apiVersion: policy.open-cluster-management.io/v1
-kind: PlacementBinding
-metadata:
-  name: factory-secret-data-lake-placement-binding
-placementRef:
-  name: factory-secret-data-lake-placement
-  kind: PlacementRule
-  apiGroup: apps.open-cluster-management.io
-subjects:
-  - name: factory-secret-data-lake-policy
-    kind: Policy
-    apiGroup: policy.open-cluster-management.io
----
-# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
 # We need to run this on any managed cluster but not on the HUB
 apiVersion: apps.open-cluster-management.io/v1
 kind: PlacementRule
 metadata:
   name: factory-secret-data-lake-placement
 spec:
-  clusterSelector:
-    matchLabels:
+  clusterSelector: {
+  "matchExpressions": [
+    {
+      "key": "vendor",
+      "operator": "In",
+      "values": [
+        "OpenShift"
+      ]
+    }
+  ]
+}
 ---
 # Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
-apiVersion: policy.open-cluster-management.io/v1
-kind: Policy
-metadata:
-  name: factory-secret-data-lake-policy
-spec:
-  remediationAction: enforce
-  disabled: false
-  policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: factory-secret-data-lake
-          annotations:
-            apps.open-cluster-management.io/deployables: "secret"
-        spec:
-          remediationAction: enforce
-          severity: med
-          namespaceSelector:
-            include:
-              - default
-          object-templates:
-            - complianceType: mustonlyhave
-              objectDefinition:
-                kind: Secret
-                type: Opaque
-                metadata:
-                  name: prod-kafka-cluster-cluster-ca-cert
-                  namespace: manuela-stormshift-messaging
-                apiVersion: v1
-                data:
-                  ca.crt: '{{hub index (lookup "v1" "Secret" "manuela-data-lake" "prod-kafka-cluster-cluster-ca-cert").data "ca.crt" hub}}'
----
-# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
-# We need to run this on any managed cluster but not on the HUB
-apiVersion: apps.open-cluster-management.io/v1
-kind: PlacementRule
-metadata:
-  name: factory-secret-data-lake-placement
-spec:
-  clusterSelector:
-    matchLabels:
-apiVersion: policy.open-cluster-management.io/v1
-kind: Policy
-metadata:
-  name: factory-secret-data-lake-policy
-spec:
-  remediationAction: enforce
-  disabled: false
-  policy-templates:
-    - objectDefinition:
-        apiVersion: policy.open-cluster-management.io/v1
-        kind: ConfigurationPolicy
-        metadata:
-          name: factory-secret-data-lake
-          annotations:
-            apps.open-cluster-management.io/deployables: "secret"
-        spec:
-          remediationAction: enforce
-          severity: med
-          namespaceSelector:
-            include:
-              - default
-          object-templates:
-            - complianceType: mustonlyhave
-              objectDefinition:
-                kind: Secret
-                type: Opaque
-                metadata:
-                  name: prod-kafka-cluster-cluster-ca-cert
-                  namespace: manuela-stormshift-messaging
-                apiVersion: v1
-                data:
-                  ca.crt: '{{hub index (lookup "v1" "Secret" "manuela-data-lake" "prod-kafka-cluster-cluster-ca-cert").data "ca.crt" hub}}'
----
-# Source: manuela-data-lake/templates/factory-data-lake-secret-policy.yaml
-# We need to run this on any managed cluster but not on the HUB
-apiVersion: apps.open-cluster-management.io/v1
-kind: PlacementRule
-metadata:
-  name: factory-secret-data-lake-placement
-spec:
-  clusterSelector:
-    matchLabels:
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
