@@ -28,38 +28,32 @@ clusterGroup:
     amqbroker-prod:
       name: amq-broker-rhel8
       namespace: manuela-tst-all
-      channel: 7.x
 
     amqstreams-prod-dev:
       name: amq-streams
       namespaces: 
       - manuela-data-lake
       - manuela-tst-all
-      channel: stable
 
     camelk-prod-dev:
       name: red-hat-camel-k
       namespaces: 
       - manuela-data-lake
       - manuela-tst-all
-      channel: stable
 
     seldon-prod-dev:
       name: seldon-operator
       namespaces: 
       - manuela-ml-workspace
       - manuela-tst-all
-      channel: stable
       source: community-operators
 
     pipelines:
       name: openshift-pipelines-operator-rh
-      channel: latest
       source: redhat-operators
       
     odh:
       name: opendatahub-operator
-      channel: stable
       source: community-operators
 
   projects:
