@@ -24,7 +24,7 @@ help:
 pipeline-setup: ## calls the helm pipeline-setup
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
 
-install: operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
+install: pipeline-setup operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
 	echo "Installed"
 
 legacy-install: legacy-deploy post-install ## install the pattern the old way without the operator
