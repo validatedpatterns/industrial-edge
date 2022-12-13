@@ -25,20 +25,12 @@ pipeline-setup: ## calls the helm pipeline-setup
 	helm install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
 
 install: pipeline-setup operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
-	echo "Installed"
+	@echo "Installed"
 
-legacy-install: legacy-deploy post-install ## install the pattern the old way without the operator
-	echo "Installed"
-
-post-install: ## Post-install tasks - vault init and load-secrets
-	@if grep -v -e '^\s\+#' "values-hub.yaml" | grep -q -e "insecureUnsealVaultInsideCluster:\s\+true"; then \
-	  echo "Skipping 'make vault-init' as we're unsealing the vault from inside the cluster"; \
-	else \
-	  make vault-init; \
-	fi
+post-install: ## Post-install tasks
 	make load-secrets
 	make argosecret
-	echo "Done"
+	@echo "Done"
 
 sleep: ## waits for all seed resources to be presents
 	scripts/sleep-seed.sh
