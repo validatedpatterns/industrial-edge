@@ -17,9 +17,6 @@ global:
 clusterGroup:
   name: datacenter
   isHubCluster: true
-  # Note: setting this to true stores the vault unseal keys inside a cluster secret and
-  # is fundamentally insecure
-  insecureUnsealVaultInsideCluster: true
   managedClusterGroups:
     factory:
       name: factory
