@@ -237,7 +237,7 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: factory-secret-data-lake-policy
+  name: manuela-data-lake.factory-secret-data-lake-policy
 spec:
   remediationAction: enforce
   disabled: false
@@ -288,7 +288,7 @@ spec:
 apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
-  name: factory-secret-data-lake-policy
+  name: manuela-data-lake.factory-secret-data-lake-policy
 spec:
   remediationAction: enforce
   disabled: false
