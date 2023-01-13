@@ -4,7 +4,6 @@ metadata:
   finalizers:
   - kfdef-finalizer.kfdef.apps.kubeflow.org
   name: opendatahub
-  namespace: manuela-ml-workspace
 spec:
   applications:
   - kustomizeConfig:
