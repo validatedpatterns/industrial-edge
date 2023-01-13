@@ -230,6 +230,8 @@ apiVersion: policy.open-cluster-management.io/v1
 kind: Policy
 metadata:
   name: factory-secret-data-lake-policy
+  annotations:
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
 spec:
   remediationAction: enforce
   disabled: false
