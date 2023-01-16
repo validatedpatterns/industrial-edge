@@ -45,7 +45,8 @@ This relies on [kubernetes.core](https://docs.ansible.com/ansible/latest/collect
 Currently this role supports two formats: version 1.0 (which is the assumed default when not specified) and version 2.0.
 The latter is more fatureful and supports generating secrets directly into the vault and also prompting the user for a secret.
 By default, the first file that will looked up is `~/values-secret-<patternname>.yaml` and should that not exist it will look
-for `~/values-secret.yaml`.
+for `~/values-secret.yaml`. The paths can be overridden by setting the environment variable `VALUES_SECRET` to the path of the
+secret file.
 
 The values secret yaml files can be encrypted with `ansible-vault`. If the role detects they are encrypted, the password to
 decrypt them will be prompted when needed.
@@ -70,17 +71,6 @@ secrets:
   # This ends up as the s3Secret attribute to the path secret/hub/aws
   aws:
     s3Secret: test-secret
-
-  # The cluster_xxxx pattern is used for creating externalSecrets that
-  # will be used by ArgoCD to push manifests to other clusters.
-  #
-  # Create a service account with enough permissions and extract the token
-  #
-  # CLUSTER_TOKEN=$(oc describe secret -n default argocd-external-token | grep 'token:' | awk '{print$2}')
-  # CLUSTER_CA=$(oc extract -n openshift-config cm/kube-root-ca.crt --to=- --keys=ca.crt | base64 | awk '{print}' ORS='')
-  cluster_example:
-    server: https://api.example.openshiftapps.com:6443
-    bearerToken: <bearer_token>
 
 # This will create the vault key secret/hub/testfoo which will have two
 # properties 'b64content' and 'content' which will be the base64-encoded
@@ -199,6 +189,18 @@ secrets:
     - name: ca_crt
       path: /tmp/ca.crt
       onMissingValue: error # One of error, prompt (for path). generate makes no sense for file
+
+  # The following will read the ini-file at ~/.aws/credentials and place the ini_key "[default]/aws_access_key_id"
+  # in the aws_access_key_id_test vault attribute in the secret/hub/awsexample path
+  - name: awsexample
+    fields:
+    - name: aws_access_key_id_test
+      ini_file: ~/.aws/credentials
+      ini_section: default
+      ini_key: aws_access_key_id
+    - name: aws_secret_access_key_test
+      ini_file: ~/.aws/credentials
+      ini_key: aws_secret_access_key
 ```
 
 Internals
