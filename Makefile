@@ -14,11 +14,12 @@ default: show
 
 .PHONY: help
 # No need to add a comment here as help is described in common/
+##@ Pattern tasks
+
 help:
-	@printf "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) common/Makefile | sort | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)\n"
+	@make -f common/Makefile MAKEFILE_LIST="Makefile common/Makefile" help
 
 %:
-	echo "Delegating $* target"
 	make -f common/Makefile $*
 
 pipeline-setup: ## calls the helm pipeline-setup
