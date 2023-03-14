@@ -4,7 +4,7 @@
   "definitions": {
     "ValidatedPatterns": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "properties": {
         "enabled": {
           "type": "string",
@@ -101,37 +101,37 @@
       "properties": {
         "pattern": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "The name of the pattern being installed. The default is the name of the repository's folder and is automatically set by the Makefile"
         },
         "clusterDomain": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "The FQDN domain of the cluster without the 'apps.' component. For example: mcg-hub.blueprints.rhecoeng.com. Gets set automatically by the framework"
         },
         "localClusterDomain": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "The FQDN domain of the cluster including the 'apps.' component. For example: apps.mcg-hub.blueprints.rhecoeng.com. Gets set automatically by the framework"
         },
         "targetRevision": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "revision (branch/commit/ref) to use on the pattern's git repository, it is set automatically by the pattern's operator"
         },
         "repoURL": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "URL of the pattern's git repository, it is set automatically by the pattern's operator"
         },
         "hubClusterDomain": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "The FQDN domain of the hub cluster including the 'apps.' component. For example: apps.mcg-hub.blueprints.rhecoeng.com. Gets set automatically by the framework. Only makes sense when using ACM"
         },
         "namespace": {
           "type": "string",
-          "readOnly": "true",
+          "readOnly": true,
           "description": "The namespace in which the ArgoCD instance is running. Automatically set to either 'openshift-operators' or '$ARGOCD_APP_NAMESPACE'"
         },
         "git": {
@@ -142,14 +142,13 @@
         }
       },
       "required": [
-        "options",
-        "pattern"
+        "options"
       ],
       "title": "Global"
     },
     "GlobalGit": {
       "type": "object",
-      "additionalProperties": false,
+      "additionalProperties": true,
       "description": "The git configuration used to support Tekton pipeline tasks.",
       "properties": {
         "hostname": {
@@ -224,6 +223,20 @@
             "type": "string"
           }
         },
+        "indexImages": {
+          "anyOf": [
+            {
+              "type": "array"
+            },
+            {
+              "type": "object"
+            }
+          ],
+          "description": "List of index images for overriding default catalog sources.",
+          "items": {
+            "$ref": "#/definitions/IndexImages"
+          }
+        },
         "operatorgroupExcludes": {
           "type": "array",
           "description": "List of namespaces to exclude the creation of operator groups.",
@@ -239,6 +252,9 @@
         },
         "subscriptions": {
           "anyOf": [
+            {
+              "type": "null"
+            },
             {
               "type": "array"
             },
@@ -296,7 +312,6 @@
       "required": [
         "applications",
         "isHubCluster",
-        "managedClusterGroups",
         "name",
         "namespaces",
         "projects"
@@ -394,6 +409,21 @@
         "project"
       ],
       "title": "Applications"
+    },
+    "IndexImages": {
+      "type": "object",
+      "description": "Details for overriding default catalog sources",
+      "additionalProperties": false,
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "Name for the custom catalog source."
+        },
+        "image": {
+          "type": "string",
+          "description": "Location of the index image."
+        }
+      }
     },
     "HostedSite": {
       "type": "object",
@@ -627,7 +657,14 @@
           "type": "string"
         },
         "value": {
-          "type": "string"
+          "anyOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "boolean"
+            }
+          ]
         }
       },
       "required": [

@@ -1,5 +1,22 @@
 # Changes
 
+## February 9, 2023
+
+* Add support for /values-<platform>.yaml and for /values-<platform>-<clusterversion>.yaml
+
+## January 29, 2023
+
+* Stop extracting the HUB's CA via an imperative job running on the imported cluster.
+  Just use ACM to push the HUB's CA out to the managed clusters.
+
+## January 23, 2023
+
+* Add initial support for running ESO on ACM-imported clusters
+
+## January 18, 2023
+
+* Add validate-schema target
+
 ## January 13, 2023
 
 * Simplify the secrets paths when using argo hosted sites

@@ -104,3 +104,25 @@ spec:
   - name: manifests
     uri: https://github.com/opendatahub-io/odh-manifests/tarball/v1.4
   version: v1.4.0
+---
+# Source: opendatahub/templates/odh-dashboard.yaml
+apiVersion: opendatahub.io/v1alpha
+kind: OdhDashboardConfig
+metadata:
+  name: odh-dashboard-config
+  namespace: manuela-ml-workspace
+spec:
+  dashboardConfig:
+    disableBYONImageStream: false
+    disableClusterManager: false
+    disableISVBadges: false
+    disableInfo: false
+    disableSupport: false
+    disableTracking: false
+    disableUserManagement: false
+    enablement: true
+  groupsConfig:
+    adminGroups: odh-admins
+    allowedGroups: 'system:authenticated'
+  notebookController:
+    enabled: true

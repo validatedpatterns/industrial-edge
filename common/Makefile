@@ -3,6 +3,10 @@ ifneq ($(origin TARGET_SITE), undefined)
   TARGET_SITE_OPT=--set main.clusterGroupName=$(TARGET_SITE)
 endif
 
+# INDEX_IMAGES=registry-proxy.engineering.redhat.com/rh-osbs/iib:394248
+INDEX_IMAGES ?= 
+INDEX_OPTIONS=$(shell echo $(INDEX_IMAGES) | tr ',' '\n' | awk -F: 'match($$1,"/"){print "--set main.extraParameters."NR".name=clusterGroup.indexImages."NR".image --set main.extraParameters."NR".value="$$1":"$$2}')
+
 TARGET_ORIGIN ?= origin
 # This is to ensure that whether we start with a git@ or https:// URL, we end up with an https:// URL
 # This is because we expect to use tokens for repo authentication as opposed to SSH keys
@@ -11,10 +15,13 @@ TARGET_REPO=$(shell git ls-remote --get-url --symref $(TARGET_ORIGIN) | sed -e '
 TARGET_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
 
 # --set values always take precedence over the contents of -f
-HELM_OPTS=-f values-global.yaml --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) $(TARGET_SITE_OPT)
+HELM_OPTS=-f values-global.yaml --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) $(TARGET_SITE_OPT) $(INDEX_OPTIONS)
+
+##@ Pattern Common Tasks
+
 .PHONY: help
 help: ## This help message
-	@printf "$$(grep -hE '^\S+:.*##' $(MAKEFILE_LIST) | sed -e 's/:.*##\s*/:/' -e 's/^\(.\+\):\(.*\)/\\x1b[36m\1\\x1b[m:\2/' | column -c2 -t -s :)\n"
+	@awk 'BEGIN {FS = ":.*##"; printf "\nUsage:\n  make \033[36m<target>\033[0m\n"} /^(\s|[a-zA-Z_0-9-])+:.*?##/ { printf "  \033[36m%-35s\033[0m %s\n", $$1, $$2 } /^##@/ { printf "\n\033[1m%s\033[0m\n", substr($$0, 5) } ' $(MAKEFILE_LIST)
 
 #  Makefiles in the individual patterns should call these targets explicitly
 #  e.g. from industrial-edge: make -f common/Makefile show
@@ -22,26 +29,10 @@ help: ## This help message
 show: ## show the starting template without installing it
 	helm template common/operator-install/ --name-template $(NAME) $(HELM_OPTS)
 
-# We only check the remote ssh git branch's existance if we're not running inside a container
-# as getting ssh auth working inside a container seems a bit brittle
-.PHONY: validate-origin
-validate-origin: ## verify the git origin is available
-	@echo Checking repo $(TARGET_REPO) - branch $(TARGET_BRANCH)
-	@if [ ! -f /run/.containerenv ]; then\
-		git ls-remote --exit-code --heads $(TARGET_REPO) $(TARGET_BRANCH) >/dev/null &&\
-				echo "$(TARGET_REPO) - $(TARGET_BRANCH) exists" ||\
-				(echo "$(TARGET_BRANCH) not found in $(TARGET_REPO)"; exit 1);\
-	else\
-		echo "Running inside a container: Skipping git ssh checks";\
-	fi
-
-.PHONY: operator-deploy operator-upgrade
-operator-deploy operator-upgrade: validate-origin ## runs helm install
+.PHONY: operator-deploy
+operator-deploy operator-upgrade: validate-prereq validate-origin ## runs helm install
+	@echo "Running helm:"
 	helm upgrade --install $(NAME) common/operator-install/ $(HELM_OPTS)
-
-.PHONY: deploy upgrade legacy-deploy legacy-upgrade
-deploy upgrade legacy-deploy legacy-upgrade: ## does nothing anymore. use operator-deploy
-	@echo "UNSUPPORTED TARGET: please switch to 'operator-deploy'"; exit 1
 
 .PHONY: uninstall
 uninstall: ## runs helm uninstall
@@ -52,6 +43,43 @@ uninstall: ## runs helm uninstall
 .PHONY: load-secrets
 load-secrets: ## loads the secrets into the vault
 	common/scripts/vault-utils.sh push_secrets $(NAME)
+
+##@ Validation Tasks
+
+# We only check the remote ssh git branch's existance if we're not running inside a container
+# as getting ssh auth working inside a container seems a bit brittle
+.PHONY: validate-origin
+validate-origin: ## verify the git origin is available
+	@echo "Checking repository:"
+	@echo -n "  $(TARGET_REPO) - branch $(TARGET_BRANCH): "
+	@if [ ! -f /run/.containerenv ]; then\
+		git ls-remote --exit-code --heads $(TARGET_REPO) $(TARGET_BRANCH) >/dev/null &&\
+				echo "OK" ||\
+				(echo "NOT FOUND"; exit 1);\
+	else\
+		echo "Running inside a container: Skipping git ssh checks";\
+	fi
+
+.PHONY: validate-schema
+validate-schema: ## validates values files against schema in common/clustergroup
+	$(eval VAL_PARAMS := $(shell for i in ./values-*.yaml; do echo -n "$${i} "; done))
+	@echo -n "Validating clustergroup schema of: "
+	@set -e; for i in $(VAL_PARAMS); do echo -n " $$i"; helm template common/clustergroup $(HELM_OPTS) -f "$${i}" >/dev/null; done
+	@echo
+
+.PHONY: validate-prereq
+validate-prereq: ## verify pre-requisites
+	@echo "Checking prerequisites:"
+	@for t in $(EXECUTABLES); do if ! which $$t > /dev/null 2>&1; then echo "No $$t in PATH"; exit 1; fi; done
+	@echo "  Check for '$(EXECUTABLES)': OK"
+	@echo -n "  Check for python-kubernetes: "
+	@if ! ansible -m ansible.builtin.command -a "{{ ansible_python_interpreter }} -c 'import kubernetes'" localhost > /dev/null 2>&1; then echo "Not found"; exit 1; fi
+	@echo "OK"
+	@echo -n "  Check for kubernetes.core collection: "
+	@if ! ansible-galaxy collection list | grep kubernetes.core > /dev/null 2>&1; then echo "Not found"; exit 1; fi
+	@echo "OK"
+
+##@ Test and Linters Tasks
 
 CHARTS=$(shell find . -type f -iname 'Chart.yaml' -exec dirname "{}"  \; | grep -v examples | sed -e 's/.\///')
 # Section related to tests and linting
@@ -77,16 +105,6 @@ KUBECONFORM_SKIP ?= -skip 'CustomResourceDefinition'
 kubeconform: ## run helm kubeconform
 	@for t in $(CHARTS); do helm template $(TEST_OPTS) $(PATTERN_OPTS) $$t | kubeconform -strict $(KUBECONFORM_SKIP) -verbose -schema-location $(API_URL); if [ $$? != 0 ]; then exit 1; fi; done
 
-.PHONY: validate-prereq
-validate-prereq: ## verify pre-requisites
-	@for t in $(EXECUTABLES); do if ! which $$t > /dev/null 2>&1; then echo "No $$t in PATH"; exit 1; fi; done
-	@echo "Prerequisites checked '$(EXECUTABLES)': OK"
-	@ansible -m ansible.builtin.command -a "{{ ansible_python_interpreter }} -c 'import kubernetes'" localhost > /dev/null 2>&1
-	@echo "Python kubernetes module: OK"
-	@echo -n "Check for kubernetes.core collection: "
-	@if ! ansible-galaxy collection list | grep kubernetes.core > /dev/null 2>&1; then echo "Not found"; exit 1; fi
-	@echo "OK"
-
 .PHONY: super-linter
 super-linter: ## Runs super linter locally
 	rm -rf .mypy_cache
@@ -108,3 +126,8 @@ ansible-lint: ## run ansible lint on ansible/ folder
 .PHONY: ansible-unittest
 ansible-unittest: ## run ansible unit tests
 	pytest -r a --fulltrace --color yes ansible/tests/unit/test_*.py
+
+.PHONY: deploy upgrade legacy-deploy legacy-upgrade
+deploy upgrade legacy-deploy legacy-upgrade:
+	@echo "UNSUPPORTED TARGET: please switch to 'operator-deploy'"; exit 1
+

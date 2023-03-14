@@ -2997,6 +2997,8 @@ spec:
     resources: {}
     securityContext:
       privileged: false
+      capabilities:
+        add: ["SETFCAP"]
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers
@@ -3012,6 +3014,8 @@ spec:
     resources: {}
     securityContext:
       privileged: false
+      capabilities:
+        add: ["SETFCAP"]
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers
@@ -3679,6 +3683,8 @@ spec:
     resources: {}
     securityContext:
       privileged: false # LRC Changed from true
+      capabilities:
+        add: ["SETFCAP"]
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers
@@ -3695,6 +3701,8 @@ spec:
     resources: {}
     securityContext:
       privileged: false # LRC Changed from true
+      capabilities:
+        add: ["SETFCAP"]
     volumeMounts:
     - mountPath: /var/lib/containers
       name: varlibcontainers

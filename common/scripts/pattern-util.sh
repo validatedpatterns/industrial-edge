@@ -25,6 +25,8 @@ if [ -n "$KUBECONFIG" ]; then
 	KUBECONF_ENV="-e KUBECONFIG=${KUBECONFIG}"
 fi
 
+# Do not quote the ${KUBECONF_ENV} below, otherwise we will pass '' to podman
+# which will be confused
 podman run -it \
 	--security-opt label=disable \
 	${KUBECONF_ENV} \
