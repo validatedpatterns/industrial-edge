@@ -6,15 +6,8 @@ clusterGroup:
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
-  - manuela-factory-ml-workspace
-
-  operatorgroupExcludes:
-  - manuela-factory-ml-workspace
 
   subscriptions:
-  - name: opendatahub-operator
-    source: community-operators
-
   - name: seldon-operator
     namespace: manuela-stormshift-messaging
     source: community-operators
@@ -37,11 +30,6 @@ clusterGroup:
     path: charts/factory/manuela-stormshift
     plugin:
       name: helm-with-kustomize
-
-  - name: odh
-    namespace: manuela-factory-ml-workspace
-    project: factory
-    path: charts/datacenter/opendatahub
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
