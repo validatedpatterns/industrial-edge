@@ -16,6 +16,8 @@ clusterGroup:
     namespace: manuela-stormshift-messaging
 
   - name: amq-broker-rhel8
+    channel: 7.10.x
+    csv: amq-broker-operator.v7.10.2-opr-2-0.1676475747.p
     namespace: manuela-stormshift-messaging
 
   - name: red-hat-camel-k
