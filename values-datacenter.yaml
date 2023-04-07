@@ -24,6 +24,7 @@ clusterGroup:
 
     amqbroker-prod:
       name: amq-broker-rhel8
+      channel: 7.10.x
       namespace: manuela-tst-all
 
     amqstreams-prod-dev:
