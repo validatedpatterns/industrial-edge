@@ -172,12 +172,10 @@ data:
   SOCKET_PATH: "/api/service-web/socket"
   TEMPERATURE_THRESHOLD: "70.0"
   TEMPERATURE_ALERT_ENABLED: "true"
-  VIBRATION_ALERT_ENABLED: "true"
   TOPIC_GPS: "iot-sensor/sw/gps"
   TOPIC_TEMPERATURE: "iot-sensor/sw/temperature"
   TOPIC_VIBRATION: "iot-sensor/sw/vibration"
   TOPIC_LIGHT: "iot-sensor/sw/light"
-  VIBRATION_ANOMALY_ENABLED: "true"
   ANOMALY_DETECTION_URL: "http://anomaly-detection-predictor:8000"
 ---
 # Source: manuela-tst-all/templates/line-dashboard/line-dashboard-svc.yaml
