@@ -122,7 +122,7 @@ super-linter: ## Runs super linter locally
 	podman run -e RUN_LOCAL=true -e USE_FIND_ALGORITHM=true	\
 					-e VALIDATE_BASH=false \
 					-e VALIDATE_JSCPD=false \
-					-e VALIDATE_KUBERNETES_KUBEVAL=false \
+					-e VALIDATE_KUBERNETES_KUBECONFORM=false \
 					-e VALIDATE_YAML=false \
 					-e VALIDATE_ANSIBLE=false \
 					-e VALIDATE_DOCKERFILE_HADOLINT=false \
@@ -130,11 +130,12 @@ super-linter: ## Runs super linter locally
 					$(DISABLE_LINTERS) \
 					-v $(PWD):/tmp/lint:rw,z \
 					-w /tmp/lint \
-					docker.io/github/super-linter:slim-v4
+					docker.io/github/super-linter:slim-v5
 
 .PHONY: ansible-lint
 ansible-lint: ## run ansible lint on ansible/ folder
-	podman run -it -v $(PWD):/workspace:rw,z --workdir /workspace --entrypoint "/usr/local/bin/ansible-lint" quay.io/ansible/creator-ee:latest  "-vvv" "ansible/"
+	podman run -it -v $(PWD):/workspace:rw,z --workdir /workspace --env ANSIBLE_CONFIG=./ansible/ansible.cfg \
+		--entrypoint "/usr/local/bin/ansible-lint" quay.io/ansible/creator-ee:latest  "-vvv" "ansible/"
 
 .PHONY: ansible-unittest
 ansible-unittest: ## run ansible unit tests
