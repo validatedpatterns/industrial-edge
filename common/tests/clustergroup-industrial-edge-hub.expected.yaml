@@ -306,6 +306,7 @@ data:
       localClusterDomain: apps.region.example.com
       namespace: pattern-namespace
       options:
+        applicationRetryLimit: 20
         installPlanApproval: Automatic
         syncPolicy: Manual
         useCSV: true
@@ -682,7 +683,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -713,7 +713,8 @@ spec:
 ]
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -737,7 +738,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -759,7 +759,8 @@ spec:
           value: apps.region.example.com
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -783,7 +784,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -805,7 +805,8 @@ spec:
           value: apps.region.example.com
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -829,7 +830,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -881,7 +881,8 @@ spec:
 ]
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -905,7 +906,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -927,7 +927,8 @@ spec:
           value: apps.region.example.com
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -951,7 +952,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -973,7 +973,8 @@ spec:
           value: apps.region.example.com
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -997,7 +998,8 @@ spec:
 }
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -1021,7 +1023,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-datacenter.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -1061,7 +1062,8 @@ spec:
           value: "1.10.3-ubi"
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/argocd.yaml
 apiVersion: argoproj.io/v1alpha1

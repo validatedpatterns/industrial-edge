@@ -19,7 +19,7 @@ For example, to mirror an operator into an existing cluster you would do the fol
 export KUBECONFIG=/tmp/foo/kubeconfig
 export OPERATOR=openshift-gitops-operator
 export IIB=492329
-export INDEX_IMAGES=registry-proxy.engineering.redhat.com/rh-osbs/iib:iib-${IIB}
+export INDEX_IMAGES=registry-proxy.engineering.redhat.com/rh-osbs/iib:${IIB}
 export KUBEADMINPASS="11111-22222-33333-44444"
 # This will push the IIB and all the needed images for the default openshift-gitops-operator into the cluster
 make load-iib
@@ -64,6 +64,19 @@ registry. Run `make iib` with the following environment variables set:
 *Note*: For the REGISTRY_TOKEN go to your quay repository, add a robot with "Write" permissions. The robot created will have a "username" and "password" fields. Set the REGISTRY_TOKEN environment variable to that value.
 
 ## Useful commands
+
+* List IIBs for an operator:
+
+```sh
+ansible-playbook common/ansible/playbooks/iib-ci/lookup.yml
+...
+ok: [localhost] => (item=v4.13) => {
+    "msg": "v4.13 -> {'indeximage': 'registry-proxy.engineering.redhat.com/rh-osbs/iib:509435', 'bundleimage': 'registry-proxy.engineering.redhat.com/rh-osbs/openshift-gitops-1-gitops-operator-bundle:v99.9.0-106'}"
+}
+...
+```
+
+Override the `operator` value with the desired bundle name to figure out the last IIBs for it.
 
 * List all images uploaded to the internal registry:
 
