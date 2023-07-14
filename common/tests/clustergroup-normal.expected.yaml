@@ -122,18 +122,23 @@ data:
         clusterPools:
           exampleAWSPool:
             baseDomain: blueprints.rhecoeng.com
-            clusters:
-            - one
+            controlPlane:
+              count: 1
+              platform:
+                aws:
+                  type: m5.xlarge
             name: aws-ap
             openshiftVersion: 4.10.18
             platform:
               aws:
                 region: ap-southeast-2
             size: 3
+            workers:
+              count: 0
           exampleAzurePool:
             baseDomain: blueprints.rhecoeng.com
             clusters:
-            - two
+            - Two
             - three
             name: azure-us
             openshiftVersion: 4.10.18
@@ -198,6 +203,7 @@ data:
       multiClusterTarget: all
       namespace: pattern-namespace
       options:
+        applicationRetryLimit: 20
         installPlanApproval: Automatic
         syncPolicy: Automatic
         useCSV: false
@@ -532,7 +538,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-example.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -563,7 +568,8 @@ spec:
 ]
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/applications.yaml
 apiVersion: argoproj.io/v1alpha1
@@ -587,7 +593,6 @@ spec:
       valueFiles:
       - "/values-global.yaml"
       - "/values-example.yaml"
-      # Watch the progress of https://issues.redhat.com/browse/GITOPS-891 and update accordingly
       parameters:
         - name: global.repoURL
           value: $ARGOCD_APP_SOURCE_REPO_URL
@@ -609,7 +614,8 @@ spec:
           value: apps.region.example.com
   syncPolicy:
     automated: {}
-    #  selfHeal: true
+    retry:
+      limit: 20
 ---
 # Source: pattern-clustergroup/templates/plumbing/hosted-sites.yaml
 apiVersion: argoproj.io/v1alpha1
