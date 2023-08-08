@@ -20,11 +20,9 @@ clusterGroup:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
-      channel: release-2.6
 
     amqbroker-prod:
       name: amq-broker-rhel8
-      channel: 7.10.x
       namespace: manuela-tst-all
 
     amqstreams-prod-dev:
