@@ -13,8 +13,8 @@ clusterGroup:
   - staging
   - vault
 
-  operatorgroupExcludes:
-  - manuela-ml-workspace
+    #  operatorgroupExcludes:
+    #  - manuela-ml-workspace
 
   subscriptions:
     acm:
@@ -70,11 +70,11 @@ clusterGroup:
         jsonPointers:
         - /spec/loggingCA
 
-    odh:
-      name: odh
-      namespace: manuela-ml-workspace
-      project: datacenter
-      path: charts/datacenter/opendatahub
+          #odh:
+          #name: odh
+          #namespace: manuela-ml-workspace
+          #project: datacenter
+          #path: charts/datacenter/opendatahub
 
     pipelines:
       name: pipelines
