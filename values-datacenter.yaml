@@ -38,7 +38,7 @@ clusterGroup:
       - manuela-tst-all
 
     seldon-prod-dev:
-      name: seldon-operator
+      name: seldon-operator-certified
       namespaces: 
       - openshift-operators
       source: certified-operators
