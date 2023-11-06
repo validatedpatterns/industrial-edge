@@ -42,7 +42,7 @@ clusterGroup:
       namespaces: 
       - manuela-ml-workspace
       - manuela-tst-all
-      source: community-operators
+      source: certified-operators
 
     pipelines:
       name: openshift-pipelines-operator-rh
