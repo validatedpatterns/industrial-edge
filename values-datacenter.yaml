@@ -38,11 +38,10 @@ clusterGroup:
       - manuela-tst-all
 
     seldon-prod-dev:
-      name: seldon-operator
+      name: seldon-operator-certified
       namespaces: 
-      - manuela-ml-workspace
-      - manuela-tst-all
-      source: community-operators
+      - openshift-operators
+      source: certified-operators
 
     pipelines:
       name: openshift-pipelines-operator-rh
