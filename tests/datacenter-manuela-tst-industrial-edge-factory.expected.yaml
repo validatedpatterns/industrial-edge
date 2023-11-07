@@ -178,6 +178,20 @@ data:
   TOPIC_LIGHT: "iot-sensor/sw/light"
   ANOMALY_DETECTION_URL: "http://anomaly-detection-predictor:8000"
 ---
+# Source: manuela-tst-all/templates/system-image-builder-role-binding.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'system:image-builder'
+subjects:
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: manuela-ci
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'system:image-builder'
+---
 # Source: manuela-tst-all/templates/line-dashboard/line-dashboard-svc.yaml
 apiVersion: v1
 kind: Service

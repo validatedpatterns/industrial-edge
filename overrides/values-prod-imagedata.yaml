@@ -1,46 +1,6 @@
-global:
-  imageregistry:
-    account: PLAINTEXT
-    hostname: quay.io
-    type: quay
-
-  git:
-    hostname: github.com
-    account: PLAINTEXT
-    username: PLAINTEXT
-    email: SOMEWHERE@EXAMPLE.COM
-    dev_revision: main
-
-  localClusterDomain: local.example.com
-  hubClusterDomain: hub.example.com
-
-messaging:
-  vibrationAlert: true
-  vibrationAnomaly: true
-  nodeTlsReject: 0
-
-machineSensor1:
-  port: 80
-
-machineSensor2:
-  port: 80
-  sensorTemperature: false
-
-mqtt:
-  broker:
-    uri: "tcp://broker-amq-mqtt-all-0-svc:61616"
-    clientId: "MQTT2KafkaRoute"
-    topic:
-      temperature: "iot-sensor/sw/temperature"
-      vibration: "iot-sensor/sw/vibration"
-
-kafka:
-  broker:
-    uri: "factory-kafka-cluster-kafka-bootstrap:9092"
-    topic:
-      temperature: "manuela-factory.iot-sensor-sw-temperature"
-      vibration: "manuela-factory.iot-sensor-sw-vibration"
-
+# NOTE: This file will be edited by the pipeline processes as new versions are built through the pipelines
+# prod_version and test_version keys with built values will be edited when the pipelines run
+---
 namespace: manuela-stormshift
 
 local_image_registry: image-registry.openshift-image-registry.svc:5000

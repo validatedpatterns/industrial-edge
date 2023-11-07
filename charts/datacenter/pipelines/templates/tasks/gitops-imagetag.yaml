@@ -27,16 +27,16 @@ spec:
     default: "ops"
   steps:
   - name: patch-kustomization
-    image: mikefarah/yq:3.2.1
+    image: {{ .Values.yq.image }}
     script: |
-      KUSTOMIZATION_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_KUSTOMIZATION_PATH)"
+      VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
       ls -al $KUSTOMIZATION_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
-      yq w -i $KUSTOMIZATION_PATH "$YAML_PATH" $(params.TAG)
+      yq w -i $VALUES_PATH "$YAML_PATH" $(params.TAG)
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: patch-imagestream
-    image: mikefarah/yq:3.2.1
+    image: {{ .Values.yq.image }}
     script: |
       IMAGESTREAM_CONFIG_PATH=$(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_IMAGESTREAM_PATH
       if [ -f "$IMAGESTREAM_CONFIG_PATH" ]; then

@@ -7,10 +7,19 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: {{ .Values.iot_frontend.bootstrap_tag }}
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
+      name: {{ .Values.iot_frontend.bootstrap_image }}
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- if .Values.iot_frontend.updated_images }}
+  - name: {{ .Values.iot_frontend.tag | quote }}
+    from:
+      kind: DockerImage
+      name: "{{ .Values.iot_frontend.image_location }}:{{ .Values.iot_frontend.tag }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}

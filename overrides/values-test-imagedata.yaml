@@ -1,50 +1,6 @@
-global:
-  datacenter:
-    clustername: datacenter-XXXXX
-    domain: BASEDOMAIN
-  s3:
-    bucket:
-      name: BUCKETNAME
-      region: AWSREGION
-      message:
-        aggregation:
-          count: 50
-      custom:
-        endpoint:
-          enabled: false
-
-messaging:
-  vibrationAlert: true
-  vibrationAnomaly: true
-  nodeTlsReject: 0
-
-machineSensor1:
-  port: 80
-
-machineSensor2:
-  port: 80
-  sensorTemperature: false
-
-mqtt:
-  broker:
-    uri: "tcp://broker-amq-mqtt-all-0-svc.manuela-tst-all.svc:61616"
-    clientId: "MQTT2KafkaRouteDev"
-    topic:
-      temperature: "iot-sensor/sw/temperature"
-      vibration: "iot-sensor/sw/vibration"
-
-kafka:
-  broker:
-    uri: "dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
-    topic:
-      temperature: "iot-sensor-sw-temperature"
-      vibration: "iot-sensor-sw-vibration"
-
-subscriptions:
-  version:
-    installPlanApproval: Automatic
-    seldon: v1.13.1
-
+# NOTE: This file will be edited by the pipeline processes as new versions are built through the pipelines
+# prod_version and test_version keys with built values will be edited when the pipelines run
+---
 namespace: manuela-tst-all
 
 local_image_registry: image-registry.openshift-image-registry.svc:5000
@@ -52,7 +8,6 @@ local_image_registry: image-registry.openshift-image-registry.svc:5000
 machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
-  bootstrap_tag: 0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
   container_name: machine-sensor
   repo_short_name: iot-software-sensor
@@ -61,7 +16,6 @@ machine_sensor:
 iot_anomaly_detection:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
-  bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
   container_name: anomaly-detection
   repo_short_name: iot-anomaly-detection
@@ -69,7 +23,6 @@ iot_anomaly_detection:
 
 iot_consumer:
   updated_images: false
-  bootstrap_tag: 0.3.2
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
   container_name: messaging
@@ -78,8 +31,7 @@ iot_consumer:
 
 iot_frontend:
   updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
-  bootstrap_tag: 0.3.1
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
   container_name: line-dashboard
   repo_short_name: iot-frontend

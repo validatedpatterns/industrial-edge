@@ -16,3 +16,12 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- if .Values.iot_anomaly_detection.updated_images }}
+  - name: {{ .Values.iot_anomaly_detection.tag | quote }}
+    from:
+      kind: DockerImage
+      name: "{{ .Values.iot_anomaly_detection.image_location }}:{{ .Values.iot_anomaly_detection.tag }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}

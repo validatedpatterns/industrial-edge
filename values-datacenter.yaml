@@ -110,8 +110,8 @@ clusterGroup:
       namespace: manuela-tst-all
       project: datacenter
       path: charts/datacenter/manuela-tst
-      plugin:
-        name: helm-with-kustomize
+      extraValueFiles:
+        - /overrides/values-test-imagedata.yaml
 
     vault:
       name: vault

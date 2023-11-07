@@ -11,3 +11,12 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- if .Values.iot_consumer.updated_images }}
+  - name: {{ .Values.iot_consumer.tag | quote }}
+    from:
+      kind: DockerImage
+      name: "{{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}
