@@ -19,6 +19,7 @@ spec:
         containers:
           - name: anomaly-detection
             image: {{ .Values.iot_anomaly_detection.image_location }}:{{ .Values.iot_anomaly_detection.tag }}
+            imagePullPolicy: Always
             env:
             - name: MODEL_FIILE
               value: "model.joblib"

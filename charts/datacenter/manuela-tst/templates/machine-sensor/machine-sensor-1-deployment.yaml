@@ -26,7 +26,7 @@ spec:
       containers:
       - name: machine-sensor
         image: {{ .Values.machine_sensor.image_location }}:{{ .Values.machine_sensor.tag }}
-        #imagePullPolicy: Always
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
