@@ -17,7 +17,8 @@ machine_sensor:
 iot_anomaly_detection:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
   container_name: anomaly-detection
   repo_short_name: iot-anomaly-detection
   tag: 0.3.2
