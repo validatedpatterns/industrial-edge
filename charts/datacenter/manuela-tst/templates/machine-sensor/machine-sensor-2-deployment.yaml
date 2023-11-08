@@ -25,7 +25,7 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
+        image: {{ .Values.machine_sensor.image_location }}:{{ .Values.machine_sensor.tag }}
         #imagePullPolicy: Always
         ports:
           - containerPort: 8778

@@ -19,7 +19,7 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: messaging
+      - image: {{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}
         #imagePullPolicy: Always
         name: messaging
         ports:

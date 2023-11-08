@@ -25,7 +25,8 @@ iot_anomaly_detection:
 iot_consumer:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
   container_name: messaging
   repo_short_name: iot-consumer
   tag: 0.3.2
