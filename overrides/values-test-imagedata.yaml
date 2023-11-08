@@ -8,7 +8,8 @@ local_image_registry: image-registry.openshift-image-registry.svc:5000
 machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
   container_name: machine-sensor
   repo_short_name: iot-software-sensor
   tag: 0.3.1
