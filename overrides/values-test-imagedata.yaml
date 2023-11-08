@@ -34,7 +34,7 @@ iot_consumer:
 
 iot_frontend:
   updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
   # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
   container_name: line-dashboard
