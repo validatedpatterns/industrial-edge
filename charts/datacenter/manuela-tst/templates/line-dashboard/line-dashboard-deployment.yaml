@@ -23,7 +23,7 @@ spec:
       containers:
       - name: line-dashboard
         image: {{ .Values.iot_frontend.image_location }}:{{ .Values.iot_frontend.tag }}
-        #imagePullPolicy: Always
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http
