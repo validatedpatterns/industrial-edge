@@ -8,6 +8,7 @@ local_image_registry: image-registry.openshift-image-registry.svc:5000
 machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+  bootstrap_tag: 0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
   # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
   container_name: machine-sensor
@@ -17,6 +18,7 @@ machine_sensor:
 iot_anomaly_detection:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
+  bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
   # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
   container_name: anomaly-detection
@@ -26,6 +28,7 @@ iot_anomaly_detection:
 iot_consumer:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
+  bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
   # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
   container_name: messaging
@@ -35,6 +38,7 @@ iot_consumer:
 iot_frontend:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
+  bootstrap_tag: 0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
   # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
   container_name: line-dashboard
