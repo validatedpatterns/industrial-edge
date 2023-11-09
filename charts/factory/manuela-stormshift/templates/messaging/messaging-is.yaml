@@ -7,10 +7,19 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.2
+  - name: {{ .Values.iot_consumer.bootstrap_tag }}
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
+      name: {{ .Values.iot_consumer.bootstrap_image }}
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- if .Values.iot_consumer.updated_images }}
+  - name: {{ .Values.iot_consumer.tag }}
+    from:
+      kind: DockerImage
+      name: "{{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}

@@ -19,7 +19,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:0.3.2-119
+            image: {{ .Values.iot_anomaly_detection.image_location }}:{{ .Values.iot_anomaly_detection.tag }}
             imagePullPolicy: Always
             env:
             - name: MODEL_FIILE
