@@ -1,18 +1,11 @@
 # NOTE: This file will be edited by the pipeline processes as new versions are built through the pipelines
 # prod_version and test_version keys with built values will be edited when the pipelines run
 ---
-namespace: manuela-tst-all
-
-local_image_registry: image-registry.openshift-image-registry.svc:5000
-
 machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
   bootstrap_tag: 0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
-  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
-  container_name: machine-sensor
-  repo_short_name: iot-software-sensor
   tag: 0.3.1
 
 iot_anomaly_detection:
@@ -20,9 +13,6 @@ iot_anomaly_detection:
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
   bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
-  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
-  container_name: anomaly-detection
-  repo_short_name: iot-anomaly-detection
   tag: 0.3.2
 
 iot_consumer:
@@ -30,9 +20,6 @@ iot_consumer:
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
   bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
-  container_name: messaging
-  repo_short_name: iot-consumer
   tag: 0.3.2
 
 iot_frontend:
@@ -40,7 +27,4 @@ iot_frontend:
   bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
   bootstrap_tag: 0.3.1
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
-  # image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
-  container_name: line-dashboard
-  repo_short_name: iot-frontend
   tag: 0.3.1
