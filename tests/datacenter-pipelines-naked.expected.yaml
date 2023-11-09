@@ -3518,14 +3518,17 @@ spec:
     image: mikefarah/yq:latest
     script: |
       set -x
+      TAG_VALUE=$(params.TAG)
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
       UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
-      yq "$UPDATE_FLAG_PATH = true" -i $VALUES_PATH
-      yq "$YAML_PATH = '$(params.TAG)'" -i $VALUES_PATH
+      yq "$UPDATE_FLAG_PATH = true" $VALUES_PATH > $VALUES_PATH.tmp
+      mv $VALUES_PATH.tmp $VALUES_PATH
+      yq "$YAML_PATH = \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
+      mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
 ---
 # Source: pipelines/templates/tasks/mock.yaml
