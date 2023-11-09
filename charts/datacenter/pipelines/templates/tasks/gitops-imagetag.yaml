@@ -26,6 +26,7 @@ spec:
     image: {{ .Values.yq.image }}
     script: |
       set -x
+      TAG_VALUE=$(params.TAG)
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
@@ -34,6 +35,7 @@ spec:
       echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
       yq "$UPDATE_FLAG_PATH = true" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
-      yq "$YAML_PATH = $(params.TAG)" $VALUES_PATH > $VALUES_PATH.tmp
+      echo $TAG_VALUE
+      yq "$YAML_PATH = $TAG_VALUE" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
