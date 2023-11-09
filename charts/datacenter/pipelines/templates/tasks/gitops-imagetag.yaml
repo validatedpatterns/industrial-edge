@@ -17,37 +17,20 @@ spec:
   - name: TAG
     description: the VERSION tag
     type: string
-  - name: TRUNCATE_IMAGESTREAM_TAGS_AFTER
-    type: string
-    description: Number of image stream tags to keep
-    default: "5"
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
     default: "ops"
   steps:
-  - name: patch-kustomization
+  - name: patch-values
     image: {{ .Values.yq.image }}
     script: |
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
-      ls -al $KUSTOMIZATION_PATH
+      ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
+      UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
       yq w -i $VALUES_PATH "$YAML_PATH" $(params.TAG)
-    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
-  - name: patch-imagestream
-    image: {{ .Values.yq.image }}
-    script: |
-      IMAGESTREAM_CONFIG_PATH=$(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_IMAGESTREAM_PATH
-      if [ -f "$IMAGESTREAM_CONFIG_PATH" ]; then
-        IMAGESTREAM_PATH=$(cat $IMAGESTREAM_CONFIG_PATH)
-        REMOTE_IMAGE=$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_IMAGE)
-
-        echo "Adding $(params.TAG) to image stream $IMAGESTREAM_PATH"
-        cat $IMAGESTREAM_PATH
-        echo "{\"spec\":{\"tags\":[{\"name\":\"$(params.TAG)\",\"from\":{\"kind\":\"DockerImage\",\"name\":\"$REMOTE_IMAGE:$(params.TAG)\"},\"importPolicy\":{},\"referencePolicy\":{\"type\":\"Local\"}}]}}" | yq -P m -i -a $IMAGESTREAM_PATH -
-        if [ $(yq r $IMAGESTREAM_PATH --length spec.tags) -gt $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER) ]; then
-          yq -P d -i $IMAGESTREAM_PATH 'spec.tags[0]'
-        fi
-      fi
+      yq w -i $VALUES_PATH "$UPDATE_FLAG_PATH" "true"
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
