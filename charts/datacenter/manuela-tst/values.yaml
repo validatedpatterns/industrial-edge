@@ -49,26 +49,26 @@ machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
   bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
   tag: 0.3.1
 
 iot_anomaly_detection:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
   bootstrap_tag: 0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
   tag: 0.3.2
 
 iot_consumer:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
   bootstrap_tag: 0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
   tag: 0.3.2
 
 iot_frontend:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
   bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
   tag: 0.3.1
