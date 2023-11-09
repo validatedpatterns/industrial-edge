@@ -35,6 +35,6 @@ spec:
       echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
       yq "$UPDATE_FLAG_PATH = true" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
-      yq '$YAML_PATH = "$TAG_VALUE"' $VALUES_PATH > $VALUES_PATH.tmp
+      yq "$YAML_PATH = \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
