@@ -25,33 +25,29 @@ iot_consumer:
   image: iot-consumer
   yaml_path: 'iot_consumer.tag'
   update_flag_path: 'iot_consumer.updated_images'
-  test_values_path: /overrides/values-test-imagedata.yaml
-  prod_values_path: /overrides/values-prod-imagedata.yaml
-  prod_imagestream_path: /overrides/values-prod-imagedata.yaml
+  test_values_path: overrides/values-test-imagedata.yaml
+  prod_values_path: overrides/values-prod-imagedata.yaml
 
 iot_frontend:
   image: iot-frontend
   yaml_path: 'iot_frontend.tag'
   update_flag_path: 'iot_frontend.updated_images'
-  test_values_path: /overrides/values-test-imagedata.yaml
-  prod_values_path: /overrides/values-prod-imagedata.yaml
-  prod_imagestream_path: /overrides/values-prod-imagedata.yaml
+  test_values_path: overrides/values-test-imagedata.yaml
+  prod_values_path: overrides/values-prod-imagedata.yaml
 
 machine_sensor:
   image: iot-software-sensor
   yaml_path: 'machine_sensor.tag'
   update_flag_path: 'machine_sensor.updated_images'
-  test_values_path: /overrides/values-test-imagedata.yaml
-  prod_values_path: /overrides/values-prod-imagedata.yaml
-  prod_imagestream_path: /overrides/values-prod-imagedata.yaml
+  test_values_path: overrides/values-test-imagedata.yaml
+  prod_values_path: overrides/values-prod-imagedata.yaml
 
 iot_anomaly_detection:
   image: iot-anomaly-detection
   yaml_path: 'iot_anomaly_detection.tag'
   update_flag_path: 'iot_anomaly_detection.updated_images'
-  test_values_path: /overrides/values-test-imagedata.yaml
-  prod_values_path: /overrides/values-prod-imagedata.yaml
-  prod_imagestream_path: /overrides/values-prod-imagedata.yaml
+  test_values_path: overrides/values-test-imagedata.yaml
+  prod_values_path: overrides/values-prod-imagedata.yaml
 
 yq:
   image: mikefarah/yq:latest
