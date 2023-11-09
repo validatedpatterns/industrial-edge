@@ -32,6 +32,7 @@ spec:
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
       UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
+      cp $YAML_PATH overrides/foo.yaml
       yq "$UPDATE_FLAG_PATH = true" -i $VALUES_PATH
       yq "$YAML_PATH = '$(params.TAG)'" -i $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
