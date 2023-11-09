@@ -24,7 +24,7 @@ data:
   IOT_FRONTEND_YAML_PATH: ".iot_frontend.tag"
   IOT_FRONTEND_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_FRONTEND_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
-  IOT_FRONTEND_UPDATE_FLAG_PATH: iot_frontend.updated_images
+  IOT_FRONTEND_UPDATE_FLAG_PATH: .iot_frontend.updated_images
   IOT_SWSENSOR_IMAGE: iot-software-sensor
   IOT_SWSENSOR_YAML_PATH: ".machine_sensor.tag"
   IOT_SWSENSOR_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml

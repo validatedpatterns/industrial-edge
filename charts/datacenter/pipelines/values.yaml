@@ -31,7 +31,7 @@ iot_consumer:
 iot_frontend:
   image: iot-frontend
   yaml_path: '.iot_frontend.tag'
-  update_flag_path: 'iot_frontend.updated_images'
+  update_flag_path: '.iot_frontend.updated_images'
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
