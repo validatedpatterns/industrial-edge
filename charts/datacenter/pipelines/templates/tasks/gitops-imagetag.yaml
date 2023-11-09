@@ -25,7 +25,7 @@ spec:
   - name: patch-values
     image: {{ .Values.yq.image }}
     script: |
-      set +x
+      set -x
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
