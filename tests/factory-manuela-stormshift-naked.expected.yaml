@@ -288,8 +288,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -354,8 +354,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -616,7 +616,7 @@ spec:
   - name: 0.3.2
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
+      name: quay.io/hybridcloudpatterns/messaging:0.3.2
     importPolicy: {}
     referencePolicy:
       type: Local
@@ -912,7 +912,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:0.3.2-119
+            image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection:0.3.2
             imagePullPolicy: Always
             env:
             - name: MODEL_FIILE
