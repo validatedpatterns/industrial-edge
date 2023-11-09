@@ -415,8 +415,8 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: messaging
-        #imagePullPolicy: Always
+      - image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging:0.3.2
+        imagePullPolicy: Always
         name: messaging
         ports:
         - containerPort: 3000
