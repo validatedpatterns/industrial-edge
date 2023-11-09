@@ -255,7 +255,7 @@ spec:
     spec:
       containers:
       - name: line-dashboard
-        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard:0.3.1
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard:0.3.1
         imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -326,7 +326,7 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor:0.3.1
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor:0.3.1
         imagePullPolicy: Always
         ports:
           - containerPort: 8778
@@ -392,7 +392,7 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor:0.3.1
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor:0.3.1
         imagePullPolicy: Always
         ports:
           - containerPort: 8778
@@ -452,7 +452,7 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging:0.3.2
+      - image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging:0.3.2
         imagePullPolicy: Always
         name: messaging
         ports:
@@ -977,7 +977,7 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection:0.3.2
+            image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection:0.3.2
             imagePullPolicy: Always
             env:
             - name: MODEL_FIILE

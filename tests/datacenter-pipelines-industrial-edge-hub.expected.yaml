@@ -17,23 +17,23 @@ data:
   GIT_OPS_REPO_PROD_REVISION: main
   IOT_CONSUMER_IMAGE: iot-consumer
   IOT_CONSUMER_YAML_PATH: "iot_consumer.tag"
-  IOT_CONSUMER_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
-  IOT_CONSUMER_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_CONSUMER_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
+  IOT_CONSUMER_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_CONSUMER_UPDATE_FLAG_PATH: iot_consumer.updated_images
   IOT_FRONTEND_IMAGE: iot-frontend
   IOT_FRONTEND_YAML_PATH: "iot_frontend.tag"
-  IOT_FRONTEND_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
-  IOT_FRONTEND_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_FRONTEND_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
+  IOT_FRONTEND_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_FRONTEND_UPDATE_FLAG_PATH: iot_frontend.updated_images
   IOT_SWSENSOR_IMAGE: iot-software-sensor
   IOT_SWSENSOR_YAML_PATH: "machine_sensor.tag"
-  IOT_SWSENSOR_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
-  IOT_SWSENSOR_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_SWSENSOR_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
+  IOT_SWSENSOR_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_SWSENSOR_UPDATE_FLAG_PATH: machine_sensor.updated_images
   IOT_ANOMALY_IMAGE: iot-anomaly-detection
   IOT_ANOMALY_YAML_PATH: "iot_anomaly_detection.tag"
-  IOT_ANOMALY_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
-  IOT_ANOMALY_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_ANOMALY_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
+  IOT_ANOMALY_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_ANOMALY_UPDATE_FLAG_PATH: iot_anomaly_detection.updated_images
 
 #   IOT_CONSUMER_IMAGE: iot-consumer
@@ -3517,6 +3517,7 @@ spec:
   - name: patch-values
     image: mikefarah/yq:latest
     script: |
+      set +x
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
