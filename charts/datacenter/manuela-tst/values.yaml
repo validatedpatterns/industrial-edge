@@ -45,42 +45,30 @@ subscriptions:
     installPlanApproval: Automatic
     seldon: v1.13.1
 
-namespace: manuela-tst-all
-
-local_image_registry: image-registry.openshift-image-registry.svc:5000
-
 machine_sensor:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
   bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-machine-sensor/machine-sensor
-  container_name: machine-sensor
-  repo_short_name: iot-software-sensor
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
   tag: 0.3.1
 
 iot_anomaly_detection:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
   bootstrap_tag: 0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/anomaly-detection
-  container_name: anomaly-detection
-  repo_short_name: iot-anomaly-detection
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
   tag: 0.3.2
 
 iot_consumer:
   updated_images: false
-  bootstrap_tag: 0.3.2
   bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-messaging/messaging
-  container_name: messaging
-  repo_short_name: iot-consumer
+  bootstrap_tag: 0.3.2
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
   tag: 0.3.2
 
 iot_frontend:
   updated_images: false
   bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
   bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all-line-dashboard/line-dashboard
-  container_name: line-dashboard
-  repo_short_name: iot-frontend
+  image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
   tag: 0.3.1
