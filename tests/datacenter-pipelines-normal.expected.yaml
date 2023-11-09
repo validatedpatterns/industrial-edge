@@ -19,22 +19,22 @@ data:
   IOT_CONSUMER_YAML_PATH: "iot_consumer.tag"
   IOT_CONSUMER_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
   IOT_CONSUMER_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
-  IOT_CONSUMER_PROD_IMAGESTREAM_PATH: 
+  IOT_CONSUMER_UPDATE_FLAG_PATH: iot_consumer.updated_images
   IOT_FRONTEND_IMAGE: iot-frontend
   IOT_FRONTEND_YAML_PATH: "iot_frontend.tag"
   IOT_FRONTEND_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
   IOT_FRONTEND_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
-  IOT_FRONTEND_PROD_IMAGESTREAM_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_FRONTEND_UPDATE_FLAG_PATH: iot_frontend.updated_images
   IOT_SWSENSOR_IMAGE: iot-software-sensor
   IOT_SWSENSOR_YAML_PATH: "machine_sensor.tag"
   IOT_SWSENSOR_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
   IOT_SWSENSOR_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
-  IOT_SWSENSOR_PROD_IMAGESTREAM_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_SWSENSOR_UPDATE_FLAG_PATH: machine_sensor.updated_images
   IOT_ANOMALY_IMAGE: iot-anomaly-detection
   IOT_ANOMALY_YAML_PATH: "iot_anomaly_detection.tag"
   IOT_ANOMALY_TEST_VALUES_PATH: /overrides/values-test-imagedata.yaml
   IOT_ANOMALY_PROD_VALUES_PATH: /overrides/values-prod-imagedata.yaml
-  IOT_ANOMALY_PROD_IMAGESTREAM_PATH: /overrides/values-prod-imagedata.yaml
+  IOT_ANOMALY_UPDATE_FLAG_PATH: iot_anomaly_detection.updated_images
 
 #   IOT_CONSUMER_IMAGE: iot-consumer
 #   IOT_CONSUMER_YAML_PATH: 'images(name==messaging).newTag'
@@ -3509,39 +3509,22 @@ spec:
   - name: TAG
     description: the VERSION tag
     type: string
-  - name: TRUNCATE_IMAGESTREAM_TAGS_AFTER
-    type: string
-    description: Number of image stream tags to keep
-    default: "5"
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
     default: "ops"
   steps:
-  - name: patch-kustomization
+  - name: patch-values
     image: mikefarah/yq:latest
     script: |
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
-      ls -al $KUSTOMIZATION_PATH
+      ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
+      UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
       yq w -i $VALUES_PATH "$YAML_PATH" $(params.TAG)
-    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
-  - name: patch-imagestream
-    image: mikefarah/yq:latest
-    script: |
-      IMAGESTREAM_CONFIG_PATH=$(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_IMAGESTREAM_PATH
-      if [ -f "$IMAGESTREAM_CONFIG_PATH" ]; then
-        IMAGESTREAM_PATH=$(cat $IMAGESTREAM_CONFIG_PATH)
-        REMOTE_IMAGE=$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_IMAGE)
-
-        echo "Adding $(params.TAG) to image stream $IMAGESTREAM_PATH"
-        cat $IMAGESTREAM_PATH
-        echo "{\"spec\":{\"tags\":[{\"name\":\"$(params.TAG)\",\"from\":{\"kind\":\"DockerImage\",\"name\":\"$REMOTE_IMAGE:$(params.TAG)\"},\"importPolicy\":{},\"referencePolicy\":{\"type\":\"Local\"}}]}}" | yq -P m -i -a $IMAGESTREAM_PATH -
-        if [ $(yq r $IMAGESTREAM_PATH --length spec.tags) -gt $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER) ]; then
-          yq -P d -i $IMAGESTREAM_PATH 'spec.tags[0]'
-        fi
-      fi
+      yq w -i $VALUES_PATH "$UPDATE_FLAG_PATH" "true"
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
 ---
 # Source: pipelines/templates/tasks/mock.yaml
