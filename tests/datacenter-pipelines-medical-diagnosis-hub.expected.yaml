@@ -17,22 +17,22 @@ data:
   GIT_OPS_REPO_PROD_REVISION: main
   IOT_CONSUMER_IMAGE: iot-consumer
   IOT_CONSUMER_YAML_PATH: ".iot_consumer.tag"
-  IOT_CONSUMER_BUILT_TAGS_PATH: .iot_consumer.built_tags[]
+  IOT_CONSUMER_BUILT_TAGS_PATH: .iot_consumer.built_tags
   IOT_CONSUMER_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_CONSUMER_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_FRONTEND_IMAGE: iot-frontend
   IOT_FRONTEND_YAML_PATH: ".iot_frontend.tag"
-  IOT_FRONTEND_BUILT_TAGS_PATH: ".iot_frontend.built_tags[]"
+  IOT_FRONTEND_BUILT_TAGS_PATH: ".iot_frontend.built_tags"
   IOT_FRONTEND_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_FRONTEND_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_SWSENSOR_IMAGE: iot-software-sensor
   IOT_SWSENSOR_YAML_PATH: ".machine_sensor.tag"
-  IOT_SWSENSOR_BUILT_TAGS_PATH: .machine_sensor.built_tags[]
+  IOT_SWSENSOR_BUILT_TAGS_PATH: .machine_sensor.built_tags
   IOT_SWSENSOR_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_SWSENSOR_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
   IOT_ANOMALY_IMAGE: iot-anomaly-detection
   IOT_ANOMALY_YAML_PATH: ".iot_anomaly_detection.tag"
-  IOT_ANOMALY_BUILT_TAGS_PATH: .iot_anomaly_detection.built_tags[]
+  IOT_ANOMALY_BUILT_TAGS_PATH: .iot_anomaly_detection.built_tags
   IOT_ANOMALY_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_ANOMALY_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
 
@@ -3553,7 +3553,7 @@ spec:
       ARRAY_COUNT=$(yq "$BUILT_TAGS_PATH | length" $VALUES_PATH)
       echo $ARRAY_COUNT
       if [ "$ARRAY_COUNT" -ge "$(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)" ]; then
-        yq "del($BUILT_TAGS_PATH | select(key == 0))" $VALUES_PATH > $VALUES_PATH.tmp
+        yq "del(${BUILT_TAGS_PATH}[] | select(key == 0))" $VALUES_PATH > $VALUES_PATH.tmp
         mv $VALUES_PATH.tmp $VALUES_PATH
       else
         echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)"

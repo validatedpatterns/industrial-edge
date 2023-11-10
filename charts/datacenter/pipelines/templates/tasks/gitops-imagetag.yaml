@@ -61,7 +61,7 @@ spec:
       ARRAY_COUNT=$(yq "$BUILT_TAGS_PATH | length" $VALUES_PATH)
       echo $ARRAY_COUNT
       if [ "$ARRAY_COUNT" -ge "$(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)" ]; then
-        yq "del($BUILT_TAGS_PATH | select(key == 0))" $VALUES_PATH > $VALUES_PATH.tmp
+        yq "del(${BUILT_TAGS_PATH}[] | select(key == 0))" $VALUES_PATH > $VALUES_PATH.tmp
         mv $VALUES_PATH.tmp $VALUES_PATH
       else
         echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)"
