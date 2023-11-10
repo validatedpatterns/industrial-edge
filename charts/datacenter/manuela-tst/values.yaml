@@ -66,7 +66,7 @@ iot_consumer:
   bootstrap_image: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
   bootstrap_tag: 0.3.2
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-  repo_name: messaging
+  repo_name: iot-consumer
   tag: 0.3.2
 
 iot_frontend:
