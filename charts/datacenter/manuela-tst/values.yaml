@@ -2,6 +2,12 @@ global:
   datacenter:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
+
+  imageregistry:
+    account: PLAINTEXT
+    hostname: quay.io
+    type: quay
+
   s3:
     bucket:
       name: BUCKETNAME
