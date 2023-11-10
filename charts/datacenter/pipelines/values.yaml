@@ -24,28 +24,28 @@ clusterGroup:
 iot_consumer:
   image: iot-consumer
   yaml_path: '.iot_consumer.tag'
-  built_tags_path: '.iot_consumer.built_tags'
+  built_tags_path: '.iot_consumer.built_tags[]'
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
 iot_frontend:
   image: iot-frontend
   yaml_path: '.iot_frontend.tag'
-  built_tags_path: '.iot_frontend.built_tags'
+  built_tags_path: '.iot_frontend.built_tags[]'
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
 machine_sensor:
   image: iot-software-sensor
   yaml_path: '.machine_sensor.tag'
-  built_tags_path: '.machine_sensor.built_tags'
+  built_tags_path: '.machine_sensor.built_tags[]'
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
 iot_anomaly_detection:
   image: iot-anomaly-detection
   yaml_path: '.iot_anomaly_detection.tag'
-  built_tags_path: '.iot_anomaly_detection.built_tags'
+  built_tags_path: '.iot_anomaly_detection.built_tags[]'
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
