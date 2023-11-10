@@ -64,6 +64,6 @@ spec:
         yq "del(${BUILT_TAGS_PATH}[] | select(key == 0))" $VALUES_PATH
         mv $VALUES_PATH.tmp $VALUES_PATH
       else
-        echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER )"
+        echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)"
       fi
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
