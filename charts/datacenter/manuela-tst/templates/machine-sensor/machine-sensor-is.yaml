@@ -7,10 +7,19 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: {{ .Values.machine_sensor.bootstrap_tag | quote }}
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
+      name: {{ .Values.machine_sensor.bootstrap_image }}
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- range .Values.machine_sensor.built_tags }}
+  - name: {{ . | quote }}
+    from:
+      kind: DockerImage
+      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.machine_sensor.repo_name }}:{{ . }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}

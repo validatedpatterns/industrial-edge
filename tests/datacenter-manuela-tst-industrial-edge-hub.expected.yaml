@@ -178,6 +178,20 @@ data:
   TOPIC_LIGHT: "iot-sensor/sw/light"
   ANOMALY_DETECTION_URL: "http://anomaly-detection-predictor:8000"
 ---
+# Source: manuela-tst-all/templates/system-image-builder-role-binding.yaml
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: 'system:image-builder'
+subjects:
+  - kind: ServiceAccount
+    name: pipeline
+    namespace: manuela-ci
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: 'system:image-builder'
+---
 # Source: manuela-tst-all/templates/line-dashboard/line-dashboard-svc.yaml
 apiVersion: v1
 kind: Service
@@ -241,8 +255,8 @@ spec:
     spec:
       containers:
       - name: line-dashboard
-        image: line-dashboard:0.3.1-81
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard:0.3.1
+        imagePullPolicy: Always
         ports:
         - containerPort: 8080
           name: http
@@ -312,8 +326,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -378,8 +392,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -438,8 +452,8 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: messaging
-        #imagePullPolicy: Always
+      - image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging:0.3.2
+        imagePullPolicy: Always
         name: messaging
         ports:
         - containerPort: 3000
@@ -537,7 +551,7 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - name: 0.3.2
+  - name: "0.3.2"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
@@ -555,7 +569,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
@@ -573,7 +587,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
@@ -963,7 +977,8 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:0.3.2-42
+            image: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection:0.3.2
+            imagePullPolicy: Always
             env:
             - name: MODEL_FIILE
               value: "model.joblib"

@@ -4,10 +4,19 @@ metadata:
   name: messaging
 spec:
   tags:
-  - name: 0.3.2
+  - name: {{ .Values.iot_consumer.bootstrap_tag }}
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
+      name: {{ .Values.iot_consumer.bootstrap_image }}
     importPolicy: {}
     referencePolicy:
       type: Local
+{{- range .Values.iot_consumer.built_tags }}
+  - name: {{ . | quote }}
+    from:
+      kind: DockerImage
+      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.iot_consumer.repo_name }}:{{ . }}"
+    importPolicy: {}
+    referencePolicy:
+      type: Local
+{{- end }}

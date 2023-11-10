@@ -1,0 +1,3 @@
+# NOTE: This file will be edited by the pipeline processes as new versions are built through the pipelines
+# prod_version and test_version keys with built values will be edited when the pipelines run
+---

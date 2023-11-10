@@ -218,7 +218,7 @@ spec:
     spec:
       containers:
       - name: line-dashboard
-        image: line-dashboard:0.3.1-81
+        image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-line-dashboard/line-dashboard:0.3.1
         #imagePullPolicy: Always
         ports:
         - containerPort: 8080
@@ -288,8 +288,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -354,8 +354,8 @@ spec:
     spec:
       containers:
       - name: machine-sensor
-        image: machine-sensor:latest
-        #imagePullPolicy: Always
+        image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor:0.3.1
+        imagePullPolicy: Always
         ports:
           - containerPort: 8778
             name: jolokia
@@ -415,8 +415,8 @@ spec:
         deploymentconfig: messaging
     spec:
       containers:
-      - image: messaging
-        #imagePullPolicy: Always
+      - image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging:0.3.2
+        imagePullPolicy: Always
         name: messaging
         ports:
         - containerPort: 3000
@@ -577,7 +577,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
@@ -595,7 +595,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
@@ -613,7 +613,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.2
+  - name: "0.3.2"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
@@ -912,7 +912,8 @@ spec:
     - spec:
         containers:
           - name: anomaly-detection
-            image: anomaly-detection:0.3.2-119
+            image: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection:0.3.2
+            imagePullPolicy: Always
             env:
             - name: MODEL_FIILE
               value: "model.joblib"
