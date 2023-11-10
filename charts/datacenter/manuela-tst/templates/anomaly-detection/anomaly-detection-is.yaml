@@ -19,7 +19,7 @@ spec:
   - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.iot_anomaly_detection.repo_name }}:{{ . }}"
+      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.iot_anomaly_detection.repo_name }}:{{ . }}"
     importPolicy: {}
     referencePolicy:
       type: Local
