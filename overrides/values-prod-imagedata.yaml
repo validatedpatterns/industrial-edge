@@ -1,30 +1,10 @@
 # NOTE: This file will be edited by the pipeline processes as new versions are built through the pipelines
 # prod_version and test_version keys with built values will be edited when the pipelines run
 ---
-machine_sensor:
-  updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
-  bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor
-  tag: 0.3.1
+machine_sensor: {}
 
-iot_anomaly_detection:
-  updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
-  bootstrap_tag: 0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection
-  tag: 0.3.2
+iot_anomaly_detection: {}
 
-iot_consumer:
-  updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/messaging:0.3.2
-  bootstrap_tag: 0.3.2
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
-  tag: 0.3.2
+iot_consumer: {}
 
-iot_frontend:
-  updated_images: false
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
-  bootstrap_tag: 0.3.1
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-line-dashboard/line-dashboard
-  tag: 0.3.1
+iot_frontend: {}
