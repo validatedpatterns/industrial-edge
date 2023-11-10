@@ -17,12 +17,16 @@ spec:
   - name: TAG
     description: the VERSION tag
     type: string
+  - name: TRUNCATE_IMAGESTREAM_TAGS_AFTER
+    type: string
+    description: Number of image stream tags to keep
+    default: "4"
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
     default: "ops"
   steps:
-  - name: patch-values
+  - name: update-tag
     image: {{ .Values.yq.image }}
     script: |
       set -x
@@ -31,10 +35,35 @@ spec:
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
-      UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
-      echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
-      yq "$UPDATE_FLAG_PATH = true" $VALUES_PATH > $VALUES_PATH.tmp
-      mv $VALUES_PATH.tmp $VALUES_PATH
       yq "$YAML_PATH = \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: update-built-tags
+    image: {{ .Values.yq.image }}
+    script: |
+      set -x
+      TAG_VALUE=$(params.TAG)
+      VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
+      ls -al $VALUES_PATH
+      BUILT_TAGS_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH) : $BUILT_TAGS_PATH"
+      yq "$BUILT_TAGS_PATH += \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
+      mv $VALUES_PATH.tmp $VALUES_PATH
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: prune-built-tags
+    image: {{ .Values.yq.image }}
+    script: |
+      set -x
+      VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
+      ls -al $VALUES_PATH
+      BUILT_TAGS_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH) : $BUILT_TAGS_PATH"
+      ARRAY_COUNT=$(yq "$BUILT_TAGS_PATH | length" $VALUES_PATH)
+      echo $ARRAY_COUNT
+      if [ "$ARRAY_COUNT" -ge "$(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)" ]; then
+        yq "del(${BUILT_TAGS_PATH}[] | select(key == 0))" $VALUES_PATH
+        mv $VALUES_PATH.tmp $VALUES_PATH
+      else
+        echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER )"
+      fi
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

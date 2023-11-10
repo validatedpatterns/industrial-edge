@@ -17,24 +17,24 @@ data:
   GIT_OPS_REPO_PROD_REVISION: main
   IOT_CONSUMER_IMAGE: iot-consumer
   IOT_CONSUMER_YAML_PATH: ".iot_consumer.tag"
+  IOT_CONSUMER_BUILT_TAGS_PATH: .iot_consumer.built_tags
   IOT_CONSUMER_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_CONSUMER_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
-  IOT_CONSUMER_UPDATE_FLAG_PATH: .iot_consumer.updated_images
   IOT_FRONTEND_IMAGE: iot-frontend
   IOT_FRONTEND_YAML_PATH: ".iot_frontend.tag"
+  IOT_FRONTEND_BUILT_TAGS_PATH: ".iot_frontend.built_tags"
   IOT_FRONTEND_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_FRONTEND_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
-  IOT_FRONTEND_UPDATE_FLAG_PATH: .iot_frontend.updated_images
   IOT_SWSENSOR_IMAGE: iot-software-sensor
   IOT_SWSENSOR_YAML_PATH: ".machine_sensor.tag"
+  IOT_SWSENSOR_BUILT_TAGS_PATH: .machine_sensor.built_tags
   IOT_SWSENSOR_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_SWSENSOR_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
-  IOT_SWSENSOR_UPDATE_FLAG_PATH: .machine_sensor.updated_images
   IOT_ANOMALY_IMAGE: iot-anomaly-detection
   IOT_ANOMALY_YAML_PATH: ".iot_anomaly_detection.tag"
+  IOT_ANOMALY_BUILT_TAGS_PATH: .iot_anomaly_detection.built_tags
   IOT_ANOMALY_TEST_VALUES_PATH: overrides/values-test-imagedata.yaml
   IOT_ANOMALY_PROD_VALUES_PATH: overrides/values-prod-imagedata.yaml
-  IOT_ANOMALY_UPDATE_FLAG_PATH: .iot_anomaly_detection.updated_images
 
 #   IOT_CONSUMER_IMAGE: iot-consumer
 #   IOT_CONSUMER_YAML_PATH: 'images(name==messaging).newTag'
@@ -3509,12 +3509,16 @@ spec:
   - name: TAG
     description: the VERSION tag
     type: string
+  - name: TRUNCATE_IMAGESTREAM_TAGS_AFTER
+    type: string
+    description: Number of image stream tags to keep
+    default: "4"
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
     default: "ops"
   steps:
-  - name: patch-values
+  - name: update-tag
     image: mikefarah/yq:latest
     script: |
       set -x
@@ -3523,12 +3527,37 @@ spec:
       ls -al $VALUES_PATH
       YAML_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_YAML_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_YAML_PATH) : $YAML_PATH"
-      UPDATE_FLAG_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH)"
-      echo "$(params.CONFIGMAP_PREFIX)_UPDATE_FLAG_PATH) : $UPDATE_FLAG_PATH"
-      yq "$UPDATE_FLAG_PATH = true" $VALUES_PATH > $VALUES_PATH.tmp
-      mv $VALUES_PATH.tmp $VALUES_PATH
       yq "$YAML_PATH = \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: update-built-tags
+    image: mikefarah/yq:latest
+    script: |
+      set -x
+      TAG_VALUE=$(params.TAG)
+      VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
+      ls -al $VALUES_PATH
+      BUILT_TAGS_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH) : $BUILT_TAGS_PATH"
+      yq "$BUILT_TAGS_PATH += \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
+      mv $VALUES_PATH.tmp $VALUES_PATH
+    workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
+  - name: prune-built-tags
+    image: mikefarah/yq:latest
+    script: |
+      set -x
+      VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
+      ls -al $VALUES_PATH
+      BUILT_TAGS_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH)"
+      echo "$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH) : $BUILT_TAGS_PATH"
+      ARRAY_COUNT=$(yq "$BUILT_TAGS_PATH | length" $VALUES_PATH)
+      echo $ARRAY_COUNT
+      if [ "$ARRAY_COUNT" -ge "$(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER)" ]; then
+        yq "del(${BUILT_TAGS_PATH}[] | select(key == 0))" $VALUES_PATH
+        mv $VALUES_PATH.tmp $VALUES_PATH
+      else
+        echo "$BUILT_TAGS_PATH currently has $ARRAY_COUNT tags, will prune at $(params.TRUNCATE_IMAGESTREAM_TAGS_AFTER )"
+      fi
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
 ---
 # Source: pipelines/templates/tasks/mock.yaml

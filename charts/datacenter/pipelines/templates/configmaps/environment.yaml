@@ -15,24 +15,24 @@ data:
   GIT_OPS_REPO_PROD_REVISION: {{ .Values.global.targetRevision }}
   IOT_CONSUMER_IMAGE: {{ .Values.iot_consumer.image }}
   IOT_CONSUMER_YAML_PATH: {{ .Values.iot_consumer.yaml_path | quote }}
+  IOT_CONSUMER_BUILT_TAGS_PATH: {{ .Values.iot_consumer.built_tags_path }}
   IOT_CONSUMER_TEST_VALUES_PATH: {{ .Values.iot_consumer.test_values_path }}
   IOT_CONSUMER_PROD_VALUES_PATH: {{ .Values.iot_consumer.prod_values_path }}
-  IOT_CONSUMER_UPDATE_FLAG_PATH: {{ .Values.iot_consumer.update_flag_path }}
   IOT_FRONTEND_IMAGE: {{ .Values.iot_frontend.image }}
   IOT_FRONTEND_YAML_PATH: {{ .Values.iot_frontend.yaml_path | quote }}
+  IOT_FRONTEND_BUILT_TAGS_PATH: {{ .Values.iot_frontend.built_tags_path | quote }}
   IOT_FRONTEND_TEST_VALUES_PATH: {{ .Values.iot_frontend.test_values_path }}
   IOT_FRONTEND_PROD_VALUES_PATH: {{ .Values.iot_frontend.prod_values_path }}
-  IOT_FRONTEND_UPDATE_FLAG_PATH: {{ .Values.iot_frontend.update_flag_path }}
   IOT_SWSENSOR_IMAGE: {{ .Values.machine_sensor.image }}
   IOT_SWSENSOR_YAML_PATH: {{ .Values.machine_sensor.yaml_path | quote }}
+  IOT_SWSENSOR_BUILT_TAGS_PATH: {{ .Values.machine_sensor.built_tags_path }}
   IOT_SWSENSOR_TEST_VALUES_PATH: {{ .Values.machine_sensor.test_values_path }}
   IOT_SWSENSOR_PROD_VALUES_PATH: {{ .Values.machine_sensor.prod_values_path }}
-  IOT_SWSENSOR_UPDATE_FLAG_PATH: {{ .Values.machine_sensor.update_flag_path }}
   IOT_ANOMALY_IMAGE: {{ .Values.iot_anomaly_detection.image }}
   IOT_ANOMALY_YAML_PATH: {{ .Values.iot_anomaly_detection.yaml_path | quote }}
+  IOT_ANOMALY_BUILT_TAGS_PATH: {{ .Values.iot_anomaly_detection.built_tags_path }}
   IOT_ANOMALY_TEST_VALUES_PATH: {{ .Values.iot_anomaly_detection.test_values_path }}
   IOT_ANOMALY_PROD_VALUES_PATH: {{ .Values.iot_anomaly_detection.prod_values_path }}
-  IOT_ANOMALY_UPDATE_FLAG_PATH: {{ .Values.iot_anomaly_detection.update_flag_path }}
 
 #   IOT_CONSUMER_IMAGE: iot-consumer
 #   IOT_CONSUMER_YAML_PATH: 'images(name==messaging).newTag'
