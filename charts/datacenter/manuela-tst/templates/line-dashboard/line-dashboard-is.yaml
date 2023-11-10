@@ -7,7 +7,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: {{ .Values.iot_frontend.bootstrap_tag }}
+  - name: {{ .Values.iot_frontend.bootstrap_tag | quote }}
     from:
       kind: DockerImage
       name: {{ .Values.iot_frontend.bootstrap_image }}
@@ -18,7 +18,7 @@ spec:
   - name: {{ .Values.iot_frontend.tag | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.iot_frontend.image_location }}:{{ .Values.iot_frontend.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.iot_frontend.repo_name }}:{{ .Values.iot_frontend.tag }}"
     importPolicy: {}
     referencePolicy:
       type: Local

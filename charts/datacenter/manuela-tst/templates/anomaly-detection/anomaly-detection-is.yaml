@@ -8,7 +8,7 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - name: {{ .Values.iot_anomaly_detection.bootstrap_tag }}
+  - name: {{ .Values.iot_anomaly_detection.bootstrap_tag | quote }}
     from:
       kind: DockerImage
       name: {{ .Values.iot_anomaly_detection.bootstrap_image }}
@@ -19,7 +19,7 @@ spec:
   - name: {{ .Values.iot_anomaly_detection.tag | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.iot_anomaly_detection.image_location }}:{{ .Values.iot_anomaly_detection.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.iot_anomaly_detection.repo_name }}:{{ .Values.iot_anomaly_detection.tag }}"
     importPolicy: {}
     referencePolicy:
       type: Local

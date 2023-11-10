@@ -7,7 +7,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: {{ .Values.iot_consumer.bootstrap_tag }}
+  - name: {{ .Values.iot_consumer.bootstrap_tag | quote }}
     from:
       kind: DockerImage
       name: {{ .Values.iot_consumer.bootstrap_image }}
@@ -15,10 +15,10 @@ spec:
     referencePolicy:
       type: Local
 {{- if .Values.iot_consumer.updated_images }}
-  - name: {{ .Values.iot_consumer.tag }}
+  - name: {{ .Values.iot_consumer.tag | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.iot_consumer.repo_name }}:{{ .Values.iot_consumer.tag }}"
     importPolicy: {}
     referencePolicy:
       type: Local

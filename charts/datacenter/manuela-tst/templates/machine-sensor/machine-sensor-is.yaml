@@ -7,7 +7,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: {{ .Values.machine_sensor.bootstrap_tag }}
+  - name: {{ .Values.machine_sensor.bootstrap_tag | quote }}
     from:
       kind: DockerImage
       name: {{ .Values.machine_sensor.bootstrap_image }}
@@ -18,7 +18,7 @@ spec:
   - name: {{ .Values.machine_sensor.tag | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.machine_sensor.image_location }}:{{ .Values.machine_sensor.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.machine_sensor.repo_name }}:{{ .Values.machine_sensor.tag }}"
     importPolicy: {}
     referencePolicy:
       type: Local

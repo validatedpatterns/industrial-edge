@@ -551,7 +551,7 @@ spec:
   lookupPolicy:
     local: false
   tags:
-  - name: 0.3.2
+  - name: "0.3.2"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
@@ -569,7 +569,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
@@ -587,7 +587,7 @@ spec:
   lookupPolicy:
     local: true
   tags:
-  - name: 0.3.1
+  - name: "0.3.1"
     from:
       kind: DockerImage
       name: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
