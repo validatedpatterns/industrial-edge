@@ -11,11 +11,11 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
-{{- if .Values.iot_consumer.updated_images }}
-  - name: {{ .Values.iot_consumer.tag }}
+{{- range .Values.iot_consumer.built_tags }}
+  - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.iot_consumer.repo_name }}:{{ . }}"
     importPolicy: {}
     referencePolicy:
       type: Local

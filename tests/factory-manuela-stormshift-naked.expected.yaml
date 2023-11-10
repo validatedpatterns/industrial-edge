@@ -616,7 +616,7 @@ spec:
   - name: "0.3.2"
     from:
       kind: DockerImage
-      name: quay.io/hybridcloudpatterns/messaging:0.3.2
+      name: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
     importPolicy: {}
     referencePolicy:
       type: Local

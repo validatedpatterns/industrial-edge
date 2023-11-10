@@ -14,11 +14,11 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
-{{- if .Values.machine_sensor.updated_images }}
-  - name: {{ .Values.machine_sensor.tag | quote }}
+{{- range .Values.machine_sensor.built_tags }}
+  - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.machine_sensor.repo_name }}:{{ .Values.machine_sensor.tag }}"
+      name: "{{ .Values.global.imageregistry.hostname }}/{{ .Values.global.imageregistry.account }}/{{ .Values.machine_sensor.repo_name }}:{{ . }}"
     importPolicy: {}
     referencePolicy:
       type: Local
