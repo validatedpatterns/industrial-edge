@@ -47,7 +47,7 @@ spec:
       ls -al $VALUES_PATH
       BUILT_TAGS_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH)"
       echo "$(params.CONFIGMAP_PREFIX)_BUILT_TAGS_PATH) : $BUILT_TAGS_PATH"
-      yq "$BUILT_TAGS_PATH += \"$TAG_VALUE\"" $VALUES_PATH > $VALUES_PATH.tmp
+      yq "$BUILT_TAGS_PATH += [ \"$TAG_VALUE\" ]" $VALUES_PATH > $VALUES_PATH.tmp
       mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: prune-built-tags
