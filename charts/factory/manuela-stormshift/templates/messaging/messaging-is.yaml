@@ -14,7 +14,7 @@ spec:
     importPolicy: {}
     referencePolicy:
       type: Local
-{{- if .Values.iot_consumer.built_tags }}
+{{- range .Values.iot_consumer.built_tags }}
   - name: {{ $.Values.iot_consumer.tag | quote }}
     from:
       kind: DockerImage
