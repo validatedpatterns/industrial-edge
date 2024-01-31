@@ -119,7 +119,7 @@ def test_check_pod_status(openshift_dyn_client, altprojects):
         # Check for missing project
         try:
             namespaces = Namespace.get(dyn_client=openshift_dyn_client, name=project)
-            namespace = next(namespaces)
+            next(namespaces)
         except NotFoundError:
             missing_projects.append(project)
             continue

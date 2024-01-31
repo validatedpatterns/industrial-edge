@@ -6,6 +6,7 @@ import time
 
 import pytest
 from ocp_resources.configmap import ConfigMap
+from openshift.dynamic.exceptions import NotFoundError
 
 from . import __loggername__
 from .edge_util import modify_file_content
