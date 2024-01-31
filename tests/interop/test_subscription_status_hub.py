@@ -135,7 +135,7 @@ def test_subscription_status_hub(openshift_dyn_client):
     checkpath = os.path.exists(previouspath)
     logger.info(checkpath)
 
-    if checkpath == True:
+    if checkpath is True:
         logger.info("Diff current operator list with previous file")
         diff = opdiff(open(previouspath).readlines(), open(currentfile).readlines())
         diffstring = "".join(diff)
@@ -153,9 +153,8 @@ def test_subscription_status_hub(openshift_dyn_client):
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
     else:
-
         # Only push the new operarator list if the test passed
-        if checkpath == True:
+        if checkpath is True:
             os.remove(previouspath)
             os.rename(currentfile, previouspath)
 
@@ -168,7 +167,7 @@ def test_subscription_status_hub(openshift_dyn_client):
                 ["git", "commit", "-m", "Update operator versions list"],
                 cwd=cwd,
             )
-            push = subprocess.run(["git", "push"], cwd=cwd)
+            subprocess.run(["git", "push"], cwd=cwd)
 
         logger.info("PASS: Subscription status check passed")
 

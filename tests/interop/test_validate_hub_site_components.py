@@ -1,24 +1,17 @@
 import logging
 import os
 import subprocess
-from os.path import expanduser
 
 import pytest
 from ocp_resources.namespace import Namespace
 from ocp_resources.pod import Pod
-from ocp_resources.resource import Resource
 from ocp_resources.route import Route
 from ocp_resources.storage_class import StorageClass
 from openshift.dynamic.exceptions import NotFoundError
 
 from . import __loggername__
 from .crd import ArgoCD, ManagedCluster
-from .edge_util import (
-    find_number_of_edge_sites,
-    get_long_live_bearer_token,
-    get_site_response,
-    load_yaml_file,
-)
+from .edge_util import get_long_live_bearer_token, get_site_response
 
 logger = logging.getLogger(__loggername__)
 
@@ -456,7 +449,6 @@ def test_validate_jupyter_route_reachable(openshift_dyn_client):
 
 @pytest.mark.validate_argocd_applications_health_hub_site
 def test_validate_argocd_applications_health_hub_site(openshift_dyn_client):
-    argocd_apps = dict()
     unhealthy_apps = []
     logger.info("Get all applications deployed by argocd on hub site")
     projects = ["openshift-gitops", "industrial-edge-datacenter"]
@@ -478,7 +470,7 @@ def test_validate_argocd_applications_health_hub_site(openshift_dyn_client):
                         logger.info(f"\n{res}")
 
     if unhealthy_apps:
-        err_msg = f"Some or all applications deployed on hub site are unhealthy"
+        err_msg = "Some or all applications deployed on hub site are unhealthy"
         logger.error(f"FAIL: {err_msg}:\n{unhealthy_apps}")
         assert False, err_msg
     else:

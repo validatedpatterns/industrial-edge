@@ -28,7 +28,7 @@ def test_toggle_machine_sensor(openshift_dyn_client):
         )
         cm = next(cm_obj)
     except NotFoundError:
-        err_msg = f"The configmap {cm} was not found in project {project}"
+        err_msg = f"The configmap {cm} was not found in project {project}"  # pylint: disable=E0601
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
 

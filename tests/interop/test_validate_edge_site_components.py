@@ -5,7 +5,6 @@ import subprocess
 import pytest
 from ocp_resources.namespace import Namespace
 from ocp_resources.pod import Pod
-from ocp_resources.resource import Resource
 from ocp_resources.route import Route
 from openshift.dynamic.exceptions import NotFoundError
 
@@ -292,7 +291,6 @@ def test_validate_manuela_stormshift_line_dashboard_reachable_edge_site(
 
 @pytest.mark.validate_argocd_applications_health_edge_site
 def test_validate_argocd_applications_health_edge_site(openshift_dyn_client):
-    argocd_apps = dict()
     unhealthy_apps = []
     logger.info("Get all applications deployed by argocd on edge site")
     projects = ["openshift-gitops", "industrial-edge-factory"]
@@ -314,7 +312,7 @@ def test_validate_argocd_applications_health_edge_site(openshift_dyn_client):
                         logger.info(f"\n{res}")
 
     if unhealthy_apps:
-        err_msg = f"Some or all applications deployed on edge site are unhealthy"
+        err_msg = "Some or all applications deployed on edge site are unhealthy"
         logger.error(f"FAIL: {err_msg}:\n{unhealthy_apps}")
         assert False, err_msg
     else:

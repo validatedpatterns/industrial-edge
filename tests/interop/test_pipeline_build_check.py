@@ -22,7 +22,7 @@ def test_pipeline_build_check(openshift_dyn_client):
     regex = "[0-9]{1,4}$"
     project_hub = "manuela-tst-all"
     project_edge = "manuela-stormshift-messaging"
-    kubeconfig_hub = f"{os.environ['TEFLO_WORKSPACE']}/kube/kubeconfig-hub"
+    # kubeconfig_hub = f"{os.environ['TEFLO_WORKSPACE']}/kube/kubeconfig-hub"
     kubeconfig_edge = f"{os.environ['TEFLO_WORKSPACE']}/kube/kubeconfig-edge"
     openshift_dyn_client_edge = DynamicClient(
         client=kubernetes.config.new_client_from_config(config_file=kubeconfig_edge)
