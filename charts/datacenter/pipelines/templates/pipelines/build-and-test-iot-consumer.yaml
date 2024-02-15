@@ -186,8 +186,8 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       #value: datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "{{ .Values.site.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.site.name }}.svc"
-
+      value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
+      
   - name: test-all
     taskRef:
       name: tkn

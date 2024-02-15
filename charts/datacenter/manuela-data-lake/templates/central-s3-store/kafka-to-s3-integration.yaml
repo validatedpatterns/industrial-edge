@@ -60,11 +60,9 @@ spec:
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
-                   + endpoint
-                   + secret
-                   + region;
+                + secret
+                + region;
 
                 from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
@@ -90,9 +88,7 @@ spec:
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
-                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
-                   + endpoint
                    + secret
                    + region;
                 from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
