@@ -200,6 +200,8 @@ data:
               count: 50
           name: BUCKETNAME
           region: AWSREGION
+      secretStore:
+        backend: vault
       targetRevision: main
     main:
       clusterGroupName: datacenter
