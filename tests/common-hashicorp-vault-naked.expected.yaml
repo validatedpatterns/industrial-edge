@@ -204,7 +204,7 @@ spec:
       containers:
         - name: vault
           
-          image: registry.connect.redhat.com/hashicorp/vault:1.15.2-ubi
+          image: registry.connect.redhat.com/hashicorp/vault:1.15.5-ubi
           imagePullPolicy: IfNotPresent
           command:
           - "/bin/sh"
@@ -351,7 +351,7 @@ metadata:
     app.kubernetes.io/instance: common-hashicorp-vault
     app.kubernetes.io/managed-by: Helm
 spec:
-  host: 
+  host: chart-example.local
   to:
     kind: Service
     name: common-hashicorp-vault
@@ -373,7 +373,7 @@ spec:
   
   containers:
     - name: common-hashicorp-vault-server-test
-      image: registry.connect.redhat.com/hashicorp/vault:1.15.2-ubi
+      image: registry.connect.redhat.com/hashicorp/vault:1.15.5-ubi
       imagePullPolicy: IfNotPresent
       env:
         - name: VAULT_ADDR
