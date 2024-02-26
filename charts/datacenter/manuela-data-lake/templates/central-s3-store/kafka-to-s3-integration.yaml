@@ -61,7 +61,7 @@ spec:
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
                 String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
-                String endpoint = "&uriEndpointOverride=https://" + s3_custom_endpoint_url;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
                    + customendpoint
                    + endpoint
@@ -93,7 +93,7 @@ spec:
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
                 String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
-                String endpoint = "&uriEndpointOverride=https://" + s3_custom_endpoint_url;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
                    + customendpoint
                    + endpoint
