@@ -17,7 +17,7 @@ data:
     s3.message.aggregation.count=50
     s3.custom.endpoint.enabled=false
     # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.apps.region.example.com
+    s3.custom.endpoint.url=https://my.custom.endpoint
 ---
 # Source: manuela-data-lake/templates/central-s3-store/kafka-to-s3-integration.yaml
 apiVersion: camel.apache.org/v1
@@ -82,9 +82,13 @@ spec:
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
+                String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
-                + secret
-                + region;
+                   + customendpoint
+                   + endpoint
+                   + secret
+                   + region;
 
                 from("kafka:manuela-factory.iot-sensor-sw-vibration?brokers=prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092")
                     .convertBodyTo(String.class)
@@ -110,9 +114,14 @@ spec:
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
+                String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
                 String s3params = key
+                   + customendpoint
+                   + endpoint
                    + secret
                    + region;
+                   
                 from("kafka:manuela-factory.iot-sensor-sw-temperature?brokers=prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
