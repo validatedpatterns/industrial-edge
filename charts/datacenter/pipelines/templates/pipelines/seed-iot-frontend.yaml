@@ -79,7 +79,7 @@ spec:
     - name: BUILDER_IMAGE
       value: nodeshift/ubi8-s2i-web-app
     - name: CHAINED_BUILD_DOCKERFILE
-      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: OUTPUT_IMAGE

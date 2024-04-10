@@ -50,4 +50,4 @@ objects:
       value: IOT_FRONTEND
     - name: CHAINED_BUILD_DOCKERFILE
       #value: "FROM centos/httpd-24-centos7\nCOPY --from=0 /opt/app-root/output /var/www/html/"
-      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
