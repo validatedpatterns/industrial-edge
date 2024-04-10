@@ -1400,7 +1400,7 @@ spec:
     - name: BUILDER_IMAGE
       value: nodeshift/ubi8-s2i-web-app
     - name: CHAINED_BUILD_DOCKERFILE
-      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: OUTPUT_IMAGE
@@ -2342,7 +2342,7 @@ spec:
     - name: BUILDER_IMAGE
       value: nodeshift/ubi8-s2i-web-app
     - name: CHAINED_BUILD_DOCKERFILE
-      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: OUTPUT_IMAGE
@@ -3094,7 +3094,7 @@ spec:
       name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: bump-tag
-    image: quay.io/manuela/bumpversiontask:latest
+    image: quay.io/hybridcloudpatterns/bumpversiontask:latest
     script: |
       cd /scratch
       echo -e "[bumpversion]\ncurrent_version = $(cat VERSION)" >.bumpversion.cfg
@@ -4063,7 +4063,7 @@ objects:
       value: IOT_FRONTEND
     - name: CHAINED_BUILD_DOCKERFILE
       #value: "FROM centos/httpd-24-centos7\nCOPY --from=0 /opt/app-root/output /var/www/html/"
-      value: "FROM quay.io/manuela/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
 ---
 # Source: pipelines/templates/templates/build-iot-software-sensor-quarkus.yaml
 apiVersion: template.openshift.io/v1

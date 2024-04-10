@@ -47,7 +47,7 @@ spec:
       name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: bump-tag
-    image: quay.io/manuela/bumpversiontask:latest
+    image: quay.io/hybridcloudpatterns/bumpversiontask:latest
     script: |
       cd /scratch
       echo -e "[bumpversion]\ncurrent_version = $(cat VERSION)" >.bumpversion.cfg
