@@ -50,4 +50,4 @@ iot_anomaly_detection:
   prod_values_path: overrides/values-prod-imagedata.yaml
 
 yq:
-  image: mikefarah/yq:latest
+  image: quay.io/hybridcloudpatterns/yq:latest
