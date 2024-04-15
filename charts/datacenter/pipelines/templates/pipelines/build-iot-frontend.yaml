@@ -77,7 +77,7 @@ spec:
     - name: PATH_CONTEXT
       value: components/iot-frontend
     - name: BUILDER_IMAGE
-      value: nodeshift/ubi8-s2i-web-app
+      value: quay.io/hybridcloudpatterns/ubi8-s2i-web-app
     - name: CHAINED_BUILD_DOCKERFILE
       value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
