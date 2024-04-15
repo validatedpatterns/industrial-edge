@@ -3519,7 +3519,7 @@ spec:
     default: "ops"
   steps:
   - name: update-tag
-    image: mikefarah/yq:latest
+    image: quay.io/hybridcloudpatterns/yq:latest
     script: |
       set -x
       TAG_VALUE=$(params.TAG)
@@ -3531,7 +3531,7 @@ spec:
       mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: update-built-tags
-    image: mikefarah/yq:latest
+    image: quay.io/hybridcloudpatterns/yq:latest
     script: |
       set -x
       TAG_VALUE=$(params.TAG)
@@ -3543,7 +3543,7 @@ spec:
       mv $VALUES_PATH.tmp $VALUES_PATH
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: prune-built-tags
-    image: mikefarah/yq:latest
+    image: quay.io/hybridcloudpatterns/yq:latest
     script: |
       set -x
       VALUES_PATH="$(cat $(workspaces.config.path)/$(params.CONFIGMAP_PREFIX)_$(params.ENVIRONMENT)_VALUES_PATH)"
