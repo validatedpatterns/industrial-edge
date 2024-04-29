@@ -286,8 +286,8 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       #value: datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "example-gitops-server.mypattern-example.svc"
-
+      value: "factory-gitops-server.mypattern-factory.svc"
+      
   - name: test-all
     taskRef:
       name: tkn
@@ -518,8 +518,8 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       #value: datacenter-gitops-server.industrial-edge-datacenter.svc
-      value: "example-gitops-server.mypattern-example.svc"
-
+      value: "factory-gitops-server.mypattern-factory.svc"
+      
   - name: test-all
     taskRef:
       name: tkn
