@@ -29,6 +29,5 @@ global:
         aggregation:
           count: 50
       custom:
-        endpoint: 
-          url: https://my.custom.endpoint
+        endpoint:
           enabled: false

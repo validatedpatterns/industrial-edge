@@ -315,7 +315,6 @@ data:
           custom:
             endpoint:
               enabled: false
-              url: https://my.custom.endpoint
           message:
             aggregation:
               count: 50
