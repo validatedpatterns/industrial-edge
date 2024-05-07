@@ -16,7 +16,6 @@ oc = os.environ["HOME"] + "/oc_client/oc"
 
 @pytest.mark.test_validate_pipelineruns
 def test_validate_pipelineruns(openshift_dyn_client):
-
     project = "manuela-ci"
 
     expected_pipelines = [
@@ -86,7 +85,6 @@ def test_validate_pipelineruns(openshift_dyn_client):
         assert False, err_msg
 
     while time.time() < timeout:
-
         for pipelinerun in PipelineRun.get(
             dyn_client=openshift_dyn_client, namespace=project
         ):
@@ -118,7 +116,6 @@ def test_validate_pipelineruns(openshift_dyn_client):
     timeout = time.time() + 3600
 
     while time.time() < timeout:
-
         for pipelinerun in PipelineRun.get(
             dyn_client=openshift_dyn_client, namespace=project
         ):
@@ -166,7 +163,6 @@ def test_validate_pipelineruns(openshift_dyn_client):
             assert False, err_msg
 
         for taskrun in TaskRun.get(dyn_client=openshift_dyn_client, namespace=project):
-
             if taskrun.instance.status.conditions[0].status == "False":
                 reason = taskrun.instance.status.conditions[0].reason
                 logger.info(
