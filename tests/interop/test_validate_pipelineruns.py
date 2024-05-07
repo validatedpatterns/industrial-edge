@@ -1,12 +1,14 @@
-import pytest
 import logging
-import re
 import os
-import time
+import re
 import subprocess
+import time
+
+import pytest
 from ocp_resources.pipeline import Pipeline
 from ocp_resources.pipelineruns import PipelineRun
 from ocp_resources.task_run import TaskRun
+
 from . import __loggername__
 
 logger = logging.getLogger(__loggername__)
