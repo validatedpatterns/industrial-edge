@@ -16,6 +16,7 @@ oc = os.environ["HOME"] + "/oc_client/oc"
 
 @pytest.mark.test_validate_pipelineruns
 def test_validate_pipelineruns(openshift_dyn_client):
+
     project = "manuela-ci"
 
     expected_pipelines = [
@@ -48,7 +49,7 @@ def test_validate_pipelineruns(openshift_dyn_client):
         pipelines = Pipeline.get(dyn_client=openshift_dyn_client, namespace=project)
         next(pipelines)
     except StopIteration:
-        err_msg = f"No pipelines were found"
+        err_msg = "No pipelines were found"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
 
@@ -64,7 +65,7 @@ def test_validate_pipelineruns(openshift_dyn_client):
     if len(expected_pipelines) == len(found_pipelines):
         logger.info("Found all expected pipelines")
     else:
-        err_msg = f"Some or all pipelines are missing"
+        err_msg = "Some or all pipelines are missing"
         logger.error(
             f"FAIL: {err_msg}:\nExpected: {expected_pipelines}\nFound: {found_pipelines}"
         )
@@ -80,11 +81,12 @@ def test_validate_pipelineruns(openshift_dyn_client):
         )
         next(pipelineruns)
     except StopIteration:
-        err_msg = f"No pipeline runs were found"
+        err_msg = "No pipeline runs were found"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
 
     while time.time() < timeout:
+
         for pipelinerun in PipelineRun.get(
             dyn_client=openshift_dyn_client, namespace=project
         ):
@@ -106,7 +108,7 @@ def test_validate_pipelineruns(openshift_dyn_client):
     if len(expected_pipelineruns) == len(found_pipelineruns):
         logger.info("Found all expected pipeline runs")
     else:
-        err_msg = f"Some pipeline runs are missing"
+        err_msg = "Some pipeline runs are missing"
         logger.error(
             f"FAIL: {err_msg}:\nExpected: {expected_pipelineruns}\nFound: {found_pipelineruns}"
         )
@@ -116,6 +118,7 @@ def test_validate_pipelineruns(openshift_dyn_client):
     timeout = time.time() + 3600
 
     while time.time() < timeout:
+
         for pipelinerun in PipelineRun.get(
             dyn_client=openshift_dyn_client, namespace=project
         ):
@@ -158,11 +161,12 @@ def test_validate_pipelineruns(openshift_dyn_client):
             taskruns = TaskRun.get(dyn_client=openshift_dyn_client, namespace=project)
             next(taskruns)
         except StopIteration:
-            err_msg = f"No task runs were found"
+            err_msg = "No task runs were found"
             logger.error(f"FAIL: {err_msg}")
             assert False, err_msg
 
         for taskrun in TaskRun.get(dyn_client=openshift_dyn_client, namespace=project):
+
             if taskrun.instance.status.conditions[0].status == "False":
                 reason = taskrun.instance.status.conditions[0].reason
                 logger.info(
@@ -182,10 +186,10 @@ def test_validate_pipelineruns(openshift_dyn_client):
 
                     logger.info(cmd_out.stdout.decode("utf-8"))
                     logger.info(cmd_out.stderr.decode("utf-8"))
-                except AttributeError as e:
-                    logger.error(f"No logs to collect")
+                except AttributeError:
+                    logger.error("No logs to collect")
 
-        err_msg = f"Some or all tasks have failed"
+        err_msg = "Some or all tasks have failed"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
 
