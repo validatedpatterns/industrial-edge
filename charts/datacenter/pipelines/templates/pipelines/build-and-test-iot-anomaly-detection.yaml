@@ -85,7 +85,7 @@ spec:
     - name: PATH_CONTEXT
       value: components/iot-anomaly-detection
     - name: BUILDER_IMAGE
-      value: registry.access.redhat.com/rhscl/python-36-rhel7
+      value: quay.io/hybridcloudpatterns/python-38-rhel7
     - name: TAG
       value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
     - name: OUTPUT_IMAGE
