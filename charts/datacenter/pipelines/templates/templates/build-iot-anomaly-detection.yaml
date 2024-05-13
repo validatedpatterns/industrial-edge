@@ -39,7 +39,7 @@ objects:
               storage: 128Mi
     params:
     - name: S2I_BUILDER_IMAGE
-      value: registry.access.redhat.com/rhscl/python-36-rhel7
+      value: quay.io/hybridcloudpatterns/python-38-rhel7
     - name: LOCAL_IMAGE
       value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
     - name: PATH_CONTEXT
