@@ -423,6 +423,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: openshift-gitops-cluster-admin-rolebinding
+  # We need to have this before anything else or the sync might get stuck forever
+  # due to permission issues
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -442,6 +446,10 @@ apiVersion: rbac.authorization.k8s.io/v1
 kind: ClusterRoleBinding
 metadata:
   name: mypattern-hub-cluster-admin-rolebinding
+  # We need to have this before anything else or the sync might get stuck forever
+  # due to permission issues
+  annotations:
+    argocd.argoproj.io/sync-wave: "-100"
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: ClusterRole
@@ -756,6 +764,8 @@ spec:
     path: common/golang-external-secrets
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -812,6 +822,8 @@ spec:
     path: charts/all/kafdrop
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -868,6 +880,8 @@ spec:
     path: charts/all/kafka
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -924,6 +938,8 @@ spec:
     path: charts/all/opendatahub
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -980,6 +996,8 @@ spec:
     path: charts/all/openshift-data-foundations
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1036,6 +1054,8 @@ spec:
     path: charts/all/openshift-serverless
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1092,6 +1112,8 @@ spec:
     path: charts/all/medical-diagnosis/service-account
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1148,6 +1170,8 @@ spec:
     chart: vault
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1222,6 +1246,8 @@ spec:
     path: charts/all/medical-diagnosis/database
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1278,6 +1304,8 @@ spec:
     path: charts/all/medical-diagnosis/grafana
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1334,6 +1362,8 @@ spec:
     path: charts/all/medical-diagnosis/image-generator
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1399,6 +1429,8 @@ spec:
     path: charts/all/medical-diagnosis/image-server
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
@@ -1464,6 +1496,8 @@ spec:
     path: charts/all/medical-diagnosis/xray-init
     helm:
       ignoreMissingValueFiles: true
+      values: |
+        extraParametersNested:
       valueFiles:
       - "/values-global.yaml"
       - "/values-hub.yaml"
