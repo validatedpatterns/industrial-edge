@@ -26,7 +26,7 @@ spec:
     targetRepo: https://github.com/pattern-clone/mypattern
     targetRevision: main 
   multiSourceConfig:
-    enabled: false
+    enabled: true
 ---
 # Source: pattern-install/templates/subscription.yaml
 apiVersion: operators.coreos.com/v1alpha1
