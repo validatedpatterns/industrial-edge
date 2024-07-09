@@ -62,7 +62,8 @@ clusterGroup:
       name: acm
       namespace: open-cluster-management
       project: datacenter
-      path: common/acm
+      chart: acm
+      chartVersion: 0.1.*
       ignoreDifferences:
       - group: internal.open-cluster-management.io
         kind: ManagedClusterInfo
@@ -116,13 +117,15 @@ clusterGroup:
       name: vault
       namespace: vault
       project: datacenter
-      path: common/hashicorp-vault
+      chart: hashicorp-vault
+      chartVersion: 0.1.*
 
     secrets-operator:
       name: golang-external-secrets
       namespace: golang-external-secrets
       project: golang-external-secrets
-      path: common/golang-external-secrets
+      chart: golang-external-secrets
+      chartVersion: 0.1.*
 
     secrets:
       name: external-secrets

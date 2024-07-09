@@ -1,5 +1,7 @@
 main:
   clusterGroupName: datacenter
+  multiSourceConfig:
+    enabled: true
 
 global:
   pattern: industrial-edge
