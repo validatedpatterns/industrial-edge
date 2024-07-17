@@ -7,9 +7,9 @@ import time
 import pytest
 from ocp_resources.configmap import ConfigMap
 from openshift.dynamic.exceptions import NotFoundError
+from validatedpatterns_tests.interop.edge_util import modify_file_content
 
 from . import __loggername__
-from .edge_util import modify_file_content
 
 logger = logging.getLogger(__loggername__)
 
