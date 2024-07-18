@@ -139,8 +139,6 @@ def test_check_pod_status(openshift_dyn_client):
     ]
 
     missing_projects = components.check_project_absense(openshift_dyn_client, projects)
-    missing_pods = []
-    failed_pods = []
 
     for project in projects:
         missing_pods += components.check_pod_absence(openshift_dyn_client, project)

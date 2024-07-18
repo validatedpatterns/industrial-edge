@@ -92,30 +92,27 @@ def test_validate_hub_site_reachable(kube_config, openshift_dyn_client):
 
 
 @pytest.mark.check_pod_status_hub
-def test_check_pod_status(openshift_dyn_client, altprojects):
+def test_check_pod_status(openshift_dyn_client):
     logger.info("Checking pod status")
 
     err_msg = []
-
-    if altprojects is None:
-        projects = [
-            "openshift-operators",
-            "open-cluster-management",
-            "open-cluster-management-hub",
-            "openshift-gitops",
-            "industrial-edge-datacenter",
-            "manuela-tst-all",
-            "openshift-pipelines",
-            "manuela-ci",
-            "manuela-data-lake",
-            "vault",
-        ]
-    else:
-        projects = [altprojects]
+    failed_pods = []
+    missing_pods = []
+    missing_projects = []
+    projects = [
+        "openshift-operators",
+        "open-cluster-management",
+        "open-cluster-management-hub",
+        "openshift-gitops",
+        "industrial-edge-datacenter",
+        "manuela-tst-all",
+        "openshift-pipelines",
+        "manuela-ci",
+        "manuela-data-lake",
+        "vault",
+    ]
 
     missing_projects = components.check_project_absense(openshift_dyn_client, projects)
-    missing_pods = []
-    failed_pods = []
 
     for project in projects:
         logger.info(f"Checking pods in namespace '{project}'")
