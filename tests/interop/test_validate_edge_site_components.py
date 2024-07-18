@@ -7,9 +7,7 @@ from openshift.dynamic.exceptions import NotFoundError
 from validatedpatterns_tests.interop import components
 from validatedpatterns_tests.interop.crd import ArgoCD
 from validatedpatterns_tests.interop.edge_util import (
-    get_long_live_bearer_token,
-    get_site_response,
-)
+    get_long_live_bearer_token, get_site_response)
 
 from . import __loggername__
 
@@ -139,8 +137,6 @@ def test_check_pod_status(openshift_dyn_client):
     ]
 
     missing_projects = components.check_project_absense(openshift_dyn_client, projects)
-    missing_pods = []
-    failed_pods = []
 
     for project in projects:
         missing_pods += components.check_pod_absence(openshift_dyn_client, project)
