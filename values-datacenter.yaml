@@ -14,24 +14,24 @@ clusterGroup:
   - vault
   - openshift-pipelines
   - openshift-storage
-    - redhat-ods-operator:
-        operatorGroup: true
-        targetNamespaces:
-    - edge-workspace
-    - edge-test-all
-    - edge-ci
-    - ml-development:
-        labels:
-          app.kubernetes.io/instance: edge-anomaly-detection-hub
-          kubernetes.io/metadata.name: ml-development
-          argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
-          modelmesh-enabled: 'true'
-          opendatahub.io/dashboard: 'true'
-    - redhat-ods-applications:
-        labels:
-          app.kubernetes.io/instance: edge-anomaly-detection-hub
-          kubernetes.io/metadata.name: redhat-ods-applications
-          argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
+  - redhat-ods-operator:
+      operatorGroup: true
+      targetNamespaces:
+  - edge-workspace
+  - edge-test-all
+  - edge-ci
+  - ml-development:
+      labels:
+        app.kubernetes.io/instance: edge-anomaly-detection-hub
+        kubernetes.io/metadata.name: ml-development
+        argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
+  - redhat-ods-applications:
+      labels:
+        app.kubernetes.io/instance: edge-anomaly-detection-hub
+        kubernetes.io/metadata.name: redhat-ods-applications
+        argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
     #  operatorgroupExcludes:
     #  - manuela-ml-workspace
 
