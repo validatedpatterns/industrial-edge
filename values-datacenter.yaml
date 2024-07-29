@@ -56,19 +56,9 @@ clusterGroup:
       - manuela-data-lake
       - manuela-tst-all
 
-    seldon-prod-dev:
-      name: seldon-operator-certified
-      namespaces:
-      - openshift-operators
-      source: certified-operators
-
     pipelines:
       name: openshift-pipelines-operator-rh
       source: redhat-operators
-
-    odh:
-      name: opendatahub-operator
-      source: community-operators
 
     ods:
       name: rhods-operator
@@ -140,7 +130,7 @@ clusterGroup:
       name: data-science-cluster
       namespace: redhat-ods-applications
       project: data-science-proj
-      path: charts/hub/data-science-cluster
+      path: charts/datacenter/data-science-cluster
       ignoreDifferences:
       - group: apps
         kind: Deployment
@@ -163,7 +153,7 @@ clusterGroup:
       name: data-science-project
       namespace: ml-development
       project: data-science-proj
-      path: charts/hub/data-science-project
+      path: charts/datacenter/data-science-project
       ignoreDifferences:
       - group: apps
         kind: Deployment
