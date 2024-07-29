@@ -60,6 +60,10 @@ clusterGroup:
       name: openshift-pipelines-operator-rh
       source: redhat-operators
 
+    odf:
+      name: odf-operator
+      namespace: openshift-storage
+
     ods:
       name: rhods-operator
       channel: alpha
