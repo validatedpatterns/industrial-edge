@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: obc-dataconnection-init-jobs
+spec:
+  template:
+    spec:
+      containers:
+        - image: quay.io/mmurakam/obc-dataconnection-init:obc-dataconnection-init-v0.1.1
+          imagePullPolicy: Always
+          name: obc-dataconnection-init-job
+          env:
+            - name: NAMESPACE
+              value: ml-development
+            - name: SOURCE_SECRET_NAME
+              value: pipeline-bucket
+            - name: TARGET_SECRET_NAME
+              value: aws-connection-pipelines
+            - name: BUCKET_NAME
+              value: pipeline-bucket
+      dnsPolicy: ClusterFirst
+      restartPolicy: Never
+      serviceAccount: obc-dataconnection-init
+      terminationGracePeriodSeconds: 3000
