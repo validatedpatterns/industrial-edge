@@ -12,7 +12,26 @@ clusterGroup:
   - manuela-data-lake
   - staging
   - vault
-
+  - openshift-pipelines
+  - openshift-storage
+    - redhat-ods-operator:
+        operatorGroup: true
+        targetNamespaces:
+    - edge-workspace
+    - edge-test-all
+    - edge-ci
+    - ml-development:
+        labels:
+          app.kubernetes.io/instance: edge-anomaly-detection-hub
+          kubernetes.io/metadata.name: ml-development
+          argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
+          modelmesh-enabled: 'true'
+          opendatahub.io/dashboard: 'true'
+    - redhat-ods-applications:
+        labels:
+          app.kubernetes.io/instance: edge-anomaly-detection-hub
+          kubernetes.io/metadata.name: redhat-ods-applications
+          argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
     #  operatorgroupExcludes:
     #  - manuela-ml-workspace
 
@@ -27,34 +46,40 @@ clusterGroup:
 
     amqstreams-prod-dev:
       name: amq-streams
-      namespaces: 
+      namespaces:
       - manuela-data-lake
       - manuela-tst-all
 
     camelk-prod-dev:
       name: red-hat-camel-k
-      namespaces: 
+      namespaces:
       - manuela-data-lake
       - manuela-tst-all
 
     seldon-prod-dev:
       name: seldon-operator-certified
-      namespaces: 
+      namespaces:
       - openshift-operators
       source: certified-operators
 
     pipelines:
       name: openshift-pipelines-operator-rh
       source: redhat-operators
-      
+
     odh:
       name: opendatahub-operator
       source: community-operators
+
+    ods:
+      name: rhods-operator
+      channel: alpha
+      namespace: redhat-ods-operator
 
   projects:
   - datacenter
   - production-datalake
   - golang-external-secrets
+  - data-science-proj
   - vault
 
   applications:
@@ -87,6 +112,58 @@ clusterGroup:
       namespace: manuela-data-lake
       project: production-datalake
       path: charts/datacenter/manuela-data-lake
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
+      - group: apps.openshift.io
+        kind: DeploymentConfig
+        jsonPointers:
+        - /spec/template/spec/containers/0/image
+
+    storage:
+      name: storage
+      namespace: openshift-storage
+      project: datacenter
+      path: charts/datacenter/data-lake/odf
+
+    data-science-cluster:
+      name: data-science-cluster
+      namespace: redhat-ods-applications
+      project: data-science-proj
+      path: charts/hub/data-science-cluster
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
+      - group: apps.openshift.io
+        kind: DeploymentConfig
+        jsonPointers:
+        - /spec/template/spec/containers/0/image
+
+    data-science-project:
+      name: data-science-project
+      namespace: ml-development
+      project: data-science-proj
+      path: charts/hub/data-science-project
       ignoreDifferences:
       - group: apps
         kind: Deployment
