@@ -144,6 +144,14 @@ spec:
             - name: JUPYTER_IMAGE
               value: >-
                 image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/ml-development:1.0.1
+            - name: GIT_SSL_CAINFO
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIP_CERT
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: REQUESTS_CA_BUNDLE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: SSL_CERT_FILE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
           ports:
             - containerPort: 8888
               name: notebook-port
@@ -159,9 +167,20 @@ spec:
           envFrom:
             - secretRef:
                 name: aws-connection-ml-development
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: trusted-ca
+              readOnly: true
+              subPath: ca-bundle.crt
           image: >-
             image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/ml-development:1.0.1
           workingDir: /opt/app-root/src
+        - configMap:
+            items:
+              - key: ca-bundle.crt
+                path: ca-bundle.crt
+            name: workbench-trusted-ca-bundle
+            optional: true
+          name: trusted-ca
         - resources:
             limits:
               cpu: 100m
