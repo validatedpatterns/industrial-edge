@@ -6,7 +6,7 @@ spec:
   template:
     spec:
       containers:
-        - image: quay.io/mmurakam/obc-dataconnection-init:obc-dataconnection-init-v0.1.1
+        - image: quay.io/mmurakam/obc-dataconnection-init:obc-dataconnection-init-v0.1.2
           imagePullPolicy: Always
           name: obc-dataconnection-init-job
           env:
