@@ -61,7 +61,7 @@ spec:
     disableHealthCheck: false
     enableExternalRoute: false
     externalStorage:
-      bucket: pipelines
+      bucket: pipeline-bucket
       host: 's3.openshift-storage.svc.cluster.local'
       port: ''
       s3CredentialsSecret:
