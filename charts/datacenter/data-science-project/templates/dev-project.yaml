@@ -31,13 +31,15 @@ spec:
 apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
 kind: DataSciencePipelinesApplication
 metadata:
-  name: pipelines-definition
+  name: dspa
   namespace: ml-development
 spec:
   apiServer:
+    caBundleFileMountPath: ''
     stripEOF: true
     dbConfigConMaxLifetimeSec: 120
     applyTektonCustomResource: true
+    caBundleFileName: ''
     deploy: true
     enableSamplePipeline: false
     autoUpdatePipelineDefaultVersion: true
@@ -48,14 +50,16 @@ spec:
     collectMetrics: true
     injectDefaultScript: true
   database:
+    disableHealthCheck: false
     mariaDB:
       deploy: true
       pipelineDBName: mlpipeline
       pvcSize: 10Gi
       username: mlpipeline
-  mlmd:
-    deploy: false
+  dspVersion: v2
   objectStorage:
+    disableHealthCheck: false
+    enableExternalRoute: false
     externalStorage:
       bucket: pipelines
       host: 's3.openshift-storage.svc.cluster.local'
