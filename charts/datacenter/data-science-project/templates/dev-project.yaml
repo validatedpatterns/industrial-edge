@@ -148,13 +148,15 @@ spec:
             - name: JUPYTER_IMAGE
               value: >-
                 image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/ml-development:1.0.1
+            - name: SSL_CERT_FILE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIPELINES_SSL_SA_CERTS
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
             - name: GIT_SSL_CAINFO
               value: /etc/pki/tls/custom-certs/ca-bundle.crt
             - name: PIP_CERT
               value: /etc/pki/tls/custom-certs/ca-bundle.crt
             - name: REQUESTS_CA_BUNDLE
-              value: /etc/pki/tls/custom-certs/ca-bundle.crt
-            - name: SSL_CERT_FILE
               value: /etc/pki/tls/custom-certs/ca-bundle.crt
           ports:
             - containerPort: 8888
@@ -168,25 +170,16 @@ spec:
               name: elyra-dsp-details
             - mountPath: /dev/shm
               name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: trusted-ca
+              readOnly: true
+              subPath: ca-bundle.crt
           envFrom:
             - secretRef:
                 name: aws-connection-ml-development
-            #- mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
-            #  name: trusted-ca
-            #  readOnly: true
-            #  subPath: ca-bundle.crt
           image: >-
             image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/ml-development:1.0.1
           workingDir: /opt/app-root/src
-        - name: trusted-ca
-          resources: {}
-#        - configMap:
-#            items:
-#              - key: ca-bundle.crt
-#                path: ca-bundle.crt
-#            name: workbench-trusted-ca-bundle
-#            optional: true
-#          name: trusted-ca
         - resources:
             limits:
               cpu: 100m
@@ -269,6 +262,13 @@ spec:
           secret:
             defaultMode: 420
             secretName: jupyterlab-tls
+        - configMap:
+            items:
+              - key: ca-bundle.crt
+                path: ca-bundle.crt
+            name: workbench-trusted-ca-bundle
+            optional: true
+          name: trusted-ca
 ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
