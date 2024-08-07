@@ -1,9 +1,9 @@
 import logging
 import os
 import subprocess
-import yaml
 
 import pytest
+import yaml
 from ocp_resources.pod import Pod
 from ocp_resources.route import Route
 from ocp_resources.storage_class import StorageClass
