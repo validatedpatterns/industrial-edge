@@ -3,6 +3,7 @@ import os
 import subprocess
 
 import pytest
+import yaml
 from ocp_resources.pod import Pod
 from ocp_resources.route import Route
 from ocp_resources.storage_class import StorageClass
@@ -193,13 +194,18 @@ def test_check_pod_status(openshift_dyn_client):
 @pytest.mark.validate_acm_self_registration_managed_clusters
 def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
     logger.info("Check ACM self registration for edge site")
-    site_name = (
-        os.environ["EDGE_CLUSTER_PREFIX"]
-        + "-"
-        + os.environ["INFRA_PROVIDER"]
-        + "-"
-        + os.environ["MPTS_TEST_RUN_ID"]
-    )
+
+    kubefile = os.getenv("KUBECONFIG_EDGE")
+    kubefile_exp = os.path.expandvars(kubefile)
+    with open(kubefile_exp) as stream:
+        try:
+            out = yaml.safe_load(stream)
+            site_name = out["clusters"][0]["name"]
+        except yaml.YAMLError:
+            err_msg = "Failed to load kubeconfig file"
+            logger.error(f"FAIL: {err_msg}")
+            assert False, err_msg
+
     clusters = ManagedCluster.get(dyn_client=openshift_dyn_client, name=site_name)
     cluster = next(clusters)
     is_managed_cluster_joined, managed_cluster_status = cluster.self_registered
