@@ -175,7 +175,7 @@ spec:
               subPath: ca-bundle.crt
           envFrom:
             - secretRef:
-                name: aws-connection-ml-development
+                name: aws-connection-user
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
           workingDir: /opt/app-root/src
         - resources:
