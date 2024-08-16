@@ -76,7 +76,9 @@ def test_subscription_status_hub(openshift_dyn_client):
         except Exception:
             pass
 
-        previouspath = os.getcwd() + f"/operator-versions/industrialedge_hub_{shortversion}"
+        previouspath = (
+            os.getcwd() + f"/operator-versions/industrialedge_hub_{shortversion}"
+        )
         previousfile = f"industrialedge_hub_{shortversion}"
 
         logger.info("Ensure previous file exists")
