@@ -69,32 +69,32 @@ def test_check_logging_edge():
     else:
         logger.info("PASS: Found expected output in kafka log")
 
-    logger.info(
-        "Checking logs for kafka (iot-sensor-sw-temperature) in"
-        " manuela-stormshift-messaging namespace"
-    )
-    log_proc = subprocess.Popen(
-        [
-            oc,
-            "exec",
-            "factory-kafka-cluster-kafka-0",
-            "-c",
-            "kafka",
-            "-n",
-            "manuela-stormshift-messaging",
-            "--",
-            "bin/kafka-console-consumer.sh",
-            "--topic",
-            "manuela-factory.iot-sensor-sw-temperature",
-            "--bootstrap-server",
-            "factory-kafka-cluster-kafka-bootstrap:9092",
-        ],
-        shell=True,
-    )
+    # logger.info(
+    #     "Checking logs for kafka (iot-sensor-sw-temperature) in"
+    #     " manuela-stormshift-messaging namespace"
+    # )
+    # log_proc = subprocess.Popen(
+    #     [
+    #         oc,
+    #         "exec",
+    #         "factory-kafka-cluster-kafka-0",
+    #         "-c",
+    #         "kafka",
+    #         "-n",
+    #         "manuela-stormshift-messaging",
+    #         "--",
+    #         "bin/kafka-console-consumer.sh",
+    #         "--topic",
+    #         "manuela-factory.iot-sensor-sw-temperature",
+    #         "--bootstrap-server",
+    #         "factory-kafka-cluster-kafka-bootstrap:9092",
+    #     ],
+    #     shell=True,
+    # )
 
-    sleep(30)
-    log_proc.terminate()
-    logger.info("PASS: Found expected output in kafka log")
+    # sleep(30)
+    # log_proc.terminate()
+    # logger.info("PASS: Found expected output in kafka log")
 
 
 def get_log_output(app_string, namespace):
