@@ -3,6 +3,7 @@ import os
 
 import pytest
 from ocp_resources.route import Route
+from openshift.dynamic.exceptions import NotFoundError
 from validatedpatterns_tests.interop import application, components, edge_util
 
 from . import __loggername__
@@ -172,9 +173,7 @@ def test_validate_manuela_stormshift_line_dashboard_reachable_edge_site(
         sub_string="argocd-dex-server-token",
     )
     if not bearer_token:
-        err_msg = (
-            "Bearer token is missing for argocd-dex-server"
-        )
+        err_msg = "Bearer token is missing for argocd-dex-server"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
     else:

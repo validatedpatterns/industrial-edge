@@ -2,7 +2,8 @@ import logging
 import os
 import re
 import subprocess
-from time import sleep
+
+# from time import sleep
 
 import pytest
 

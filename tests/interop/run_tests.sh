@@ -1,8 +1,8 @@
 #!/usr/bin/bash
 
 export EXTERNAL_TEST="true"
-export PATTERN_NAME="AnsibleEdgeGitops"
-export PATTERN_SHORTNAME="aegitops"
+export PATTERN_NAME="IndustrialEdge"
+export PATTERN_SHORTNAME="industrialedge"
 
 if [ -z "${KUBECONFIG}" ]; then
     echo "No kubeconfig file set for hub cluster"
