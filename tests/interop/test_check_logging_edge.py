@@ -10,7 +10,6 @@ from . import __loggername__
 # from time import sleep
 
 
-
 logger = logging.getLogger(__loggername__)
 
 oc = os.environ["HOME"] + "/oc_client/oc"
