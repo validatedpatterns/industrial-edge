@@ -4,8 +4,8 @@
 
 * fork of industrial-edge repository
 * Openshift clusters with industrial-edge pattern installed
-    * factory cluster is managed via rhacm
-    * './pattern.sh make seed' has been run
+  * factory cluster is managed via rhacm
+  * './pattern.sh make seed' has been run
 * kubeconfig files for Openshift clusters
 * oc client installed at ~/oc_client/oc
 
