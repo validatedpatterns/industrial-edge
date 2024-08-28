@@ -1,18 +1,11 @@
 import logging
 import os
-import subprocess
 
 import pytest
-from ocp_resources.pod import Pod
-from ocp_resources.route import Route
+import yaml
 from ocp_resources.storage_class import StorageClass
-from openshift.dynamic.exceptions import NotFoundError
-from validatedpatterns_tests.interop import components
-from validatedpatterns_tests.interop.crd import ArgoCD, ManagedCluster
-from validatedpatterns_tests.interop.edge_util import (
-    get_long_live_bearer_token,
-    get_site_response,
-)
+from validatedpatterns_tests.interop import application, components
+from validatedpatterns_tests.interop.crd import ManagedCluster
 
 from . import __loggername__
 
@@ -67,21 +60,16 @@ def test_validate_hub_site_components(openshift_dyn_client):
 @pytest.mark.validate_hub_site_reachable
 def test_validate_hub_site_reachable(kube_config, openshift_dyn_client):
     logger.info("Check if hub site API end point is reachable")
-    hub_api_url = kube_config.host
-    if not hub_api_url:
-        err_msg = "Hub site url is missing in kubeconfig file"
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
-    else:
-        logger.info(f"HUB api url : {hub_api_url}")
-
-    bearer_token = get_long_live_bearer_token(dyn_client=openshift_dyn_client)
-    if not bearer_token:
-        assert False, "Bearer token is missing for hub site"
-
-    hub_api_response = get_site_response(
-        site_url=hub_api_url, bearer_token=bearer_token
-    )
+    namespace = "openshift-gitops"
+    sub_string = "argocd-dex-server-token"
+    try:
+        hub_api_url = application.get_site_api_url(kube_config)
+        hub_api_response = application.get_site_api_response(
+            openshift_dyn_client, hub_api_url, namespace, sub_string
+        )
+    except AssertionError as e:
+        logger.error(f"FAIL: {e}")
+        assert False, e
 
     if hub_api_response.status_code != 200:
         err_msg = "Hub site is not reachable. Please check the deployment."
@@ -193,13 +181,18 @@ def test_check_pod_status(openshift_dyn_client):
 @pytest.mark.validate_acm_self_registration_managed_clusters
 def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
     logger.info("Check ACM self registration for edge site")
-    site_name = (
-        os.environ["EDGE_CLUSTER_PREFIX"]
-        + "-"
-        + os.environ["INFRA_PROVIDER"]
-        + "-"
-        + os.environ["MPTS_TEST_RUN_ID"]
-    )
+
+    kubefile = os.getenv("KUBECONFIG_EDGE")
+    kubefile_exp = os.path.expandvars(kubefile)
+    with open(kubefile_exp) as stream:
+        try:
+            out = yaml.safe_load(stream)
+            site_name = out["clusters"][0]["name"]
+        except yaml.YAMLError:
+            err_msg = "Failed to load kubeconfig file"
+            logger.error(f"FAIL: {err_msg}")
+            assert False, err_msg
+
     clusters = ManagedCluster.get(dyn_client=openshift_dyn_client, name=site_name)
     cluster = next(clusters)
     is_managed_cluster_joined, managed_cluster_status = cluster.self_registered
@@ -218,39 +211,24 @@ def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
 @pytest.mark.validate_argocd_reachable_hub_site
 def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
     namespace = "openshift-gitops"
+    name = "openshift-gitops-server"
+    sub_string = "argocd-dex-server-token"
     logger.info("Check if argocd route/url on hub site is reachable")
     try:
-        for route in Route.get(
-            dyn_client=openshift_dyn_client,
-            namespace=namespace,
-            name="openshift-gitops-server",
-        ):
-            argocd_route_url = route.instance.spec.host
-    except NotFoundError:
+        argocd_route_url = application.get_argocd_route_url(
+            openshift_dyn_client, namespace, name
+        )
+        argocd_route_response = application.get_site_api_response(
+            openshift_dyn_client, argocd_route_url, namespace, sub_string
+        )
+    except StopIteration:
         err_msg = "Argocd url/route is missing in open-cluster-management namespace"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
-
-    final_argocd_url = f"{'http://'}{argocd_route_url}"
-    logger.info(f"ACM route/url : {final_argocd_url}")
-
-    bearer_token = get_long_live_bearer_token(
-        dyn_client=openshift_dyn_client,
-        namespace=namespace,
-        sub_string="openshift-gitops-argocd-server-token",
-    )
-    if not bearer_token:
-        err_msg = (
-            "Bearer token is missing for argocd-server in openshift-gitops" " namespace"
-        )
+    except AssertionError:
+        err_msg = "Bearer token is missing for argocd-dex-server"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
-    else:
-        logger.debug(f"Argocd bearer token : {bearer_token}")
-
-    argocd_route_response = get_site_response(
-        site_url=final_argocd_url, bearer_token=bearer_token
-    )
 
     logger.info(f"Argocd route response : {argocd_route_response}")
 
@@ -262,113 +240,113 @@ def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
         logger.info("PASS: Argocd is reachable")
 
 
-@pytest.mark.skip
-@pytest.mark.validate_jupyterhub_pods_hub_site
-def test_validate_jupyterhub_pods_hub_site(openshift_dyn_client):
-    pods_down = 0
-    namespace = "manuela-ml-workspace"
-    logger.info(
-        "Check if jupyterhub pods are in 'Running' state in" f" {namespace} namespace"
-    )
+# @pytest.mark.skip
+# @pytest.mark.validate_jupyterhub_pods_hub_site
+# def test_validate_jupyterhub_pods_hub_site(openshift_dyn_client):
+#     pods_down = 0
+#     namespace = "manuela-ml-workspace"
+#     logger.info(
+#         "Check if jupyterhub pods are in 'Running' state in" f" {namespace} namespace"
+#     )
 
-    try:
-        jupyterhub_pods = Pod.get(
-            dyn_client=openshift_dyn_client,
-            namespace=namespace,
-            label_selector="deploymentconfig=jupyterhub",
-        )
-        pod = next(jupyterhub_pods)
-    except StopIteration:
-        err_msg = f"There are no jupyterhub pods in {namespace} namespace"
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
+#     try:
+#         jupyterhub_pods = Pod.get(
+#             dyn_client=openshift_dyn_client,
+#             namespace=namespace,
+#             label_selector="deploymentconfig=jupyterhub",
+#         )
+#         pod = next(jupyterhub_pods)
+#     except StopIteration:
+#         err_msg = f"There are no jupyterhub pods in {namespace} namespace"
+#         logger.error(f"FAIL: {err_msg}")
+#         assert False, err_msg
 
-    for pod in jupyterhub_pods:
-        container = pod.instance.status.containerStatuses[0]
-        podname, containername = pod.instance.metadata.name, container.name
-        logger.info(f"{podname}: {containername}: Ready: {container.ready}")
+#     for pod in jupyterhub_pods:
+#         container = pod.instance.status.containerStatuses[0]
+#         podname, containername = pod.instance.metadata.name, container.name
+#         logger.info(f"{podname}: {containername}: Ready: {container.ready}")
 
-        # The jupyterhub container for 2 of the 3 jupyterhub pods should
-        # show 'Waiting to become leader' status.
-        # One jupyterhub pod should show all containers ready.
-        if container.ready is not True:
-            log_out = subprocess.run(
-                [
-                    oc,
-                    "logs",
-                    "-n",
-                    "manuela-ml-workspace",
-                    "-c",
-                    containername,
-                    podname,
-                ],
-                capture_output=True,
-            )
-            log_out = log_out.stdout.decode("utf-8")
-            logger.info(f"Log for container '{containername}' in pod '{podname}':")
-            logger.info(log_out)
-            pods_down += 1
+#         # The jupyterhub container for 2 of the 3 jupyterhub pods should
+#         # show 'Waiting to become leader' status.
+#         # One jupyterhub pod should show all containers ready.
+#         if container.ready is not True:
+#             log_out = subprocess.run(
+#                 [
+#                     oc,
+#                     "logs",
+#                     "-n",
+#                     "manuela-ml-workspace",
+#                     "-c",
+#                     containername,
+#                     podname,
+#                 ],
+#                 capture_output=True,
+#             )
+#             log_out = log_out.stdout.decode("utf-8")
+#             logger.info(f"Log for container '{containername}' in pod '{podname}':")
+#             logger.info(log_out)
+#             pods_down += 1
 
-    if int(pods_down) > 2:
-        err_msg = "All jupyterhub pods deployed in manuela-ml-workspace failed"
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
-    else:
-        logger.info(
-            "PASS: All jupyterhub pods deployed in manuela-ml-workspace"
-            " namespace are up."
-        )
+#     if int(pods_down) > 2:
+#         err_msg = "All jupyterhub pods deployed in manuela-ml-workspace failed"
+#         logger.error(f"FAIL: {err_msg}")
+#         assert False, err_msg
+#     else:
+#         logger.info(
+#             "PASS: All jupyterhub pods deployed in manuela-ml-workspace"
+#             " namespace are up."
+#         )
 
 
-@pytest.mark.skip
-@pytest.mark.validate_jupyter_route_reachable
-def test_validate_jupyter_route_reachable(openshift_dyn_client):
-    namespace = "manuela-ml-workspace"
+# @pytest.mark.skip
+# @pytest.mark.validate_jupyter_route_reachable
+# def test_validate_jupyter_route_reachable(openshift_dyn_client):
+#     namespace = "manuela-ml-workspace"
 
-    logger.info("Check if jupyterhub route/url on hub site is reachable")
-    try:
-        for route in Route.get(
-            dyn_client=openshift_dyn_client,
-            namespace=namespace,
-            name="jupyterhub",
-        ):
-            jupyterhub_route_url = route.instance.spec.host
-    except NotFoundError:
-        err_msg = "Jupyterhub url/route is missing in manuela-ml-workspace namespace"
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
+#     logger.info("Check if jupyterhub route/url on hub site is reachable")
+#     try:
+#         for route in Route.get(
+#             dyn_client=openshift_dyn_client,
+#             namespace=namespace,
+#             name="jupyterhub",
+#         ):
+#             jupyterhub_route_url = route.instance.spec.host
+#     except NotFoundError:
+#         err_msg = "Jupyterhub url/route is missing in manuela-ml-workspace namespace"
+#         logger.error(f"FAIL: {err_msg}")
+#         assert False, err_msg
 
-    final_jupyterhub_url = f"{'http://'}{jupyterhub_route_url}"
-    logger.info(f"Jupyterhub route/url : {final_jupyterhub_url}")
+#     final_jupyterhub_url = f"{'http://'}{jupyterhub_route_url}"
+#     logger.info(f"Jupyterhub route/url : {final_jupyterhub_url}")
 
-    bearer_token = get_long_live_bearer_token(
-        dyn_client=openshift_dyn_client,
-        namespace=namespace,
-        sub_string="jupyterhub-hub-token",
-    )
+#     bearer_token = get_long_live_bearer_token(
+#         dyn_client=openshift_dyn_client,
+#         namespace=namespace,
+#         sub_string="jupyterhub-hub-token",
+#     )
 
-    if not bearer_token:
-        err_msg = (
-            "Bearer token is missing for jupyterhub in manuela-ml-workspace"
-            " namespace"
-        )
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
-    else:
-        logger.debug(f"Jupyterhub bearer token : {bearer_token}")
+#     if not bearer_token:
+#         err_msg = (
+#             "Bearer token is missing for jupyterhub in manuela-ml-workspace"
+#             " namespace"
+#         )
+#         logger.error(f"FAIL: {err_msg}")
+#         assert False, err_msg
+#     else:
+#         logger.debug(f"Jupyterhub bearer token : {bearer_token}")
 
-    jupyterhub_route_response = get_site_response(
-        site_url=final_jupyterhub_url, bearer_token=bearer_token
-    )
+#     jupyterhub_route_response = get_site_response(
+#         site_url=final_jupyterhub_url, bearer_token=bearer_token
+#     )
 
-    logger.info(f"Jupyterhub route response : {jupyterhub_route_response}")
+#     logger.info(f"Jupyterhub route response : {jupyterhub_route_response}")
 
-    if jupyterhub_route_response.status_code != 200:
-        err_msg = "Jupyterhub is not reachable. Please check the deployment"
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
-    else:
-        logger.info("PASS: Jupyterhub is reachable.")
+#     if jupyterhub_route_response.status_code != 200:
+#         err_msg = "Jupyterhub is not reachable. Please check the deployment"
+#         logger.error(f"FAIL: {err_msg}")
+#         assert False, err_msg
+#     else:
+#         logger.info("PASS: Jupyterhub is reachable.")
 
 
 @pytest.mark.validate_argocd_applications_health_hub_site
@@ -377,22 +355,9 @@ def test_validate_argocd_applications_health_hub_site(openshift_dyn_client):
     logger.info("Get all applications deployed by argocd on hub site")
     projects = ["openshift-gitops", "industrial-edge-datacenter"]
     for project in projects:
-        for app in ArgoCD.get(dyn_client=openshift_dyn_client, namespace=project):
-            app_name = app.instance.metadata.name
-            app_health = app.instance.status.health.status
-            app_sync = app.instance.status.sync.status
-
-            logger.info(f"Status for {app_name} : {app_health} : {app_sync}")
-
-            if "Healthy" != app_health or "Synced" != app_sync:
-                logger.info(f"Dumping failed resources for app: {app_name}")
-                unhealthy_apps.append(app_name)
-                for res in app.instance.status.resources:
-                    if (
-                        res.health and res.health.status != "Healthy"
-                    ) or res.status != "Synced":
-                        logger.info(f"\n{res}")
-
+        unhealthy_apps += application.get_argocd_application_status(
+            openshift_dyn_client, project
+        )
     if unhealthy_apps:
         err_msg = "Some or all applications deployed on hub site are unhealthy"
         logger.error(f"FAIL: {err_msg}:\n{unhealthy_apps}")
