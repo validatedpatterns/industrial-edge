@@ -326,7 +326,7 @@ metadata:
     notebooks.opendatahub.io/inject-oauth: 'true'
     notebooks.opendatahub.io/last-size-selection: Small
     notebooks.opendatahub.io/oauth-logout-url: >-
-      https://rhods-dashboard-redhat-ods-applications.apps.{{ .Values.clusterdomainurl }}/projects/ml-development?notebookLogout=jupyterlab
+      https://rhods-dashboard-redhat-ods-applications.apps.{{ .Values.clusterdomainurl }}/projects/ml-development?notebookLogout=s3-browser
     opendatahub.io/username: 'user'
     openshift.io/description: ''
     openshift.io/display-name: 'S3 Browser'
