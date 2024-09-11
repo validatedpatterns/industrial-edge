@@ -1,6 +1,10 @@
 site:
   name: example
 
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
 global:
   pattern: industrial-edge
   repoURL: "https://github.com/pattern-clone/industrial-edge"
