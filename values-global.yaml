@@ -2,6 +2,8 @@ main:
   clusterGroupName: datacenter
   multiSourceConfig:
     enabled: true
+  git:
+    repoUpstreamURL: https://github.com/mamurak/industrial-edge
 
 global:
   pattern: industrial-edge
