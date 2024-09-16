@@ -21,7 +21,7 @@ to build and use"
 
 ## Design Considerations
 
-These pipelines are designed to be long, with simple reusable tasks. They do not use PipelineResources due to the unclear nature of their future. Instead, they use tasks, workspaces and persistent volume claims to achieve similar goals: Clone the repositories, build the code, deploy to test, test and then trigger a staging to production. For each component, there is a separate PVC to allow parallel component builds without two pipeline runs stepping on each others toes. In the future (post Tekton-v0.11), the PVCs can be created on the fly instead of having to be static. The git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repositories reside on the same PVC.
+These pipelines are designed to be long, with simple reusable tasks. They do not use PipelineResources due to the unclear nature of their future. Instead, they use tasks, workspaces and persistent volume claims to achieve similar goals: Clone the repositories, build the code, deploy to test, test and then trigger a staging to production. For each component, there is a separate PVC to allow parallel component builds without two pipeline runs stepping on each others toes. In the future (post Tekton-v0.11), the PVCs can be created on the fly instead of having to be static. The Git clone tasks clone their repositories into a subdirectory of this PVC, so both the dev and ops repositories reside on the same PVC.
 
 The build-and-test pipeline is designed to be generic in nature and to be used on all components. In the previous attempt to provide pipelines, all component pipelines were the same instead of the build step which used a component specific s2i task. This design can be deviated from in the future if need arises to provide a component-specific pipeline. There is a certain amount of logic within the s2i task to distinguish java-based s2i builds from others since the former require some special handling, such as setting up the Maven environment and special parameters to the s2i build process.
 
@@ -29,19 +29,19 @@ All tasks are simple and designed not to have any hardwired dependencies, such a
 
 Tasks are named to indicate whether they are specific to a certain product, such as OpenShift or GitHub. This should allow to identify which tasks need to be adjusted if this demo is ported to other scnearios.
 
-Another design goal was to put all environment-specific configuration into a (single) ConfigMap, to allow easy reconfiguration of the Pipeline for new environments. It contains both global configuration (such as the location of the dev and ops git repositories) as well as component-specific configuration items whose key is prefixed with a component-specific name, such as IOT_CONSUMER_. This way, the whole pipeline can be reused for different components, just by specifying the component prefix.
+Another design goal was to put all environment-specific configuration into a (single) ConfigMap, to allow easy reconfiguration of the Pipeline for new environments. It contains both global configuration (such as the location of the dev and ops Git repositories) as well as component-specific configuration items whose key is prefixed with a component-specific name, such as IOT_CONSUMER_. This way, the whole pipeline can be reused for different components, just by specifying the component prefix.
 
 ## Pipelines
 
 There are four pipelines:
 
-- [build-and-test](pipelines/build-and-test.yaml): this pipeline performs a checkout of the git dev and ops repos, and determines the next build tag. It then triggers an s2i build and the gitops modifications to deploy the new version for testing in parallel. If the s2i build completes successfully, the new build version tag is pushed to the dev repository, and the ops modifications to the ops repository. After syncing the test instance through ArgoCD, it tiggers the [test-all](pipelines/test-all.yaml) pipeline and waits for its completion. Once completed, it triggers the [stage-production](pipelines/stage-production.yaml) pipeline and cleans up excess tags in the git repository.
+- [build-and-test](pipelines/build-and-test.yaml): this pipeline performs a checkout of the Git dev and ops repos, and determines the next build tag. It then triggers an s2i build and the gitops modifications to deploy the new version for testing in parallel. If the s2i build completes successfully, the new build version tag is pushed to the dev repository, and the ops modifications to the ops repository. After syncing the test instance through ArgoCD, it tiggers the [test-all](pipelines/test-all.yaml) pipeline and waits for its completion. Once completed, it triggers the [stage-production](pipelines/stage-production.yaml) pipeline and cleans up excess tags in the Git repository.
 
 - [test-all](pipelines/test-all.yaml): this pipeline is a sequence of (currently mocked) component tests and integration tests.
 
-- [stage-production](pipelines/stage-production.yaml): checks out the git ops repository and switches to a branch "staging-approval". If this branch does not exist, it is created. It then modifies the git ops repository for the production deployment and commits and pushes the changes to the origin ops repo's staging-approval branch. Finally, it creates a pull-request from the origin repo's staging-approval to the origin master branch, if no pull request is pending.
+- [stage-production](pipelines/stage-production.yaml): checks out the Git ops repository and switches to a branch "staging-approval". If this branch does not exist, it is created. It then modifies the Git ops repository for the production deployment and commits and pushes the changes to the origin ops repo's staging-approval branch. Finally, it creates a pull-request from the origin repo's staging-approval to the origin master branch, if no pull request is pending.
 
-- [seed](pipelines/seed.yaml): checks out the git dev and ops repositories and builds all components in parallel. It modifies the ops repositories for both test and prod on the master branch and pushes these changes to origin. This pipeline is useful to prepare a new installation to a known good state on which demo runs can take place.
+- [seed](pipelines/seed.yaml): checks out the Git dev and ops repositories and builds all components in parallel. It modifies the ops repositories for both test and prod on the master branch and pushes these changes to origin. This pipeline is useful to prepare a new installation to a known good state on which demo runs can take place.
 
 ## How to start a pipeline
 
@@ -63,7 +63,7 @@ In addition, there is a [stage-production-pipelinerun](templates/stage-productio
 
 ## Versioning and Tagging
 
-These pipelines use git tags in the dev repository to maintain the state which build number is current per component. The task [bumpversion](tasks/bumpversion.yaml) retrieves the component version from its VERSION file in the dev repository. It then searches for the highest tag matching "build-COMPONENTNAME-VERSION-*". In case it doesn't find one, it assumes "build-COMPONENTNAME-VERSION-0". The task then increases the build number (after the last dash) and tags the repository accordingly to form a tag in the form "build-COMPONENTNAME-VERSION-BUILD". These tags can be pushed to origin in a later task.
+These pipelines use Git tags in the dev repository to maintain the state which build number is current per component. The task [bumpversion](tasks/bumpversion.yaml) retrieves the component version from its VERSION file in the dev repository. It then searches for the highest tag matching "build-COMPONENTNAME-VERSION-*". In case it doesn't find one, it assumes "build-COMPONENTNAME-VERSION-0". The task then increases the build number (after the last dash) and tags the repository accordingly to form a tag in the form "build-COMPONENTNAME-VERSION-BUILD". These tags can be pushed to origin in a later task.
 
 OCI Images are tagged with "VERSION-BUILD" since the component name is already reflected in the image name.
 
