@@ -63,6 +63,7 @@ clusterGroup:
     odf:
       name: odf-operator
       namespace: openshift-storage
+      source: redhat-operators
 
     ods:
       name: rhods-operator
