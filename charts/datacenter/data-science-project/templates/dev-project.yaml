@@ -136,6 +136,9 @@ spec:
             periodSeconds: 5
             successThreshold: 1
             timeoutSeconds: 1
+          envFrom:
+            - secretRef:
+                name: gitea-admin-secret
           env:
             - name: NOTEBOOK_ARGS
               value: |-
