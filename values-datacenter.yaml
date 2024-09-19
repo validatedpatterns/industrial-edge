@@ -137,9 +137,6 @@ clusterGroup:
       # path: charts/datacenter/data-lake/odf
       chart: openshift-data-foundations
       chartVersion: 0.1.*
-      overrides:
-        - name: "storageSystem.inventory.useSpecificNodes"
-          value: "false"
 
     data-science-cluster:
       name: data-science-cluster
