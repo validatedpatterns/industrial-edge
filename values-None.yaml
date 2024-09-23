@@ -2,4 +2,5 @@
 ---
 global:
   datacenter:
-    storageClassName: localblock-sc
+    # storageClassName: localblock-sc
+    storageClassName: nfs-csi
