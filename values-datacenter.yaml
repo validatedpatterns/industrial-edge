@@ -1,3 +1,7 @@
+storageSystem:
+  inventory:
+    useSpecificNodes: false
+
 clusterGroup:
   name: datacenter
   isHubCluster: true
@@ -63,6 +67,7 @@ clusterGroup:
     odf:
       name: odf-operator
       namespace: openshift-storage
+      source: redhat-operators
 
     ods:
       name: rhods-operator
@@ -128,7 +133,10 @@ clusterGroup:
       name: storage
       namespace: openshift-storage
       project: datacenter
-      path: charts/datacenter/data-lake/odf
+      # TODO remove this folder eventually
+      # path: charts/datacenter/data-lake/odf
+      chart: openshift-data-foundations
+      chartVersion: 0.1.*
 
     data-science-cluster:
       name: data-science-cluster
