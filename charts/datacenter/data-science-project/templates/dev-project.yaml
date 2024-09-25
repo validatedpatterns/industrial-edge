@@ -139,6 +139,8 @@ spec:
           envFrom:
             - secretRef:
                 name: gitea-admin-secret
+            - secretRef:
+                name: aws-connection-user
           env:
             - name: NOTEBOOK_ARGS
               value: |-
@@ -176,9 +178,6 @@ spec:
               name: trusted-ca
               readOnly: true
               subPath: ca-bundle.crt
-          envFrom:
-            - secretRef:
-                name: aws-connection-user
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
           workingDir: /opt/app-root/src
         - resources:
