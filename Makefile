@@ -63,11 +63,3 @@ build-and-test-iot-anomaly-detection: ## run a build and test pipeline iot anoma
 
 build-and-test-iot-consumer: ## run a build and test pipeline iot consumer
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
-
-test:
-	@make -f common/Makefile PATTERN_OPTS="-f values-global.yaml -f values-hub.yaml" test
-
-.PHONY: kubeconform
-KUBECONFORM_SKIP=-skip 'CustomResourceDefinition,Pipeline,Task,KfDef,Integration,IntegrationPlatform,Kafka,ActiveMQArtemis,KafkaTopic,SeldonDeployment,KafkaMirrorMaker,OdhDashboardConfig,ArgoCD,CertManager,Certificate,ClusterIssuer'
-kubeconform:
-	make -f common/Makefile KUBECONFORM_SKIP="$(KUBECONFORM_SKIP)" kubeconform
