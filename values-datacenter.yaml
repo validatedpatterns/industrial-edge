@@ -1,7 +1,3 @@
-storageSystem:
-  inventory:
-    useSpecificNodes: true
-
 clusterGroup:
   name: datacenter
   isHubCluster: true
