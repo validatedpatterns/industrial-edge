@@ -1,6 +1,6 @@
 storageSystem:
   inventory:
-    useSpecificNodes: false
+    useSpecificNodes: true
 
 clusterGroup:
   name: datacenter
