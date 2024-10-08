@@ -1,6 +1,0 @@
-# Overrides for bandini's at home KVM cluster
----
-global:
-  datacenter:
-    # storageClassName: localblock-sc
-    storageClassName: nfs-csi
