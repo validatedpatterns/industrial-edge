@@ -34,4 +34,5 @@ global:
           count: 50
       custom:
         endpoint:
-          enabled: false
+          enabled: true
+          url: http://s3.openshift-storage.svc

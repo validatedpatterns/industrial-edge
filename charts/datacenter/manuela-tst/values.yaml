@@ -19,6 +19,9 @@ global:
         endpoint:
           enabled: false
 
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true

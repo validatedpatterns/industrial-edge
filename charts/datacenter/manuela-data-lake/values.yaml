@@ -42,3 +42,6 @@ kafka:
       temperature: "manuela-factory.iot-sensor-sw-temperature"
       vibration: "manuela-factory.iot-sensor-sw-vibration"
 
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
