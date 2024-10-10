@@ -10,18 +10,14 @@ global:
 
   s3:
     bucket:
-      name: BUCKETNAME
-      region: AWSREGION
       message:
         aggregation:
           count: 50
-      custom:
-        endpoint:
-          enabled: false
 
 secretStore:
   name: vault-backend
   kind: ClusterSecretStore
+
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true
@@ -43,6 +39,9 @@ mqtt:
       vibration: "iot-sensor/sw/vibration"
 
 kafka:
+  s3:
+    bucket: anomaly-detection
+    endpointurl: http://s3.openshift-storage.svc
   broker:
     uri: "dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
     topic:

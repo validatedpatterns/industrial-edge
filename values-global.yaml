@@ -27,12 +27,6 @@ global:
 
   s3:
     bucket:
-      name: BUCKETNAME
-      region: AWSREGION
       message:
         aggregation:
           count: 50
-      custom:
-        endpoint:
-          enabled: true
-          url: http://s3.openshift-storage.svc

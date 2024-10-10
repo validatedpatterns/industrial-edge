@@ -5,14 +5,9 @@ global:
 
   s3:
     bucket:
-      name: BUCKETNAME
-      region: AWSREGION
       message:
         aggregation:
           count: 50
-      custom:
-        endpoint:
-          enabled: false
 
 clusterGroup:
   name: datacenter
@@ -36,6 +31,9 @@ clusterGroup:
             - OpenShift
 
 kafka:
+  s3:
+    bucket: anomaly-detection
+    endpointurl: http://s3.openshift-storage.svc
   broker:
     uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:
