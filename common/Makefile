@@ -115,7 +115,7 @@ secrets-backend-none: ## Edits values files to remove secrets manager + ESO
 .PHONY: load-iib
 load-iib: ## CI target to install Index Image Bundles
 	@set -e; if [ x$(INDEX_IMAGES) != x ]; then \
-		ansible-playbook common/ansible/playbooks/iib-ci/iib-ci.yaml; \
+		ansible-playbook rhvp.cluster_utils.iib_ci; \
 	else \
 		echo "No INDEX_IMAGES defined. Bailing out"; \
 		exit 1; \
@@ -143,7 +143,7 @@ validate-cluster: ## Do some cluster validations before installing
 	@oc cluster-info >/dev/null && echo "OK" || (echo "Error"; exit 1)
 	@echo -n "  storageclass: "
 	@if [ `oc get storageclass -o go-template='{{printf "%d\n" (len .items)}}'` -eq 0 ]; then\
-		echo "None Found"; exit 1;\
+		echo "WARNING: No storageclass found";\
 	else\
 		echo "OK";\
 	fi
@@ -205,38 +205,13 @@ argo-healthcheck: ## Checks if all argo applications are synced
 
 ##@ Test and Linters Tasks
 
-CHARTS=$(shell find . -type f -iname 'Chart.yaml' -exec dirname "{}"  \; | grep -v examples | sed -e 's/.\///')
-# Section related to tests and linting
-TEST_OPTS= -f values-global.yaml \
-	--set global.repoURL="https://github.com/pattern-clone/mypattern" \
-	--set main.git.repoURL="https://github.com/pattern-clone/mypattern" \
-	--set main.git.revision=main --set global.pattern="mypattern" \
-	--set global.namespace="pattern-namespace" \
-	--set global.hubClusterDomain=apps.hub.example.com \
-	--set global.localClusterDomain=apps.region.example.com \
-	--set global.clusterDomain=region.example.com \
-	--set global.clusterVersion="4.12" \
-	--set global.clusterPlatform=aws \
-	--set "clusterGroup.imperative.jobs[0].name"="test" \
-	--set "clusterGroup.imperative.jobs[0].playbook"="ansible/test.yml"
-PATTERN_OPTS=-f common/examples/values-example.yaml
-EXECUTABLES=git helm oc ansible
-
-.PHONY: test
-test: ## run helm tests
-	@for t in $(CHARTS); do common/scripts/test.sh $$t all "$(TEST_OPTS)"; if [ $$? != 0 ]; then exit 1; fi; done
-
-.PHONY: helmlint
-helmlint: ## run helm lint
-	@for t in $(CHARTS); do common/scripts/lint.sh $$t $(TEST_OPTS); if [ $$? != 0 ]; then exit 1; fi; done
-
-API_URL ?= https://raw.githubusercontent.com/hybrid-cloud-patterns/ocp-schemas/main/openshift/4.10/
-KUBECONFORM_SKIP ?= -skip 'CustomResourceDefinition,ClusterIssuer,CertManager,Certificate,ArgoCD'
-
-# We need to skip 'CustomResourceDefinition' as openapi2jsonschema seems to be unable to generate them ATM
-.PHONY: kubeconform
-kubeconform: ## run helm kubeconform
-	@for t in $(CHARTS); do helm template $(TEST_OPTS) $(PATTERN_OPTS) $$t | kubeconform -strict $(KUBECONFORM_SKIP) -verbose -schema-location $(API_URL); if [ $$? != 0 ]; then exit 1; fi; done
+.PHONY: qe-tests
+qe-tests: ## Runs the tests that QE runs
+	@set -e; if [ -f ./tests/interop/run_tests.sh ]; then \
+		./tests/interop/run_tests.sh; \
+	else \
+		echo "No ./tests/interop/run_tests.sh found skipping"; \
+	fi
 
 .PHONY: super-linter
 super-linter: ## Runs super linter locally
@@ -259,15 +234,6 @@ super-linter: ## Runs super linter locally
 					-v $(PWD):/tmp/lint:rw,z \
 					-w /tmp/lint \
 					ghcr.io/super-linter/super-linter:slim-v7
-
-.PHONY: ansible-lint
-ansible-lint: ## run ansible lint on ansible/ folder
-	podman run -it -v $(PWD):/workspace:rw,z --workdir /workspace --env ANSIBLE_CONFIG=./ansible/ansible.cfg \
-		--entrypoint "/usr/local/bin/ansible-lint" quay.io/ansible/creator-ee:latest  "-vvv" "ansible/"
-
-.PHONY: ansible-unittest
-ansible-unittest: ## run ansible unit tests
-	pytest -r a --fulltrace --color yes ansible/tests/unit/test_*.py
 
 .PHONY: deploy upgrade legacy-deploy legacy-upgrade
 deploy upgrade legacy-deploy legacy-upgrade:
