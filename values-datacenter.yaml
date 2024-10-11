@@ -1,3 +1,8 @@
+storageSystem:
+  deploy: true
+  inventory:
+    useSpecificNodes: false
+
 clusterGroup:
   name: datacenter
   isHubCluster: true
@@ -132,7 +137,8 @@ clusterGroup:
       name: storage
       namespace: openshift-storage
       project: datacenter
-      path: charts/datacenter/data-lake/odf
+      chart: openshift-data-foundations
+      chartVersion: 0.1.*
 
     data-science-cluster:
       name: data-science-cluster
