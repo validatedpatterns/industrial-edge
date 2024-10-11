@@ -1,42 +1,39 @@
-#apiVersion: kafka.strimzi.io/v1beta2
-#kind: KafkaMirrorMaker2
-#metadata:
-#  name: factory-to-central-mm2
-#  namespace: manuela-stormshift-messaging
-#spec:
-#  version: 3.1.0
-#  replicas: 1
-#  connectCluster: production-kafka-cluster
-#  clusters:
-#    - alias: production-kafka-cluster
-#      bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.{{ .Values.global.hubClusterDomain }}:443'
-#      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
-#      #
-#      # TODO: This is a secret that we will need to create in the manuela-stormshift-messaging namespace
-#      #
-#      tls:
-#        trustedCertificates:
-#        - certificate: ca.crt
-#          secretName: prod-kafka-cluster-cluster-ca-cert
-#    - alias: factory-kafka-cluster
-#      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
-#      config:
-#        config.storage.replication.factor: 1
-#        offset.storage.replication.factor: 1
-#        status.storage.replication.factor: 1
-#  mirrors:
-#    - sourceCluster: factory-kafka-cluster
-#      targetCluster: production-kafka-cluster
-#      sourceConnector:
-#        config:
-#          replication.factor: 1
-#          offset-syncs.topic.replication.factor: 1
-#          sync.topic.acls.enabled: 'false'
-#      heartbeatConnector:
-#        config:
-#          heartbeats.topic.replication.factor: 1
-#      checkpointConnector:
-#        config:
-#          checkpoints.topic.replication.factor: 1
-#      topicsPattern: .*
-#      groupsPattern: .*
+apiVersion: kafka.strimzi.io/v1beta2
+kind: KafkaMirrorMaker2
+metadata:
+  name: factory-to-central-mm2
+  namespace: manuela-stormshift-messaging
+spec:
+  version: 3.7.0
+  replicas: 1
+  connectCluster: production-kafka-cluster
+  clusters:
+    - alias: production-kafka-cluster
+      bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443'
+      #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
+      tls:
+        trustedCertificates:
+        - certificate: ca.crt
+          secretName: prod-kafka-cluster-cluster-ca-cert
+    - alias: factory-kafka-cluster
+      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
+      config:
+        config.storage.replication.factor: 1
+        offset.storage.replication.factor: 1
+        status.storage.replication.factor: 1
+  mirrors:
+    - sourceCluster: factory-kafka-cluster
+      targetCluster: production-kafka-cluster
+      sourceConnector:
+        config:
+          replication.factor: 1
+          offset-syncs.topic.replication.factor: 1
+          sync.topic.acls.enabled: 'false'
+      heartbeatConnector:
+        config:
+          heartbeats.topic.replication.factor: 1
+      checkpointConnector:
+        config:
+          checkpoints.topic.replication.factor: 1
+      topicsPattern: .*
+      groupsPattern: .*
