@@ -33,6 +33,7 @@ jobs:
           VALIDATE_DOCKERFILE_HADOLINT: false
           VALIDATE_JSCPD: false
           VALIDATE_KUBERNETES_KUBECONFORM: false
+          VALIDATE_MARKDOWN_PRETTIER: false
           VALIDATE_PYTHON_PYLINT: false
           VALIDATE_SHELL_SHFMT: false
           VALIDATE_TEKTON: false
