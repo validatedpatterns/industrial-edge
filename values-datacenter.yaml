@@ -9,7 +9,6 @@ clusterGroup:
 
   namespaces:
   - golang-external-secrets
-  - external-secrets
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
@@ -207,12 +206,6 @@ clusterGroup:
       project: golang-external-secrets
       chart: golang-external-secrets
       chartVersion: 0.1.*
-
-    secrets:
-      name: external-secrets
-      namespace: external-secrets
-      project: golang-external-secrets
-      path: charts/datacenter/external-secrets
 
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #

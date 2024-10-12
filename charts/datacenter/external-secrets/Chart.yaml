@@ -1,6 +1,0 @@
-apiVersion: v2
-description: A Helm chart to build and deploy secrets using external-secrets for industrial-edge
-keywords:
-- pattern
-name: external-secrets-install
-version: 0.0.1

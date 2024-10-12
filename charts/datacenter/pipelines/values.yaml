@@ -5,6 +5,12 @@ secretStore:
   name: vault-backend
   kind: ClusterSecretStore
 
+gitsecret:
+  key: secret/data/hub/git
+
+imageregistrysecret:
+  key: secret/data/hub/imageregistry
+
 global:
   pattern: industrial-edge
   repoURL: "https://github.com/pattern-clone/industrial-edge"
