@@ -4,7 +4,7 @@ main:
     enabled: true
     clusterGroupChartVersion: 0.9.*
   git:
-    repoUpstreamURL: https://github.com/mamurak/industrial-edge
+    repoUpstreamURL: https://github.com/validatedpatterns/industrial-edge
 
 global:
   pattern: industrial-edge
