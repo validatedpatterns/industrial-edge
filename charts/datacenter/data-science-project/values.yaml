@@ -16,7 +16,4 @@ s3:
   default_endpoint: http://s3.openshift-storage.svc
   default_region: none
 
-awsPipelinesSecret:
-  key: secret/data/hub/aws-connection-pipelines
-
 clusterdomainurl: cluster.example.com

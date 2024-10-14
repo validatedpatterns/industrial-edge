@@ -67,7 +67,7 @@ spec:
       s3CredentialsSecret:
         accessKey: AWS_ACCESS_KEY_ID
         secretKey: AWS_SECRET_ACCESS_KEY
-        secretName: aws-connection-pipelines
+        secretName: aws-connection-pipeline-bucket
       scheme: http
   persistenceAgent:
     deploy: true
@@ -140,7 +140,7 @@ spec:
             - secretRef:
                 name: gitea-admin-secret
             - secretRef:
-                name: aws-connection-user
+                name: aws-connection-user-bucket
           env:
             - name: NOTEBOOK_ARGS
               value: |-
@@ -418,7 +418,7 @@ spec:
               subPath: ca-bundle.crt
           envFrom:
             - secretRef:
-                name: aws-connection-user
+                name: aws-connection-user-bucket
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/odh-tec:v0.1
           workingDir: /opt/app-root/src
         - resources:
