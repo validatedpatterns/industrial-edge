@@ -78,7 +78,7 @@ def test_toggle_machine_sensor(openshift_dyn_client):
         subprocess.run(["git", "add", machine_sensor_file], cwd=patterns_repo)
         subprocess.run(
             ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
-            cwd=f"{patterns_repo}",
+            cwd=patterns_repo,
         )
         push = subprocess.run(
             ["git", "push"], cwd=patterns_repo, capture_output=True, text=True
