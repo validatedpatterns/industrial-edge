@@ -60,15 +60,34 @@ def test_pipeline_build_check(openshift_dyn_client):
     starting_build_edge = re.search(regex, starting_image_edge)
 
     logger.info("Apply build-test-and-run chart")
-    subprocess.run(
+    if os.getenv("EXTERNAL_TEST") != "true":
+        chart = (
+            f"{os.environ['HOME']}"
+            + "/validated_patterns/industrial-edge/charts/"
+            + "datacenter/pipelines/extra/build-and-test-run.yaml"
+        )
+    else:
+        chart = "../../charts/datacenter/pipelines/extra/build-and-test-run.yaml"
+
+    logger.info(f"Chart: {chart}")
+
+    apply_chart = subprocess.run(
         [
             oc,
             "create",
             "-f",
-            "charts/datacenter/pipelines/extra/build-and-test-run.yaml",
+            chart,
         ],
-        cwd=f"{os.environ['HOME']}/validated_patterns/industrial-edge",
+        capture_output=True,
+        text=True,
     )
+    logger.info(apply_chart.stdout)
+    logger.info(apply_chart.stderr)
+
+    if apply_chart.stderr:
+        err_msg = "Failed to apply chart"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
 
     timeout = time.time() + 60 * 30
     while time.time() < timeout:
