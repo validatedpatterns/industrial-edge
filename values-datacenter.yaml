@@ -43,6 +43,7 @@ clusterGroup:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
+      channel: release-2.11
 
     amqbroker-prod:
       name: amq-broker-rhel8
