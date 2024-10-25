@@ -12,9 +12,7 @@ clusterGroup:
   - open-cluster-management
   - manuela-ml-workspace
   - manuela-tst-all
-  - manuela-ci:
-      labels:
-        manuela-role: pipeline
+  - manuela-ci
   - manuela-data-lake
   - staging
   - vault
