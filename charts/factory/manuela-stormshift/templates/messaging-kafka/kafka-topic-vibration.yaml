@@ -1,7 +1,7 @@
 apiVersion: kafka.strimzi.io/v1beta1
 kind: KafkaTopic
 metadata:
-  name: iot-sensor-sw-vibration
+  name: {{ .Values.kafka.broker.topic.vibration }}
   namespace: manuela-stormshift-messaging
   labels:
     strimzi.io/cluster: factory-kafka-cluster
