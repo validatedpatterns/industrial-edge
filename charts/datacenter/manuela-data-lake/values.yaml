@@ -37,8 +37,8 @@ kafka:
   broker:
     uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:
-      temperature: "manuela-factory.iot-sensor-sw-temperature"
-      vibration: "manuela-factory.iot-sensor-sw-vibration"
+      temperature: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-temperature"
+      vibration: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-vibration"
 
 secretStore:
   name: vault-backend
