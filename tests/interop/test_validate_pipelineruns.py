@@ -1,6 +1,7 @@
 import logging
 import os
 
+import pytest
 from validatedpatterns_tests.interop import components
 
 from . import __loggername__
