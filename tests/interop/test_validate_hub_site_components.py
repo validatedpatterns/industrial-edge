@@ -123,6 +123,7 @@ def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
     else:
         logger.info("PASS: Argocd is reachable")
 
+
 @pytest.mark.validate_acm_self_registration_managed_clusters
 def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
     logger.info("Check ACM self registration for edge site")
@@ -134,7 +135,7 @@ def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
     else:
-        logger.info(f"PASS: Edge site is self registered")
+        logger.info("PASS: Edge site is self registered")
 
 
 # @pytest.mark.skip

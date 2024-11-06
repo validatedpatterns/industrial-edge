@@ -3,7 +3,8 @@ import os
 
 import pytest
 from ocp_resources.route import Route
-from validatedpatterns_tests.interop import application, components
+from openshift.dynamic.exceptions import NotFoundError
+from validatedpatterns_tests.interop import application, components, edge_util
 
 from . import __loggername__
 
