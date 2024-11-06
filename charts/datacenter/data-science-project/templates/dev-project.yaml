@@ -250,7 +250,7 @@ spec:
             claimName: workbench-pvc
         - name: elyra-dsp-details
           secret:
-            secretName: ds-pipeline-config
+            secretName: ds-pipeline-config-custom
         - emptyDir:
             medium: Memory
           name: shm
