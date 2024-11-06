@@ -98,12 +98,6 @@ clusterGroup:
         jsonPointers:
         - /spec/loggingCA
 
-          #odh:
-          #name: odh
-          #namespace: manuela-ml-workspace
-          #project: datacenter
-          #path: charts/datacenter/opendatahub
-
     pipelines:
       name: pipelines
       namespace: manuela-ci
