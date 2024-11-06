@@ -6,15 +6,15 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  configuration:
-    - type: configmap
-      value: kafka-to-s3-config
-    - type: secret
-      value: s3-anomaly
+  traits:
+    mount:
+      configs:
+        - configmap:kafka-to-s3-config
+        - secret:s3-anomaly
   profile: OpenShift
   sources:
     - content: |
-       // dependency=camel:camel-endpointdsl
+        // dependency=camel:camel-endpointdsl
         package com.redhat.manuela.routes;
         import java.io.ByteArrayInputStream;
         import java.util.Iterator;
