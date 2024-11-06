@@ -2,7 +2,6 @@ import logging
 import os
 
 import pytest
-import yaml
 from ocp_resources.storage_class import StorageClass
 from validatedpatterns_tests.interop import application, components
 
@@ -114,6 +113,16 @@ def test_check_pod_status(openshift_dyn_client):
 #         logger.info("PASS: ACM is reachable.")
 
 
+@pytest.mark.validate_argocd_reachable_hub_site
+def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
+    logger.info("Check if argocd route/url on hub site is reachable")
+    err_msg = components.validate_argocd_reachable(openshift_dyn_client)
+    if err_msg:
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+    else:
+        logger.info("PASS: Argocd is reachable")
+
 @pytest.mark.validate_acm_self_registration_managed_clusters
 def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
     logger.info("Check ACM self registration for edge site")
@@ -126,17 +135,6 @@ def test_validate_acm_self_registration_managed_clusters(openshift_dyn_client):
         assert False, err_msg
     else:
         logger.info(f"PASS: Edge site is self registered")
-
-
-@pytest.mark.validate_argocd_reachable_hub_site
-def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
-    logger.info("Check if argocd route/url on hub site is reachable")
-    err_msg = components.validate_argocd_reachable(openshift_dyn_client)
-    if err_msg:
-        logger.error(f"FAIL: {err_msg}")
-        assert False, err_msg
-    else:
-        logger.info("PASS: Argocd is reachable")
 
 
 # @pytest.mark.skip
@@ -250,7 +248,6 @@ def test_validate_argocd_reachable_hub_site(openshift_dyn_client):
 
 @pytest.mark.validate_argocd_applications_health_hub_site
 def test_validate_argocd_applications_health_hub_site(openshift_dyn_client):
-    unhealthy_apps = []
     logger.info("Get all applications deployed by argocd on hub site")
     projects = ["openshift-gitops", "industrial-edge-datacenter"]
     unhealthy_apps = application.get_argocd_application_status(
