@@ -8,10 +8,6 @@ secretStore:
   name: vault-backend
   kind: ClusterSecretStore
 
-bucketSecrets:
-  - pipeline-bucket
-  - user-bucket
-
 s3:
   default_endpoint: http://s3.openshift-storage.svc
   default_region: none
