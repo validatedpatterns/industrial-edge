@@ -18,10 +18,12 @@ spec:
       annotations:
         opendatahub.io/notebook-python-dependencies: '[]'
         opendatahub.io/notebook-software: '[]'
-        openshift.io/imported-from: 'quay.io/mmurakam/workbenches:industrial-edge-v0.1.0'
+        # Once we we merge the integrate_rhoai branch in manuela-dev into main
+        # we can change the image here and point it to latest and/or use a vX.Y.Z tag
+        openshift.io/imported-from: 'quay.io/hybridcloudpatterns/manuela-workbench:integrate_rhoai'
       from:
         kind: DockerImage
-        name: 'quay.io/mmurakam/workbenches:industrial-edge-v0.1.0'
+        name: 'quay.io/hybridcloudpatterns/manuela-workbench:integrate_rhoai'
       generation: 2
       importPolicy:
         importMode: Legacy
