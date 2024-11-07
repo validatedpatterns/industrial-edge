@@ -1,3 +1,11 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workbench-trusted-ca-bundle
+  namespace: ml-development
+  labels:
+    config.openshift.io/inject-trusted-cabundle: 'true'
+---
 kind: PersistentVolumeClaim
 apiVersion: v1
 metadata:
