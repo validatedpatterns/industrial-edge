@@ -122,10 +122,6 @@ clusterGroup:
         kind: ImageStream
         jsonPointers:
         - /spec/tags
-      - group: apps.openshift.io
-        kind: DeploymentConfig
-        jsonPointers:
-        - /spec/template/spec/containers/0/image
 
     storage:
       name: storage
@@ -152,10 +148,6 @@ clusterGroup:
         kind: ImageStream
         jsonPointers:
         - /spec/tags
-      - group: apps.openshift.io
-        kind: DeploymentConfig
-        jsonPointers:
-        - /spec/template/spec/containers/0/image
 
     data-science-project:
       name: data-science-project
@@ -175,10 +167,6 @@ clusterGroup:
         kind: ImageStream
         jsonPointers:
         - /spec/tags
-      - group: apps.openshift.io
-        kind: DeploymentConfig
-        jsonPointers:
-        - /spec/template/spec/containers/0/image
 
     test:
       name: manuela-test
