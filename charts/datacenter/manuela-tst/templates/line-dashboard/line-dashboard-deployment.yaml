@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: line-dashboard
+    app: line-dashboard
     template: openjdk18-web-basic-s2i
     app.kubernetes.io/part-of: ManuELA
   name: line-dashboard
@@ -11,13 +11,12 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      deploymentconfig: line-dashboard
+      app: line-dashboard
   template:
     metadata:
       creationTimestamp: null
       labels:
         app: line-dashboard
-        deploymentconfig: line-dashboard
       name: line-dashboard
     spec:
       containers:
