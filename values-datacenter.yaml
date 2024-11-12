@@ -221,6 +221,18 @@ clusterGroup:
 #    repoURL: https://github.com/vendor/applications.git
 #    targetRevision: main
 
+  imperative:
+    # For additional overrides that apply to the jobs, please refer to
+    # https://github.com/validatedpatterns/clustergroup-chart/
+    # schedule: "*/10 * * * *" # Default schedule
+    jobs:
+      - name: clone-upstream-repos-gitea
+        playbook: ./ansible/playbooks/clone_upstream_repos_gitea.yml
+        extravars:
+          - "repo_name=manuela-dev"
+          - "upstream_repo_url=https://github.com/validatedpatterns-demos/manuela-dev"
+        timeout: 180
+
   managedClusterGroups:
     factory:
       name: factory

@@ -1,0 +1,59 @@
+---
+- name: Industrial repo cloning
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Fail if any needed parameter is undefined
+      ansible.builtin.assert:
+        that:
+          - repo_name is defined
+          - upstream_repo_url is defined
+
+    - name: Find needed route
+      ansible.builtin.shell: |
+        oc get routes -n vp-gitea gitea-route -o jsonpath='{.spec.host}'
+      register: route_raw
+
+    - name: Find gitea_admin username
+      ansible.builtin.shell: |
+        oc extract -n vp-gitea secret/gitea-admin-secret --to=- --keys=username 2>/dev/null
+      register: gitea_username_raw
+
+    - name: Find gitea_admin password
+      ansible.builtin.shell: |
+        oc extract -n vp-gitea secret/gitea-admin-secret --to=- --keys=password 2>/dev/null
+      register: gitea_password_raw
+
+    - name: Set some basic facts
+      ansible.builtin.set_fact:
+        gitea_route: "https://{{ route_raw.stdout }}"
+        gitea_username: "{{ gitea_username_raw.stdout }}"
+        gitea_password: "{{ gitea_password_raw.stdout }}"
+
+    - name: Set some more route facts
+      ansible.builtin.set_fact:
+        gitea_repos_route: "{{ gitea_route }}/api/v1/repos/{{ gitea_username }}/{{ repo_name }}"
+        gitea_migrate_route: "{{ gitea_route }}/api/v1/repos/migrate"
+
+    - name: Does repo already exist
+      ansible.builtin.uri:
+        url: "{{ gitea_repos_route }}"
+      register: repo_exists
+      failed_when: false
+
+    - name: If the repo already exists then stop here
+      ansible.builtin.meta: end_play
+      when: repo_exists.status == 200
+
+    - name: Migrate repository
+      ansible.builtin.uri:
+        url: "{{ gitea_migrate_route }}"
+        user: "{{ gitea_username }}"
+        password: "{{ gitea_password }}"
+        force_basic_auth: true
+        method: POST
+        body_format: json
+        body: "{ \"repo_name\": \"{{ repo_name }}\", \"clone_addr\": \"{{ upstream_repo_url }}\" }"
+        return_content: true
+        status_code: [201]
