@@ -23,10 +23,7 @@ help:
 %:
 	make -f common/Makefile $*
 
-pipeline-setup: ## calls the helm pipeline-setup
-	helm upgrade --install $(NAME)-secrets charts/secrets/pipeline-setup $(HELM_OPTS)
-
-install: pipeline-setup operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
+install: operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
 	@echo "Installed"
 
 post-install: ## Post-install tasks
