@@ -23,7 +23,7 @@ spec:
         secretName: argocd-env
     - name: github-secret
       secret:
-        secretName: git-repo-credentials
+        secretName: gitea-admin-secret
     - name: build-artifacts
       persistentVolumeClaim:
         claimName: build-artifacts-rwo

@@ -14,12 +14,12 @@ imageregistrysecret:
 global:
   pattern: industrial-edge
   repoURL: "https://github.com/pattern-clone/industrial-edge"
+  localClusterDomain: apps.localcluster.domain
   targetRevision: main
 
   git:
-    hostname: github.com
-    account: PLAINTEXT
-    username: PLAINTEXT
+    #hostname: ""
+    account: gitea_admin
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main
 

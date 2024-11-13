@@ -21,7 +21,7 @@ spec:
     type: string
   steps:
   - name: commit
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       git diff
       git config --global user.email "$(cat $(workspaces.config.path)/$(params.GIT_EMAIL_CONFIGMAPKEY))"
