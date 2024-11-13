@@ -24,7 +24,7 @@ spec:
     description: the new build version based on the last tags and VERSION file
   steps:
   - name: current-tag
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       VERSION_GLOB="build-$(params.component_name)-$(cat $(params.version_file_path))-*"
 
@@ -70,7 +70,7 @@ spec:
       name: scratch
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: tag-repo
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       VERSION=$(cat /scratch/VERSION)
       git tag $VERSION

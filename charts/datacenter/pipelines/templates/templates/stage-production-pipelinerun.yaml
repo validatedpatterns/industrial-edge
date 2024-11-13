@@ -26,7 +26,7 @@ objects:
         secretName: argocd-env
     - name: github-secret
       secret:
-        secretName: git-repo-credentials
+        secretName: gitea-admin-secret
     - name: gitrepos
       volumeClaimTemplate:
         spec:

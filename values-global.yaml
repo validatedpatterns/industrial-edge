@@ -15,13 +15,12 @@ global:
     installPlanApproval: Automatic
 
   imageregistry:
-    account: PLAINTEXT
+    account: rhn_support_mbaldess
     hostname: quay.io
     type: quay
 
   git:
-    hostname: github.com
-    account: PLAINTEXT
+    account: gitea_admin
     #username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     dev_revision: main

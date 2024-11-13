@@ -19,7 +19,7 @@ spec:
     description: The precise commit SHA that is HEAD of the checked out branch
   steps:
   - name: checkout
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       BRANCH=$(params.BRANCH)
       git checkout -q --track -b $BRANCH origin/$BRANCH 2>&1 || git checkout -q -b $BRANCH 2>&1

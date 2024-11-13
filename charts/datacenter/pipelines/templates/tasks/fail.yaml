@@ -5,6 +5,6 @@ metadata:
 spec:
   steps:
   - name: fail
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       exit 1
