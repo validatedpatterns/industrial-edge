@@ -1,5 +1,3 @@
-{{- $giturl := coalesce .Values.global.git.hostname (printf "gitea-route-vp-gitea.%s" .Values.global.localClusterDomain) }}
-{{- $full_giturl := printf "https://%s/%s/manuela-dev.git" $giturl .Values.global.git.account }}
 ---
 apiVersion: tekton.dev/v1beta1
 kind: Task
@@ -24,6 +22,7 @@ spec:
   - name: push
     image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
+      set -x
       git remote -v
       git branch
       git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git -c http.sslVerify=$(params.sslVerify) pull --ff-only --no-edit
