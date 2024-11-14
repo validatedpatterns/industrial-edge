@@ -232,6 +232,13 @@ clusterGroup:
           - "repo_name=manuela-dev"
           - "upstream_repo_url=https://github.com/validatedpatterns-demos/manuela-dev"
         timeout: 180
+      - name: copy-initial-model-to-incluster-s3
+        image: quay.io/hybridcloudpatterns/utility-container:latest
+        playbook: ./ansible/playbooks/copy_initial_model_to_incluster_s3.yml
+        extravars:
+          - "bucket_name=user-bucket"
+          - "src_file=ansible/files/model.joblib"
+        timeout: 180
 
   managedClusterGroups:
     factory:
