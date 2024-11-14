@@ -15,7 +15,7 @@ global:
     installPlanApproval: Automatic
 
   imageregistry:
-    account: rhn_support_mbaldess
+    account: PLAINTEXT
     hostname: quay.io
     type: quay
 
