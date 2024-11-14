@@ -18,13 +18,13 @@ spec:
     default: --
   - name: argocd-version
     type: string
-    default: v1.5.2
+    default: v1.14.1
   - name: argocd-server
     type: string
     default: openshift-gitops-server.openshift-gitops.svc
   steps:
     - name: login-sync-wait
-      image: argoproj/argocd:$(params.argocd-version)
+      image: registry.redhat.io/openshift-gitops-1/argocd-rhel8:$(params.argocd-version)
       command: ["/bin/bash", "-c"]
       args:
         - if [ -z $ARGOCD_AUTH_TOKEN ]; then
