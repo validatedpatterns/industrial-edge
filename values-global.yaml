@@ -23,7 +23,8 @@ global:
     account: gitea_admin
     #username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
-    dev_revision: main
+    # Branch used for the manuela-dev repository
+    dev_revision: integrate_rhoai
 
   s3:
     bucket:
