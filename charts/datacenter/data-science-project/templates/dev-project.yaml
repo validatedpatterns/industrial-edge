@@ -115,6 +115,25 @@ spec:
                     values:
                       - 'true'
               weight: 1
+      initContainers:
+        - name: fetch-ca
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
+            ls -l /tmp/ca-bundles/
+          volumeMounts:
+          - mountPath: /var/run/kube-root-ca
+            name: kube-root-ca
+          - mountPath: /var/run/trusted-ca
+            name: trusted-ca-bundle
+          - mountPath: /var/run/openshift-service-ca
+            name: openshift-service-ca
+          - mountPath: /tmp/ca-bundles
+            name: ca-bundles
       containers:
         - resources:
             limits:
@@ -183,7 +202,7 @@ spec:
             - mountPath: /dev/shm
               name: shm
             - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
-              name: trusted-ca
+              name: ca-bundles
               readOnly: true
               subPath: ca-bundle.crt
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
@@ -270,13 +289,20 @@ spec:
           secret:
             defaultMode: 420
             secretName: jupyterlab-tls
-        - configMap:
-            items:
-              - key: ca-bundle.crt
-                path: ca-bundle.crt
+        - name: trusted-ca-bundle
+          configMap:
             name: workbench-trusted-ca-bundle
-            optional: true
-          name: trusted-ca
+            defaultMode: 420
+        - name: kube-root-ca
+          configMap:
+            name: kube-root-ca.crt
+            defaultMode: 420
+        - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            defaultMode: 420
+        - name: ca-bundles
+          emptyDir: {}
 ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
@@ -360,6 +386,25 @@ spec:
                     values:
                       - 'true'
               weight: 1
+      initContainers:
+        - name: fetch-ca
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/odh-tec:v0.1
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
+            ls -l /tmp/ca-bundles/
+          volumeMounts:
+          - mountPath: /var/run/kube-root-ca
+            name: kube-root-ca
+          - mountPath: /var/run/trusted-ca
+            name: trusted-ca-bundle
+          - mountPath: /var/run/openshift-service-ca
+            name: openshift-service-ca
+          - mountPath: /tmp/ca-bundles
+            name: ca-bundles
       containers:
         - resources:
             limits:
@@ -421,7 +466,7 @@ spec:
             - mountPath: /dev/shm
               name: shm
             - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
-              name: trusted-ca
+              name: ca-bundles
               readOnly: true
               subPath: ca-bundle.crt
           envFrom:
@@ -508,10 +553,17 @@ spec:
           secret:
             defaultMode: 420
             secretName: s3-browser-tls
-        - configMap:
-            items:
-              - key: ca-bundle.crt
-                path: ca-bundle.crt
+        - name: trusted-ca-bundle
+          configMap:
             name: workbench-trusted-ca-bundle
-            optional: true
-          name: trusted-ca
+            defaultMode: 420
+        - name: kube-root-ca
+          configMap:
+            name: kube-root-ca.crt
+            defaultMode: 420
+        - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            defaultMode: 420
+        - name: ca-bundles
+          emptyDir: {}

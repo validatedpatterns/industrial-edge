@@ -10,7 +10,6 @@ spec:
     from:
       kind: DockerImage
       name: {{ .Values.iot_consumer.bootstrap_image }}
-    importPolicy: {}
     referencePolicy:
       type: Local
 {{- range .Values.iot_consumer.built_tags }}
@@ -18,7 +17,6 @@ spec:
     from:
       kind: DockerImage
       name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.iot_consumer.repo_name }}:{{ . }}"
-    importPolicy: {}
     referencePolicy:
       type: Local
 {{- end }}
