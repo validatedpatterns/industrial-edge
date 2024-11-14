@@ -3,6 +3,8 @@ kind: ImageStream
 metadata:
   name: messaging
 spec:
+  lookupPolicy:
+    local: true
   tags:
   - name: {{ .Values.iot_consumer.bootstrap_tag }}
     from:

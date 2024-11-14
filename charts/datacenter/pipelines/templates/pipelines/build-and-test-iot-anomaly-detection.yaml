@@ -164,6 +164,8 @@ spec:
     params:
     - name: subdirectory
       value: ops
+    - name: PUSH_FLAGS
+      value: --all
 
   - name: argocd-sync-application
     taskRef:
@@ -179,8 +181,6 @@ spec:
       value: manuela-test
     - name: flags
       value: --insecure
-    - name: argocd-version
-      value: "v1.5.2"
     - name: revision
       value: $(params.OPS_REVISION)
     - name: argocd-server

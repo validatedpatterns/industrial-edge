@@ -146,7 +146,7 @@ spec:
             timeoutSeconds: 1
           envFrom:
             - secretRef:
-                name: gitea-admin-secret
+                name: gitea-admin-secret-and-branch
             - secretRef:
                 name: aws-connection-user-bucket
           env:
