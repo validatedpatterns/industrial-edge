@@ -11,7 +11,11 @@ clusterGroup:
   - golang-external-secrets
   - open-cluster-management
   - manuela-ml-workspace
-  - manuela-tst-all
+  - manuela-tst-all:
+      operatorGroup: true
+      labels:
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
   - manuela-ci
   - manuela-data-lake
   - staging
@@ -26,16 +30,9 @@ clusterGroup:
   - edge-ci
   - ml-development:
       labels:
-        app.kubernetes.io/instance: edge-anomaly-detection-hub
-        kubernetes.io/metadata.name: ml-development
-        argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
         modelmesh-enabled: 'true'
         opendatahub.io/dashboard: 'true'
-  - redhat-ods-applications:
-      labels:
-        app.kubernetes.io/instance: edge-anomaly-detection-hub
-        kubernetes.io/metadata.name: redhat-ods-applications
-        argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
+  - redhat-ods-applications
     #  operatorgroupExcludes:
     #  - manuela-ml-workspace
 
