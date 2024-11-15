@@ -11,7 +11,14 @@ clusterGroup:
   - golang-external-secrets
   - open-cluster-management
   - manuela-ml-workspace
-  - manuela-tst-all
+  - manuela-tst-all:
+      operatorGroup: true
+      labels:
+        app.kubernetes.io/instance: edge-anomaly-detection-hub
+        kubernetes.io/metadata.name: manuela-tst-all
+        argocd.argoproj.io/managed-by: edge-anomaly-detection-hub
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
   - manuela-ci
   - manuela-data-lake
   - staging
