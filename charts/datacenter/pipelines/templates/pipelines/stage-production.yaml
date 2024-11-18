@@ -63,6 +63,8 @@ spec:
       value: ops
     - name: BRANCH
       value: staging-approval
+    - name: STARTINGBRANCH
+      value: {{ .Values.global.targetRevision }}
 
   - name: modify-ops-prod
     taskRef:
@@ -110,7 +112,7 @@ spec:
     - name: subdirectory
       value: ops
     - name: PUSH_FLAGS
-      value: --set-upstream origin staging-approval
+      value: --set-upstream origin staging-approval -f
 
   - name: github-pull-request
     taskRef:

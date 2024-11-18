@@ -31,5 +31,10 @@ spec:
     image: curlimages/curl
     script: |
       GITREPO=$(cat $(workspaces.config.path)/$(params.GITHUB_REPO_CONFIGMAPKEY))
-      PULLREQUEST_API_ENDPOINT=$(echo -n "$GITREPO" | sed "s|github.com|api.github.com/repos|" | sed "s/\.git$//g")/pulls
-      curl -v -u :$(cat $(workspaces.github-secret.path)/password) $PULLREQUEST_API_ENDPOINT -d '{"title":"$(params.PULL_REQUEST_TITLE)","body":"$(params.PULL_REQUEST_BODY)","head":"$(params.GIT_BRANCH_HEAD)","base":"$(params.GIT_BRANCH_BASE)"}'
+      # GIT_OPS_REPO_PROD_URL - https://gitea-route-vp-gitea.apps.mcg-hub.aws.validatedpatterns.io/gitea_admin/industrial-edge
+      BASE=$(echo $GITREPO | cut -d'/' -f1-3)
+      END=$(echo $GITREPO | cut -d'/' -f4-)
+      URL="${BASE}/api/v1/repos/${END}/pulls"
+      curl -k --fail-with-body -v -u "$(cat $(workspaces.github-secret.path)/username):$(cat $(workspaces.github-secret.path)/password)" \
+        -H "Content-Type: application/json" -X POST \
+        --data '{"base": "$(params.GIT_BRANCH_BASE)", "title": "$(params.PULL_REQUEST_TITLE)", "head": "$(params.GIT_BRANCH_HEAD)"}' "${URL}"

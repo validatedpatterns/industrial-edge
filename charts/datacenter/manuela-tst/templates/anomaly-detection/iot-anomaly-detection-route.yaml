@@ -9,7 +9,7 @@ spec:
     targetPort: http
   to:
     kind: Service
-    name: anomaly-detection-predictor-anomaly-detection
+    name: modelmesh-serving
   tls:
     insecureEdgeTerminationPolicy: Allow
     termination: edge

@@ -18,4 +18,5 @@ data:
   TOPIC_TEMPERATURE: "iot-sensor/sw/temperature"
   TOPIC_VIBRATION: "iot-sensor/sw/vibration"
   TOPIC_LIGHT: "iot-sensor/sw/light"
-  ANOMALY_DETECTION_URL: "http://anomaly-detection-predictor:8000"
+  ANOMALY_DETECTION_URL: "http://anomaly-detection-manuela-tst-all.{{ .Values.global.hubClusterDomain }}"
+  ANOMALY_DETECTION_URL_PATH: "/v2/models/inference-service/infer"
