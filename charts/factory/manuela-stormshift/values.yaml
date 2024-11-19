@@ -14,6 +14,10 @@ global:
   localClusterDomain: local.example.com
   hubClusterDomain: hub.example.com
 
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true
