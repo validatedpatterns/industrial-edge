@@ -7,6 +7,14 @@ clusterGroup:
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
+  - manuela-inference:
+      operatorGroup: true
+      labels:
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
+  - redhat-ods-operator:
+      operatorGroup: true
+      targetNamespaces:
 
   subscriptions:
   - name: amq-streams
@@ -17,6 +25,10 @@ clusterGroup:
 
   - name: red-hat-camel-k
     namespace: manuela-stormshift-messaging
+
+  - name: rhods-operator
+    channel: alpha
+    namespace: redhat-ods-operator
 
   projects:
   - factory
