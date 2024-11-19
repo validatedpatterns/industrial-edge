@@ -8,7 +8,6 @@ data:
   VIBRATION_ANOMALY_ENABLED: "{{ .Values.messaging.vibrationAnomaly }}"
   NODE_TLS_REJECT_UNAUTHORIZED: "{{ .Values.messaging.nodeTlsReject }}"
   MQTT_BROKER: "ws://broker-amq-mqtt-all-0-svc:61616"
-  MQTT_PASSWORD: "iotuser"
   MQTT_USER: "iotuser"
   PORT: "3000"
   SOCKET_PATH: "/api/service-web/socket"

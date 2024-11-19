@@ -28,6 +28,8 @@ spec:
         envFrom:
         - configMapRef:
             name: messaging-configmap
+        - secretRef:
+            name: messaging-secret
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File
