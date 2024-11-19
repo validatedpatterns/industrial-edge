@@ -11,7 +11,6 @@ data:
     DEVICE_METRICS: "temperature,vibration,gps,light"
     MACHINE_ID: "floor-1-line-1-extruder-1"
 
-    MQTT_PASSWORD: "iotuser"
     MQTT_TLSSNI: "false"
     MQTT_USER: "iotuser"
 

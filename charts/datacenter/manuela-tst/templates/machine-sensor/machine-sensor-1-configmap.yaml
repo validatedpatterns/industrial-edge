@@ -17,7 +17,6 @@ data:
   MACHINE_ID: "floor-1-line-1-extruder-1"
 
   MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
-  MQTT_PASSWORD: "iotuser"
   MQTT_PORT: "61616"
   MQTT_TLSSNI: "false"
   MQTT_USER: "iotuser"
