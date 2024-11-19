@@ -1,3 +1,6 @@
+{{- $giturl := coalesce .Values.global.git.hostname (printf "gitea-route-vp-gitea.%s" .Values.global.localClusterDomain) }}
+{{- $full_giturl := printf "https://%s/%s/manuela-dev.git" $giturl .Values.global.git.account }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
@@ -126,14 +129,33 @@ spec:
             cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
             ls -l /tmp/ca-bundles/
           volumeMounts:
-          - mountPath: /var/run/kube-root-ca
-            name: kube-root-ca
-          - mountPath: /var/run/trusted-ca
-            name: trusted-ca-bundle
-          - mountPath: /var/run/openshift-service-ca
-            name: openshift-service-ca
-          - mountPath: /tmp/ca-bundles
-            name: ca-bundles
+            - mountPath: /var/run/kube-root-ca
+              name: kube-root-ca
+            - mountPath: /var/run/trusted-ca
+              name: trusted-ca-bundle
+            - mountPath: /var/run/openshift-service-ca
+              name: openshift-service-ca
+            - mountPath: /tmp/ca-bundles
+              name: ca-bundles
+        - name: git-init
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            if [ ! -d /opt/app-root/src/manuela-dev ]; then export GIT_SSL_CAINFO=/etc/pki/tls/custom-certs/ca-bundle.crt; git clone --single-branch -b {{ .Values.global.git.dev_revision }} {{ $full_giturl }} /opt/app-root/src/manuela-dev; fi
+          volumeMounts:
+            - mountPath: /opt/app-root/src
+              name: jupyterlab
+            - mountPath: /opt/app-root/runtimes
+              name: elyra-dsp-details
+            - mountPath: /dev/shm
+              name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: ca-bundles
+              readOnly: true
+              subPath: ca-bundle.crt
       containers:
         - resources:
             limits:
