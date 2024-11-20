@@ -18,6 +18,9 @@ secretStore:
   name: vault-backend
   kind: ClusterSecretStore
 
+s3:
+  default_region: none
+
 messaging:
   vibrationAlert: true
   vibrationAnomaly: true
