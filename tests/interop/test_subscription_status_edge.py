@@ -16,7 +16,7 @@ def test_subscription_status_edge(openshift_dyn_client):
         "amq-broker-rhel8": ["manuela-stormshift-messaging"],
         "amq-streams": ["manuela-stormshift-messaging"],
         "red-hat-camel-k": ["manuela-stormshift-messaging"],
-        "seldon-operator-certified": ["openshift-operators"],
+        "rhods-operator": ["redhat-ods-operator"],
     }
 
     err_msg = subscription.subscription_status(
