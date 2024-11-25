@@ -1,0 +1,20 @@
+apiVersion: serving.kserve.io/v1beta1
+kind: InferenceService
+metadata:
+  annotations:
+    serving.kserve.io/deploymentMode: ModelMesh
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+  labels:
+    opendatahub.io/dashboard: "true"
+  name: inference-service
+  namespace: manuela-inference
+spec:
+  predictor:
+    model:
+      modelFormat:
+        name: sklearn
+        version: "0"
+      runtime: anomaly-detection-model-server
+      storage:
+        key: aws-connection-user-bucket
+        path: initial_model.joblib

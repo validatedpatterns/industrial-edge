@@ -6,11 +6,11 @@ metadata:
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:
-  configuration:
-    - type: configmap
-      value: kafka-to-s3-config
-    - type: secret
-      value: s3-secret
+  traits:
+    mount:
+      configs:
+        - configmap:kafka-to-s3-config
+        - secret:s3-anomaly
   profile: OpenShift
   sources:
     - content: |
@@ -41,13 +41,15 @@ spec:
             @PropertyInject("s3.custom.endpoint.url")
             private String s3_custom_endpoint_url;
 
-            @PropertyInject("s3.accessKey")
+            @PropertyInject("AWS_ACCESS_KEY_ID")
             private String s3_accessKey;
-            @PropertyInject("s3.secretKey")
+            @PropertyInject("AWS_SECRET_ACCESS_KEY")
             private String s3_secretKey;
             @PropertyInject("s3.message.aggregation.count")
             private String s3_message_aggregation_count;
 
+            @PropertyInject("s3.bucket.name")
+            private String s3_bucket_name;
             @PropertyInject("s3.region")
             private String s3_region;
             @Override
@@ -59,7 +61,12 @@ spec:
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
+                String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
             	String s3params = key
+                + customendpoint
+                + "&forcePathStyle=true"
+                + endpoint
                 + secret
                 + region;
 
@@ -80,16 +87,21 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-vibration-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
+                    .to("aws2-s3://" + s3_bucket_name + "?" + s3params)
                     .log("Uploaded from [ ${headers[kafka.KEY]} ] Vibration dataset to S3");
             }
             private void storeTemperatureInS3() {
                 String key = "accessKey=RAW(" + s3_accessKey + ")";
                 String secret = "&secretKey=RAW(" + s3_secretKey + ")";
                 String region = "&region=" + s3_region;
+                String customendpoint = "&overrideEndpoint=" + s3_custom_endpoint_enabled;
+                String endpoint = "&uriEndpointOverride=" + s3_custom_endpoint_url;
             	String s3params = key
-                   + secret
-                   + region;
+                + customendpoint
+                + "&forcePathStyle=true"
+                + endpoint
+                + secret
+                + region;
                 from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
@@ -107,7 +119,7 @@ spec:
                         })
                     // .to(\"file:/var/tmp/\");
                     .setHeader(AWS2S3Constants.KEY, simple("manuela-dev-temperature-${headers[kafka.KEY]}-${date:now}.txt"))
-                    .to("aws2-s3://{{ .Values.global.s3.bucket.name }}?" + s3params)
+                    .to("aws2-s3://" + s3_bucket_name + "?" + s3params)
                     .log("Uploaded Temperature from [ ${headers[kafka.KEY]} ] dataset to S3");
             }
             @Override

@@ -3,16 +3,20 @@ clusterGroup:
   isHubCluster: false
 
   namespaces:
+  - golang-external-secrets
   - manuela-stormshift-line-dashboard
   - manuela-stormshift-machine-sensor
   - manuela-stormshift-messaging
+  - manuela-inference:
+      operatorGroup: true
+      labels:
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
+  - redhat-ods-operator:
+      operatorGroup: true
+      targetNamespaces:
 
   subscriptions:
-  - name: seldon-operator-certified
-    namespaces: 
-    - openshift-operators
-    source: certified-operators
-
   - name: amq-streams
     namespace: manuela-stormshift-messaging
 
@@ -22,15 +26,28 @@ clusterGroup:
   - name: red-hat-camel-k
     namespace: manuela-stormshift-messaging
 
+  - name: rhods-operator
+    channel: alpha
+    namespace: redhat-ods-operator
+
   projects:
   - factory
 
   applications:
-  - name: stormshift
-    project: factory
-    path: charts/factory/manuela-stormshift
-    extraValueFiles:
-      - /overrides/values-prod-imagedata.yaml
+    eso:
+      name: golang-external-secrets
+      namespace: golang-external-secrets
+      project: factory
+      chart: golang-external-secrets
+      chartVersion: 0.1.*
+
+    stormshift:
+      name: stormshift
+      project: factory
+      path: charts/factory/manuela-stormshift
+      extraValueFiles:
+        - /overrides/values-prod-imagedata.yaml
+
 
 #
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate

@@ -177,3 +177,5 @@ spec:
     params:
     - name: subdirectory
       value: ops
+    - name: PUSH_FLAGS
+      value: --all

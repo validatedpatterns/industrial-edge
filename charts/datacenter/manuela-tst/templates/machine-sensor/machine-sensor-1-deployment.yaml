@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: machine-sensor-1
+    app: machine-sensor-1
     template: openjdk18-web-basic-s2i
     app.kubernetes.io/part-of: ManuELA
   name: machine-sensor-1
@@ -12,15 +12,14 @@ spec:
   revisionHistoryLimit: 10
   selector:
     matchLabels:
-      deploymentConfig: machine-sensor-1
+      app: machine-sensor-1
   template:
     metadata:
       creationTimestamp: null
       annotations:
         checksum/config: {{ include (print $.Template.BasePath "/machine-sensor/machine-sensor-1-configmap.yaml") . | sha256sum }}
       labels:
-        application: machine-sensor-1
-        deploymentConfig: machine-sensor-1
+        app: machine-sensor-1
       name: machine-sensor-1
     spec:
       containers:
@@ -39,6 +38,8 @@ spec:
             protocol: TCP
         envFrom:
           - configMapRef:
+              name: machine-sensor-1
+          - secretRef:
               name: machine-sensor-1
         resources: {}
         terminationMessagePath: /dev/termination-log

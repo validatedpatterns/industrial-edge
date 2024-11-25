@@ -1,6 +1,0 @@
-apiVersion: v2
-description: A Helm chart to configure OpenDataHub
-keywords:
-- patterns
-name: opendatahub
-version: 0.0.1
