@@ -30,7 +30,7 @@ global:
     #username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
     # Branch used for the manuela-dev repository
-    dev_revision: integrate_rhoai
+    dev_revision: main
 
   s3:
     bucket:
