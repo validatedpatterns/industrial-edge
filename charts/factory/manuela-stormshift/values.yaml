@@ -49,33 +49,33 @@ kafka:
       vibration: "manuela-factory.iot-sensor-sw-vibration"
 
 machine_sensor:
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.3.1
-  bootstrap_tag: 0.3.1
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-software-sensor:0.4.0
+  bootstrap_tag: 0.4.0
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-machine-sensor/machine-sensor
   repo_name: iot-software-sensor
-  tag: 0.3.1
+  tag: 0.4.0
   built_tags: []
 
 iot_anomaly_detection:
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.3.2
-  bootstrap_tag: 0.3.2
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.4.0
+  bootstrap_tag: 0.4.0
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection
   repo_name: iot-anomaly-detection
-  tag: 0.3.2
+  tag: 0.4.0
   built_tags: []
 
 iot_consumer:
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-consumer:0.3.2
-  bootstrap_tag: 0.3.2
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-consumer:0.4.0
+  bootstrap_tag: 0.4.0
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/messaging
   repo_name: iot-consumer
-  tag: 0.3.2
+  tag: 0.4.0
   built_tags: []
 
 iot_frontend:
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.3.1
-  bootstrap_tag: 0.3.1
+  bootstrap_image: quay.io/hybridcloudpatterns/iot-frontend:0.4.0
+  bootstrap_tag: 0.4.0
   image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-line-dashboard/line-dashboard
   repo_name: iot-frontend
-  tag: 0.3.1
+  tag: 0.4.0
   built_tags: []
