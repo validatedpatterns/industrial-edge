@@ -3,3 +3,4 @@
 .*.swo
 values-secret*
 super-linter.log
+tests/interop/__pycache__*
