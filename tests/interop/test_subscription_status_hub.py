@@ -14,12 +14,11 @@ def test_subscription_status_hub(openshift_dyn_client):
     expected_subs = {
         "openshift-gitops-operator": ["openshift-operators"],
         "advanced-cluster-management": ["open-cluster-management"],
-        "opendatahub-operator": ["openshift-operators"],
         "openshift-pipelines-operator-rh": ["openshift-operators"],
         "amq-broker-rhel8": ["manuela-tst-all"],
         "amq-streams": ["manuela-tst-all", "manuela-data-lake"],
-        "red-hat-camel-k": ["manuela-tst-all", "manuela-data-lake"],
-        "seldon-operator-certified": ["openshift-operators"],
+        "camel-k": ["manuela-tst-all", "manuela-data-lake"],
+        "rhods-operator": ["redhat-ods-operator"],
     }
 
     err_msg = subscription.subscription_status(
