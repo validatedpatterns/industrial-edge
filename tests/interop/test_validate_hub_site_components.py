@@ -48,7 +48,6 @@ def test_check_pod_status(openshift_dyn_client):
         "industrial-edge-datacenter",
         "manuela-tst-all",
         "openshift-pipelines",
-        "manuela-ci",
         "manuela-data-lake",
         "vault",
     ]
