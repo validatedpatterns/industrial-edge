@@ -6,12 +6,6 @@ main:
   git:
     repoUpstreamURL: https://github.com/validatedpatterns/industrial-edge
 
-# FIXME: when switching this branch to main, we need to rebuild all bootstrap containers,
-# check their version and make sure we reference those in the main branch
-# This container has the new API endpoint of the inference service
-iot_consumer:
-  bootstrap_image: quay.io/aeros/iot-consumer:0.3.2-40
-
 global:
   pattern: industrial-edge
 
