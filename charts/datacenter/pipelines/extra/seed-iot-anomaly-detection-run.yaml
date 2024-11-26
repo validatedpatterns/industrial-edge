@@ -4,7 +4,7 @@ metadata:
   name: seed-iot-anomaly-detection-run
 spec:
   pipelineRef:
-    name: seed-iot-anomaly-detection
+    name: iot-component
   serviceAccountName: pipeline
   timeout: 1h0m0s
   workspaces:
@@ -15,8 +15,6 @@ spec:
     secret:
       secretName: argocd-env
   - name: build-artifacts
-    # persistentVolumeClaim:
-    #   claimName: build-artifacts-rwo
     volumeClaimTemplate:
       spec:
         accessModes:
@@ -25,8 +23,6 @@ spec:
           requests:
             storage: 1Gi
   - name: gitrepos
-    # persistentVolumeClaim:
-    #   claimName: iot-anomaly-detection-rwo
     volumeClaimTemplate:
       spec:
         accessModes:
@@ -34,3 +30,16 @@ spec:
         resources:
           requests:
             storage: 128Mi
+  parameters:
+  - name: component_name
+    value: iot-anomaly-detection
+  - name: seed_prod_with_tags
+    value: true
+  - name: builder_image
+    value: quay.io/hybridcloudpatterns/python-38-rhel7
+  - name: output_image_name
+    value: anomaly-detection
+  - name: target_image_configmapkey
+    value: IOT_ANOMALY_IMAGE
+  - name: configmap_prefix
+    value: IOT_ANOMALY

@@ -97,7 +97,6 @@ spec:
       name: github-push
     runAfter:
     - build-messaging-image
-#    - bump-build-version
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -161,53 +160,13 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
       value: manuela-test
     - name: flags
       value: --insecure
     - name: revision
       value: $(params.OPS_REVISION)
     - name: argocd-server
-      # datacenter-gitops-server.industrial-edge-datacenter.svc
       value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
-  # - name: sensor-broker-test
-  #   taskRef:
-  #     name: mock
-  #     kind: Task
-  #   runAfter:
-  #     - argocd-sync-application
-  #   params:
-  #     - name: MESSAGE
-  #       value: "succesfully sent messages to broker..."
-  # - name: consumer-broker-test
-  #   taskRef:
-  #     name: mock
-  #     kind: Task
-  #   runAfter:
-  #     - argocd-sync-application
-  #   params:
-  #     - name: MESSAGE
-  #       value: "succesfully processed messages from broker..."
-  # - name: consumer-frontend-test
-  #   taskRef:
-  #     name: mock
-  #     kind: Task
-  #   runAfter:
-  #     - argocd-sync-application
-  #   params:
-  #     - name: MESSAGE
-  #       value: "succesfully executed Websocket APIs..."
-  # - name: e2e-test
-  #   taskRef:
-  #     name: mock
-  #     kind: Task
-  #   runAfter:
-  #     - sensor-broker-test
-  #     - consumer-broker-test
-  #     - consumer-frontend-test
-  #   params:
-  #     - name: MESSAGE
-  #       value: "e2e testsuite succesfully executed"
   - name: test-all
     taskRef:
       name: tkn
@@ -224,14 +183,20 @@ spec:
 
   - name: trigger-staging
     taskRef:
-      name: openshift-instantiate-template
+      name: tkn
     runAfter:
     - test-all
     params:
-    - name: TEMPLATE
-      value: stage-production-pipelinerun
-    - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot-consumer
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - stage-production
+      - --showlog
+      - --nocolour
+      - --param TAG=$(tasks.bump-build-version.results.image-tag) 
+      - --param CONFIGMAP_PREFIX=IOT_CONSUMER 
+      - --param SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging 
 
   - name: cleanup
     taskRef:
@@ -248,8 +213,3 @@ spec:
       value: dev
     - name: COMPONENT_NAME
       value: iot-consumer
-    # - name: OPENSHIFT_NAMESPACE
-    #   value: manuela-tst-all
-    # - name: OPENSHIFT_IMAGESTREAM
-    #   value: messaging
-
