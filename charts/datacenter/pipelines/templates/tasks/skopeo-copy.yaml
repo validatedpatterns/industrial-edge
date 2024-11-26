@@ -15,6 +15,6 @@ spec:
     type: string
   steps:
   - name: skopeo-copy
-    image: quay.io/redhat-emea-ssa-team/skopeo-ubi:latest
+    image: registry.redhat.io/ubi9/skopeo:9.5
     script: |
       skopeo copy --src-tls-verify=false --dest-tls-verify=false docker://$(params.SOURCE_IMAGE):$(params.TAG) docker://$(cat $(workspaces.config.path)/IMAGE_PROVIDER)/$(cat $(workspaces.config.path)/IMAGE_ACCOUNT)/$(cat $(workspaces.config.path)/$(params.TARGET_IMAGE_CONFIGMAPKEY)):$(params.TAG)

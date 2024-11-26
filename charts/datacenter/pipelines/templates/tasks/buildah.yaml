@@ -37,7 +37,7 @@ spec:
     type: string
   steps:
   - name: build
-    image: quay.io/buildah/stable:v1.11.0
+    image: registry.redhat.io/ubi9/buildah:9.5
     script: |
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
@@ -53,7 +53,7 @@ spec:
       name: varlibcontainers
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)/$(params.PATH_CONTEXT)
   - name: push
-    image: quay.io/buildah/stable:v1.11.0
+    image: registry.redhat.io/ubi9/buildah:9.5
     script: |
       PROVIDER=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY))
       ACCOUNT=$(cat $(workspaces.config.path)/$(params.OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY))
