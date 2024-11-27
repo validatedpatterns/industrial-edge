@@ -33,7 +33,7 @@ objects:
       grpcDataEndpoint: 'port:8001'
       containers:
         - name: mlserver
-          image: 'seldonio/mlserver:1.3.5'
+          image: 'docker.io/seldonio/mlserver:1.3.5'
           env:
             - name: MLSERVER_MODELS_DIR
               value: /models/_mlserver_models/

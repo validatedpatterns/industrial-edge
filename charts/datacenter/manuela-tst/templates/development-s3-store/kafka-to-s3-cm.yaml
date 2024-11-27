@@ -12,7 +12,7 @@ data:
     local.cluster.name={{ .Values.global.localClusterDomain }}
     s3.region=none
     s3.bucket.name={{ .Values.kafka.s3.bucket }}
-    s3.message.aggregation.count={{ .Values.global.s3.bucket.message.aggregation.count }}
+    s3.message.aggregation.count={{ .Values.kafka.s3.message.aggregation.count }}
     s3.custom.endpoint.enabled=true
     # Convert this directory into a helm chart and use templating to set this
     s3.custom.endpoint.url={{ .Values.kafka.s3.endpointurl }}

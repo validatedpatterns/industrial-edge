@@ -3,12 +3,6 @@ global:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
 
-  s3:
-    bucket:
-      message:
-        aggregation:
-          count: 50
-
 clusterGroup:
   name: datacenter
   isHubCluster: true
@@ -34,6 +28,9 @@ kafka:
   s3:
     bucket: anomaly-detection
     endpointurl: http://s3.openshift-storage.svc
+    message:
+      aggregation:
+        count: 50
   broker:
     uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:

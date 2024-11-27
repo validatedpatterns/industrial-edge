@@ -8,12 +8,6 @@ global:
     hostname: quay.io
     type: quay
 
-  s3:
-    bucket:
-      message:
-        aggregation:
-          count: 50
-
 secretStore:
   name: vault-backend
   kind: ClusterSecretStore
@@ -42,6 +36,10 @@ kafka:
   s3:
     bucket: anomaly-detection
     endpointurl: http://s3.openshift-storage.svc
+    message:
+      aggregation:
+        count: 50
+
   broker:
     uri: "dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
     topic:
