@@ -50,11 +50,11 @@ def test_check_logging_hub():
     logger.info(
         "Checking logs for anomaly-detection-predictor in manuela-tst-all" " namespace"
     )
-    app_string = "seldon-app=anomaly-detection-predictor"
+    app_string = "modelmesh-service=modelmesh-serving"
     log_out = get_log_output(
-        app_string, namespace="manuela-tst-all", container="anomaly-detection"
+        app_string, namespace="manuela-tst-all", container="mlserver"
     )
-    search_terms = ["Predict"]
+    search_terms = ["/inference.GRPCInferenceService/ModelInfer"]
     if not search_log_output(log_out, search_terms):
         err_msg = "Failed to find expected output in anomaly-detection-predictor log"
         logger.error(f"FAIL: {err_msg}")
