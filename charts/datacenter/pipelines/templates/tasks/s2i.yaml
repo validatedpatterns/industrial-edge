@@ -102,7 +102,7 @@ spec:
         s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --as-dockerfile /gen-source/Dockerfile.gen
       fi
       if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
-        echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
+        echo -e "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
       fi
     resources: {}
     volumeMounts:

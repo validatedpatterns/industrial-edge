@@ -1,7 +1,7 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-and-test-iot-anomaly-detection
+  name: build-and-test-iot-frontend
 spec:
   workspaces:
   - name: gitrepos
@@ -55,7 +55,7 @@ spec:
     - name: deleteExisting
       value: "true"
 
-  - name: bump-build-version-iot-anomaly
+  - name: bump-build-version-iot-frontend
     taskRef:
       name: bumpversion
     runAfter:
@@ -65,15 +65,15 @@ spec:
       workspace: gitrepos
     params:
     - name: component_name
-      value: iot-anomaly
+      value: iot-frontend
     - name: version_file_path
-      value: components/iot-anomaly-detection/VERSION
+      value: components/iot-frontend/VERSION
 
-  - name: s2i-build-iot-anomaly
+  - name: s2i-build-iot-frontend
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-anomaly
+    - bump-build-version-iot-frontend
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -83,35 +83,37 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: PATH_CONTEXT
-      value: components/iot-anomaly-detection
+      value: components/iot-frontend
     - name: BUILDER_IMAGE
-      value: quay.io/hybridcloudpatterns/python-38-rhel7
+      value: quay.io/hybridcloudpatterns/ubi8-s2i-web-app
+    - name: chained_build_dockerfile
+      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
-      value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
+      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: OUTPUT_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
 
-  - name: copy-image-to-remote-registry-iot-anomaly
+  - name: copy-image-to-remote-registry-iot-frontend
     taskRef:
       name: skopeo-copy
     runAfter:
-    - s2i-build-iot-anomaly
+    - s2i-build-iot-frontend
     workspaces:
     - name: config
       workspace: config
     params:
     - name: TAG
-      value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
+      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: SOURCE_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_ANOMALY_IMAGE
+      value: IOT_FRONTEND_IMAGE
 
   - name: push-dev-tag
     taskRef:
       name: github-push
     runAfter:
-    - copy-image-to-remote-registry-iot-anomaly
+    - copy-image-to-remote-registry-iot-frontend
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -119,7 +121,7 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-  - name: modify-ops-test-iot-anomaly
+  - name: modify-ops-test-iot-frontend
     taskRef:
       name: gitops-imagetag
     runAfter:
@@ -131,11 +133,11 @@ spec:
       workspace: config
     params:
     - name: CONFIGMAP_PREFIX
-      value: IOT_ANOMALY
+      value: IOT_FRONTEND
     - name: ENVIRONMENT
       value: TEST
     - name: TAG
-      value: $(tasks.bump-build-version-iot-anomaly.results.image-tag)
+      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
     - name: subdirectory
       value: ops
 
@@ -143,7 +145,7 @@ spec:
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-test-iot-anomaly
+    - modify-ops-test-iot-frontend
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -213,11 +215,11 @@ spec:
       - --showlog
       - --nocolour
       - --param
-      - TAG=$(tasks.bump-build-version-iot-anomaly.results.image-tag)
+      - TAG=$(tasks.bump-build-version-iot-frontend.results.image-tag)
       - --param
-      - CONFIGMAP_PREFIX=IOT_ANOMALY
+      - CONFIGMAP_PREFIX=IOT_FRONTEND
       - --param
-      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
       - --workspace
       - name=gitrepos,claimName=gitrepos-rwo
       - --workspace
@@ -239,4 +241,4 @@ spec:
     - name: subdirectory
       value: dev
     - name: COMPONENT_NAME
-      value: iot-anomaly-detection
+      value: iot-frontend

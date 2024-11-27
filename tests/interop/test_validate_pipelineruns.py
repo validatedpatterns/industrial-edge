@@ -19,10 +19,11 @@ def test_validate_pipelineruns(openshift_dyn_client):
     expected_pipelines = [
         "seed",
         "build-base-images",
-        "seed-iot-anomaly-detection",
-        "seed-iot-consumer",
-        "seed-iot-frontend",
-        "seed-iot-software-sensor",
+        "iot-component",
+        "build-and-test-iot-anomaly-detection",
+        "build-and-test-iot-consumer",
+        "build-and-test-iot-frontend",
+        "build-and-test-iot-software-sensor"
     ]
 
     expected_pipelineruns = [

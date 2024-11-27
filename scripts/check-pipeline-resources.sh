@@ -6,7 +6,7 @@ while [ 1 ]; do
 	oc get -n manuela-ci task tkn 1>/dev/null 2>/dev/null && \
 	oc get -n manuela-ci secret gitea-admin-secret 1>/dev/null 2>/dev/null && \
 	oc get -n manuela-ci secret image-registry-credentials 1>/dev/null 2>/dev/null && \
-	echo "Bootstrap seed now running" && break;
+	echo "Bootstrap seed now can run" && break;
 	sleep 5;
 done
 

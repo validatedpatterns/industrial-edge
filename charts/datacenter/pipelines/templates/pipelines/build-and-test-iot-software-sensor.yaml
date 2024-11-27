@@ -1,13 +1,13 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: just-pr
+  name: build-and-test-iot-software-sensor
 spec:
   workspaces:
   - name: gitrepos
   - name: config
-  - name: argocd-env-secret
   - name: build-artifacts
+  - name: argocd-env-secret
   params:
   - name: DEV_REVISION
     type: string
@@ -15,6 +15,7 @@ spec:
   - name: OPS_REVISION
     type: string
     default: {{ .Values.global.targetRevision }}
+
   tasks:
   - name: git-clone-dev
     taskRef:
@@ -28,13 +29,13 @@ spec:
     - name: url_configmapkey
       value: GIT_DEV_REPO_URL
     - name: revision
-      value: $(params.DEV_REVISION)
+      value: {{ .Values.global.git.dev_revision }}
     - name: subdirectory
       value: dev
     - name: deleteExisting
       value: "true"
 
-  - name: git-clone-gitops
+  - name: git-clone-ops
     taskRef:
       name: git-clone-with-tags
     runAfter:
@@ -54,25 +55,25 @@ spec:
     - name: deleteExisting
       value: "true"
 
-  - name: bump-build-version
+  - name: bump-build-version-iot-software-sensor
     taskRef:
       name: bumpversion
     runAfter:
-    - git-clone-gitops
+    - git-clone-ops
     workspaces:
     - name: gitrepos
       workspace: gitrepos
     params:
     - name: component_name
-      value: iot_consumer
+      value: iot-software-sensor
     - name: version_file_path
-      value: components/iot-consumer/VERSION
+      value: components/iot-software-sensor/VERSION
 
-  - name: build-messaging-image
+  - name: s2i-build-iot-software-sensor
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version
+    - bump-build-version-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -82,21 +83,35 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: PATH_CONTEXT
-      value: components/iot-consumer
+      value: components/iot-software-sensor
     - name: BUILDER_IMAGE
-      value: registry.access.redhat.com/rhscl/nodejs-10-rhel7
+      value: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
     - name: TAG
-      value: $(tasks.bump-build-version.results.image-tag)
+      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
     - name: OUTPUT_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
-    - name: CHAINED_BUILD_DOCKERFILE
-      value: ""
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+
+  - name: copy-image-to-remote-registry-iot-software-sensor
+    taskRef:
+      name: skopeo-copy
+    runAfter:
+    - s2i-build-iot-software-sensor
+    workspaces:
+    - name: config
+      workspace: config
+    params:
+    - name: TAG
+      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
+    - name: SOURCE_IMAGE
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+    - name: TARGET_IMAGE_CONFIGMAPKEY
+      value: IOT_SWSENSOR_IMAGE
 
   - name: push-dev-tag
     taskRef:
       name: github-push
     runAfter:
-    - build-messaging-image
+    - copy-image-to-remote-registry-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -104,7 +119,7 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-  - name: modify-ops-test
+  - name: modify-ops-test-iot-software-sensor
     taskRef:
       name: gitops-imagetag
     runAfter:
@@ -116,19 +131,19 @@ spec:
       workspace: config
     params:
     - name: CONFIGMAP_PREFIX
-      value: IOT_CONSUMER
+      value: IOT_SWSENSOR
     - name: ENVIRONMENT
       value: TEST
     - name: TAG
-      value: $(tasks.bump-build-version.results.image-tag)
+      value: $(tasks.bump-build-version-iot-software-sensor.results.image-tag)
     - name: subdirectory
       value: ops
 
-  - name: commit-ops-test
+  - name: commit-ops
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-test
+    - modify-ops-test-iot-software-sensor
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -138,23 +153,25 @@ spec:
     - name: subdirectory
       value: ops
 
-  - name: push-ops-test
+  - name: push-ops
     taskRef:
       name: github-push
     runAfter:
-    - commit-ops-test
+    - commit-ops
     workspaces:
     - name: gitrepos
       workspace: gitrepos
     params:
     - name: subdirectory
       value: ops
+    - name: PUSH_FLAGS
+      value: --all
 
   - name: argocd-sync-application
     taskRef:
       name: argocd-sync-and-wait
     runAfter:
-    - push-ops-test
+    - push-ops
     workspaces:
     - name: argocd-env-secret
       workspace: argocd-env-secret
@@ -167,6 +184,7 @@ spec:
       value: $(params.OPS_REVISION)
     - name: argocd-server
       value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
+
   - name: test-all
     taskRef:
       name: tkn
@@ -194,9 +212,18 @@ spec:
       - stage-production
       - --showlog
       - --nocolour
-      - --param TAG=$(tasks.bump-build-version.results.image-tag) 
-      - --param CONFIGMAP_PREFIX=IOT_CONSUMER 
-      - --param SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging 
+      - --param
+      - TAG=$(tasks.bump-build-version-iot-software-sensor.results.image-tag)
+      - --param
+      - CONFIGMAP_PREFIX=IOT_SWSENSOR
+      - --param
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/machine-sensor
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=gitea-admin-secret
 
   - name: cleanup
     taskRef:
@@ -212,4 +239,4 @@ spec:
     - name: subdirectory
       value: dev
     - name: COMPONENT_NAME
-      value: iot-consumer
+      value: iot-software-sensor

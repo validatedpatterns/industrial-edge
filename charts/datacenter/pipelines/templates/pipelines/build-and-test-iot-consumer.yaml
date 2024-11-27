@@ -119,7 +119,6 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-
   - name: modify-ops-test-iot-consumer
     taskRef:
       name: gitops-imagetag
@@ -200,7 +199,6 @@ spec:
       - --showlog
       - --nocolour
 
-
   - name: trigger-staging
     taskRef:
       name: tkn
@@ -214,9 +212,18 @@ spec:
       - stage-production
       - --showlog
       - --nocolour
-      - --param TAG=$(tasks.bump-build-version-iot-consumer.results.image-tag)
-      - --param CONFIGMAP_PREFIX=IOT_CONSUMER
-      - --param SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+      - --param
+      - TAG=$(tasks.bump-build-version-iot-consumer.results.image-tag)
+      - --param
+      - CONFIGMAP_PREFIX=IOT_CONSUMER
+      - --param
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=gitea-admin-secret
 
   - name: cleanup
     taskRef:
