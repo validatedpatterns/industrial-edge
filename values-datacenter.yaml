@@ -223,10 +223,19 @@ clusterGroup:
         timeout: 180
       - name: copy-initial-model-to-incluster-s3
         image: quay.io/hybridcloudpatterns/utility-container:latest
-        playbook: ./ansible/playbooks/copy_initial_model_to_incluster_s3.yml
+        playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
         extravars:
           - "bucket_name=user-bucket"
           - "src_file=ansible/files/model.joblib"
+          - "object_name=initial_model.joblib"
+        timeout: 180
+      - name: copy-initial-training-data-to-incluster-s3
+        image: quay.io/hybridcloudpatterns/utility-container:latest
+        playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
+        extravars:
+          - "bucket_name=user-bucket"
+          - "src_file=ansible/files/raw-data.csv"
+          - "object_name=raw-data.csv"
         timeout: 180
 
   managedClusterGroups:
