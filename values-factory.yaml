@@ -67,13 +67,6 @@ clusterGroup:
 #    - name: myparam
 #      value: myparam
 #
-#  - name: pipelines
-#    namespace: staging
-#    project: datacenter
-#    path: applications/pipeline
-#    repoURL: https://github.com/you/applications.git
-#    targetRevision: main
-#
 #   Additional applications
 #   Be sure to include additional resources your apps will require
 #   +X machines
