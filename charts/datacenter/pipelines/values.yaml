@@ -61,3 +61,22 @@ iot_anomaly_detection:
 
 yq:
   image: quay.io/hybridcloudpatterns/yq:latest
+
+pipeline_components:
+  - component_name: iot-anomaly-detection
+    builder_image: quay.io/hybridcloudpatterns/python-38-rhel7
+    output_image_name: anomaly-detection
+    configmap_prefix: IOT_ANOMALY
+  - component_name: iot-consumer
+    builder_image: registry.access.redhat.com/rhscl/nodejs-10-rhel7
+    output_image_name: messaging
+    configmap_prefix: IOT_CONSUMER
+  - component_name: iot-frontend
+    builder_image: quay.io/hybridcloudpatterns/ubi8-s2i-web-app
+    chained_build_dockerfile: "FROM quay.io/hybridcloudpatterns/httpd-ionic\\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+    output_image_name: line-dashboard
+    configmap_prefix: IOT_FRONTEND
+  - component_name: iot-software-sensor
+    builder_image: registry.access.redhat.com/redhat-openjdk-18/openjdk18-openshift
+    output_image_name: machine-sensor
+    configmap_prefix: IOT_SWSENSOR

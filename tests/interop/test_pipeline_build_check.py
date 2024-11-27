@@ -64,10 +64,12 @@ def test_pipeline_build_check(openshift_dyn_client):
         chart = (
             f"{os.environ['HOME']}"
             + "/validated_patterns/industrial-edge/charts/"
-            + "datacenter/pipelines/extra/build-and-test-run.yaml"
+            + "datacenter/pipelines/extra/build-and-test-iot-consumer.yaml"
         )
     else:
-        chart = "../../charts/datacenter/pipelines/extra/build-and-test-run.yaml"
+        chart = (
+            "../../charts/datacenter/pipelines/extra/build-and-test-iot-consumer.yaml"
+        )
 
     logger.info(f"Chart: {chart}")
 

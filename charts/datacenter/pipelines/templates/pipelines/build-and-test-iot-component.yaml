@@ -1,0 +1,93 @@
+{{- range .Values.pipeline_components }}
+---
+  {{/*- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
+  {{/*- include "test_include" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
+
+apiVersion: tekton.dev/v1beta1
+kind: Pipeline
+metadata:
+  name: build-and-test-{{ .component_name }}
+spec:
+  workspaces:
+  - name: gitrepos
+  - name: config
+  - name: build-artifacts
+  - name: argocd-env-secret
+  - name: github-secret
+  tasks:
+  - name: git-clone-dev
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_DEV_REPO_URL
+    - name: revision
+      value: {{ $.Values.global.git.dev_revision }}
+    - name: subdirectory
+      value: dev
+    - name: deleteExisting
+      value: "true"
+
+  - name: git-clone-ops
+    taskRef:
+      name: git-clone-with-tags
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: url_configmapkey
+      value: GIT_OPS_REPO_TEST_URL
+    - name: revision
+      value: {{ $.Values.global.targetRevision }}
+    - name: subdirectory
+      value: ops
+    - name: deleteExisting
+      value: "true"
+
+{{- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "false") | nindent 2 }}
+
+  - name: argocd-sync-application
+    taskRef:
+      name: argocd-sync-and-wait
+    runAfter:
+    - push-ops-{{ .component_name }}
+    workspaces:
+    - name: argocd-env-secret
+      workspace: argocd-env-secret
+    params:
+    - name: application-name
+      value: manuela-test
+    - name: flags
+      value: --insecure
+    - name: revision
+      value: {{ $.Values.global.targetRevision }}
+    - name: argocd-server
+      value: "{{ $.Values.clusterGroup.name }}-gitops-server.{{ $.Values.global.pattern }}-{{ $.Values.clusterGroup.name }}.svc"
+
+{{- include "test-all" . | nindent 2 }}
+
+{{- include "trigger-staging" (dict "root" $.Values "component" . ) | nindent 2 }}
+
+  - name: cleanup
+    taskRef:
+      name: cleanup
+    runAfter:
+    - github-pull-request
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: subdirectory
+      value: dev
+    - name: COMPONENT_NAME
+      value: {{ .component_name }}
+{{- end }}

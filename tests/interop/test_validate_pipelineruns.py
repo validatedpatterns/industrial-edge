@@ -18,8 +18,6 @@ def test_validate_pipelineruns(openshift_dyn_client):
 
     expected_pipelines = [
         "seed",
-        "build-base-images",
-        "iot-component",
         "build-and-test-iot-anomaly-detection",
         "build-and-test-iot-consumer",
         "build-and-test-iot-frontend",
@@ -28,11 +26,6 @@ def test_validate_pipelineruns(openshift_dyn_client):
 
     expected_pipelineruns = [
         "seed-run",
-        "build-base-images-run",
-        "seed-iot-anomaly-detection-run",
-        "seed-iot-consumer-run",
-        "seed-iot-frontend-run",
-        "seed-iot-software-sensor-run",
     ]
 
     err_msg = components.validate_pipelineruns(
