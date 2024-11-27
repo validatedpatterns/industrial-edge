@@ -177,16 +177,14 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
       value: manuela-test
     - name: flags
       value: --insecure
     - name: revision
       value: $(params.OPS_REVISION)
     - name: argocd-server
-      #value: datacenter-gitops-server.industrial-edge-datacenter.svc
       value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
-      
+
   - name: test-all
     taskRef:
       name: tkn
@@ -203,14 +201,29 @@ spec:
 
   - name: trigger-staging
     taskRef:
-      name: openshift-instantiate-template
+      name: tkn
     runAfter:
     - test-all
     params:
-    - name: TEMPLATE
-      value: stage-production-pipelinerun
-    - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version-iot-anomaly.results.image-tag) -p CONFIGMAP_PREFIX=IOT_ANOMALY -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection -p COMPONENT_NAME=iot-anomaly-detection
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - stage-production
+      - --showlog
+      - --nocolour
+      - --param
+      - TAG=$(tasks.bump-build-version-iot-anomaly.results.image-tag)
+      - --param
+      - CONFIGMAP_PREFIX=IOT_ANOMALY
+      - --param
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/anomaly-detection
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=gitea-admin-secret
 
   - name: cleanup
     taskRef:

@@ -28,7 +28,7 @@ spec:
     default: main
   steps:
   - name: create-pull-request
-    image: curlimages/curl
+    image: registry.redhat.io/ubi9-minimal:9.5
     script: |
       GITREPO=$(cat $(workspaces.config.path)/$(params.GITHUB_REPO_CONFIGMAPKEY))
       # GIT_OPS_REPO_PROD_URL - https://gitea-route-vp-gitea.apps.mcg-hub.aws.validatedpatterns.io/gitea_admin/industrial-edge

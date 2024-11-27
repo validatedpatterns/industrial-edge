@@ -1,12 +1,20 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: seed-iot-frontend
+  name: build-and-test-iot-frontend
 spec:
   workspaces:
   - name: gitrepos
   - name: config
   - name: build-artifacts
+  - name: argocd-env-secret
+  params:
+  - name: DEV_REVISION
+    type: string
+    default: {{ .Values.global.git.dev_revision }}
+  - name: OPS_REVISION
+    type: string
+    default: {{ .Values.global.targetRevision }}
 
   tasks:
   - name: git-clone-dev
@@ -78,7 +86,7 @@ spec:
       value: components/iot-frontend
     - name: BUILDER_IMAGE
       value: quay.io/hybridcloudpatterns/ubi8-s2i-web-app
-    - name: CHAINED_BUILD_DOCKERFILE
+    - name: chained_build_dockerfile
       value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
     - name: TAG
       value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
@@ -113,7 +121,6 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-
   - name: modify-ops-test-iot-frontend
     taskRef:
       name: gitops-imagetag
@@ -134,31 +141,11 @@ spec:
     - name: subdirectory
       value: ops
 
-  - name: modify-ops-prod-iot-frontend
-    taskRef:
-      name: gitops-imagetag
-    runAfter:
-    - modify-ops-test-iot-frontend
-    workspaces:
-    - name: gitrepos
-      workspace: gitrepos
-    - name: config
-      workspace: config
-    params:
-    - name: CONFIGMAP_PREFIX
-      value: IOT_FRONTEND
-    - name: ENVIRONMENT
-      value: PROD
-    - name: TAG
-      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
-    - name: subdirectory
-      value: ops
-
   - name: commit-ops
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-prod-iot-frontend
+    - modify-ops-test-iot-frontend
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -181,3 +168,77 @@ spec:
       value: ops
     - name: PUSH_FLAGS
       value: --all
+
+  - name: argocd-sync-application
+    taskRef:
+      name: argocd-sync-and-wait
+    runAfter:
+    - push-ops
+    workspaces:
+    - name: argocd-env-secret
+      workspace: argocd-env-secret
+    params:
+    - name: application-name
+      value: manuela-test
+    - name: flags
+      value: --insecure
+    - name: revision
+      value: $(params.OPS_REVISION)
+    - name: argocd-server
+      value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
+
+  - name: test-all
+    taskRef:
+      name: tkn
+    runAfter:
+    - argocd-sync-application
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - test-all
+      - --showlog
+      - --nocolour
+
+  - name: trigger-staging
+    taskRef:
+      name: tkn
+    runAfter:
+    - test-all
+    params:
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - stage-production
+      - --showlog
+      - --nocolour
+      - --param
+      - TAG=$(tasks.bump-build-version-iot-frontend.results.image-tag)
+      - --param
+      - CONFIGMAP_PREFIX=IOT_FRONTEND
+      - --param
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=gitea-admin-secret
+
+  - name: cleanup
+    taskRef:
+      name: cleanup
+    runAfter:
+    - trigger-staging
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: subdirectory
+      value: dev
+    - name: COMPONENT_NAME
+      value: iot-frontend

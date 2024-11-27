@@ -1,13 +1,36 @@
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
-  name: build-iot-frontend
+  name: iot-component
 spec:
   workspaces:
   - name: gitrepos
   - name: config
   - name: build-artifacts
-
+  params:
+  - name: component_name
+    type: string
+    description: Name of IoT component to build
+  - name: seed_prod_with_tags
+    type: string
+    description: Seed tags to prod env
+    default: 'false'
+  - name: builder_image
+    type: string
+    description: The builder image to use for building the component
+  - name: chained_build_dockerfile
+    type: string
+    description: If a chained build is to be executed, the second part of the DOCKERFILE
+    default: ""
+  - name: output_image_name
+    type: string
+    description: Name of the output image after build
+  - name: target_image_configmapkey
+    type: string
+    description: Name of key of the target image in the configmap
+  - name: configmap_prefix
+    type: string
+    description: The prefix of the key in the configmap for the component
   tasks:
   - name: git-clone-dev
     taskRef:
@@ -47,7 +70,8 @@ spec:
     - name: deleteExisting
       value: "true"
 
-  - name: bump-build-version-iot-frontend
+  - name: bump-build-version-iot-component
+    displayName: "Bump version for $(params.component_name)"
     taskRef:
       name: bumpversion
     runAfter:
@@ -57,15 +81,16 @@ spec:
       workspace: gitrepos
     params:
     - name: component_name
-      value: iot-frontend
+      value: $(params.component_name)
     - name: version_file_path
-      value: components/iot-frontend/VERSION
+      value: components/$(params.component_name)/VERSION
 
-  - name: s2i-build-iot-frontend
+  - name: s2i-build-iot-component
+    displayName: "S2I build IoT $(params.component_name)"
     taskRef:
       name: s2i
     runAfter:
-    - bump-build-version-iot-frontend
+    - bump-build-version-iot-component
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -75,37 +100,38 @@ spec:
     - name: TLSVERIFY
       value: "false"
     - name: PATH_CONTEXT
-      value: components/iot-frontend
+      value: components/$(params.component_name)
     - name: BUILDER_IMAGE
-      value: quay.io/hybridcloudpatterns/ubi8-s2i-web-app
+      value: $(params.builder_image)
     - name: CHAINED_BUILD_DOCKERFILE
-      value: "FROM quay.io/hybridcloudpatterns/httpd-ionic\nCOPY --from=0 /opt/app-root/output /var/www/html/"
+      value: $(params.chained_build_dockerfile)
     - name: TAG
-      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
+      value: $(tasks.bump-build-version-iot-component.results.image-tag)
     - name: OUTPUT_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/$(params.output_image_name)
 
-  - name: copy-image-to-remote-registry-iot-frontend
+  - name: copy-image-to-remote-registry
+    displayName: "Copy image to remote registry"
     taskRef:
       name: skopeo-copy
     runAfter:
-    - s2i-build-iot-frontend
+    - s2i-build-iot-component
     workspaces:
     - name: config
       workspace: config
     params:
     - name: TAG
-      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
+      value: $(tasks.bump-build-version-iot-component.results.image-tag)
     - name: SOURCE_IMAGE
-      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/line-dashboard
+      value: image-registry.openshift-image-registry.svc:5000/manuela-tst-all/$(params.output_image_name)
     - name: TARGET_IMAGE_CONFIGMAPKEY
-      value: IOT_FRONTEND_IMAGE
+      value: $(params.target_image_configmapkey)
 
   - name: push-dev-tag
     taskRef:
       name: github-push
     runAfter:
-    - copy-image-to-remote-registry-iot-frontend
+    - copy-image-to-remote-registry
     workspaces:
     - name: gitrepos
       workspace: gitrepos
@@ -114,7 +140,7 @@ spec:
       value: --tags
 
 
-  - name: modify-ops-test-iot-frontend
+  - name: modify-ops-test-iot-component
     taskRef:
       name: gitops-imagetag
     runAfter:
@@ -126,11 +152,35 @@ spec:
       workspace: config
     params:
     - name: CONFIGMAP_PREFIX
-      value: IOT_FRONTEND
+      value: $(params.configmap_prefix)
     - name: ENVIRONMENT
       value: TEST
     - name: TAG
-      value: $(tasks.bump-build-version-iot-frontend.results.image-tag)
+      value: $(tasks.bump-build-version-iot-component.results.image-tag)
+    - name: subdirectory
+      value: ops
+
+  - name: modify-ops-prod-iot-component
+    when:
+      - input: "$(params.seed_prod_with_tags)"
+        operator: in
+        values: ["true"]
+    taskRef:
+      name: gitops-imagetag
+    runAfter:
+    - modify-ops-test-iot-component
+    workspaces:
+    - name: gitrepos
+      workspace: gitrepos
+    - name: config
+      workspace: config
+    params:
+    - name: CONFIGMAP_PREFIX
+      value: $(params.configmap_prefix)
+    - name: ENVIRONMENT
+      value: PROD
+    - name: TAG
+      value: $(tasks.bump-build-version-iot-component.results.image-tag)
     - name: subdirectory
       value: ops
 
@@ -138,7 +188,7 @@ spec:
     taskRef:
       name: git-commit
     runAfter:
-    - modify-ops-test-iot-frontend
+    - modify-ops-prod-iot-component
     workspaces:
     - name: gitrepos
       workspace: gitrepos

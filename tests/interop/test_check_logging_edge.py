@@ -21,7 +21,7 @@ def test_check_logging_edge():
         "Checking logs for machine-sensor-1 in"
         " manuela-stormshift-machine-sensor namespace"
     )
-    app_string = "application=machine-sensor-1"
+    app_string = "app=machine-sensor-1"
     log_out = get_log_output(app_string, namespace="manuela-stormshift-machine-sensor")
     search_terms = ["Current", "Measure", "vibration"]
     if not search_log_output(log_out, search_terms):

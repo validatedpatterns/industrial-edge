@@ -1,11 +1,3 @@
-NAME=$(shell basename `pwd`)
-TARGET_BRANCH=$(shell git rev-parse --abbrev-ref HEAD)
-HUBCLUSTER_APPS_DOMAIN=$(shell oc get ingresses.config/cluster -o jsonpath={.spec.domain})
-TARGET_ORIGIN ?= origin
-TARGET_REPO=$(shell git ls-remote --get-url --symref $(TARGET_ORIGIN) | sed -e 's/.*URL:[[:space:]]*//' -e 's%^git@%%' -e 's%^https://%%' -e 's%:%/%' -e 's%^%https://%')
-CHART_OPTS=-f common/examples/values-secret.yaml -f values-global.yaml -f values-datacenter.yaml --set global.targetRevision=main --set global.valuesDirectoryURL="https://github.com/pattern-clone/pattern/raw/main/" --set global.pattern="industrial-edge" --set global.namespace="pattern-namespace"
-HELM_OPTS=-f values-global.yaml --set main.git.repoURL="$(TARGET_REPO)" --set main.git.revision=$(TARGET_BRANCH) --set global.hubClusterDomain=$(HUBCLUSTER_APPS_DOMAIN)
-
 .PHONY: default
 default: show
 
@@ -19,30 +11,35 @@ help:
 %:
 	make -f common/Makefile $*
 
+.PHONY: install
 install: operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
 	@echo "Installed"
 
+.PHONY: post-install
 post-install: ## Post-install tasks
 	make load-secrets
 	@echo "Done"
 
-sleep: ## waits for all seed resources to be presents
-	scripts/sleep-seed.sh
+.PHONY: check-pipeline-resources
+check-pipeline-resources: ## wait for all seed resources to be present
+	scripts/check-pipeline-resources.sh
 
-sleep-seed: sleep seed ## waits for seed resources and calls seed-run
-	true
-
-seed: sleep ## waits for all seed resources
+.PHONY: seed
+seed: check-pipeline-resources ## run the seed pipipeline (test and prod, no pr)
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
 
-build-and-test: ## run a build and test pipeline
-	oc create -f charts/datacenter/pipelines/extra/build-and-test-run.yaml
-
-just-pr: ## run a build and test pipeline
-	oc create -f charts/datacenter/pipelines/extra/just-pr-run.yaml
-
+.PHONY: build-and-test-iot-anomaly-detection
 build-and-test-iot-anomaly-detection: ## run a build and test pipeline iot anomaly detection
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-anomaly-detection.yaml
 
+.PHONY: build-and-test-iot-consumer
 build-and-test-iot-consumer: ## run a build and test pipeline iot consumer
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-run-iot-consumer.yaml
+
+.PHONY: build-and-test-iot-frontend
+build-and-test-iot-frontend: ## run a build and test pipeline iot frontend
+	oc create -f charts/datacenter/pipelines/extra/build-and-test-iot-frontend.yaml
+
+.PHONY: build-and-test-iot-software-sensor
+build-and-test-iot-software-sensor: ## run a build and test pipeline iot software-sensor
+	oc create -f charts/datacenter/pipelines/extra/build-and-test-iot-software-sensor.yaml

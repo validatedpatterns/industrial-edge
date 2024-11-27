@@ -1,14 +1,14 @@
 apiVersion: tekton.dev/v1beta1
 kind: PipelineRun
 metadata:
-  generateName: build-and-test-run-
+  generateName: build-and-test-iot-software-sensor-
   namespace: manuela-ci
   labels:
     argocd.argoproj.io/instance: pipelines-industrial-edge-datacenter
-    tekton.dev/pipeline: build-and-test
+    tekton.dev/pipeline: build-and-test-iot-software-sensor
 spec:
   pipelineRef:
-    name: build-and-test
+    name: build-and-test-iot-software-sensor
   serviceAccountName: pipeline
   timeout: 1h0m0s
   workspaces:

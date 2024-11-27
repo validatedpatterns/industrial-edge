@@ -119,7 +119,6 @@ spec:
     - name: PUSH_FLAGS
       value: --tags
 
-
   - name: modify-ops-test-iot-consumer
     taskRef:
       name: gitops-imagetag
@@ -178,16 +177,14 @@ spec:
       workspace: argocd-env-secret
     params:
     - name: application-name
-      #value: manuela-test-{{ .Values.global.pattern }}-{{ .Values.site.name }}
       value: manuela-test
     - name: flags
       value: --insecure
     - name: revision
       value: $(params.OPS_REVISION)
     - name: argocd-server
-      #value: datacenter-gitops-server.industrial-edge-datacenter.svc
       value: "{{ .Values.clusterGroup.name }}-gitops-server.{{ .Values.global.pattern }}-{{ .Values.clusterGroup.name }}.svc"
-      
+
   - name: test-all
     taskRef:
       name: tkn
@@ -202,17 +199,31 @@ spec:
       - --showlog
       - --nocolour
 
-
   - name: trigger-staging
     taskRef:
-      name: openshift-instantiate-template
+      name: tkn
     runAfter:
     - test-all
     params:
-    - name: TEMPLATE
-      value: stage-production-pipelinerun
-    - name: PARAMS
-      value: -p TAG=$(tasks.bump-build-version-iot-consumer.results.image-tag) -p CONFIGMAP_PREFIX=IOT_CONSUMER -p SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging -p COMPONENT_NAME=iot-consumer
+    - name: ARGS
+      value:
+      - pipeline
+      - start
+      - stage-production
+      - --showlog
+      - --nocolour
+      - --param
+      - TAG=$(tasks.bump-build-version-iot-consumer.results.image-tag)
+      - --param
+      - CONFIGMAP_PREFIX=IOT_CONSUMER
+      - --param
+      - SOURCE_IMAGE=image-registry.openshift-image-registry.svc:5000/manuela-tst-all/messaging
+      - --workspace
+      - name=gitrepos,claimName=gitrepos-rwo
+      - --workspace
+      - name=config,config=environment
+      - --workspace
+      - name=github-secret,secret=gitea-admin-secret
 
   - name: cleanup
     taskRef:
