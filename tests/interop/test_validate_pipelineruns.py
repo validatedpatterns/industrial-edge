@@ -23,7 +23,7 @@ def test_validate_pipelineruns(openshift_dyn_client):
         "build-and-test-iot-anomaly-detection",
         "build-and-test-iot-consumer",
         "build-and-test-iot-frontend",
-        "build-and-test-iot-software-sensor"
+        "build-and-test-iot-software-sensor",
     ]
 
     expected_pipelineruns = [

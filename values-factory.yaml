@@ -47,6 +47,11 @@ clusterGroup:
       path: charts/factory/manuela-stormshift
       extraValueFiles:
         - /overrides/values-prod-imagedata.yaml
+      ignoreDifferences:
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
 
 
 #
