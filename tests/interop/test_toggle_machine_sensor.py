@@ -16,7 +16,7 @@ logger = logging.getLogger(__loggername__)
 oc = os.environ["HOME"] + "/oc_client/oc"
 
 
-# FIXME(bandini): For now we skip this test, we need to rewrite it so that the change pushed in git 
+# FIXME(bandini): For now we skip this test, we need to rewrite it so that the change pushed in git
 # is done in the in-cluster gitea and not on the upstream repo. Otherwise the change will never be
 # propagated
 @pytest.mark.skip(reason="Need to push the changes to the in-cluster gitea")
