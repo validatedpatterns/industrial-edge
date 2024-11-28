@@ -1,5 +1,5 @@
 ---
-- name: Load the initial model to in cluster s3
+- name: Load object to in cluster s3
   hosts: localhost
   connection: local
   gather_facts: false
@@ -9,6 +9,7 @@
         that:
           - bucket_name is defined
           - src_file is defined
+          - object_name is defined
 
     - name: Find s3 endpoint
       ansible.builtin.shell: |
@@ -35,7 +36,7 @@
     - name: Basic individual file upload
       amazon.aws.s3_object:
         bucket: "{{ bucket_name }}"
-        object: initial_model.joblib
+        object: "{{ object_name }}"
         mode: put
         content_base64: "{{ lookup('ansible.builtin.file', src_file_path) | b64encode }}"
         endpoint_url: "{{ endpoint_url }}"
