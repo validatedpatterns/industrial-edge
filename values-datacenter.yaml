@@ -24,9 +24,6 @@ clusterGroup:
   - redhat-ods-operator:
       operatorGroup: true
       targetNamespaces:
-  - edge-workspace
-  - edge-test-all
-  - edge-ci
   - ml-development:
       labels:
         modelmesh-enabled: 'true'
