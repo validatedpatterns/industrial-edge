@@ -24,3 +24,6 @@ spec:
     - name: build-artifacts
       persistentVolumeClaim:
         claimName: build-artifacts-rwo
+    - name: github-secret
+      secret:
+        secretName: gitea-admin-secret
