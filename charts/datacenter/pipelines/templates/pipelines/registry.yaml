@@ -1,0 +1,46 @@
+{{- if (eq .Values.global.imageregistry.type "openshift-internal") -}}
+---
+apiVersion: imageregistry.operator.openshift.io/v1
+kind: Config
+metadata:
+  name: cluster
+spec:
+  defaultRoute: false
+  routes:
+  - name: registry
+    hostname: {{ include "imageRegistryHostname" . }}
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: image-puller
+subjects:
+- kind: Group
+  apiGroup: rbac.authorization.k8s.io
+  name: system:unauthenticated
+- kind: Group
+  apiGroup: rbac.authorization.k8s.io
+  name: system:authenticated
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: system:image-puller
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: registry-admin
+subjects:
+- kind: ServiceAccount
+  name: pipeline
+  namespace: manuela-ci
+roleRef:
+  kind: ClusterRole
+  apiGroup: rbac.authorization.k8s.io
+  name: registry-admin
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: {{ include "imageRegistryAccount" . }}
+{{- end }}

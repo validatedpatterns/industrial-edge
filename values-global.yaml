@@ -15,9 +15,11 @@ global:
     installPlanApproval: Automatic
 
   imageregistry:
-    account: PLAINTEXT
-    hostname: quay.io
-    type: quay
+    # account: PLAINTEXT
+    # hostname: quay.io
+    # type: quay
+    # Account and hostname will be set automatically if the type is openshift-internal
+    type: openshift-internal
 
   git:
     account: gitea_admin

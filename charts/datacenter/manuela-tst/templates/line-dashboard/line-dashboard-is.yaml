@@ -17,7 +17,7 @@ spec:
   - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.iot_frontend.repo_name }}:{{ . }}"
+      name: "{{ include "imageRegistryHostname" $ }}/{{ include "imageRegistryAccount" $ }}/{{ $.Values.iot_frontend.repo_name }}:{{ . }}"
     referencePolicy:
       type: Local
 {{- end }}
