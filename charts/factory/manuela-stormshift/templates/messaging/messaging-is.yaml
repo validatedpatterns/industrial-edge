@@ -19,7 +19,9 @@ spec:
     from:
       kind: DockerImage
       name: "{{ include "imageRegistryHostname" $ }}/{{ include "imageRegistryAccount" $ }}/{{ $.Values.iot_consumer.repo_name }}:{{ . }}"
-    importPolicy: {}
+    importPolicy: {
+      insecure: true
+    }
     referencePolicy:
       type: Local
 {{- end }}
