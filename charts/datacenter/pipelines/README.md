@@ -47,7 +47,6 @@ There are four pipelines:
 
 The pipelines expect a set of parameters and workspaces to be in place. To make it easier to create such PipelineRuns, there are a number of OpenShift templates. These templates contain all the required configuration and ensure the PipelineRuns contain the name of the component in question:
 
-- [build-iot-anomaly-detection](templates/build-iot-anomaly-detection.yaml): Start the pipeline for the iot-anomaly-detection component
 - [build-iot-consumer](templates/build-iot-consumer.yaml): Start the pipeline for the iot-consumer component
 - [build-iot-frontend](templates/build-iot-frontend.yaml): Start the pipeline for the iot-frontend component
 - [build-iot-software-sensor](templates/build-iot-software-sensor.yaml): Start the pipeline for the iot-software-sensor component

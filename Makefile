@@ -28,10 +28,6 @@ check-pipeline-resources: ## wait for all seed resources to be present
 seed: check-pipeline-resources ## run the seed pipeline (build all component, push to all env, no pr)
 	oc create -f charts/datacenter/pipelines/extra/seed-run.yaml
 
-.PHONY: build-and-test-iot-anomaly-detection
-build-and-test-iot-anomaly-detection: ## run iot anomaly detection pipeline (build, test, push to manuela-tst-all, pr for prod)
-	oc create -f charts/datacenter/pipelines/extra/build-and-test-iot-anomaly-detection.yaml
-
 .PHONY: build-and-test-iot-consumer
 build-and-test-iot-consumer: ## run iot consumer pipeline (build, test, push to manuela-tst-all, pr for prod)
 	oc create -f charts/datacenter/pipelines/extra/build-and-test-iot-consumer.yaml
