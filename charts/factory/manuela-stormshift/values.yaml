@@ -56,14 +56,6 @@ machine_sensor:
   tag: 0.4.0
   built_tags: []
 
-iot_anomaly_detection:
-  bootstrap_image: quay.io/hybridcloudpatterns/iot-anomaly-detection:0.4.0
-  bootstrap_tag: 0.4.0
-  image_location: image-registry.openshift-image-registry.svc:5000/manuela-stormshift-messaging/anomaly-detection
-  repo_name: iot-anomaly-detection
-  tag: 0.4.0
-  built_tags: []
-
 iot_consumer:
   bootstrap_image: quay.io/hybridcloudpatterns/iot-consumer:0.4.0
   bootstrap_tag: 0.4.0

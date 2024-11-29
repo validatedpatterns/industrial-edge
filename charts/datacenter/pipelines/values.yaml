@@ -52,21 +52,10 @@ machine_sensor:
   test_values_path: overrides/values-test-imagedata.yaml
   prod_values_path: overrides/values-prod-imagedata.yaml
 
-iot_anomaly_detection:
-  image: iot-anomaly-detection
-  yaml_path: '.iot_anomaly_detection.tag'
-  built_tags_path: '.iot_anomaly_detection.built_tags'
-  test_values_path: overrides/values-test-imagedata.yaml
-  prod_values_path: overrides/values-prod-imagedata.yaml
-
 yq:
   image: quay.io/hybridcloudpatterns/yq:latest
 
 pipeline_components:
-  - component_name: iot-anomaly-detection
-    builder_image: quay.io/hybridcloudpatterns/python-38-rhel7
-    output_image_name: anomaly-detection
-    configmap_prefix: IOT_ANOMALY
   - component_name: iot-consumer
     builder_image: registry.access.redhat.com/rhscl/nodejs-10-rhel7
     output_image_name: messaging
