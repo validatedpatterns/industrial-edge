@@ -1,3 +1,22 @@
+{{/*
+Set the hostname for the imageregistry if type is openshift-internal
+*/}}
+{{- define "imageRegistryHostname" -}}
+{{- if (eq .Values.global.imageregistry.type "openshift-internal") -}}
+registry.{{- .Values.global.hubClusterDomain -}}
+{{- else }}
+{{- .Values.global.imageregistry.hostname -}}
+{{- end }}
+{{- end }}
+
+{{- define "imageRegistryAccount" -}}
+{{- if (eq .Values.global.imageregistry.type "openshift-internal") -}}
+ie-registry
+{{- else }}
+{{- .Values.global.imageregistry.account -}}
+{{- end }}
+{{- end }}
+
 {{- define "build-base-images" -}}
 - name: buildah-build
   taskRef:

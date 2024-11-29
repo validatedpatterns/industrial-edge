@@ -18,8 +18,10 @@ spec:
   - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.machine_sensor.repo_name }}:{{ . }}"
-    importPolicy: {}
+      name: "{{ include "imageRegistryHostname" $ }}/{{ include "imageRegistryAccount" $ }}/{{ $.Values.machine_sensor.repo_name }}:{{ . }}"
+    importPolicy: {
+      insecure: true
+    }
     referencePolicy:
       type: Local
 {{- end }}
