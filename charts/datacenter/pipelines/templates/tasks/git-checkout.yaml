@@ -11,6 +11,10 @@ spec:
     description: branch to check out or to create
     type: string
     default: main
+  - name: STARTINGBRANCH
+    description: when set it will always create a new branch named BRANCH starting from this parameter
+    type: string
+    default: ""
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
@@ -19,10 +23,17 @@ spec:
     description: The precise commit SHA that is HEAD of the checked out branch
   steps:
   - name: checkout
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       BRANCH=$(params.BRANCH)
-      git checkout -q --track -b $BRANCH origin/$BRANCH 2>&1 || git checkout -q -b $BRANCH 2>&1
+      STARTINGBRANCH=$(params.STARTINGBRANCH)
+      if [ -z $STARTINGBRANCH ]; then
+        git checkout -q --track -b $BRANCH origin/$BRANCH 2>&1 || git checkout -q -b $BRANCH 2>&1
+      else
+        git checkout origin/$STARTINGBRANCH 2>&1
+        git checkout -b $BRANCH 2>&1
+        git branch --set-upstream-to=origin/$STARTINGBRANCH 2>&1
+      fi
 
       EXIT_CODE="$?"
       if [ "$EXIT_CODE" != 0 ]

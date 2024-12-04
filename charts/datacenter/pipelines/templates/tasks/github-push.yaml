@@ -1,3 +1,4 @@
+---
 apiVersion: tekton.dev/v1beta1
 kind: Task
 metadata:
@@ -15,13 +16,17 @@ spec:
     description: additional flags for git push
     type: string
     default: ""
+  - name: sslVerify
+    default: "false"
   steps:
   - name: push
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
+      set -x
       git remote -v
       git branch
-      git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git pull --ff-only --no-edit
+      git branch -r | grep -q origin/$(git rev-parse --abbrev-ref HEAD) && git -c http.sslVerify=$(params.sslVerify) pull --ff-only --no-edit
       git log -n 2
-      git push -v $(params.PUSH_FLAGS)
+      git -c http.sslVerify=$(params.sslVerify) push -v $(params.PUSH_FLAGS)
+      echo "github push task completed"
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)

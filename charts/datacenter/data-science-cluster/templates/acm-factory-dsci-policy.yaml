@@ -1,0 +1,87 @@
+# This pushes out the HUB's Certificate Authorities on to the imported clusters
+{{- if .Values.clusterGroup.isHubCluster }}
+{{- range .Values.clusterGroup.managedClusterGroups }}
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: Policy
+metadata:
+  name: acm-{{ .name }}-dsci-policy
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+    argocd.argoproj.io/compare-options: IgnoreExtraneous
+spec:
+  remediationAction: enforce
+  disabled: false
+  policy-templates:
+    - objectDefinition:
+        apiVersion: policy.open-cluster-management.io/v1
+        kind: ConfigurationPolicy
+        metadata:
+          name: acm-{{ .name }}-dsci-config-policy
+        spec:
+          remediationAction: enforce
+          severity: medium
+          namespaceSelector:
+            include:
+              - default
+          object-templates:
+            - complianceType: mustonlyhave
+              objectDefinition:
+                apiVersion: dscinitialization.opendatahub.io/v1
+                kind: DSCInitialization
+                metadata:
+                  finalizers:
+                  - dscinitialization.opendatahub.io/finalizer
+                  name: default-dsci
+                spec:
+                  applicationsNamespace: redhat-ods-applications
+                  monitoring:
+                    managementState: Managed
+                    namespace: redhat-ods-monitoring
+                  serviceMesh:
+                    auth:
+                      audiences:
+                      - https://kubernetes.default.svc
+                    controlPlane:
+                      metricsCollection: Istio
+                      name: data-science-smcp
+                      namespace: istio-system
+                    managementState: Managed
+                  trustedCABundle:
+                    customCABundle: |
+                      '{{ `{{hub fromConfigMap "" "kube-root-ca.crt" "ca.crt" | autoindent hub}}` }}'
+                    managementState: Managed
+---
+apiVersion: policy.open-cluster-management.io/v1
+kind: PlacementBinding
+metadata:
+  name: acm-{{ .name }}-dsci-policy-placement-binding
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+placementRef:
+  name: acm-{{ .name }}-dsci-policy-placement
+  kind: PlacementRule
+  apiGroup: apps.open-cluster-management.io
+subjects:
+  - name: acm-{{ .name }}-dsci-policy
+    kind: Policy
+    apiGroup: policy.open-cluster-management.io
+---
+apiVersion: apps.open-cluster-management.io/v1
+kind: PlacementRule
+metadata:
+  name: acm-{{ .name }}-dsci-policy-placement
+  annotations:
+    argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
+spec:
+  clusterConditions:
+    - status: 'True'
+      type: ManagedClusterConditionAvailable
+  clusterSelector:
+    matchExpressions:
+      - key: local-cluster
+        operator: NotIn
+        values:
+          - 'true'
+{{- end }}{{/* range .Values.clusterGroup.managedClusterGroups */}}
+{{- end }}{{/* isHubCluster */}}

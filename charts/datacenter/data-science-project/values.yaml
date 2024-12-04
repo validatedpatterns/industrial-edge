@@ -1,0 +1,15 @@
+global:
+  secretStore:
+    backend: vault
+    name: vault-backend
+    kind: ClusterSecretStore
+
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore
+
+s3:
+  default_endpoint: http://s3.openshift-storage.svc
+  default_region: none
+
+clusterdomainurl: cluster.example.com

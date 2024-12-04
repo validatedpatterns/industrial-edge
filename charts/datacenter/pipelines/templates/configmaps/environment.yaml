@@ -1,13 +1,16 @@
+{{- $giturl := coalesce .Values.global.git.hostname (printf "gitea-route-vp-gitea.%s" .Values.global.localClusterDomain) }}
+{{- $full_giturl := printf "https://%s/%s/manuela-dev.git" $giturl .Values.global.git.account }}
+---
 apiVersion: v1
 kind: ConfigMap
 metadata:
   name: environment
 data:
   DESCRIPTION: "Config keys for openshift-pipelines"
-  IMAGE_PROVIDER: {{ .Values.global.imageregistry.hostname }}
-  IMAGE_ACCOUNT: {{ .Values.global.imageregistry.account }}
+  IMAGE_PROVIDER: {{ include "imageRegistryHostname" . }}
+  IMAGE_ACCOUNT: {{ include "imageRegistryAccount" . }}
   GIT_EMAIL: {{ .Values.global.git.email }}
-  GIT_DEV_REPO_URL: https://{{ .Values.global.git.hostname }}/{{ .Values.global.git.account }}/manuela-dev.git
+  GIT_DEV_REPO_URL: {{ $full_giturl }}
   GIT_DEV_REPO_REVISION: {{ .Values.global.git.dev_revision }}
   GIT_OPS_REPO_TEST_URL: {{ .Values.global.repoURL }}
   GIT_OPS_REPO_TEST_REVISION: {{ .Values.global.targetRevision }}
@@ -28,29 +31,3 @@ data:
   IOT_SWSENSOR_BUILT_TAGS_PATH: {{ .Values.machine_sensor.built_tags_path }}
   IOT_SWSENSOR_TEST_VALUES_PATH: {{ .Values.machine_sensor.test_values_path }}
   IOT_SWSENSOR_PROD_VALUES_PATH: {{ .Values.machine_sensor.prod_values_path }}
-  IOT_ANOMALY_IMAGE: {{ .Values.iot_anomaly_detection.image }}
-  IOT_ANOMALY_YAML_PATH: {{ .Values.iot_anomaly_detection.yaml_path | quote }}
-  IOT_ANOMALY_BUILT_TAGS_PATH: {{ .Values.iot_anomaly_detection.built_tags_path }}
-  IOT_ANOMALY_TEST_VALUES_PATH: {{ .Values.iot_anomaly_detection.test_values_path }}
-  IOT_ANOMALY_PROD_VALUES_PATH: {{ .Values.iot_anomaly_detection.prod_values_path }}
-
-#   IOT_CONSUMER_IMAGE: iot-consumer
-#   IOT_CONSUMER_YAML_PATH: 'images(name==messaging).newTag'
-#   IOT_CONSUMER_TEST_VALUES_PATH: charts/datacenter/manuela-tst/kustomization.yaml
-#   IOT_CONSUMER_PROD_VALUES_PATH: charts/factory/manuela-stormshift/kustomization.yaml
-#   IOT_CONSUMER_PROD_IMAGESTREAM_PATH: charts/factory/manuela-stormshift/templates/messaging/messaging-is.yaml
-#   IOT_FRONTEND_IMAGE: iot-frontend
-#   IOT_FRONTEND_YAML_PATH: 'images(name==line-dashboard).newTag'
-#   IOT_FRONTEND_TEST_VALUES_PATH: charts/datacenter/manuela-tst/kustomization.yaml
-#   IOT_FRONTEND_PROD_VALUES_PATH: charts/factory/manuela-stormshift/kustomization.yaml
-#   IOT_FRONTEND_PROD_IMAGESTREAM_PATH: charts/factory/manuela-stormshift/templates/line-dashboard/line-dashboard-is.yaml
-#   IOT_SWSENSOR_IMAGE: iot-software-sensor
-#   IOT_SWSENSOR_YAML_PATH: 'images(name==machine-sensor).newTag'
-#   IOT_SWSENSOR_TEST_VALUES_PATH: charts/datacenter/manuela-tst/kustomization.yaml
-#   IOT_SWSENSOR_PROD_VALUES_PATH: charts/factory/manuela-stormshift/kustomization.yaml
-#   IOT_SWSENSOR_PROD_IMAGESTREAM_PATH: charts/factory/manuela-stormshift/templates/machine-sensor/machine-sensor-is.yaml
-#   IOT_ANOMALY_IMAGE: iot-anomaly-detection
-#   IOT_ANOMALY_YAML_PATH: 'images(name==anomaly-detection).newTag'
-#   IOT_ANOMALY_TEST_VALUES_PATH: charts/datacenter/manuela-tst/kustomization.yaml
-#   IOT_ANOMALY_PROD_VALUES_PATH: charts/factory/manuela-stormshift/kustomization.yaml
-#   IOT_ANOMALY_PROD_IMAGESTREAM_PATH: charts/factory/manuela-stormshift/templates/anomaly-detection/anomaly-detection-is.yaml

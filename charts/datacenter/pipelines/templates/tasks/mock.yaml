@@ -10,7 +10,7 @@ spec:
       The message to echo.
     default: "Hello from mock-task"
   steps:
-  - image: node  # contains node
+  - image: registry.redhat.io/ubi9-minimal:9.5
     script: |
-      #!/usr/bin/env node
-      console.log("$(params.MESSAGE)")
+      #!/bin/bash
+      echo "$(params.MESSAGE)"

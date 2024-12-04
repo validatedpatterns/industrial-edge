@@ -18,17 +18,18 @@ spec:
     default: --
   - name: argocd-version
     type: string
-    default: v1.5.2
+    default: v1.14.1
   - name: argocd-server
     type: string
     default: openshift-gitops-server.openshift-gitops.svc
   steps:
     - name: login-sync-wait
-      image: argoproj/argocd:$(params.argocd-version)
+      image: registry.redhat.io/openshift-gitops-1/argocd-rhel8:$(params.argocd-version)
       command: ["/bin/bash", "-c"]
       args:
         - if [ -z $ARGOCD_AUTH_TOKEN ]; then
             yes | argocd login $(params.argocd-server) --grpc-web $(params.flags) --username=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_USERNAME) --password=$(cat $(workspaces.argocd-env-secret.path)/ARGOCD_PASSWORD);
           fi;
+        - argocd app get --refresh $(params.application-name);
         - argocd app sync $(params.application-name) --revision $(params.revision) $(params.flags);
         - argocd app wait $(params.application-name) --health $(params.flags);

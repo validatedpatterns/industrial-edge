@@ -1,18 +1,34 @@
+storageSystem:
+  deploy: true
+  inventory:
+    useSpecificNodes: false
+
 clusterGroup:
   name: datacenter
   isHubCluster: true
 
   namespaces:
   - golang-external-secrets
-  - external-secrets
   - open-cluster-management
   - manuela-ml-workspace
-  - manuela-tst-all
+  - manuela-tst-all:
+      operatorGroup: true
+      labels:
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
   - manuela-ci
   - manuela-data-lake
-  - staging
   - vault
-
+  - openshift-pipelines
+  - openshift-storage
+  - redhat-ods-operator:
+      operatorGroup: true
+      targetNamespaces:
+  - ml-development:
+      labels:
+        modelmesh-enabled: 'true'
+        opendatahub.io/dashboard: 'true'
+  - redhat-ods-applications
     #  operatorgroupExcludes:
     #  - manuela-ml-workspace
 
@@ -20,6 +36,7 @@ clusterGroup:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
+      channel: release-2.11
 
     amqbroker-prod:
       name: amq-broker-rhel8
@@ -27,34 +44,38 @@ clusterGroup:
 
     amqstreams-prod-dev:
       name: amq-streams
-      namespaces: 
+      namespaces:
       - manuela-data-lake
       - manuela-tst-all
 
     camelk-prod-dev:
-      name: red-hat-camel-k
-      namespaces: 
+      name: camel-k
+      namespaces:
       - manuela-data-lake
       - manuela-tst-all
-
-    seldon-prod-dev:
-      name: seldon-operator-certified
-      namespaces: 
-      - openshift-operators
-      source: certified-operators
+      channel: stable-v2
+      source: community-operators
+      sourceNamespace: openshift-marketplace
 
     pipelines:
       name: openshift-pipelines-operator-rh
       source: redhat-operators
-      
-    odh:
-      name: opendatahub-operator
-      source: community-operators
+
+    odf:
+      name: odf-operator
+      namespace: openshift-storage
+      source: redhat-operators
+
+    ods:
+      name: rhods-operator
+      channel: alpha
+      namespace: redhat-ods-operator
 
   projects:
   - datacenter
   - production-datalake
   - golang-external-secrets
+  - data-science-proj
   - vault
 
   applications:
@@ -62,18 +83,13 @@ clusterGroup:
       name: acm
       namespace: open-cluster-management
       project: datacenter
-      path: common/acm
+      chart: acm
+      chartVersion: 0.1.*
       ignoreDifferences:
       - group: internal.open-cluster-management.io
         kind: ManagedClusterInfo
         jsonPointers:
         - /spec/loggingCA
-
-          #odh:
-          #name: odh
-          #namespace: manuela-ml-workspace
-          #project: datacenter
-          #path: charts/datacenter/opendatahub
 
     pipelines:
       name: pipelines
@@ -99,10 +115,51 @@ clusterGroup:
         kind: ImageStream
         jsonPointers:
         - /spec/tags
-      - group: apps.openshift.io
-        kind: DeploymentConfig
+
+    storage:
+      name: storage
+      namespace: openshift-storage
+      project: datacenter
+      chart: openshift-data-foundations
+      chartVersion: 0.1.*
+
+    data-science-cluster:
+      name: data-science-cluster
+      namespace: redhat-ods-applications
+      project: data-science-proj
+      path: charts/datacenter/data-science-cluster
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
         jsonPointers:
-        - /spec/template/spec/containers/0/image
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
+
+    data-science-project:
+      name: data-science-project
+      namespace: ml-development
+      project: data-science-proj
+      path: charts/datacenter/data-science-project
+      ignoreDifferences:
+      - group: apps
+        kind: Deployment
+        jsonPointers:
+        - /spec/replicas
+      - group: route.openshift.io
+        kind: Route
+        jsonPointers:
+        - /status
+      - group: image.openshift.io
+        kind: ImageStream
+        jsonPointers:
+        - /spec/tags
 
     test:
       name: manuela-test
@@ -116,19 +173,15 @@ clusterGroup:
       name: vault
       namespace: vault
       project: datacenter
-      path: common/hashicorp-vault
+      chart: hashicorp-vault
+      chartVersion: 0.1.*
 
     secrets-operator:
       name: golang-external-secrets
       namespace: golang-external-secrets
       project: golang-external-secrets
-      path: common/golang-external-secrets
-
-    secrets:
-      name: external-secrets
-      namespace: external-secrets
-      project: golang-external-secrets
-      path: charts/datacenter/external-secrets
+      chart: golang-external-secrets
+      chartVersion: 0.1.*
 
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
@@ -142,13 +195,6 @@ clusterGroup:
 #    - name: myparam
 #      value: myparam
 #
-#  - name: pipelines
-#    namespace: staging
-#    project: datacenter
-#    path: applications/pipeline
-#    repoURL: https://github.com/you/applications.git
-#    targetRevision: main
-#
 #   Additional applications
 #   Be sure to include additional resources your apps will require
 #   +X machines
@@ -160,6 +206,34 @@ clusterGroup:
 #    path: path/to/myapp
 #    repoURL: https://github.com/vendor/applications.git
 #    targetRevision: main
+
+  imperative:
+    # For additional overrides that apply to the jobs, please refer to
+    # https://github.com/validatedpatterns/clustergroup-chart/
+    # schedule: "*/10 * * * *" # Default schedule
+    jobs:
+      - name: clone-upstream-repos-gitea
+        playbook: ./ansible/playbooks/clone_upstream_repos_gitea.yml
+        extravars:
+          - "repo_name=manuela-dev"
+          - "upstream_repo_url=https://github.com/validatedpatterns-demos/manuela-dev"
+        timeout: 180
+      - name: copy-initial-model-to-incluster-s3
+        image: quay.io/hybridcloudpatterns/utility-container:latest
+        playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
+        extravars:
+          - "bucket_name=user-bucket"
+          - "src_file=ansible/files/model.joblib"
+          - "object_name=initial_model.joblib"
+        timeout: 180
+      - name: copy-initial-training-data-to-incluster-s3
+        image: quay.io/hybridcloudpatterns/utility-container:latest
+        playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
+        extravars:
+          - "bucket_name=user-bucket"
+          - "src_file=ansible/files/raw-data.csv"
+          - "object_name=raw-data.csv"
+        timeout: 180
 
   managedClusterGroups:
     factory:

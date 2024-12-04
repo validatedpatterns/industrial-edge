@@ -12,6 +12,5 @@ spec:
     targetPort: 3000
   selector:
     app: messaging
-    deploymentconfig: messaging
   sessionAffinity: None
   type: ClusterIP

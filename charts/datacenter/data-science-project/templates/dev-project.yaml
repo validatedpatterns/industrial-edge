@@ -1,0 +1,606 @@
+{{- $giturl := coalesce .Values.global.git.hostname (printf "gitea-route-vp-gitea.%s" .Values.global.localClusterDomain) }}
+{{- $full_giturl := printf "https://%s/%s/manuela-dev.git" $giturl .Values.global.git.account }}
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: workbench-trusted-ca-bundle
+  namespace: ml-development
+  labels:
+    config.openshift.io/inject-trusted-cabundle: 'true'
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: model-training-data-volume
+  namespace: ml-development
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: workbench-pvc
+  namespace: ml-development
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 5Gi
+  volumeMode: Filesystem
+---
+apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
+kind: DataSciencePipelinesApplication
+metadata:
+  name: dspa
+  namespace: ml-development
+spec:
+  apiServer:
+    caBundleFileMountPath: ''
+    stripEOF: true
+    dbConfigConMaxLifetimeSec: 120
+    applyTektonCustomResource: true
+    caBundleFileName: ''
+    deploy: true
+    enableSamplePipeline: false
+    autoUpdatePipelineDefaultVersion: true
+    archiveLogs: false
+    terminateStatus: Cancelled
+    enableOauth: true
+    trackArtifacts: true
+    collectMetrics: true
+    injectDefaultScript: true
+  database:
+    disableHealthCheck: false
+    mariaDB:
+      deploy: true
+      pipelineDBName: mlpipeline
+      pvcSize: 10Gi
+      username: mlpipeline
+  dspVersion: v2
+  objectStorage:
+    disableHealthCheck: false
+    enableExternalRoute: false
+    externalStorage:
+      bucket: pipeline-bucket
+      host: 's3.openshift-storage.svc.cluster.local'
+      port: ''
+      s3CredentialsSecret:
+        accessKey: AWS_ACCESS_KEY_ID
+        secretKey: AWS_SECRET_ACCESS_KEY
+        secretName: aws-connection-pipeline-bucket
+      scheme: http
+  persistenceAgent:
+    deploy: true
+    numWorkers: 2
+  scheduledWorkflow:
+    cronScheduleTimezone: UTC
+    deploy: true
+---
+apiVersion: kubeflow.org/v1
+kind: Notebook
+metadata:
+  annotations:
+    notebooks.opendatahub.io/inject-oauth: 'true'
+    notebooks.opendatahub.io/last-size-selection: Small
+    notebooks.opendatahub.io/oauth-logout-url: >-
+      https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}/projects/ml-development?notebookLogout=jupyterlab
+    opendatahub.io/username: 'user'
+    openshift.io/description: ''
+    openshift.io/display-name: JupyterLab
+  name: jupyterlab
+  namespace: ml-development
+  labels:
+    app: jupyterlab
+    opendatahub.io/dashboard: 'true'
+    opendatahub.io/odh-managed: 'true'
+    opendatahub.io/user: 'user'
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: nvidia.com/gpu.present
+                    operator: NotIn
+                    values:
+                      - 'true'
+              weight: 1
+      initContainers:
+        - name: fetch-ca
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
+            ls -l /tmp/ca-bundles/
+          volumeMounts:
+            - mountPath: /var/run/kube-root-ca
+              name: kube-root-ca
+            - mountPath: /var/run/trusted-ca
+              name: trusted-ca-bundle
+            - mountPath: /var/run/openshift-service-ca
+              name: openshift-service-ca
+            - mountPath: /tmp/ca-bundles
+              name: ca-bundles
+        - name: git-init
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            if [ ! -d /opt/app-root/src/manuela-dev ]; then export GIT_SSL_CAINFO=/etc/pki/tls/custom-certs/ca-bundle.crt; git clone --single-branch -b {{ .Values.global.git.dev_revision }} {{ $full_giturl }} /opt/app-root/src/manuela-dev; fi
+          volumeMounts:
+            - mountPath: /opt/app-root/src
+              name: jupyterlab
+            - mountPath: /opt/app-root/runtimes
+              name: elyra-dsp-details
+            - mountPath: /dev/shm
+              name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: ca-bundles
+              readOnly: true
+              subPath: ca-bundle.crt
+      containers:
+        - resources:
+            limits:
+              cpu: '2'
+              memory: 8Gi
+            requests:
+              cpu: '1'
+              memory: 8Gi
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /notebook/ml-development/jupyterlab/api
+              port: notebook-port
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: jupyterlab
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /notebook/ml-development/jupyterlab/api
+              port: notebook-port
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          envFrom:
+            - secretRef:
+                name: gitea-admin-secret-and-branch
+            - secretRef:
+                name: aws-connection-user-bucket
+          env:
+            - name: NOTEBOOK_ARGS
+              value: |-
+                --ServerApp.port=8888
+                                  --ServerApp.token=''
+                                  --ServerApp.password=''
+                                  --ServerApp.base_url=/notebook/ml-development/jupyterlab
+                                  --ServerApp.quit_button=False
+                                  --ServerApp.tornado_settings={"user":"user","hub_host":"https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}","hub_prefix":"/projects/ml-development"}
+            - name: JUPYTER_IMAGE
+              value: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+            - name: SSL_CERT_FILE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIPELINES_SSL_SA_CERTS
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: GIT_SSL_CAINFO
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIP_CERT
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: REQUESTS_CA_BUNDLE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+          ports:
+            - containerPort: 8888
+              name: notebook-port
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /opt/app-root/src
+              name: jupyterlab
+            - mountPath: /opt/app-root/runtimes
+              name: elyra-dsp-details
+            - mountPath: /dev/shm
+              name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: ca-bundles
+              readOnly: true
+              subPath: ca-bundle.crt
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
+          workingDir: /opt/app-root/src
+        - resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /oauth/healthz
+              port: oauth-proxy
+              scheme: HTTPS
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: oauth-proxy
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /oauth/healthz
+              port: oauth-proxy
+              scheme: HTTPS
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - containerPort: 8443
+              name: oauth-proxy
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /etc/oauth/config
+              name: oauth-config
+            - mountPath: /etc/tls/private
+              name: tls-certificates
+          image: >-
+            registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46
+          args:
+            - '--provider=openshift'
+            - '--https-address=:8443'
+            - '--http-address='
+            - '--openshift-service-account=jupyterlab'
+            - '--cookie-secret-file=/etc/oauth/config/cookie_secret'
+            - '--cookie-expire=24h0m0s'
+            - '--tls-cert=/etc/tls/private/tls.crt'
+            - '--tls-key=/etc/tls/private/tls.key'
+            - '--upstream=http://localhost:8888'
+            - '--upstream-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+            - '--email-domain=*'
+            - '--skip-provider-button'
+            - >-
+              --openshift-sar={"verb":"get","resource":"notebooks","resourceAPIGroup":"kubeflow.org","resourceName":"jupyterlab","namespace":"$(NAMESPACE)"}
+            - >-
+              --logout-url=https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}/projects/ml-development?notebookLogout=jupyterlab
+      enableServiceLinks: false
+      serviceAccountName: jupyterlab
+      volumes:
+        - name: jupyterlab
+          persistentVolumeClaim:
+            claimName: workbench-pvc
+        - name: elyra-dsp-details
+          secret:
+            secretName: ds-pipeline-config-custom
+        - emptyDir:
+            medium: Memory
+          name: shm
+        - name: oauth-config
+          secret:
+            defaultMode: 420
+            secretName: jupyterlab-oauth-config
+        - name: tls-certificates
+          secret:
+            defaultMode: 420
+            secretName: jupyterlab-tls
+        - name: trusted-ca-bundle
+          configMap:
+            name: workbench-trusted-ca-bundle
+            defaultMode: 420
+        - name: kube-root-ca
+          configMap:
+            name: kube-root-ca.crt
+            defaultMode: 420
+        - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            defaultMode: 420
+        - name: ca-bundles
+          emptyDir: {}
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: pipeline-bucket
+  namespace: ml-development
+  finalizers:
+    - objectbucket.io/finalizer
+  labels:
+    app: noobaa
+    bucket-provisioner: openshift-storage.noobaa.io-obc
+    noobaa-domain: openshift-storage.noobaa.io
+spec:
+  additionalConfig:
+    bucketclass: noobaa-default-bucket-class
+  bucketName: pipeline-bucket
+  generateBucketName: pipeline-bucket
+  storageClassName: openshift-storage.noobaa.io
+---
+apiVersion: objectbucket.io/v1alpha1
+kind: ObjectBucketClaim
+metadata:
+  name: user-bucket
+  namespace: ml-development
+  finalizers:
+    - objectbucket.io/finalizer
+  labels:
+    app: noobaa
+    bucket-provisioner: openshift-storage.noobaa.io-obc
+    noobaa-domain: openshift-storage.noobaa.io
+spec:
+  additionalConfig:
+    bucketclass: noobaa-default-bucket-class
+  bucketName: user-bucket
+  generateBucketName: user-bucket
+  storageClassName: openshift-storage.noobaa.io
+---
+kind: PersistentVolumeClaim
+apiVersion: v1
+metadata:
+  name: s3-browser-pvc
+  namespace: ml-development
+  finalizers:
+    - kubernetes.io/pvc-protection
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 2Gi
+  volumeMode: Filesystem
+---
+apiVersion: kubeflow.org/v1
+kind: Notebook
+metadata:
+  annotations:
+    notebooks.opendatahub.io/inject-oauth: 'true'
+    notebooks.opendatahub.io/last-size-selection: Small
+    notebooks.opendatahub.io/oauth-logout-url: >-
+      https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}/projects/ml-development?notebookLogout=s3-browser
+    opendatahub.io/username: 'user'
+    openshift.io/description: ''
+    openshift.io/display-name: 'S3 Browser'
+  name: s3-browser
+  namespace: ml-development
+  labels:
+    app: s3-browser
+    opendatahub.io/dashboard: 'true'
+    opendatahub.io/odh-managed: 'true'
+    opendatahub.io/user: 'user'
+spec:
+  template:
+    spec:
+      affinity:
+        nodeAffinity:
+          preferredDuringSchedulingIgnoredDuringExecution:
+            - preference:
+                matchExpressions:
+                  - key: nvidia.com/gpu.present
+                    operator: NotIn
+                    values:
+                      - 'true'
+              weight: 1
+      initContainers:
+        - name: fetch-ca
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/odh-tec:v0.1
+          imagePullPolicy: Always
+          command:
+          - 'sh'
+          - '-c'
+          - >-
+            cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
+            ls -l /tmp/ca-bundles/
+          volumeMounts:
+          - mountPath: /var/run/kube-root-ca
+            name: kube-root-ca
+          - mountPath: /var/run/trusted-ca
+            name: trusted-ca-bundle
+          - mountPath: /var/run/openshift-service-ca
+            name: openshift-service-ca
+          - mountPath: /tmp/ca-bundles
+            name: ca-bundles
+      containers:
+        - resources:
+            limits:
+              cpu: '2'
+              memory: 8Gi
+            requests:
+              cpu: '1'
+              memory: 8Gi
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /notebook/ml-development/s3-browser/api
+              port: notebook-port
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: s3-browser
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /notebook/ml-development/s3-browser/api
+              port: notebook-port
+              scheme: HTTP
+            initialDelaySeconds: 10
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          env:
+            - name: NOTEBOOK_ARGS
+              value: |-
+                --ServerApp.port=8888
+                                  --ServerApp.token=''
+                                  --ServerApp.password=''
+                                  --ServerApp.base_url=/notebook/ml-development/s3-browser
+                                  --ServerApp.quit_button=False
+                                  --ServerApp.tornado_settings={"user":"user","hub_host":"https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}","hub_prefix":"/projects/ml-development"}
+            - name: JUPYTER_IMAGE
+              value: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/odh-tec:v0.1
+            - name: SSL_CERT_FILE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIPELINES_SSL_SA_CERTS
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: GIT_SSL_CAINFO
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: PIP_CERT
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+            - name: REQUESTS_CA_BUNDLE
+              value: /etc/pki/tls/custom-certs/ca-bundle.crt
+          ports:
+            - containerPort: 8888
+              name: notebook-port
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /opt/app-root/src
+              name: s3-browser
+            - mountPath: /dev/shm
+              name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: ca-bundles
+              readOnly: true
+              subPath: ca-bundle.crt
+          envFrom:
+            - secretRef:
+                name: aws-connection-user-bucket
+          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/odh-tec:v0.1
+          workingDir: /opt/app-root/src
+        - resources:
+            limits:
+              cpu: 100m
+              memory: 64Mi
+            requests:
+              cpu: 100m
+              memory: 64Mi
+          readinessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /oauth/healthz
+              port: oauth-proxy
+              scheme: HTTPS
+            initialDelaySeconds: 5
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          name: oauth-proxy
+          livenessProbe:
+            failureThreshold: 3
+            httpGet:
+              path: /oauth/healthz
+              port: oauth-proxy
+              scheme: HTTPS
+            initialDelaySeconds: 30
+            periodSeconds: 5
+            successThreshold: 1
+            timeoutSeconds: 1
+          env:
+            - name: NAMESPACE
+              valueFrom:
+                fieldRef:
+                  fieldPath: metadata.namespace
+          ports:
+            - containerPort: 8443
+              name: oauth-proxy
+              protocol: TCP
+          imagePullPolicy: Always
+          volumeMounts:
+            - mountPath: /etc/oauth/config
+              name: oauth-config
+            - mountPath: /etc/tls/private
+              name: tls-certificates
+          image: >-
+            registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46
+          args:
+            - '--provider=openshift'
+            - '--https-address=:8443'
+            - '--http-address='
+            - '--openshift-service-account=s3-browser'
+            - '--cookie-secret-file=/etc/oauth/config/cookie_secret'
+            - '--cookie-expire=24h0m0s'
+            - '--tls-cert=/etc/tls/private/tls.crt'
+            - '--tls-key=/etc/tls/private/tls.key'
+            - '--upstream=http://localhost:8888'
+            - '--upstream-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
+            - '--email-domain=*'
+            - '--skip-provider-button'
+            - >-
+              --openshift-sar={"verb":"get","resource":"notebooks","resourceAPIGroup":"kubeflow.org","resourceName":"s3-browser","namespace":"$(NAMESPACE)"}
+            - >-
+              --logout-url=https://rhods-dashboard-redhat-ods-applications.{{ .Values.global.localClusterDomain }}/projects/ml-development?notebookLogout=s3-browser
+      enableServiceLinks: false
+      serviceAccountName: s3-browser
+      volumes:
+        - name: s3-browser
+          persistentVolumeClaim:
+            claimName: s3-browser-pvc
+        - emptyDir:
+            medium: Memory
+          name: shm
+        - name: oauth-config
+          secret:
+            defaultMode: 420
+            secretName: s3-browser-oauth-config
+        - name: tls-certificates
+          secret:
+            defaultMode: 420
+            secretName: s3-browser-tls
+        - name: trusted-ca-bundle
+          configMap:
+            name: workbench-trusted-ca-bundle
+            defaultMode: 420
+        - name: kube-root-ca
+          configMap:
+            name: kube-root-ca.crt
+            defaultMode: 420
+        - name: openshift-service-ca
+          configMap:
+            name: openshift-service-ca.crt
+            defaultMode: 420
+        - name: ca-bundles
+          emptyDir: {}
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: elyra-pipelines-jupyterlab
+  namespace: ml-development
+  labels:
+    opendatahub.io/dashboard: 'true'
+subjects:
+  - kind: ServiceAccount
+    name: jupyterlab
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: ds-pipeline-user-access-dspa

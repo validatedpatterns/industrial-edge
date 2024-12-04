@@ -18,8 +18,10 @@ spec:
   - name: {{ $.Values.iot_consumer.tag | quote }}
     from:
       kind: DockerImage
-      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.iot_consumer.repo_name }}:{{ . }}"
-    importPolicy: {}
+      name: "{{ include "imageRegistryHostname" $ }}/{{ include "imageRegistryAccount" $ }}/{{ $.Values.iot_consumer.repo_name }}:{{ . }}"
+    importPolicy: {
+      insecure: true
+    }
     referencePolicy:
       type: Local
 {{- end }}

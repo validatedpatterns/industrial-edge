@@ -102,7 +102,7 @@ spec:
         s2i build --loglevel=$(params.LOGLEVEL) $(params.PATH_CONTEXT) $(params.BUILDER_IMAGE) --as-dockerfile /gen-source/Dockerfile.gen
       fi
       if [[ -n "$(params.CHAINED_BUILD_DOCKERFILE)" ]]; then
-        echo "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
+        echo -e "$(params.CHAINED_BUILD_DOCKERFILE)" >>/gen-source/Dockerfile.gen
       fi
     resources: {}
     volumeMounts:
@@ -112,7 +112,7 @@ spec:
       name: envparams
     workingDir: $(workspaces.gitrepos.path)/$(params.subdirectory)
   - name: build
-    image: quay.io/buildah/stable:v1.11.0
+    image: registry.redhat.io/ubi9/buildah:9.5
     script: |
       if [ -f /env-params/buildahcommand ]; then
         source /env-params/buildahcommand
@@ -133,7 +133,7 @@ spec:
       name: envparams
     workingDir: /gen-source
   - name: push
-    image: quay.io/buildah/stable:v1.11.0
+    image: registry.redhat.io/ubi9/buildah:9.5
     script: |
       buildah push --storage-driver=vfs --tls-verify=$(params.TLSVERIFY) `basename $(params.OUTPUT_IMAGE)` docker://$(params.OUTPUT_IMAGE):$(params.TAG)
       echo -n "$(params.OUTPUT_IMAGE):$(params.TAG)" >$(results.image.path)

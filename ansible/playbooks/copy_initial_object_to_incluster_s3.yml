@@ -1,0 +1,45 @@
+---
+- name: Load object to in cluster s3
+  hosts: localhost
+  connection: local
+  gather_facts: false
+  tasks:
+    - name: Fail if any needed parameter is undefined
+      ansible.builtin.assert:
+        that:
+          - bucket_name is defined
+          - src_file is defined
+          - object_name is defined
+
+    - name: Find s3 endpoint
+      ansible.builtin.shell: |
+        oc extract -n ml-development secret/aws-connection-{{ bucket_name }} --to=- --keys=AWS_S3_ENDPOINT 2>/dev/null
+      register: s3_endpoint_raw
+
+    - name: Find access key
+      ansible.builtin.shell: |
+        oc extract -n ml-development secret/aws-connection-{{ bucket_name }} --to=- --keys=AWS_ACCESS_KEY_ID 2>/dev/null
+      register: s3_access_key_raw
+
+    - name: Find aws secret key
+      ansible.builtin.shell: |
+        oc extract -n ml-development secret/aws-connection-{{ bucket_name }} --to=- --keys=AWS_SECRET_ACCESS_KEY 2>/dev/null
+      register: s3_secret_key_raw
+
+    - name: Set s3 facts
+      ansible.builtin.set_fact:
+        endpoint_url: "{{ s3_endpoint_raw.stdout }}"
+        aws_access_key: "{{ s3_access_key_raw.stdout }}"
+        aws_secret_key: "{{ s3_secret_key_raw.stdout }}"
+        src_file_path: "/git/repo/{{ src_file }}"
+
+    - name: Basic individual file upload
+      amazon.aws.s3_object:
+        bucket: "{{ bucket_name }}"
+        object: "{{ object_name }}"
+        mode: put
+        content_base64: "{{ lookup('ansible.builtin.file', src_file_path) | b64encode }}"
+        endpoint_url: "{{ endpoint_url }}"
+        aws_access_key: "{{ aws_access_key }}"
+        aws_secret_key: "{{ aws_secret_key }}"
+        validate_certs: false

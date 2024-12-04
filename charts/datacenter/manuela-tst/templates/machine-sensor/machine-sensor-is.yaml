@@ -11,15 +11,13 @@ spec:
     from:
       kind: DockerImage
       name: {{ .Values.machine_sensor.bootstrap_image }}
-    importPolicy: {}
     referencePolicy:
       type: Local
 {{- range .Values.machine_sensor.built_tags }}
   - name: {{ . | quote }}
     from:
       kind: DockerImage
-      name: "{{ $.Values.global.imageregistry.hostname }}/{{ $.Values.global.imageregistry.account }}/{{ $.Values.machine_sensor.repo_name }}:{{ . }}"
-    importPolicy: {}
+      name: "{{ include "imageRegistryHostname" $ }}/{{ include "imageRegistryAccount" $ }}/{{ $.Values.machine_sensor.repo_name }}:{{ . }}"
     referencePolicy:
       type: Local
 {{- end }}

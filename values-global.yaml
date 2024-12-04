@@ -1,5 +1,10 @@
 main:
   clusterGroupName: datacenter
+  multiSourceConfig:
+    enabled: true
+    clusterGroupChartVersion: 0.9.*
+  git:
+    repoUpstreamURL: https://github.com/validatedpatterns/industrial-edge
 
 global:
   pattern: industrial-edge
@@ -10,24 +15,15 @@ global:
     installPlanApproval: Automatic
 
   imageregistry:
-    account: PLAINTEXT
-    hostname: quay.io
-    type: quay
+    # account: PLAINTEXT
+    # hostname: quay.io
+    # type: quay
+    # Account and hostname will be set automatically if the type is openshift-internal
+    type: openshift-internal
 
   git:
-    hostname: github.com
-    account: PLAINTEXT
+    account: gitea_admin
     #username: PLAINTEXT
     email: SOMEWHERE@EXAMPLE.COM
+    # Branch used for the manuela-dev repository
     dev_revision: main
-
-  s3:
-    bucket:
-      name: BUCKETNAME
-      region: AWSREGION
-      message:
-        aggregation:
-          count: 50
-      custom:
-        endpoint:
-          enabled: false

@@ -27,7 +27,7 @@ spec:
   - name: sslVerify
     description: defines if http.sslVerify should be set to true or false in the global git config
     type: string
-    default: "true"
+    default: "false"
   - name: subdirectory
     description: subdirectory inside the "gitrepos" workspace to clone the git repo into
     type: string
@@ -41,7 +41,7 @@ spec:
     description: The precise commit SHA that was fetched by this Task
   steps:
   - name: clone
-    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.24.3
+    image: gcr.io/tekton-releases/github.com/tektoncd/pipeline/cmd/git-init:v0.44.5
     script: |
       CHECKOUT_DIR="$(workspaces.gitrepos.path)/$(params.subdirectory)"
 

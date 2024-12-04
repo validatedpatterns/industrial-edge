@@ -3,17 +3,6 @@ global:
     clustername: datacenter-XXXXX
     domain: BASEDOMAIN
 
-  s3:
-    bucket:
-      name: BUCKETNAME
-      region: AWSREGION
-      message:
-        aggregation:
-          count: 50
-      custom:
-        endpoint:
-          enabled: false
-
 clusterGroup:
   name: datacenter
   isHubCluster: true
@@ -36,9 +25,18 @@ clusterGroup:
             - OpenShift
 
 kafka:
+  s3:
+    bucket: anomaly-detection
+    endpointurl: http://s3.openshift-storage.svc
+    message:
+      aggregation:
+        count: 50
   broker:
     uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:
-      temperature: "manuela-factory.iot-sensor-sw-temperature"
-      vibration: "manuela-factory.iot-sensor-sw-vibration"
+      temperature: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-temperature"
+      vibration: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-vibration"
 
+secretStore:
+  name: vault-backend
+  kind: ClusterSecretStore

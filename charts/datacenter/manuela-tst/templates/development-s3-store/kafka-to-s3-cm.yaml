@@ -5,17 +5,14 @@ metadata:
   namespace: manuela-tst-all
 data:
   application.properties: |
-
     kafka.broker.uri={{ .Values.kafka.broker.uri }}
     kafka.broker.topic.temperature={{ .Values.kafka.broker.topic.temperature }}
     kafka.broker.topic.vibration={{ .Values.kafka.broker.topic.vibration }}
 
     local.cluster.name={{ .Values.global.localClusterDomain }}
-    s3.region={{ .Values.global.s3.bucket.region }}
-    s3.bucket.name={{ .Values.global.s3.bucket.name }}
-    s3.message.aggregation.count={{ .Values.global.s3.bucket.message.aggregation.count }}
-    s3.custom.endpoint.enabled={{ .Values.global.s3.bucket.custom.endpoint.enabled }}
+    s3.region=none
+    s3.bucket.name={{ .Values.kafka.s3.bucket }}
+    s3.message.aggregation.count={{ .Values.kafka.s3.message.aggregation.count }}
+    s3.custom.endpoint.enabled=true
     # Convert this directory into a helm chart and use templating to set this
-    s3.custom.endpoint.url=s3-openshift-storage.{{ .Values.global.localClusterDomain }}
-
-
+    s3.custom.endpoint.url={{ .Values.kafka.s3.endpointurl }}

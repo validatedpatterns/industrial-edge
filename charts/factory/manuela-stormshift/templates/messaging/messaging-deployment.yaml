@@ -2,7 +2,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   labels:
-    application: messaging
+    app: messaging
   name: messaging
   namespace: manuela-stormshift-messaging
 spec:
@@ -17,7 +17,6 @@ spec:
     metadata:
       labels:
         app: messaging
-        deploymentconfig: messaging
     spec:
       containers:
       - image: {{ .Values.iot_consumer.image_location }}:{{ .Values.iot_consumer.tag }}
@@ -29,6 +28,8 @@ spec:
         envFrom:
         - configMapRef:
             name: messaging-configmap
+        - secretRef:
+            name: messaging-secret
         resources: {}
         terminationMessagePath: /dev/termination-log
         terminationMessagePolicy: File

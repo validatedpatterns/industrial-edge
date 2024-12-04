@@ -7,123 +7,45 @@ spec:
   - name: gitrepos
   - name: config
   - name: build-artifacts
-  params:
-  - name: DEV_REVISION
-    type: string
-    default: {{ .Values.global.git.dev_revision }}
-  - name: OPS_REVISION
-    type: string
-    default: {{ .Values.global.targetRevision }}
   tasks:
-  - name: build-base-images
-    taskRef:
-      name: tkn
-      kind: Task
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - build-base-images
-      - --param
-      - PATH_CONTEXT=tekton/images/httpd-ionic
-      - --param
-      - OUTPUT_IMAGE_PROVIDER_CONFIGMAPKEY=IMAGE_PROVIDER
-      - --param
-      - OUTPUT_IMAGE_ACCOUNT_CONFIGMAPKEY=IMAGE_ACCOUNT
-      - --param
-      - OUTPUT_IMAGE_NAME=http-ionic
-      - --param
-      - DEV_REVISION=$(params.DEV_REVISION)
-      - --workspace
-      - name=gitrepos,claimName=gitrepos-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=build-artifacts,claimName=build-artifacts-rwo
-      - --showlog
-      - --nocolour
+    - name: git-clone-dev
+      taskRef:
+        name: git-clone-with-tags
+      workspaces:
+      - name: gitrepos
+        workspace: gitrepos
+      - name: config
+        workspace: config
+      params:
+      - name: url_configmapkey
+        value: GIT_DEV_REPO_URL
+      - name: revision
+        value: {{ .Values.global.git.dev_revision }}
+      - name: subdirectory
+        value: dev
+      - name: deleteExisting
+        value: "true"
 
-  - name: seed-iot-anomaly-detection
-    runAfter:
-      - build-base-images
-    taskRef:
-      name: tkn
-      kind: Task
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - seed-iot-anomaly-detection
-      - --workspace
-      - name=gitrepos,claimName=gitrepos-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=build-artifacts,claimName=build-artifacts-rwo
-      - --showlog
-      - --nocolour
+    - name: git-clone-ops
+      taskRef:
+        name: git-clone-with-tags
+      workspaces:
+      - name: gitrepos
+        workspace: gitrepos
+      - name: config
+        workspace: config
+      params:
+      - name: url_configmapkey
+        value: GIT_OPS_REPO_TEST_URL
+      - name: revision
+        value: {{ $.Values.global.targetRevision }}
+      - name: subdirectory
+        value: ops
+      - name: deleteExisting
+        value: "true"
 
-  - name: seed-iot-consumer
-    runAfter:
-      - seed-iot-anomaly-detection
-    taskRef:
-      name: tkn
-      kind: Task
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - seed-iot-consumer
-      - --workspace
-      - name=gitrepos,claimName=gitrepos-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=build-artifacts,claimName=build-artifacts-rwo
-      - --showlog
-      - --nocolour
-
-  - name: seed-iot-frontend
-    runAfter:
-      - seed-iot-consumer
-    taskRef:
-      name: tkn
-      kind: Task
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - seed-iot-frontend
-      - --workspace
-      - name=gitrepos,claimName=gitrepos-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=build-artifacts,claimName=build-artifacts-rwo
-      - --showlog
-      - --nocolour
-
-  - name: seed-iot-software-sensor
-    runAfter:
-      - seed-iot-frontend
-    taskRef:
-      name: tkn
-      kind: Task
-    params:
-    - name: ARGS
-      value:
-      - pipeline
-      - start
-      - seed-iot-software-sensor
-      - --workspace
-      - name=gitrepos,claimName=gitrepos-rwo
-      - --workspace
-      - name=config,config=environment
-      - --workspace
-      - name=build-artifacts,claimName=build-artifacts-rwo
-      - --showlog
-      - --nocolour
+  {{- include "build-base-images" $ | nindent 4 }}
+  {{- range .Values.pipeline_components }}
+  {{- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 }}
+  {{/*- include "test_include" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
+  {{- end }}
