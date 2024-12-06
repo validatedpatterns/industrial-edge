@@ -16,10 +16,6 @@ logger = logging.getLogger(__loggername__)
 oc = os.environ["HOME"] + "/oc_client/oc"
 
 
-# FIXME(bandini): For now we skip this test, we need to rewrite it so that the change pushed in git
-# is done in the in-cluster gitea and not on the upstream repo. Otherwise the change will never be
-# propagated
-@pytest.mark.skip(reason="Need to push the changes to the in-cluster gitea")
 @pytest.mark.toggle_machine_sensor
 def test_toggle_machine_sensor(openshift_dyn_client):
     logger.info("Testing machine-sensor config change")
@@ -76,21 +72,50 @@ def test_toggle_machine_sensor(openshift_dyn_client):
         orig_content=orig_content,
         new_content=new_content,
     )
+    gitea_pass = os.getenv("GITEA_PASS")
+    gitea_user = os.getenv("GITEA_USER")
+    gitea_route = os.getenv("GITEA_ROUTE")
+    gitea_url = (
+        f"https://{gitea_user}:{gitea_pass}@{gitea_route}/{gitea_user}/industrial-edge"
+    )
+    logger.info(
+        f"Using the gitea user {gitea_user} on https://{gitea_route}/{gitea_user}/industrial-edge"
+    )
+    if gitea_pass == "" or gitea_user == "" or gitea_route == "":
+        err_msg = "gitea_pass or gitea_user or gitea_route were empty"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
 
     logger.info("Merge the change")
     if os.getenv("EXTERNAL_TEST") != "true":
-        subprocess.run(["git", "add", machine_sensor_file], cwd=patterns_repo)
-        subprocess.run(
-            ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
-            cwd=patterns_repo,
-        )
-        push = subprocess.run(
-            ["git", "push"], cwd=patterns_repo, capture_output=True, text=True
-        )
+        cur_dir = patterns_repo
     else:
-        subprocess.run(["git", "add", machine_sensor_file])
-        subprocess.run(["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"])
-        push = subprocess.run(["git", "push"], capture_output=True, text=True)
+        cur_dir = os.getcwd()
+
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "http.sslVerify=false",
+            "remote",
+            "add",
+            "gitea-qe",
+            "-f",
+            gitea_url,
+        ],
+        cwd=cur_dir,
+    )
+    subprocess.run(["git", "add", machine_sensor_file], cwd=cur_dir)
+    subprocess.run(
+        ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
+        cwd=cur_dir,
+    )
+    push = subprocess.run(
+        ["git", "-c", "http.sslVerify=false", "push", "gitea-qe"],
+        cwd=cur_dir,
+        capture_output=True,
+        text=True,
+    )
     logger.info(push.stdout)
     logger.info(push.stderr)
 
