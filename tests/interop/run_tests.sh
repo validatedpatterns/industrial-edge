@@ -37,7 +37,7 @@ pytest -lv --disable-warnings test_check_logging_hub.py --kubeconfig $KUBECONFIG
 
 KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_check_logging_edge.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_check_logging_edge.xml
 
-KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_toggle_machine_sensor.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_toggle_machine_sensor.xml
+KUBECONFIG_HUB=$KUBECONFIG KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_toggle_machine_sensor.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_toggle_machine_sensor.xml
 
 pytest -lv --disable-warnings test_pipeline_build_check.py --kubeconfig $KUBECONFIG --junit-xml $WORKSPACE/test_pipeline_build_check.xml
 
