@@ -4,8 +4,12 @@ import re
 import subprocess
 import time
 
+import kubernetes
 import pytest
 from ocp_resources.config_map import ConfigMap
+from ocp_resources.route import Route
+from ocp_resources.secret import Secret
+from openshift.dynamic import DynamicClient
 from openshift.dynamic.exceptions import NotFoundError
 from validatedpatterns_tests.interop.edge_util import modify_file_content
 
@@ -14,6 +18,40 @@ from . import __loggername__
 logger = logging.getLogger(__loggername__)
 
 oc = os.environ["HOME"] + "/oc_client/oc"
+
+
+# returns (user, pass, route) tuple
+def get_gitea_info():
+    kubefile = os.getenv("KUBECONFIG_HUB")
+    kexp = os.path.expandvars(kubefile)
+    ocp_hub = DynamicClient(
+        client=kubernetes.config.new_client_from_config(config_file=kexp)
+    )
+    logger.info("Getting HUB gitea info")
+    try:
+        gitea_secret_obj = Secret.get(
+            dyn_client=ocp_hub, namespace="vp-gitea", name="gitea-admin-secret"
+        )
+        gitea_secret = next(gitea_secret_obj)
+    except NotFoundError:
+        err_msg = "The gitea-admin-secret was not found in ns vp-gitea"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+    username = gitea_secret.instance.data.username
+    password = gitea_secret.instance.data.password
+
+    try:
+        gitea_route_obj = Route.get(
+            dyn_client=ocp_hub, namespace="vp-gitea", name="gitea-route"
+        )
+        gitea_route = next(gitea_route_obj)
+    except NotFoundError:
+        err_msg = "The gitea-route was not found in ns vp-gitea"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+    route = gitea_route.instance.spec.host
+
+    return (username, password, route)
 
 
 @pytest.mark.toggle_machine_sensor
@@ -72,9 +110,7 @@ def test_toggle_machine_sensor(openshift_dyn_client):
         orig_content=orig_content,
         new_content=new_content,
     )
-    gitea_pass = os.getenv("GITEA_PASS")
-    gitea_user = os.getenv("GITEA_USER")
-    gitea_route = os.getenv("GITEA_ROUTE")
+    (gitea_user, gitea_pass, gitea_route) = get_gitea_info()
     gitea_url = (
         f"https://{gitea_user}:{gitea_pass}@{gitea_route}/{gitea_user}/industrial-edge"
     )

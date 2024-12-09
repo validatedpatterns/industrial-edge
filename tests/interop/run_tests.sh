@@ -37,11 +37,7 @@ pytest -lv --disable-warnings test_check_logging_hub.py --kubeconfig $KUBECONFIG
 
 KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_check_logging_edge.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_check_logging_edge.xml
 
-# We need a few things from the hub cluster before working on the edge cluster
-export GITEA_PASS=$(oc --kubeconfig $KUBECONFIG extract -n vp-gitea secret/gitea-admin-secret --to=- --keys=password 2>/dev/null)
-export GITEA_USER=$(oc --kubeconfig $KUBECONFIG extract -n vp-gitea secret/gitea-admin-secret --to=- --keys=username 2>/dev/null)
-export GITEA_ROUTE=$(oc --kubeconfig $KUBECONFIG get routes -n vp-gitea gitea-route -o jsonpath='{.spec.host}')
-KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_toggle_machine_sensor.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_toggle_machine_sensor.xml
+KUBECONFIG_HUB=$KUBECONFIG KUBECONFIG=$KUBECONFIG_EDGE pytest -lv --disable-warnings test_toggle_machine_sensor.py --kubeconfig $KUBECONFIG_EDGE --junit-xml $WORKSPACE/test_toggle_machine_sensor.xml
 
 pytest -lv --disable-warnings test_pipeline_build_check.py --kubeconfig $KUBECONFIG --junit-xml $WORKSPACE/test_pipeline_build_check.xml
 
