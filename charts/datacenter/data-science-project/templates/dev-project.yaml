@@ -39,7 +39,7 @@ spec:
       storage: 5Gi
   volumeMode: Filesystem
 ---
-apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
+apiVersion: datasciencepipelinesapplications.opendatahub.io/v1
 kind: DataSciencePipelinesApplication
 metadata:
   name: dspa
@@ -47,19 +47,10 @@ metadata:
 spec:
   apiServer:
     caBundleFileMountPath: ''
-    stripEOF: true
-    dbConfigConMaxLifetimeSec: 120
-    applyTektonCustomResource: true
     caBundleFileName: ''
     deploy: true
     enableSamplePipeline: false
-    autoUpdatePipelineDefaultVersion: true
-    archiveLogs: false
-    terminateStatus: Cancelled
     enableOauth: true
-    trackArtifacts: true
-    collectMetrics: true
-    injectDefaultScript: true
   database:
     disableHealthCheck: false
     mariaDB:
@@ -272,8 +263,6 @@ spec:
               name: oauth-config
             - mountPath: /etc/tls/private
               name: tls-certificates
-          image: >-
-            registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46
           args:
             - '--provider=openshift'
             - '--https-address=:8443'
@@ -539,8 +528,6 @@ spec:
               name: oauth-config
             - mountPath: /etc/tls/private
               name: tls-certificates
-          image: >-
-            registry.redhat.io/openshift4/ose-oauth-proxy@sha256:4bef31eb993feb6f1096b51b4876c65a6fb1f4401fee97fa4f4542b6b7c9bc46
           args:
             - '--provider=openshift'
             - '--https-address=:8443'
