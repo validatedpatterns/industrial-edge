@@ -39,7 +39,7 @@ spec:
       storage: 5Gi
   volumeMode: Filesystem
 ---
-apiVersion: datasciencepipelinesapplications.opendatahub.io/v1alpha1
+apiVersion: datasciencepipelinesapplications.opendatahub.io/v1
 kind: DataSciencePipelinesApplication
 metadata:
   name: dspa
@@ -47,19 +47,10 @@ metadata:
 spec:
   apiServer:
     caBundleFileMountPath: ''
-    stripEOF: true
-    dbConfigConMaxLifetimeSec: 120
-    applyTektonCustomResource: true
     caBundleFileName: ''
     deploy: true
     enableSamplePipeline: false
-    autoUpdatePipelineDefaultVersion: true
-    archiveLogs: false
-    terminateStatus: Cancelled
     enableOauth: true
-    trackArtifacts: true
-    collectMetrics: true
-    injectDefaultScript: true
   database:
     disableHealthCheck: false
     mariaDB:
