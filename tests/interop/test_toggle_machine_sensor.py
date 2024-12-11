@@ -4,8 +4,12 @@ import re
 import subprocess
 import time
 
+import kubernetes
 import pytest
 from ocp_resources.config_map import ConfigMap
+from ocp_resources.route import Route
+from ocp_resources.secret import Secret
+from openshift.dynamic import DynamicClient
 from openshift.dynamic.exceptions import NotFoundError
 from validatedpatterns_tests.interop.edge_util import modify_file_content
 
@@ -16,10 +20,40 @@ logger = logging.getLogger(__loggername__)
 oc = os.environ["HOME"] + "/oc_client/oc"
 
 
-# FIXME(bandini): For now we skip this test, we need to rewrite it so that the change pushed in git
-# is done in the in-cluster gitea and not on the upstream repo. Otherwise the change will never be
-# propagated
-@pytest.mark.skip(reason="Need to push the changes to the in-cluster gitea")
+# returns (user, pass, route) tuple
+def get_gitea_info():
+    kubefile = os.getenv("KUBECONFIG_HUB")
+    kexp = os.path.expandvars(kubefile)
+    ocp_hub = DynamicClient(
+        client=kubernetes.config.new_client_from_config(config_file=kexp)
+    )
+    logger.info("Getting HUB gitea info")
+    try:
+        gitea_secret_obj = Secret.get(
+            dyn_client=ocp_hub, namespace="vp-gitea", name="gitea-admin-secret"
+        )
+        gitea_secret = next(gitea_secret_obj)
+    except NotFoundError:
+        err_msg = "The gitea-admin-secret was not found in ns vp-gitea"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+    username = gitea_secret.instance.data.username
+    password = gitea_secret.instance.data.password
+
+    try:
+        gitea_route_obj = Route.get(
+            dyn_client=ocp_hub, namespace="vp-gitea", name="gitea-route"
+        )
+        gitea_route = next(gitea_route_obj)
+    except NotFoundError:
+        err_msg = "The gitea-route was not found in ns vp-gitea"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+    route = gitea_route.instance.spec.host
+
+    return (username, password, route)
+
+
 @pytest.mark.toggle_machine_sensor
 def test_toggle_machine_sensor(openshift_dyn_client):
     logger.info("Testing machine-sensor config change")
@@ -76,21 +110,48 @@ def test_toggle_machine_sensor(openshift_dyn_client):
         orig_content=orig_content,
         new_content=new_content,
     )
+    (gitea_user, gitea_pass, gitea_route) = get_gitea_info()
+    gitea_url = (
+        f"https://{gitea_user}:{gitea_pass}@{gitea_route}/{gitea_user}/industrial-edge"
+    )
+    logger.info(
+        f"Using the gitea user {gitea_user} on https://{gitea_route}/{gitea_user}/industrial-edge"
+    )
+    if gitea_pass == "" or gitea_user == "" or gitea_route == "":
+        err_msg = "gitea_pass or gitea_user or gitea_route were empty"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
 
     logger.info("Merge the change")
     if os.getenv("EXTERNAL_TEST") != "true":
-        subprocess.run(["git", "add", machine_sensor_file], cwd=patterns_repo)
-        subprocess.run(
-            ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
-            cwd=patterns_repo,
-        )
-        push = subprocess.run(
-            ["git", "push"], cwd=patterns_repo, capture_output=True, text=True
-        )
+        cur_dir = patterns_repo
     else:
-        subprocess.run(["git", "add", machine_sensor_file])
-        subprocess.run(["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"])
-        push = subprocess.run(["git", "push"], capture_output=True, text=True)
+        cur_dir = os.getcwd()
+
+    subprocess.run(
+        [
+            "git",
+            "-c",
+            "http.sslVerify=false",
+            "remote",
+            "add",
+            "gitea-qe",
+            "-f",
+            gitea_url,
+        ],
+        cwd=cur_dir,
+    )
+    subprocess.run(["git", "add", machine_sensor_file], cwd=cur_dir)
+    subprocess.run(
+        ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
+        cwd=cur_dir,
+    )
+    push = subprocess.run(
+        ["git", "-c", "http.sslVerify=false", "push", "gitea-qe"],
+        cwd=cur_dir,
+        capture_output=True,
+        text=True,
+    )
     logger.info(push.stdout)
     logger.info(push.stderr)
 
