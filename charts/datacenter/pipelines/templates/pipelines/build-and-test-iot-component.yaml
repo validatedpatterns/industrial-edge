@@ -1,8 +1,5 @@
 {{- range .Values.pipeline_components }}
 ---
-  {{/*- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
-  {{/*- include "test_include" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
-
 apiVersion: tekton.dev/v1beta1
 kind: Pipeline
 metadata:
@@ -51,6 +48,10 @@ spec:
     - name: deleteExisting
       value: "true"
 
+{{- if (eq .component_name "iot-frontend") -}}
+{{- include "build-frontend-base-image" $ | nindent 2 }}
+{{- end }}
+
 {{- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "false") | nindent 2 }}
 
   - name: argocd-sync-application
@@ -70,6 +71,8 @@ spec:
       value: {{ $.Values.global.targetRevision }}
     - name: argocd-server
       value: "{{ $.Values.clusterGroup.name }}-gitops-server.{{ $.Values.global.pattern }}-{{ $.Values.clusterGroup.name }}.svc"
+
+{{- include "commit-and-push-ops-iot-component" (dict "root" $.Values "component" . ) | nindent 2 }}
 
 {{- include "test-all" . | nindent 2 }}
 
