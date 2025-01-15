@@ -17,8 +17,8 @@ ie-registry
 {{- end }}
 {{- end }}
 
-{{- define "build-base-images" -}}
-- name: buildah-build
+{{- define "build-frontend-base-image" -}}
+- name: build-base-image
   taskRef:
     name: buildah
   runAfter:
@@ -42,7 +42,7 @@ ie-registry
       value: IMAGE_ACCOUNT
     - name: OUTPUT_IMAGE_NAME
       value: httpd-ionic
-{{- end }} {{/* build-base-images */}}
+{{- end }} {{/* build-frontend-base-image */}}
 
 {{- define "build-iot-component" }}
 - name: bump-build-version-{{ .component.component_name }}
@@ -50,8 +50,12 @@ ie-registry
   taskRef:
     name: bumpversion
   runAfter:
+{{- if (eq .component.component_name "iot-frontend") }}
+  - build-base-image
+{{- else }}
   - git-clone-ops
   - git-clone-dev
+{{- end }}
   workspaces:
   - name: gitrepos
     workspace: gitrepos
@@ -160,7 +164,9 @@ ie-registry
     value: $(tasks.bump-build-version-{{ .component.component_name }}.results.image-tag)
   - name: subdirectory
     value: ops
+{{- end }} {{/* build-iot-component */}}
 
+{{- define "commit-and-push-ops-iot-component" -}}
 - name: commit-ops-{{ .component.component_name }}
   taskRef:
     name: git-commit
@@ -188,7 +194,7 @@ ie-registry
     value: ops
   - name: PUSH_FLAGS
     value: --all
-{{- end }} {{/* build-iot-component */}}
+{{- end }} {{/* commit-and-push-ops-iot-component */}}
 
 {{- define "test-all" }}
 - name: sensor-broker-test
