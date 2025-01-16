@@ -151,17 +151,34 @@ def test_toggle_machine_sensor(openshift_dyn_client):
             gitea_url,
         ],
         cwd=cur_dir,
+        capture_output=True,
+        text=True,
     )
+
+    logger.info(res.stdout)
+    logger.info(res.stderr)
+
     if res.returncode != 0:
         err_msg = f"Could not fetch remote from gitea_url: {gitea_url}"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
+
+    pull = subprocess.run(
+        ["git", "-c", "http.sslVerify=false", "pull", "gitea-qe", "main"],
+        cwd=cur_dir,
+        capture_output=True,
+        text=True,
+    )
+
+    logger.info(pull.stdout)
+    logger.info(pull.stderr)
 
     subprocess.run(["git", "add", machine_sensor_file], cwd=cur_dir)
     subprocess.run(
         ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
         cwd=cur_dir,
     )
+
     push = subprocess.run(
         ["git", "-c", "http.sslVerify=false", "push", "gitea-qe"],
         cwd=cur_dir,
