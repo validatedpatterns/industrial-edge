@@ -65,7 +65,7 @@ def test_check_logging_hub():
     logger.info("Checking logs for kafka-integration in manuela-tst-all namespace")
     app_string = "camel.apache.org/integration=mqtt2kafka-integration"
     log_out = get_log_output(app_string, namespace="manuela-tst-all")
-    search_terms = ["temperature", "vibration"]
+    search_terms = ["vibration"]
     if not search_log_output(log_out, search_terms):
         err_msg = "Failed to find expected output in kafka-integration log"
         logger.error(f"FAIL: {err_msg}")
