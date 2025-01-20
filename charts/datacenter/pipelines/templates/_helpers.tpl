@@ -52,6 +52,10 @@ ie-registry
   runAfter:
 {{- if (eq .component.component_name "iot-frontend") }}
   - build-base-image
+{{- else if and (eq .seed_prod "true") (eq .component.component_name "iot-consumer") }}
+  - modify-ops-prod-iot-component-iot-frontend
+{{- else if and (eq .seed_prod "true") (eq .component.component_name "iot-software-sensor") }}
+  - modify-ops-prod-iot-component-iot-consumer
 {{- else }}
   - git-clone-ops
   - git-clone-dev
