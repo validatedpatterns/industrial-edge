@@ -3,14 +3,6 @@ kind: ConfigMap
 metadata:
   name: machine-sensor-1
 data:
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc-rte-manuela-tst-all.{{ .Values.global.localClusterDomain }}
-  #broker-amq-mqtt-all-0-svc-rte-manuela-tst-all
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc"
-  #MQTT_HOSTNAME: "broker-amq-mqtt-all-0-svc.manuela-tst-all.svc"
-    #MQTT_PORT: "{{ .Values.machineSensor1.port }}"
-    #MQTT_PORT: "61616"
-
-
   APP_NAME: "iot-sensor"
   DEVICE_ID: "pump-1"
   DEVICE_METRICS: "temperature,vibration,gps,light"
