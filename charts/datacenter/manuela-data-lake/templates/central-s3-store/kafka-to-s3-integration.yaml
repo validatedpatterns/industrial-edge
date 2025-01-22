@@ -35,6 +35,13 @@ spec:
 
             private static final Logger LOGGER = LoggerFactory.getLogger(Kafka2S3Route.class);
 
+            @PropertyInject("kafka.broker.uri")
+            private String kafka_broker_uri;
+            @PropertyInject("kafka.broker.topic.vibration")
+            private String kafka_broker_topic_vibration;
+            @PropertyInject("kafka.broker.topic.temperature")
+            private String kafka_broker_topic_temperature;
+
             @PropertyInject("s3.custom.endpoint.enabled")
             private String s3_custom_endpoint_enabled;
 
@@ -71,7 +78,7 @@ spec:
                 + secret
                 + region;
 
-                from("kafka:{{ .Values.kafka.broker.topic.vibration }}?brokers={{ .Values.kafka.broker.uri }}")
+                from("kafka:" + kafka_broker_topic_vibration + "?brokers=" + kafka_broker_uri)
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
@@ -103,7 +110,7 @@ spec:
                 + endpoint
                 + secret
                 + region;
-                from("kafka:{{ .Values.kafka.broker.topic.temperature }}?brokers={{ .Values.kafka.broker.uri }}")
+                from("kafka:" + kafka_broker_topic_temperature + "?brokers=" + kafka_broker_uri)
                     .convertBodyTo(String.class)
                     .aggregate(simple("true"), new GroupedBodyAggregationStrategy()).completionSize(s3_message_aggregation_count)
                     .process(new Processor() {
