@@ -1,6 +1,11 @@
+// dependency=camel:camel-endpointdsl
+// dependency=camel:kafka
 package com.redhat.manuela.routes;
 
+import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.paho.PahoComponent;
+import org.apache.camel.component.kafka.KafkaComponent;
 import org.apache.camel.component.kafka.KafkaConstants;
 import org.apache.camel.model.OnCompletionDefinition;
 import org.slf4j.Logger;

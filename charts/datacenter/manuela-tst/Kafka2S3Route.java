@@ -1,4 +1,5 @@
 // dependency=camel:camel-endpointdsl
+// dependency=camel:kafka
 package com.redhat.manuela.routes;
 import java.io.ByteArrayInputStream;
 import java.util.Iterator;
@@ -8,6 +9,7 @@ import org.apache.camel.Exchange;
 import org.apache.camel.Processor;
 import org.apache.camel.PropertyInject;
 import org.apache.camel.builder.RouteBuilder;
+import org.apache.camel.component.kafka.KafkaComponent;
 import org.apache.camel.component.aws2.s3.AWS2S3Constants;
 import org.apache.camel.builder.endpoint.dsl.AWS2S3EndpointBuilderFactory;
 import org.apache.camel.model.OnCompletionDefinition;
