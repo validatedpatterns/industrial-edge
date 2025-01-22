@@ -3,4 +3,21 @@ apiVersion: v1
 metadata:
   name: mqtt2kafka-config
   namespace: manuela-stormshift-messaging
-# DO NOT DELETE. NEEDED BY THE mqtt2kafka-integration SERVICE
+data:
+  application.properties: |
+    kafka.broker.uri={{ .Values.kafka.broker.uri }}
+    kafka.broker.topic.temperature={{ .Values.kafka.broker.topic.temperature }}
+    kafka.broker.topic.vibration={{ .Values.kafka.broker.topic.vibration }}
+
+    mqtt.broker.uri={{ .Values.mqtt.broker.uri }}
+    mqtt.broker.clientId={{ .Values.mqtt.broker.clientId }}
+    mqtt.broker.topic.temperature={{ .Values.mqtt.broker.topic.temperature }}
+    mqtt.broker.topic.vibration={{ .Values.mqtt.broker.topic.vibration }}
+
+    local.cluster.name={{ .Values.global.localClusterDomain }}
+    s3.region=none
+    s3.bucket.name={{ .Values.kafka.s3.bucket }}
+    s3.message.aggregation.count={{ .Values.kafka.s3.message.aggregation.count }}
+    s3.custom.endpoint.enabled=true
+    # Convert this directory into a helm chart and use templating to set this
+    s3.custom.endpoint.url={{ .Values.kafka.s3.endpointurl }}
