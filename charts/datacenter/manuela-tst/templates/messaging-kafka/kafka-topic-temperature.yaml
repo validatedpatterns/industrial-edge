@@ -3,7 +3,7 @@ kind: KafkaTopic
 metadata:
   name: iot-sensor-sw-temperature
   labels:
-    strimzi.io/cluster: dev-kafka-cluster
+    strimzi.io/cluster: dev-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

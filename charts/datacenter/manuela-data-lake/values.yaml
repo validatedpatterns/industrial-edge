@@ -32,10 +32,10 @@ kafka:
       aggregation:
         count: 50
   broker:
-    uri: "prod-kafka-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
+    uri: "prod-cluster-kafka-bootstrap.manuela-data-lake.svc:9092"
     topic:
-      temperature: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-temperature"
-      vibration: "factory-kafka-cluster.manuela-factory.iot-sensor-sw-vibration"
+      temperature: "factory-cluster.manuela-factory.iot-sensor-sw-temperature"
+      vibration: "factory-cluster.manuela-factory.iot-sensor-sw-vibration"
 
 secretStore:
   name: vault-backend

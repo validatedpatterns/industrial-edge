@@ -43,7 +43,7 @@ spec:
         tls: true
         configuration:
           bootstrap:
-            host: bootstrap-factory-kafka-cluster.{{ .Values.global.localClusterDomain }}
+            host: bootstrap-factory-cluster.{{ .Values.global.localClusterDomain }}
     config:
       offsets.topic.replication.factor: 3
       transaction.state.log.min.isr: 2

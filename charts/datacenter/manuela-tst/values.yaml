@@ -41,7 +41,7 @@ kafka:
         count: 50
 
   broker:
-    uri: "dev-kafka-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
+    uri: "dev-cluster-kafka-bootstrap.manuela-tst-all.svc:9092"
     topic:
       temperature: "iot-sensor-sw-temperature"
       vibration: "iot-sensor-sw-vibration"

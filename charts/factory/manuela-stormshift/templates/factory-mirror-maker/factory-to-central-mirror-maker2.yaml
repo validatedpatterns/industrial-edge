@@ -9,14 +9,14 @@ spec:
   connectCluster: production-kafka-cluster
   clusters:
     - alias: production-kafka-cluster
-      bootstrapServers: 'prod-kafka-cluster-kafka-bootstrap-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443'
+      bootstrapServers: 'prod-cluster-kafka-bootstrap-manuela-data-lake.{{ .Values.global.hubClusterDomain }}:443'
       #bootstrapServers: 'bootstrap-manuela-data-lake-kafka-cluster.apps.industrial-factory-1.blueprints.rhecoeng.com:443'
       tls:
         trustedCertificates:
         - certificate: ca.crt
-          secretName: prod-kafka-cluster-cluster-ca-cert
+          secretName: prod-cluster-cluster-ca-cert
     - alias: factory-kafka-cluster
-      bootstrapServers: 'factory-kafka-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
+      bootstrapServers: 'factory-cluster-kafka-bootstrap.manuela-stormshift-messaging.svc:9092'
       config:
         config.storage.replication.factor: 1
         offset.storage.replication.factor: 1
