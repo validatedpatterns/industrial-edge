@@ -49,7 +49,7 @@ def test_check_logging_edge():
         [
             oc,
             "exec",
-            "factory-kafka-cluster-kafka-0",
+            "factory-cluster-factory-0",
             "-c",
             "kafka",
             "-n",
@@ -58,7 +58,7 @@ def test_check_logging_edge():
             "bin/kafka-topics.sh",
             "--list",
             "--bootstrap-server",
-            "factory-kafka-cluster-kafka-bootstrap:9092",
+            "factory-cluster-kafka-bootstrap:9092",
         ],
         capture_output=True,
     )
