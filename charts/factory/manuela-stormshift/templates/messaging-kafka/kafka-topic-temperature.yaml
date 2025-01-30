@@ -4,7 +4,7 @@ metadata:
   name: {{ .Values.kafka.broker.topic.temperature }}
   namespace: manuela-stormshift-messaging
   labels:
-    strimzi.io/cluster: factory-kafka-cluster
+    strimzi.io/cluster: factory-cluster
   annotations:
     argocd.argoproj.io/sync-options: SkipDryRunOnMissingResource=true
 spec:

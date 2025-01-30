@@ -17,13 +17,13 @@ spec:
     dashboard:
       managementState: Managed
     datasciencepipelines:
-      managementState: Managed
+      managementState: Removed
     kserve:
       serving:
         ingressGateway:
           certificate:
             type: SelfSigned
-        managementState: Managed
+        managementState: Removed
         name: knative-serving
       managementState: Removed
     modelmeshserving:
@@ -33,4 +33,4 @@ spec:
     trustyai:
       managementState: Removed
     workbenches:
-      managementState: Managed
+      managementState: Removed

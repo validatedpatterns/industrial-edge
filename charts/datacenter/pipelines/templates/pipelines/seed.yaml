@@ -44,8 +44,38 @@ spec:
       - name: deleteExisting
         value: "true"
 
-  {{- include "build-base-images" $ | nindent 4 }}
   {{- range .Values.pipeline_components }}
-  {{- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 }}
-  {{/*- include "test_include" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 */}}
+  {{- if (eq .component_name "iot-frontend") -}}
+  {{- include "build-frontend-base-image" $ | nindent 4 }}
   {{- end }}
+  {{- include "build-iot-component" (dict "root" $.Values "component" . "seed_prod" "true") | nindent 4 }}
+  {{- end }}
+    - name: commit-ops
+      taskRef:
+        name: git-commit
+      runAfter:
+      {{- range .Values.pipeline_components }}
+        - modify-ops-prod-iot-component-{{ .component_name }}
+      {{- end }}
+      workspaces:
+      - name: gitrepos
+        workspace: gitrepos
+      - name: config
+        workspace: config
+      params:
+      - name: subdirectory
+        value: ops
+
+    - name: push-ops
+      taskRef:
+        name: github-push
+      runAfter:
+      - commit-ops
+      workspaces:
+      - name: gitrepos
+        workspace: gitrepos
+      params:
+      - name: subdirectory
+        value: ops
+      - name: PUSH_FLAGS
+        value: --all

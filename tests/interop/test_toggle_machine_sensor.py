@@ -1,3 +1,4 @@
+import base64
 import logging
 import os
 import re
@@ -37,8 +38,8 @@ def get_gitea_info():
         err_msg = "The gitea-admin-secret was not found in ns vp-gitea"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
-    username = gitea_secret.instance.data.username
-    password = gitea_secret.instance.data.password
+    username = base64.b64decode(gitea_secret.instance.data.username).decode("utf-8")
+    password = base64.b64decode(gitea_secret.instance.data.password).decode("utf-8")
 
     try:
         gitea_route_obj = Route.get(
@@ -128,7 +129,17 @@ def test_toggle_machine_sensor(openshift_dyn_client):
     else:
         cur_dir = os.getcwd()
 
+    # We remove the 'gitea-qe' remote in case it already exists
     subprocess.run(
+        [
+            "git",
+            "remote",
+            "remove",
+            "gitea-qe",
+        ],
+        cwd=cur_dir,
+    )
+    res = subprocess.run(
         [
             "git",
             "-c",
@@ -140,18 +151,45 @@ def test_toggle_machine_sensor(openshift_dyn_client):
             gitea_url,
         ],
         cwd=cur_dir,
+        capture_output=True,
+        text=True,
     )
+
+    logger.info(res.stdout)
+    logger.info(res.stderr)
+
+    if res.returncode != 0:
+        err_msg = f"Could not fetch remote from gitea_url: {gitea_url}"
+        logger.error(f"FAIL: {err_msg}")
+        assert False, err_msg
+
+    pull = subprocess.run(
+        ["git", "-c", "http.sslVerify=false", "pull", "gitea-qe", "main"],
+        cwd=cur_dir,
+        capture_output=True,
+        text=True,
+    )
+
+    logger.info(pull.stdout)
+    logger.info(pull.stderr)
+
     subprocess.run(["git", "add", machine_sensor_file], cwd=cur_dir)
     subprocess.run(
         ["git", "commit", "-m", "Toggling SENSOR_TEMPERATURE_ENABLED"],
         cwd=cur_dir,
     )
+
     push = subprocess.run(
         ["git", "-c", "http.sslVerify=false", "push", "gitea-qe"],
         cwd=cur_dir,
         capture_output=True,
         text=True,
     )
+    if push.returncode != 0:
+        err_msg = f"Could not push to gitea_url: {gitea_url}"
+        logger.error(f"FAIL: {err_msg} - {push.stdout} - {push.stderr}")
+        assert False, err_msg
+
     logger.info(push.stdout)
     logger.info(push.stderr)
 

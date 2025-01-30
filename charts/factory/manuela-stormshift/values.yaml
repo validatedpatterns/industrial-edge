@@ -43,7 +43,7 @@ mqtt:
 
 kafka:
   broker:
-    uri: "factory-kafka-cluster-kafka-bootstrap:9092"
+    uri: "factory-cluster-kafka-bootstrap:9092"
     topic:
       temperature: "manuela-factory.iot-sensor-sw-temperature"
       vibration: "manuela-factory.iot-sensor-sw-vibration"
