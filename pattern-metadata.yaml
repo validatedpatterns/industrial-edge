@@ -1,0 +1,70 @@
+# This goal of this metadata is mainly used as a source of truth for
+# documentation and qe
+metadata_version: "1.0"
+name: industrial-edge
+pattern_version: "2.0"
+display_name: Industrial Edge
+repo_url: https://github.com/validatedpatterns/industrial-edge
+docs_repo_url: https://github.com/validatedpatterns/docs
+issues_url: https://github.com/validatedpatterns/industrial-edge/issues
+docs_url: https://validatedpatterns.io/patterns/industrial-edge/
+ci_url: https://validatedpatterns.io/ci/?pattern=industrialedge
+# can be sandbox, tested or maintained
+tier: tested
+owners: mbaldessari, darkdoc
+requirements:
+  hub: # Main cluster
+    compute:
+      platform:
+        gcp:
+          replicas: 5
+          type: n1-standard-16
+        azure:
+          replicas: 5
+          type: Standard_D16s_v5
+        aws:
+          replicas: 4
+          type: m5.4xlarge
+    controlPlane:
+      platform:
+        gcp:
+          replicas: 3
+          type: n1-standard-16
+        azure:
+          replicas: 3
+          type: Standard_D16s_v3
+        aws:
+          replicas: 3
+          type: m5.4xlarge
+  spoke: # optional - represents the clusters imported into ACM
+    compute:
+      platform:
+        gcp:
+          replicas: 3
+          type: n1-standard-16
+        azure:
+          replicas: 3
+          type: Standard_D16s_v5
+        aws:
+          replicas: 3
+          type: m5.2xlarge
+    controlPlane:
+      platform:
+        gcp:
+          replicas: 3
+          type: n1-standard-16
+        azure:
+          replicas: 3
+          type: Standard_D16s_v5
+        aws:
+          replicas: 3
+          type: m5.2xlarge
+
+# Loosely defined extra features like hypershift support, non-openshift
+# kubernetes support, spoke support
+extra_features:
+  hypershift_support: false
+  spoke_support: true
+
+external_requirements:
+# external quay, s3 bucket, agof tokens to access paywalled material, manifests, rag-llm hw (only selected regions)
