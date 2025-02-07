@@ -121,7 +121,7 @@ clusterGroup:
       namespace: openshift-storage
       project: datacenter
       chart: openshift-data-foundations
-      chartVersion: 0.1.*
+      chartVersion: 0.2.*
 
     data-science-cluster:
       name: data-science-cluster
