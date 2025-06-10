@@ -9,6 +9,8 @@ on:
     paths:
       - "pattern-metadata.yaml"
       - ".github/workflows/update-metadata.yml"
+    branches:
+      - main
 
 jobs:
   update-metadata:
