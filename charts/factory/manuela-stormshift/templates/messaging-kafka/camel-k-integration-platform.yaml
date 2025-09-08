@@ -11,3 +11,35 @@ spec:
   configuration:
   - type: repository
     value: https://maven.repository.redhat.com/earlyaccess/all@id=redhat.ea
+  build:
+    registry:
+      address: image-registry.openshift-image-registry.svc:5000
+      secret: ocp-registry
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: camel-k-operator-registry-editor
+  namespace: manuela-stormshift-messaging
+subjects:
+  - kind: ServiceAccount
+    name: camel-k-operator
+    namespace: manuela-stormshift-messaging
+roleRef:
+  kind: ClusterRole
+  name: registry-editor
+  apiGroup: rbac.authorization.k8s.io
+---
+kind: RoleBinding
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: camel-k-operator-registry-viewer
+  namespace: manuela-stormshift-messaging
+subjects:
+  - kind: ServiceAccount
+    name: camel-k-operator
+    namespace: manuela-stormshift-messaging
+roleRef:
+  kind: ClusterRole
+  name: registry-viewer
+  apiGroup: rbac.authorization.k8s.io
