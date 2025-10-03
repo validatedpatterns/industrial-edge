@@ -14,7 +14,44 @@ def test_subscription_status_hub(openshift_dyn_client):
     openshift_ver = openshift_ver.instance.status.history[0].version
 
     # These are the operator subscriptions and their associated namespaces
-    if "4.18." in openshift_ver:
+    if "4.19." in openshift_ver:
+        expected_subs = {
+            "openshift-gitops-operator": ["openshift-operators"],
+            "advanced-cluster-management": ["open-cluster-management"],
+            "openshift-pipelines-operator-rh": ["openshift-operators"],
+            "amq-broker-rhel8": ["manuela-tst-all"],
+            "amq-streams": ["manuela-tst-all", "manuela-data-lake"],
+            "camel-k": ["manuela-tst-all", "manuela-data-lake"],
+            "rhods-operator": ["redhat-ods-operator"],
+            "odf-operator": ["openshift-storage"],
+            "odf-dependencies": ["openshift-storage"],
+            "odf-prometheus-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "odf-csi-addons-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "mcg-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "ocs-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "ocs-client-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "cephcsi-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "recipe-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+            "rook-ceph-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+                "openshift-storage"
+            ],
+        }
+
+    elif "4.18." in openshift_ver:
         expected_subs = {
             "openshift-gitops-operator": ["openshift-operators"],
             "advanced-cluster-management": ["open-cluster-management"],
