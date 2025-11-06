@@ -14,7 +14,7 @@ def test_subscription_status_hub(openshift_dyn_client):
     openshift_ver = openshift_ver.instance.status.history[0].version
 
     # These are the operator subscriptions and their associated namespaces
-    if "4.19." in openshift_ver:
+    if "4.19." in openshift_ver or "4.20." in openshift_ver:
         expected_subs = {
             "openshift-gitops-operator": ["openshift-operators"],
             "advanced-cluster-management": ["open-cluster-management"],
