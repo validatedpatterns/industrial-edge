@@ -36,7 +36,7 @@ clusterGroup:
     acm:
       name: advanced-cluster-management
       namespace: open-cluster-management
-      channel: release-2.14
+      channel: release-2.15
 
     amqbroker-prod:
       name: amq-broker-rhel8
@@ -181,7 +181,7 @@ clusterGroup:
       namespace: golang-external-secrets
       project: golang-external-secrets
       chart: golang-external-secrets
-      chartVersion: 0.1.*
+      chartVersion: 0.2.*
 
 #  To have apps in multiple flavors, use namespaces and use helm overrides as appropriate
 #
