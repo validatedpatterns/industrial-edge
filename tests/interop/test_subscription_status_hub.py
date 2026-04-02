@@ -12,9 +12,12 @@ logger = logging.getLogger(__loggername__)
 def test_subscription_status_hub(openshift_dyn_client):
     openshift_ver = subscription.openshift_version(openshift_dyn_client)
     openshift_ver = openshift_ver.instance.status.history[0].version
+    ver = ".".join(openshift_ver.split(".")[:2])
+
+    logger.info(f"Openshift major/minor version: {ver}")
 
     # These are the operator subscriptions and their associated namespaces
-    if "4.19." in openshift_ver or "4.20." in openshift_ver:
+    if ver == "4.18" or ver == "4.20" or ver == "4.21":
         expected_subs = {
             "openshift-gitops-operator": ["openshift-operators"],
             "advanced-cluster-management": ["open-cluster-management"],
@@ -25,140 +28,34 @@ def test_subscription_status_hub(openshift_dyn_client):
             "rhods-operator": ["redhat-ods-operator"],
             "odf-operator": ["openshift-storage"],
             "odf-dependencies": ["openshift-storage"],
-            "odf-prometheus-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"odf-prometheus-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "odf-csi-addons-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"odf-csi-addons-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "mcg-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"mcg-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "ocs-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"ocs-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "ocs-client-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"ocs-client-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "cephcsi-operator-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"cephcsi-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "recipe-stable-4.19-redhat-operators-openshift-marketplace": [
+            f"recipe-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
-            "rook-ceph-operator-stable-4.19-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-        }
-
-    elif "4.18." in openshift_ver:
-        expected_subs = {
-            "openshift-gitops-operator": ["openshift-operators"],
-            "advanced-cluster-management": ["open-cluster-management"],
-            "openshift-pipelines-operator-rh": ["openshift-operators"],
-            "amq-broker-rhel8": ["manuela-tst-all"],
-            "amq-streams": ["manuela-tst-all", "manuela-data-lake"],
-            "camel-k": ["manuela-tst-all", "manuela-data-lake"],
-            "rhods-operator": ["redhat-ods-operator"],
-            "odf-operator": ["openshift-storage"],
-            "odf-dependencies": ["openshift-storage"],
-            "odf-prometheus-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "odf-csi-addons-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "mcg-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-client-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "cephcsi-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "recipe-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "rook-ceph-operator-stable-4.18-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-        }
-
-    elif "4.17." in openshift_ver:
-        expected_subs = {
-            "openshift-gitops-operator": ["openshift-operators"],
-            "advanced-cluster-management": ["open-cluster-management"],
-            "openshift-pipelines-operator-rh": ["openshift-operators"],
-            "amq-broker-rhel8": ["manuela-tst-all"],
-            "amq-streams": ["manuela-tst-all", "manuela-data-lake"],
-            "camel-k": ["manuela-tst-all", "manuela-data-lake"],
-            "rhods-operator": ["redhat-ods-operator"],
-            "odf-operator": ["openshift-storage"],
-            "odf-prometheus-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "odf-csi-addons-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "mcg-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-client-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "cephcsi-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "recipe-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "rook-ceph-operator-stable-4.17-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-        }
-
-    elif "4.16." in openshift_ver:
-        expected_subs = {
-            "openshift-gitops-operator": ["openshift-operators"],
-            "advanced-cluster-management": ["open-cluster-management"],
-            "openshift-pipelines-operator-rh": ["openshift-operators"],
-            "amq-broker-rhel8": ["manuela-tst-all"],
-            "amq-streams": ["manuela-tst-all", "manuela-data-lake"],
-            "camel-k": ["manuela-tst-all", "manuela-data-lake"],
-            "rhods-operator": ["redhat-ods-operator"],
-            "odf-operator": ["openshift-storage"],
-            "odf-prometheus-operator-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "odf-csi-addons-operator-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "mcg-operator-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-operator-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "ocs-client-operator-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "recipe-stable-4.16-redhat-operators-openshift-marketplace": [
-                "openshift-storage"
-            ],
-            "rook-ceph-operator-stable-4.16-redhat-operators-openshift-marketplace": [
+            f"rook-ceph-operator-stable-{ver}-redhat-operators-openshift-marketplace": [
                 "openshift-storage"
             ],
         }
 
     else:
-        err_msg = f"Openshift version {openshift_ver} not supported"
+        err_msg = f"Openshift version {ver} not supported"
         logger.error(f"FAIL: {err_msg}")
         assert False, err_msg
 
