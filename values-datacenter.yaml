@@ -68,7 +68,7 @@ clusterGroup:
 
     ods:
       name: rhods-operator
-      channel: stable-2.16
+      channel: stable-2.25
       namespace: redhat-ods-operator
 
   projects:
