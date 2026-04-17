@@ -144,7 +144,7 @@ spec:
             - mountPath: /dev/shm
               name: shm
             - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
-              name: ca-bundles
+              name: trusted-ca-bundle
               readOnly: true
               subPath: ca-bundle.crt
       containers:
