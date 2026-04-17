@@ -38,6 +38,7 @@
 
     - name: Does repo already exist
       ansible.builtin.uri:
+        validate_certs: false
         url: "{{ gitea_repos_route }}"
       register: repo_exists
       failed_when: false
@@ -48,6 +49,7 @@
 
     - name: Migrate repository
       ansible.builtin.uri:
+        validate_certs: false
         url: "{{ gitea_migrate_route }}"
         user: "{{ gitea_username }}"
         password: "{{ gitea_password }}"
