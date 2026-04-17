@@ -110,24 +110,6 @@ spec:
                       - 'true'
               weight: 1
       initContainers:
-        - name: fetch-ca
-          image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
-          imagePullPolicy: Always
-          command:
-          - 'sh'
-          - '-c'
-          - >-
-            cat /var/run/kube-root-ca/ca.crt /var/run/trusted-ca/ca-bundle.crt /var/run/openshift-service-ca/service-ca.crt > /tmp/ca-bundles/ca-bundle.crt || true;
-            ls -l /tmp/ca-bundles/
-          volumeMounts:
-            - mountPath: /var/run/kube-root-ca
-              name: kube-root-ca
-            - mountPath: /var/run/trusted-ca
-              name: trusted-ca-bundle
-            - mountPath: /var/run/openshift-service-ca
-              name: openshift-service-ca
-            - mountPath: /tmp/ca-bundles
-              name: ca-bundles
         - name: git-init
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
           imagePullPolicy: Always
@@ -135,18 +117,12 @@ spec:
           - 'sh'
           - '-c'
           - >-
-            if [ ! -d /opt/app-root/src/manuela-dev ]; then export GIT_SSL_CAINFO=/etc/pki/tls/custom-certs/ca-bundle.crt; git clone --single-branch -b {{ .Values.global.git.dev_revision }} {{ $full_giturl }} /opt/app-root/src/manuela-dev; fi
+            if [ ! -d /opt/app-root/src/manuela-dev ]; then export GIT_SSL_NO_VERIFY=true; git clone --single-branch -b {{ .Values.global.git.dev_revision }} {{ $full_giturl }} /opt/app-root/src/manuela-dev; fi
           volumeMounts:
             - mountPath: /opt/app-root/src
               name: jupyterlab
             - mountPath: /opt/app-root/runtimes
               name: elyra-dsp-details
-            - mountPath: /dev/shm
-              name: shm
-            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
-              name: trusted-ca-bundle
-              readOnly: true
-              subPath: ca-bundle.crt
       containers:
         - resources:
             limits:
@@ -216,6 +192,12 @@ spec:
               name: elyra-dsp-details
             - mountPath: /dev/shm
               name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: trusted-ca
+              readOnly: true
+              subPath: ca-bundle.crt
+            - mountPath: /opt/app-root/pipeline-runtimes/
+              name: runtime-images
           image: image-registry.openshift-image-registry.svc:5000/redhat-ods-applications/industrial-edge:industrial-edge-v0.1.0
           workingDir: /opt/app-root/src
         - resources:
@@ -257,6 +239,8 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           volumeMounts:
+            - mountPath: /etc/oauth/client
+              name: oauth-client
             - mountPath: /etc/oauth/config
               name: oauth-config
             - mountPath: /etc/tls/private
@@ -274,6 +258,9 @@ spec:
             - '--upstream-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
             - '--email-domain=*'
             - '--skip-provider-button'
+            - '--client-id=jupyterlab-ml-development-oauth-client'
+            - '--client-secret-file=/etc/oauth/client/secret'
+            - '--scope=user:info user:check-access'
             - >-
               --openshift-sar={"verb":"get","resource":"notebooks","resourceAPIGroup":"kubeflow.org","resourceName":"jupyterlab","namespace":"$(NAMESPACE)"}
             - >-
@@ -312,6 +299,21 @@ spec:
             defaultMode: 420
         - name: ca-bundles
           emptyDir: {}
+        - configMap:
+            items:
+              - key: ca-bundle.crt
+                path: ca-bundle.crt
+            name: workbench-trusted-ca-bundle
+            optional: true
+          name: trusted-ca
+        - configMap:
+            name: pipeline-runtime-images
+            optional: true
+          name: runtime-images
+        - name: oauth-client
+          secret:
+            defaultMode: 420
+            secretName: jupyterlab-oauth-client
 ---
 apiVersion: objectbucket.io/v1alpha1
 kind: ObjectBucketClaim
@@ -476,6 +478,14 @@ spec:
               name: s3-browser
             - mountPath: /dev/shm
               name: shm
+            - mountPath: /etc/pki/tls/custom-certs/ca-bundle.crt
+              name: trusted-ca
+              readOnly: true
+              subPath: ca-bundle.crt
+            - mountPath: /opt/app-root/pipeline-runtimes/
+              name: runtime-images
+            - mountPath: /opt/app-root/runtimes
+              name: elyra-dsp-details
           envFrom:
             - secretRef:
                 name: aws-connection-user-bucket
@@ -520,6 +530,8 @@ spec:
               protocol: TCP
           imagePullPolicy: Always
           volumeMounts:
+            - mountPath: /etc/oauth/client
+              name: oauth-client
             - mountPath: /etc/oauth/config
               name: oauth-config
             - mountPath: /etc/tls/private
@@ -537,6 +549,9 @@ spec:
             - '--upstream-ca=/var/run/secrets/kubernetes.io/serviceaccount/ca.crt'
             - '--email-domain=*'
             - '--skip-provider-button'
+            - '--client-id=s3-browser-ml-development-oauth-client'
+            - '--client-secret-file=/etc/oauth/client/secret'
+            - '--scope=user:info user:check-access'
             - >-
               --openshift-sar={"verb":"get","resource":"notebooks","resourceAPIGroup":"kubeflow.org","resourceName":"s3-browser","namespace":"$(NAMESPACE)"}
             - >-
@@ -572,6 +587,25 @@ spec:
             defaultMode: 420
         - name: ca-bundles
           emptyDir: {}
+        - configMap:
+            items:
+              - key: ca-bundle.crt
+                path: ca-bundle.crt
+            name: workbench-trusted-ca-bundle
+            optional: true
+          name: trusted-ca
+        - configMap:
+            name: pipeline-runtime-images
+            optional: true
+          name: runtime-images
+        - name: elyra-dsp-details
+          secret:
+            optional: true
+            secretName: ds-pipeline-config
+        - name: oauth-client
+          secret:
+            defaultMode: 420
+            secretName: s3-browser-oauth-client
 ---
 kind: RoleBinding
 apiVersion: rbac.authorization.k8s.io/v1
@@ -583,6 +617,7 @@ metadata:
 subjects:
   - kind: ServiceAccount
     name: jupyterlab
+    namespace: ml-development
 roleRef:
   apiGroup: rbac.authorization.k8s.io
   kind: Role
