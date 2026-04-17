@@ -1,3 +1,4 @@
+include Makefile-common
 .PHONY: default
 default: show
 
