@@ -219,7 +219,7 @@ clusterGroup:
           - "upstream_repo_url=https://github.com/validatedpatterns-demos/manuela-dev"
         timeout: 180
       - name: copy-initial-model-to-incluster-s3
-        image: quay.io/hybridcloudpatterns/utility-container:latest
+        image: quay.io/validatedpatterns/utility-container:latest
         playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
         extravars:
           - "bucket_name=user-bucket"
@@ -227,7 +227,7 @@ clusterGroup:
           - "object_name=initial_model.joblib"
         timeout: 180
       - name: copy-initial-training-data-to-incluster-s3
-        image: quay.io/hybridcloudpatterns/utility-container:latest
+        image: quay.io/validatedpatterns/utility-container:latest
         playbook: ./ansible/playbooks/copy_initial_object_to_incluster_s3.yml
         extravars:
           - "bucket_name=user-bucket"
