@@ -12,7 +12,7 @@ logger = logging.getLogger(__loggername__)
 def test_subscription_status_edge(openshift_dyn_client):
     # These are the operator subscriptions and their associated namespaces
     expected_subs = {
-        "openshift-gitops-operator": ["openshift-operators"],
+        "openshift-gitops-operator": ["openshift-gitops-operator"],
         "amq-broker-rhel8": ["manuela-stormshift-messaging"],
         "amq-streams": ["manuela-stormshift-messaging"],
         "red-hat-camel-k": ["manuela-stormshift-messaging"],
