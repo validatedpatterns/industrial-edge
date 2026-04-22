@@ -19,7 +19,7 @@ def test_subscription_status_hub(openshift_dyn_client):
     # These are the operator subscriptions and their associated namespaces
     if ver == "4.18" or ver == "4.20" or ver == "4.21":
         expected_subs = {
-            "openshift-gitops-operator": ["openshift-operators"],
+            "openshift-gitops-operator": ["openshift-gitops-operator"],
             "advanced-cluster-management": ["open-cluster-management"],
             "openshift-pipelines-operator-rh": ["openshift-operators"],
             "amq-broker-rhel8": ["manuela-tst-all"],

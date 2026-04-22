@@ -3,24 +3,7 @@ include Makefile-common
 default: show
 
 .PHONY: help
-# No need to add a comment here as help is described in common/
 ##@ Pattern tasks
-
-help:
-	@make -f common/Makefile MAKEFILE_LIST="Makefile common/Makefile" help
-
-%:
-	make -f common/Makefile $*
-
-.PHONY: install
-install: operator-deploy post-install ## installs the pattern, inits the vault and loads the secrets
-	@echo "Installed"
-
-.PHONY: post-install
-post-install: ## Post-install tasks
-	make load-secrets
-	@echo "Done"
-
 .PHONY: check-pipeline-resources
 check-pipeline-resources: ## wait for all seed resources to be present
 	scripts/check-pipeline-resources.sh
