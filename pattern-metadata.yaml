@@ -10,7 +10,7 @@ issues_url: https://github.com/validatedpatterns/industrial-edge/issues
 docs_url: https://validatedpatterns.io/patterns/industrial-edge/
 ci_url: https://validatedpatterns.io/ci/?pattern=industrialedge
 # can be sandbox, tested or maintained
-tier: tested
+tier: sandbox
 owners: mbaldessari, darkdoc
 requirements:
   hub: # Main cluster
