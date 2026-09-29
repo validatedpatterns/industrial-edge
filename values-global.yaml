@@ -8,7 +8,7 @@ main:
 
 global:
   pattern: industrial-edge
-
+  singleArgoCD: true
   options:
     useCSV: False
     syncPolicy: Automatic
